@@ -1,7 +1,7 @@
 Title: Higher-level functions in Python, Part 2 - reduce
-Date: 2018-05-30
+Date: 2018-06-04
 Category: Python
 Tags: python, jupyter, functional, benchmarks, numpy
 Slug: higher-level-functions-python-reduce
 Authors: François Leblanc
-Summary: We go through uses of the Python `reduce` function, when it's useful and its performance benefits.
+Summary: We go through uses of the Python `reduce` function, when it's useful and its performance benefits. This time, we spend some time exploring function composition, and how to manage large function chains, e.g. in a data processing pipeline.
