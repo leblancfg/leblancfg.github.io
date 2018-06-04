@@ -1023,7 +1023,7 @@ Python provides a few higher order (or functional programming) functions in the 
 <li>lambda</li>
 <li>list comprehensions</li>
 </ul>
-<div align="right">*Picture from [SwiftUnboxed](https://swiftunboxed.com/lang/reduce/)*</div><p>This article series focuses on exploring these. In the previous article we've taken a look at <a href="higher-level-functions-python-map.html">the <code>map</code> function</a>. In this notebook, we'll learn more about the <code>reduce</code> function in Python. Again, I will assume you already know about list expressions, (or more broadly, <a href="https://nedbatchelder.com/blog/201605/generator_comprehensions.html">generator expressions</a>). Just like I got side-tracked exploring exponential function syntax in the previous installment, this time we'll spend some time learning about function composition, and benchmarking various ways of working with function call chains in Python.</p>
+<div align="right"><i>Picture from <a href="https://swiftunboxed.com/lang/reduce">SwiftUnboxed</a></i></div><p>This article series focuses on exploring these. In the previous article we've taken a look at <a href="higher-level-functions-python-map.html">the <code>map</code> function</a>. In this notebook, we'll learn more about the <code>reduce</code> function in Python. Again, I will assume you already know about list expressions, (or more broadly, <a href="https://nedbatchelder.com/blog/201605/generator_comprehensions.html">generator expressions</a>). Just like I got side-tracked exploring exponential function syntax in the previous installment, this time we'll spend some time learning about function composition, and benchmarking various ways of working with function call chains in Python.</p>
 <p>This time, <code>reduce()</code> needs to be imported from the standard library with:</p>
 </div>
 </div>
@@ -2080,8 +2080,8 @@ reduce(call, transforms * 10, string)
 <li>The number of functions to apply in the chain are high enough to become unreadable, or</li>
 <li>You won't know in advance which functions to apply, and need a way to abstract it away.</li>
 </ol>
-<p><img align="center" src="img/genetic_algo.svg" title="Genetic Algorithm" width="400"/></p>
-<div align="center">*Courtesy of [CoalHMM Documentation](https://github.com/birc-aeh/coalhmm)*</div><p>One example of this last case that comes to mind is if you were running a genetic algorithm experiment to evolve a solution to a problem that uses function composition.</p>
+<center><img src="img/genetic_algo.svg" title="Genetic Algorithm" width="400"/>
+***Genetic Algoriths***<br/>*Courtesy of [CoalHMM Documentation](https://github.com/birc-aeh/coalhmm)*</center><p>One example of this last case that comes to mind is if you were running a genetic algorithm experiment to evolve a solution to a problem that uses function composition.</p>
 <p>For more on this, I highly recommend you take a look at Mathieu Larose's article entitled <em><a href="https://mathieularose.com/function-composition-in-python/">Function Composition in Python</a></em></p>
 </div>
 </div>
