@@ -1391,7 +1391,7 @@ reduce(...)
 <h2 id="Uses">Uses<a class="anchor-link" href="#Uses">¶</a></h2><p>Now, Guido van Rossum, the creator and Benevolent Dictator for Life of Python, has stated previously that:</p>
 <blockquote><p>There aren't a whole lot of associative operators. (Those are operators X for which (a X b) X c equals a X (b X c).) I think it's just about limited to +, *, &amp;, |, ^, and shortcut and/or. We already have sum(); I'd happily trade reduce() for product(), so that takes care of the two most common uses.</p>
 </blockquote>
-<p>So are there any use cases for non-associative use cases? From StackOverflow question <a href="https://stackoverflow.com/questions/15995/useful-code-which-uses-reduce">Useful code which uses reduce()?</a>:</p>
+<p>So are there any use cases for non-associative use cases? At the risk of turning this part of the article as a rehash of the StackOverflow question <a href="https://stackoverflow.com/questions/15995/useful-code-which-uses-reduce">Useful code which uses reduce()?</a>, here are the main uses for <code>reduce()</code>:</p>
 <ul>
 <li>Flattening a list of lists</li>
 <li>Getting the intersection of $n$ lists</li>
@@ -1488,7 +1488,7 @@ reduce(...)
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Turning-a-list-of-digits-into-a-number">Turning a list of digits into a number<a class="anchor-link" href="#Turning-a-list-of-digits-into-a-number">¶</a></h3>
+<h3 id="Getting-the-intersection-of-$n$-lists">Getting the intersection of $n$ lists<a class="anchor-link" href="#Getting-the-intersection-of-$n$-lists">¶</a></h3>
 </div>
 </div>
 </div>
@@ -1497,7 +1497,9 @@ reduce(...)
 <div class="prompt input_prompt">In [17]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">digits</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">24</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">list_items</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">'apple'</span><span class="p">,</span> <span class="s1">'pear'</span><span class="p">,</span> <span class="s1">'orange'</span><span class="p">,</span> <span class="s1">'kiwi'</span><span class="p">,</span> <span class="s1">'bicycle'</span><span class="p">],</span>
+               <span class="p">[</span><span class="s1">'shark'</span><span class="p">,</span> <span class="s1">'speedo'</span><span class="p">,</span> <span class="s1">'coconut'</span><span class="p">,</span> <span class="s1">'kiwi'</span><span class="p">,</span> <span class="s1">'bicycle'</span><span class="p">],</span>
+               <span class="p">[</span><span class="s1">'coffee'</span><span class="p">,</span> <span class="s1">'tea'</span><span class="p">,</span> <span class="s1">'apple'</span><span class="p">,</span> <span class="s1">'kiwi'</span><span class="p">,</span> <span class="s1">'bicycle'</span><span class="p">]]</span>
 </pre></div>
 </div>
 </div>
@@ -1509,7 +1511,7 @@ reduce(...)
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 'Canonical' answer</span>
-<span class="nb">int</span><span class="p">(</span><span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">digits</span><span class="p">))</span>
+<span class="nb">set</span><span class="p">(</span><span class="n">list_items</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="o">*</span><span class="n">list_items</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1518,6 +1520,69 @@ reduce(...)
 <div class="output">
 <div class="output_area">
 <div class="prompt output_prompt">Out[18]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>{'bicycle', 'kiwi'}</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [19]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># With reduce. Personally, I actually prefer the first expression.</span>
+<span class="n">reduce</span><span class="p">(</span><span class="nb">set</span><span class="o">.</span><span class="n">intersection</span><span class="p">,</span> <span class="p">[</span><span class="nb">set</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">list_items</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[19]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>{'bicycle', 'kiwi'}</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Turning-a-list-of-digits-into-a-number">Turning a list of digits into a number<a class="anchor-link" href="#Turning-a-list-of-digits-into-a-number">¶</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [20]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">digits</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">24</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [21]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 'Canonical' answer</span>
+<span class="nb">int</span><span class="p">(</span><span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">digits</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[21]:</div>
 <div class="output_text output_subarea output_execute_result">
 <pre>152752624</pre>
 </div>
@@ -1535,7 +1600,7 @@ reduce(...)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [19]:</div>
+<div class="prompt input_prompt">In [22]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span><span class="n">d</span><span class="p">:</span> <span class="mi">10</span><span class="o">*</span><span class="n">a</span><span class="o">+</span><span class="n">d</span><span class="p">,</span> <span class="n">digits</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
@@ -1546,7 +1611,7 @@ reduce(...)
 <div class="output_wrapper">
 <div class="output">
 <div class="output_area">
-<div class="prompt output_prompt">Out[19]:</div>
+<div class="prompt output_prompt">Out[22]:</div>
 <div class="output_text output_subarea output_execute_result">
 <pre>15275284</pre>
 </div>
@@ -1564,7 +1629,7 @@ reduce(...)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [20]:</div>
+<div class="prompt input_prompt">In [23]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
@@ -1579,7 +1644,7 @@ reduce(...)
 <div class="output_wrapper">
 <div class="output">
 <div class="output_area">
-<div class="prompt output_prompt">Out[20]:</div>
+<div class="prompt output_prompt">Out[23]:</div>
 <div class="output_text output_subarea output_execute_result">
 <pre>300</pre>
 </div>
@@ -1591,7 +1656,88 @@ reduce(...)
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Accessing-deeply-nested-items">Accessing deeply nested items<a class="anchor-link" href="#Accessing-deeply-nested-items">¶</a></h3>
+<h3 id="Accessing-deeply-nested-items">Accessing deeply nested items<a class="anchor-link" href="#Accessing-deeply-nested-items">¶</a></h3><p>In this case, reduce actually is the canonical answer to this problem in Python.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [24]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">"a"</span><span class="p">:{</span>
+        <span class="s2">"r"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">"s"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">"t"</span><span class="p">:</span> <span class="mi">3</span>
+        <span class="p">},</span>
+    <span class="s2">"b"</span><span class="p">:{</span>
+        <span class="s2">"u"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">"v"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"x"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">"y"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="s2">"z"</span><span class="p">:</span> <span class="mi">3</span>
+        <span class="p">},</span>
+        <span class="s2">"w"</span><span class="p">:</span> <span class="mi">3</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [25]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s1">'b'</span><span class="p">][</span><span class="s1">'v'</span><span class="p">][</span><span class="s1">'y'</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[25]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>2</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Sometimes you just don't know in advance what the query in the nested dictionnary will be, though. Imagine being given a list of (ordered) keys as your input. This can often happen in web apps and the like. You would write it out like this:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [26]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">operator</span>
+
+<span class="c1"># The user supplies this</span>
+<span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'b'</span><span class="p">,</span> <span class="s1">'v'</span><span class="p">,</span> <span class="s1">'y'</span><span class="p">]</span>
+
+<span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">getitem</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[26]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>2</pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1607,7 +1753,7 @@ reduce(...)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [21]:</div>
+<div class="prompt input_prompt">In [27]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">clean_strings</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
@@ -1628,7 +1774,7 @@ reduce(...)
 <div class="output_wrapper">
 <div class="output">
 <div class="output_area">
-<div class="prompt output_prompt">Out[21]:</div>
+<div class="prompt output_prompt">Out[27]:</div>
 <div class="output_text output_subarea output_execute_result">
 <pre>'The Slow Blue Fox Jumps Over The Industrious Dog'</pre>
 </div>
@@ -1646,7 +1792,7 @@ reduce(...)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [22]:</div>
+<div class="prompt input_prompt">In [28]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
@@ -1662,7 +1808,7 @@ reduce(...)
 <div class="output_wrapper">
 <div class="output">
 <div class="output_area">
-<div class="prompt output_prompt">Out[22]:</div>
+<div class="prompt output_prompt">Out[28]:</div>
 <div class="output_text output_subarea output_execute_result">
 <pre>'The Slow Blue Fox Jumps Over The Industrious Dog'</pre>
 </div>
@@ -1680,12 +1826,14 @@ reduce(...)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [23]:</div>
+<div class="prompt input_prompt">In [29]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">color</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'brown'</span><span class="p">,</span> <span class="s1">'blue'</span><span class="p">)</span>
 <span class="n">speed</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'quick'</span><span class="p">,</span> <span class="s1">'slow'</span><span class="p">)</span>
 <span class="n">work</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'lazy'</span><span class="p">,</span> <span class="s1">'industrious'</span><span class="p">)</span>
+
+<span class="c1"># In actual use cases, this list can get quite lengthy!</span>
 <span class="n">transforms</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">work</span><span class="p">,</span> <span class="nb">str</span><span class="o">.</span><span class="n">title</span><span class="p">]</span>
 </pre></div>
 </div>
@@ -1694,7 +1842,7 @@ reduce(...)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [24]:</div>
+<div class="prompt input_prompt">In [30]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">function</span><span class="p">):</span>
@@ -1709,7 +1857,7 @@ reduce(...)
 <div class="output_wrapper">
 <div class="output">
 <div class="output_area">
-<div class="prompt output_prompt">Out[24]:</div>
+<div class="prompt output_prompt">Out[30]:</div>
 <div class="output_text output_subarea output_execute_result">
 <pre>'The Slow Blue Fox Jumps Over The Industrious Dog'</pre>
 </div>
@@ -1734,7 +1882,7 @@ reduce(...)
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Benchmarks">Benchmarks<a class="anchor-link" href="#Benchmarks">¶</a></h2><p>Is it faster, though?</p>
+<h2 id="Benchmarks">Benchmarks<a class="anchor-link" href="#Benchmarks">¶</a></h2><p>Now the kicker! Is it faster than regular chained calls, though?</p>
 </div>
 </div>
 </div>
@@ -1748,7 +1896,7 @@ reduce(...)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [25]:</div>
+<div class="prompt input_prompt">In [31]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">string</span> <span class="o">=</span> <span class="s2">"THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG"</span>
@@ -1759,7 +1907,7 @@ reduce(...)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [26]:</div>
+<div class="prompt input_prompt">In [32]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
@@ -1778,7 +1926,7 @@ reduce(...)
 <div class="output_area">
 <div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>1.7 µs ± 125 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
+<pre>1.7 µs ± 93.4 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
 </pre>
 </div>
 </div>
@@ -1787,7 +1935,7 @@ reduce(...)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [27]:</div>
+<div class="prompt input_prompt">In [33]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
@@ -1801,7 +1949,7 @@ clean_strings(string)
 <div class="output_area">
 <div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>1.79 µs ± 64.8 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
+<pre>1.88 µs ± 53.5 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
 </pre>
 </div>
 </div>
@@ -1810,7 +1958,7 @@ clean_strings(string)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [28]:</div>
+<div class="prompt input_prompt">In [34]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
@@ -1824,10 +1972,18 @@ reduce(call, transforms, string)
 <div class="output_area">
 <div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>2.62 µs ± 44.6 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
+<pre>2.56 µs ± 38.1 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
 </pre>
 </div>
 </div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So, the answer here is <strong>no</strong>. 😂</p>
 </div>
 </div>
 </div>
@@ -1841,7 +1997,7 @@ reduce(call, transforms, string)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [29]:</div>
+<div class="prompt input_prompt">In [35]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">string</span> <span class="o">=</span> <span class="s2">"THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG"</span>
@@ -1852,7 +2008,7 @@ reduce(call, transforms, string)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [30]:</div>
+<div class="prompt input_prompt">In [36]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">repeat</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
@@ -1866,7 +2022,7 @@ reduce(call, transforms, string)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [31]:</div>
+<div class="prompt input_prompt">In [37]:</div>
 <div class="inner_cell">
 <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
@@ -1880,155 +2036,7 @@ repeat(clean_strings, 10, string)
 <div class="output_area">
 <div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>15.8 µs ± 772 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [32]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
-reduce(call, transforms * 10, string)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>23.7 µs ± 2.68 µs per loop (mean ± std. dev. of 7 runs, 10000 loops each)
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Well, no gains there!</p>
-<h3 id="Long-string,-5-string-functions">Long string, 5 string functions<a class="anchor-link" href="#Long-string,-5-string-functions">¶</a></h3><p>And now with a very long string:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [33]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">string</span> <span class="o">=</span> <span class="s2">"THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG"</span> <span class="o">*</span> <span class="mi">1000</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [34]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
-(string.lower()
-       .replace('brown', 'blue')
-       .replace('quick', 'slow')
-       .replace('lazy', 'industrious')
-       .title()
-)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>858 µs ± 43.2 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [35]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
-clean_strings(string)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>834 µs ± 25.3 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [36]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
-reduce(call, transforms, string)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>834 µs ± 36.7 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Long-string,-50-string-functions">Long string, 50 string functions<a class="anchor-link" href="#Long-string,-50-string-functions">¶</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [37]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
-clean_strings(clean_strings(clean_strings(clean_strings(clean_strings(clean_strings(clean_strings(clean_strings(clean_strings(clean_strings(string))))))))))
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>6.8 ms ± 186 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+<pre>15.4 µs ± 246 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
 </pre>
 </div>
 </div>
@@ -2051,7 +2059,155 @@ reduce(call, transforms * 10, string)
 <div class="output_area">
 <div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>7.53 ms ± 469 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+<pre>21.6 µs ± 410 ns per loop (mean ± std. dev. of 7 runs, 10000 loops each)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Well, no gains there either!</p>
+<h3 id="Long-string,-5-string-functions">Long string, 5 string functions<a class="anchor-link" href="#Long-string,-5-string-functions">¶</a></h3><p>And now with a very long string:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [39]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">string</span> <span class="o">=</span> <span class="s2">"THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG"</span> <span class="o">*</span> <span class="mi">1000</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [40]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
+(string.lower()
+       .replace('brown', 'blue')
+       .replace('quick', 'slow')
+       .replace('lazy', 'industrious')
+       .title()
+)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>756 µs ± 6.66 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [41]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
+clean_strings(string)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>748 µs ± 6.57 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [42]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
+reduce(call, transforms, string)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>755 µs ± 3.05 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Long-string,-50-string-functions">Long string, 50 string functions<a class="anchor-link" href="#Long-string,-50-string-functions">¶</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [43]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
+repeat(clean_strings, 10, string)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>6.63 ms ± 67.4 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [44]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
+reduce(call, transforms * 10, string)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>6.64 ms ± 25.1 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 </pre>
 </div>
 </div>
