@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>Python's map function, and benchmarks for exponentials</title>
+        <title>Higher-level functions in Python, Part 1 - map</title>
         <link rel="stylesheet" href="https://leblancfg.com/theme/css/main.css" />
         <link href="https://leblancfg.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="leblancfg.com Atom Feed" />
 
@@ -23,8 +23,8 @@
   <article>
     <header>
       <h1 class="entry-title">
-        <a href="https://leblancfg.com/python-map-function-and-benchmarks-for-exponentials.html" rel="bookmark"
-           title="Permalink to Python's map function, and benchmarks for exponentials">Python's map function, and benchmarks for exponentials</a></h1>
+        <a href="https://leblancfg.com/higher-level-functions-python-map.html" rel="bookmark"
+           title="Permalink to Higher-level functions in Python, Part 1 - map">Higher-level functions in Python, Part 1 - map</a></h1>
     </header>
 
     <div class="entry-content">
@@ -1023,7 +1023,7 @@ Python provides a few higher order (or functional programming) functions in the 
 <li>lambda</li>
 <li>list comprehensions</li>
 </ul>
-<p>In this notebook, we'll learn more about the <code>map</code> Python function. I will assume you already know about list expressions, but might not be so familiar with the other four.</p>
+<div align="right">*Picture from [SwiftUnboxed](https://swiftunboxed.com/open-source/map/)*</div><p>This article series focuses on exploring these. In this notebook, we'll learn more about the <code>map</code> Python function. I will assume you already know about list expressions, but might not be so familiar with the other four.</p>
 <p>At first glance <code>map</code> seems a bit redundant — all it does is apply a function to every member in an iterable (list, dict, tuple, set, etc.)? Playing with it though, we'll see that it can be used to tidy up your code, make it more readable, and even give performance gains when used with very large iterables due to its lazy evaluation.</p>
 </div>
 </div>
@@ -2012,6 +2012,7 @@ np.sum(np.square(np.arange(3, 1024**2, dtype='uint32')))
 <li>Switch to <code>map</code> instead of list comprehensions for iterables with around a million items or more.</li>
 <li>Unless you really can't use numpy, use <code>n * n * ...</code> instead of <code>n**k</code>, for <code>k</code> in <code>[2, 4]</code></li>
 </ol>
+<h2 id="Keep-on-reading!">Keep on reading!<a class="anchor-link" href="#Keep-on-reading!">¶</a></h2><p>Next in the <em>Higher-level functions in Python</em> series we'll take a look at <a href="higher-level-functions-python-reduce.html">the <code>reduce</code> function</a>.</p>
 </div>
 </div>
 </div>
@@ -2050,6 +2051,14 @@ np.sum(np.square(np.arange(3, 1024**2, dtype='uint32')))
   </article>
 </section>
         <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>links</h2>
+                        <ul>
+                            <li><a href="https://github.com/leblancfg">leblancfg on Github</a></li>
+                            <li><a href="https://www.kaggle.com/leblancfg">leblancfg on Kaggle</a></li>
+                            <li><a href="https://twitter.com/leblancfg1">leblancfg1 on Twitter</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
                 <div class="social">
                         <h2>social</h2>
                         <ul>
@@ -2067,5 +2076,14 @@ np.sum(np.square(np.arange(3, 1024**2, dtype='uint32')))
                 <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
         </footer><!-- /#contentinfo -->
 
+    <script type="text/javascript">
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-120300361-1', 'auto');
+    ga('send', 'pageview');
+    </script>
 </body>
 </html>
