@@ -41,3 +41,6 @@ PLUGINS = ['ipynb.markup']
 # Define Links
 STATIC_PATHS = ['img', 'extra/CNAME']
 EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}, }
+
+# Analytics
+GOOGLE_ANALYTICS = 'UA-120300361-1'
