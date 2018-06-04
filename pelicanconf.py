@@ -20,9 +20,9 @@ AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
 
 # Blogroll
-LINKS = (('Github', 'https://github.com/leblancfg'),
-        ('Kaggle', 'https://www.kaggle.com/leblancfg'),
-        ('Twitter', 'https://twitter.com/leblancfg1'),)
+LINKS = (('leblancfg on Github', 'https://github.com/leblancfg'),
+        ('leblancfg on Kaggle', 'https://www.kaggle.com/leblancfg'),
+        ('leblancfg1 on Twitter', 'https://twitter.com/leblancfg1'),)
 
 # Social widget
 # SOCIAL = (('You can add links in your config file', '#'),
