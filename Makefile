@@ -97,7 +97,6 @@ stopserver:
 	@echo 'Stopped Pelican and SimpleHTTPServer processes running in background.'
 
 publish:
-	rm -r */.ipynb_checkpoints
 	$(PELICAN) $(INPUTDIR) -o $(OUTPUTDIR) -s $(PUBLISHCONF) $(PELICANOPTS)
 
 ssh_upload: publish
@@ -123,7 +122,8 @@ github: refresh publish
 	git push origin $(GITHUB_PAGES_BRANCH)
 
 refresh:
-	rm -rf output
+	rm -r */.ipynb_checkpoints
+	rm -r output
 	git add .
 	git commit -m "Updated content"
 	git push origin dev
