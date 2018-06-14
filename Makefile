@@ -122,8 +122,8 @@ github: refresh publish
 	git push origin $(GITHUB_PAGES_BRANCH)
 
 refresh:
-	rm -r */.ipynb_checkpoints
-	rm -r output
+	rm -rf */.ipynb_checkpoints
+	rm -rf output
 	git add .
 	git commit -m "Updated content"
 	git push origin dev
