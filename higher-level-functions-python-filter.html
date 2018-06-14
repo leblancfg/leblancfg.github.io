@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
         <meta charset="utf-8" />
-        <title>leblancfg.com - benchmarks</title>
+        <title>Higher-level functions in Python, Part 3 - filter</title>
         <link rel="stylesheet" href="https://leblancfg.com/theme/css/main.css" />
         <link href="https://leblancfg.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="leblancfg.com Atom Feed" />
 
@@ -16,13 +16,18 @@
                 <h1><a href="https://leblancfg.com/">leblancfg.com </a></h1>
                 <nav><ul>
                     <li><a href="https://leblancfg.com/pages/about.html">About</a></li>
-                    <li><a href="https://leblancfg.com/category/python.html">Python</a></li>
+                    <li class="active"><a href="https://leblancfg.com/category/python.html">Python</a></li>
                 </ul></nav>
         </header><!-- /#banner -->
+<section id="content" class="body">
+  <article>
+    <header>
+      <h1 class="entry-title">
+        <a href="https://leblancfg.com/higher-level-functions-python-filter.html" rel="bookmark"
+           title="Permalink to Higher-level functions in Python, Part 3 - filter">Higher-level functions in Python, Part 3 - filter</a></h1>
+    </header>
 
-            <aside id="featured" class="body">
-                <article>
-                    <h1 class="entry-title"><a href="https://leblancfg.com/higher-level-functions-python-filter.html">Higher-level functions in Python, Part 3 - filter</a></h1>
+    <div class="entry-content">
 <footer class="post-info">
         <abbr class="published" title="2018-06-14T00:00:00-04:00">
                 Published: Thu 14 June 2018
@@ -33,7 +38,7 @@
         </address>
 <p>In <a href="https://leblancfg.com/category/python.html">Python</a>.</p>
 <p>tags: <a href="https://leblancfg.com/tag/python.html">python</a> <a href="https://leblancfg.com/tag/jupyter.html">jupyter</a> <a href="https://leblancfg.com/tag/functional.html">functional</a> <a href="https://leblancfg.com/tag/benchmarks.html">benchmarks</a> <a href="https://leblancfg.com/tag/numpy.html">numpy</a> </p>
-</footer><!-- /.post-info --><style type="text/css">/*!
+</footer><!-- /.post-info -->      <style type="text/css">/*!
 *
 * IPython notebook
 *
@@ -1575,58 +1580,11 @@ class filter(object)
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 </script>
-                </article>
-            </aside><!-- /#featured -->
-                <section id="content" class="body">
-                    <h1>Other articles</h1>
-                    <hr />
-                    <ol id="posts-list" class="hfeed">
 
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://leblancfg.com/higher-level-functions-python-reduce.html" rel="bookmark"
-                           title="Permalink to Higher-level functions in Python, Part 2 - reduce">Higher-level functions in Python, Part 2 - reduce</a></h1>
-                </header>
+    </div><!-- /.entry-content -->
 
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2018-06-04T00:00:00-04:00">
-                Published: Mon 04 June 2018
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://leblancfg.com/author/francois-leblanc.html">François Leblanc</a>
-        </address>
-<p>In <a href="https://leblancfg.com/category/python.html">Python</a>.</p>
-<p>tags: <a href="https://leblancfg.com/tag/python.html">python</a> <a href="https://leblancfg.com/tag/jupyter.html">jupyter</a> <a href="https://leblancfg.com/tag/functional.html">functional</a> <a href="https://leblancfg.com/tag/benchmarks.html">benchmarks</a> <a href="https://leblancfg.com/tag/numpy.html">numpy</a> </p>
-</footer><!-- /.post-info -->                <p>We go through uses of the Python <code>reduce</code> function, when it's useful and its performance benefits. This time, we spend some time exploring function composition, and how to manage large function chains, e.g. in a data processing pipeline.</p>
-                <a class="readmore" href="https://leblancfg.com/higher-level-functions-python-reduce.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-
-            <li><article class="hentry">
-                <header>
-                    <h1><a href="https://leblancfg.com/higher-level-functions-python-map.html" rel="bookmark"
-                           title="Permalink to Higher-level functions in Python, Part 1 - map">Higher-level functions in Python, Part 1 - map</a></h1>
-                </header>
-
-                <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2018-05-30T00:00:00-04:00">
-                Published: Wed 30 May 2018
-        </abbr>
-
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://leblancfg.com/author/francois-leblanc.html">François Leblanc</a>
-        </address>
-<p>In <a href="https://leblancfg.com/category/python.html">Python</a>.</p>
-<p>tags: <a href="https://leblancfg.com/tag/python.html">python</a> <a href="https://leblancfg.com/tag/jupyter.html">jupyter</a> <a href="https://leblancfg.com/tag/functional.html">functional</a> <a href="https://leblancfg.com/tag/benchmarks.html">benchmarks</a> <a href="https://leblancfg.com/tag/numpy.html">numpy</a> </p>
-</footer><!-- /.post-info -->                <p>We go through uses of the Python <code>map</code> function, when it's useful and its performance benefits, and get sidetracked into benchmarking different syntaxes for exponential expressions.</p>
-                <a class="readmore" href="https://leblancfg.com/higher-level-functions-python-map.html">read more</a>
-                </div><!-- /.entry-content -->
-            </article></li>
-                </ol><!-- /#posts-list -->
-                </section><!-- /#content -->
+  </article>
+</section>
         <section id="extras" class="body">
                 <div class="blogroll">
                         <h2>links</h2>

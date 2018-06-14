@@ -22,10 +22,10 @@
 
             <aside id="featured" class="body">
                 <article>
-                    <h1 class="entry-title"><a href="https://leblancfg.com/higher-level-functions-python-reduce.html">Higher-level functions in Python, Part 2 - reduce</a></h1>
+                    <h1 class="entry-title"><a href="https://leblancfg.com/higher-level-functions-python-filter.html">Higher-level functions in Python, Part 3 - filter</a></h1>
 <footer class="post-info">
-        <abbr class="published" title="2018-06-04T00:00:00-04:00">
-                Published: Mon 04 June 2018
+        <abbr class="published" title="2018-06-14T00:00:00-04:00">
+                Published: Thu 14 June 2018
         </abbr>
 
         <address class="vcard author">
@@ -1009,7 +1009,7 @@ h6:hover .anchor-link {
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img align="right" src="img/reduce_function.png" width="200"/>
+<p><img align="right" src="img/filter.png" width="200"/>
 Python provides a few higher order (or functional programming) functions in the standard library that can be quite useful:</p>
 <ul>
 <li>map</li>
@@ -1018,8 +1018,8 @@ Python provides a few higher order (or functional programming) functions in the 
 <li>lambda</li>
 <li>list comprehensions</li>
 </ul>
-<div align="right"><i>Picture from <a href="https://swiftunboxed.com/lang/reduce">SwiftUnboxed</a></i></div><p>This article series focuses on exploring these. In the previous article we've taken a look at <a href="higher-level-functions-python-map.html">the <code>map</code> function</a>. In this notebook, we'll learn more about the <code>reduce</code> function in Python. Again, I will assume you already know about list expressions, (or more broadly, <a href="https://nedbatchelder.com/blog/201605/generator_comprehensions.html">generator expressions</a>). Just like I got side-tracked exploring exponential function syntax in the previous installment, this time we'll spend some time learning about function composition, and benchmarking various ways of working with function call chains in Python.</p>
-<p>This time, <code>reduce()</code> needs to be imported from the standard library with:</p>
+<div align="right"><i>Picture from <a href="https://netflix.github.io/">Netflix OSS</a></i></div><p>This article series focuses on exploring these. In the previous article we've taken a look at <a href="higher-level-functions-python-map.html">the <code>map</code></a> and <a href="higher-level-functions-python-reduce"><code>reduce</code></a> functions. In this notebook, we'll learn more about the <code>filter</code> function in Python. Again, I will assume you already know about list expressions, (or more broadly, <a href="https://nedbatchelder.com/blog/201605/generator_comprehensions.html">generator expressions</a>).</p>
+<p>Just like I got side-tracked exploring exponential function syntax in the previous installment, this time we'll spend some time learning about function composition, and benchmarking various ways of working with function call chains in Python.</p>
 </div>
 </div>
 </div>
@@ -1028,33 +1028,7 @@ Python provides a few higher order (or functional programming) functions in the 
 <div class="prompt input_prompt">In [1]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="k">import</span> <span class="n">reduce</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>At this point, an alarm bell might (should?) be going on in your head: <em>If it isn't in base Python, should I really use it on a regular basis?</em> The answer to that is a bit complicated.</p>
-<p>Python core developers are opinionated when it comes to it. From the Python 3.0 release notes:</p>
-<blockquote><p>Removed <code>reduce()</code>. Use <code>functools.reduce()</code> if you really need it; however, 99 percent of the time an explicit for loop is more readable.</p>
-</blockquote>
-<p>Here, we'll spend some time exploring the 1% of times it can be useful. If you don't know it exists, you can't use it, right?</p>
-<h2 id="What-does-reduce-even-do?">What does reduce even do?<a class="anchor-link" href="#What-does-reduce-even-do?">¶</a></h2><p>Rolling calculations.</p>
-<p>Reduce passes the previous output every turn in the loop with the current element. This means that you get some preserved state between iterations and that you can build the output as you need it.</p>
-<p>You might have heard of the '<a href="https://en.wikipedia.org/wiki/MapReduce">map-reduce</a>' paradigm for distributed data processing, popularized by Big Data applications like <a href="https://hadoop.apache.org/">Apache Hadoop</a>. Say you have three computers containing sales transactions, and you want to know the sum of sales. We'll get back to this and use it as our motivating example.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [2]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="n">reduce</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">help</span><span class="p">(</span><span class="nb">filter</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1064,17 +1038,30 @@ Python provides a few higher order (or functional programming) functions in the 
 <div class="output_area">
 <div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Help on built-in function reduce in module _functools:
+<pre>Help on class filter in module builtins:
 
-reduce(...)
-    reduce(function, sequence[, initial]) -&gt; value
-    
-    Apply a function of two arguments cumulatively to the items of a sequence,
-    from left to right, so as to reduce the sequence to a single value.
-    For example, reduce(lambda x, y: x+y, [1, 2, 3, 4, 5]) calculates
-    ((((1+2)+3)+4)+5).  If initial is present, it is placed before the items
-    of the sequence in the calculation, and serves as a default when the
-    sequence is empty.
+class filter(object)
+ |  filter(function or None, iterable) --&gt; filter object
+ |  
+ |  Return an iterator yielding those items of iterable for which function(item)
+ |  is true. If function is None, return the items that are true.
+ |  
+ |  Methods defined here:
+ |  
+ |  __getattribute__(self, name, /)
+ |      Return getattr(self, name).
+ |  
+ |  __iter__(self, /)
+ |      Implement iter(self).
+ |  
+ |  __new__(*args, **kwargs) from builtins.type
+ |      Create and return a new object.  See help(type) for accurate signature.
+ |  
+ |  __next__(self, /)
+ |      Implement next(self).
+ |  
+ |  __reduce__(...)
+ |      Return state information for pickling.
 
 </pre>
 </div>
@@ -1086,16 +1073,29 @@ reduce(...)
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>So <code>reduce</code> takes a two-argument function and applies it iteratively. Let's start with a few imports and work our way up to a simple use case.</p>
+<p>And from the <a href="">official Python documentation</a>:</p>
+<blockquote><p><strong><code>filter(function, iterable)</code></strong></p>
+<p>Construct an iterator from those elements of iterable for which function returns true. iterable may be either a sequence, a container which supports iteration, or an iterator. If function is <code>None</code>, the identity function is assumed, that is, all elements of iterable that are false are removed.</p>
+<p>Note that <code>filter(function, iterable)</code> is equivalent to the generator expression <code>(item for item in iterable if function(item))</code> if function is not <code>None</code> and <code>(item for item in iterable if item)</code> if function is <code>None</code>.</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So <code>filter</code> takes a two arguments: a function and an iterable. Let's start with a few imports and work our way up to a simple use case.</p>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In [3]:</div>
+<div class="prompt input_prompt">In [2]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%</span><span class="k">matplotlib</span> inline
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
@@ -1108,12 +1108,54 @@ reduce(...)
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
+<div class="prompt input_prompt">In [3]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sales</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1234</span><span class="p">,</span> <span class="mi">2345</span><span class="p">,</span> <span class="mi">3456</span><span class="p">,</span> <span class="mi">4567</span><span class="p">,</span> <span class="mi">65865</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here's the "traditional" way of filtering a list:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
 <div class="prompt input_prompt">In [4]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sales</span> <span class="o">=</span> <span class="p">[</span><span class="mi">75723</span><span class="p">,</span> <span class="mi">89359</span><span class="p">,</span> <span class="mi">27503</span><span class="p">,</span> <span class="mi">42715</span><span class="p">,</span> <span class="mi">23425</span><span class="p">,</span> <span class="mi">31931</span><span class="p">,</span> <span class="mi">64668</span><span class="p">,</span> <span class="mi">88465</span><span class="p">,</span> <span class="mi">62016</span><span class="p">,</span> <span class="mi">90350</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">sale</span> <span class="ow">in</span> <span class="n">sales</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">sale</span> <span class="o">&gt;</span> <span class="mi">3000</span><span class="p">:</span>
+        <span class="n">result</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sale</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[3456, 4567, 65865]
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now with a list expression:</p>
 </div>
 </div>
 </div>
@@ -1122,10 +1164,27 @@ reduce(...)
 <div class="prompt input_prompt">In [5]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">sum_of_sales</span><span class="p">(</span><span class="n">total</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">sale</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">total</span> <span class="o">+</span> <span class="n">sale</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="p">[</span><span class="n">sale</span> <span class="k">for</span> <span class="n">sale</span> <span class="ow">in</span> <span class="n">sales</span> <span class="k">if</span> <span class="n">sale</span> <span class="o">&gt;</span> <span class="mi">3000</span><span class="p">]</span>
 </pre></div>
 </div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[5]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>[3456, 4567, 65865]</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>And finally, with <code>filter</code>:</p>
 </div>
 </div>
 </div>
@@ -1134,7 +1193,7 @@ reduce(...)
 <div class="prompt input_prompt">In [6]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">reduce</span><span class="p">(</span><span class="n">sum_of_sales</span><span class="p">,</span> <span class="n">sales</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">sale</span><span class="p">:</span> <span class="n">sale</span> <span class="o">&gt;</span> <span class="mi">3000</span><span class="p">,</span> <span class="n">sales</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1144,7 +1203,7 @@ reduce(...)
 <div class="output_area">
 <div class="prompt output_prompt">Out[6]:</div>
 <div class="output_text output_subarea output_execute_result">
-<pre>596155</pre>
+<pre>[3456, 4567, 65865]</pre>
 </div>
 </div>
 </div>
@@ -1154,7 +1213,13 @@ reduce(...)
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>For simple operations, many people will simply write this as a lambda function:</p>
+<h2 id="Can-it-be-useful?">Can it be useful?<a class="anchor-link" href="#Can-it-be-useful?">¶</a></h2><p>Well, that's a tough one, isn't it? One way I see people saying it's useful is for lists of things that need a function applied to see if they're to be filtered or not.</p>
+<p>From the Stack Overflow post <a href="https://stackoverflow.com/questions/3013449/list-comprehension-vs-lambda-filter">list comprehension vs. lambda + filter</a>:</p>
+<blockquote><p>A very frequent use case is pulling out the values of some iterable X subject to a predicate P(x):</p>
+<p><code>[x for x in X if P(x)]</code></p>
+<p>but sometimes you want to apply some function to the values first:</p>
+<p><code>[f(x) for x in X if P(f(x))]</code></p>
+</blockquote>
 </div>
 </div>
 </div>
@@ -1163,7 +1228,13 @@ reduce(...)
 <div class="prompt input_prompt">In [7]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">reduce</span><span class="p">((</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span><span class="p">),</span> <span class="n">sales</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">gross_sales</span><span class="p">(</span><span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+    <span class="sd">"""Simple function with product and addition, for testing"""</span>
+    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="mf">1.11435</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sales</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">gross_sales</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3000</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">gross_sales</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
 </pre></div>
 </div>
 </div>
@@ -1171,19 +1242,14 @@ reduce(...)
 <div class="output_wrapper">
 <div class="output">
 <div class="output_area">
-<div class="prompt output_prompt">Out[7]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>596155</pre>
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>3852
+5090
+73397
+</pre>
 </div>
 </div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>But there's more to it that that. Let's dig into what's actually going on, and see how we might make use of it.</p>
 </div>
 </div>
 </div>
@@ -1192,12 +1258,7 @@ reduce(...)
 <div class="prompt input_prompt">In [8]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">sum_of_sales</span><span class="p">(</span><span class="n">total</span><span class="p">:</span><span class="nb">int</span><span class="p">,</span> <span class="n">sale</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">sale</span><span class="p">,</span> <span class="n">total</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">sale</span> <span class="o">+</span> <span class="n">total</span>
-    
-
-<span class="n">reduce</span><span class="p">(</span><span class="n">sum_of_sales</span><span class="p">,</span> <span class="n">sales</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="p">[</span><span class="n">gross_sales</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sales</span> <span class="k">if</span> <span class="n">gross_sales</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3000</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1205,35 +1266,11 @@ reduce(...)
 <div class="output_wrapper">
 <div class="output">
 <div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>89359 75723
-27503 165082
-42715 192585
-23425 235300
-31931 258725
-64668 290656
-88465 355324
-62016 443789
-90350 505805
-</pre>
-</div>
-</div>
-<div class="output_area">
 <div class="prompt output_prompt">Out[8]:</div>
 <div class="output_text output_subarea output_execute_result">
-<pre>596155</pre>
+<pre>[3852, 5090, 73397]</pre>
 </div>
 </div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>So actually, it's quite like a fancy for-loop in disguise!</p>
-<p>The first argument is the 'accumulator' variable, and the second is the one itered on. Of course, these variable exist only in the scope of the function:</p>
 </div>
 </div>
 </div>
@@ -1242,10 +1279,7 @@ reduce(...)
 <div class="prompt input_prompt">In [9]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">total</span><span class="p">)</span>
-<span class="k">except</span> <span class="ne">NameError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="ne">NameError</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">3000</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="n">gross_sales</span><span class="p">,</span> <span class="n">sales</span><span class="p">)))</span>
 </pre></div>
 </div>
 </div>
@@ -1253,10 +1287,9 @@ reduce(...)
 <div class="output_wrapper">
 <div class="output">
 <div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>&lt;class 'NameError'&gt; name 'total' is not defined
-</pre>
+<div class="prompt output_prompt">Out[9]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>[3852, 5090, 73397]</pre>
 </div>
 </div>
 </div>
@@ -1266,7 +1299,8 @@ reduce(...)
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>At first, this seems trivial and roundabout way of doing things. Python has a built-in that does JUST that!</p>
+<p>Which — granted, is really elegant and easy to read! — eliminates the need to recalculate the function <code>gross_sales</code> twice, right?</p>
+<p>I would contend that this, <strong>no</strong>, that's simply not the case, and can be circumvented easily by using <code>map</code>. We can map the function first and filter with the list comprehension:</p>
 </div>
 </div>
 </div>
@@ -1275,7 +1309,7 @@ reduce(...)
 <div class="prompt input_prompt">In [10]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">sum</span><span class="p">(</span><span class="n">sales</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="p">[</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">map</span><span class="p">(</span><span class="n">gross_sales</span><span class="p">,</span> <span class="n">sales</span><span class="p">)</span> <span class="k">if</span> <span class="n">s</span> <span class="o">&gt;</span> <span class="mi">3000</span><span class="p">]</span>
 </pre></div>
 </div>
 </div>
@@ -1285,7 +1319,7 @@ reduce(...)
 <div class="output_area">
 <div class="prompt output_prompt">Out[10]:</div>
 <div class="output_text output_subarea output_execute_result">
-<pre>596155</pre>
+<pre>[3852, 5090, 73397]</pre>
 </div>
 </div>
 </div>
@@ -1295,7 +1329,7 @@ reduce(...)
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>But for products of items in a list, it does provide a better one-liner than its list comprehension counterpart. Let's say we want to calculate the volume of a 6-dimensional box (an everyday occurrence, for sure! 😉)</p>
+<h2 id="Benchmarks">Benchmarks<a class="anchor-link" href="#Benchmarks">¶</a></h2>
 </div>
 </div>
 </div>
@@ -1304,12 +1338,39 @@ reduce(...)
 <div class="prompt input_prompt">In [11]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">box_sides</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">time_filter</span><span class="p">(</span><span class="n">sales_list</span><span class="p">):</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+    <span class="nb">sum</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">3000</span><span class="p">,</span> <span class="nb">map</span><span class="p">(</span><span class="n">gross_sales</span><span class="p">,</span> <span class="n">sales_list</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
 
-<span class="n">volume</span> <span class="o">=</span> <span class="mi">1</span>
-<span class="k">for</span> <span class="n">dim</span> <span class="ow">in</span> <span class="n">box_sides</span><span class="p">:</span>
-    <span class="n">volume</span> <span class="o">*=</span> <span class="n">dim</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">volume</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">time_map_list_comp</span><span class="p">(</span><span class="n">sales_list</span><span class="p">):</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+    <span class="c1"># This is actually called a generator expression</span>
+    <span class="c1"># It does not generate the list items ahead of time</span>
+    <span class="c1"># Items are calculated lazily, like `filter` results</span>
+    <span class="nb">sum</span><span class="p">(</span><span class="n">s</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">map</span><span class="p">(</span><span class="n">gross_sales</span><span class="p">,</span> <span class="n">sales_list</span><span class="p">)</span> <span class="k">if</span> <span class="n">s</span> <span class="o">&gt;</span> <span class="mi">3000</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+
+
+<span class="k">def</span> <span class="nf">time_list_comp</span><span class="p">(</span><span class="n">sales_list</span><span class="p">):</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+    <span class="c1"># This is actually called a generator expression</span>
+    <span class="c1"># It does not generate the list items ahead of time</span>
+    <span class="c1"># Items are calculated lazily, like `filter` results</span>
+    <span class="nb">sum</span><span class="p">(</span><span class="n">gross_sales</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">sales_list</span> <span class="k">if</span> <span class="n">gross_sales</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">3000</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+
+
+<span class="n">test_range</span> <span class="o">=</span> <span class="p">[</span><span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100000</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">2</span><span class="o">**</span><span class="n">x</span><span class="p">))</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">23</span><span class="p">)]</span>
+<span class="n">times_filter</span> <span class="o">=</span> <span class="p">[</span><span class="n">time_filter</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_range</span><span class="p">]</span>
+<span class="n">times_map_list_comp</span> <span class="o">=</span> <span class="p">[</span><span class="n">time_map_list_comp</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_range</span><span class="p">]</span>
+<span class="n">times_list_comp</span> <span class="o">=</span> <span class="p">[</span><span class="n">time_list_comp</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_range</span><span class="p">]</span>
+
+<span class="n">df_filter</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">times_filter</span><span class="p">,</span> <span class="n">times_map_list_comp</span><span class="p">,</span> <span class="n">times_list_comp</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+<span class="n">df_filter</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'filter'</span><span class="p">,</span> <span class="s1">'map_list_comp'</span><span class="p">,</span> <span class="s1">'list_comp'</span><span class="p">]</span>
+<span class="n">df_filter</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="k">for</span> <span class="n">s</span> <span class="ow">in</span> <span class="n">test_range</span><span class="p">]</span>
+<span class="n">df_filter</span>
 </pre></div>
 </div>
 </div>
@@ -1317,49 +1378,115 @@ reduce(...)
 <div class="output_wrapper">
 <div class="output">
 <div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>5376
-</pre>
+<div class="prompt output_prompt">Out[11]:</div>
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>filter</th>
+<th>map_list_comp</th>
+<th>list_comp</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>1024</th>
+<td>0.003</td>
+<td>0.002</td>
+<td>0.005</td>
+</tr>
+<tr>
+<th>2048</th>
+<td>0.004</td>
+<td>0.004</td>
+<td>0.008</td>
+</tr>
+<tr>
+<th>4096</th>
+<td>0.008</td>
+<td>0.008</td>
+<td>0.017</td>
+</tr>
+<tr>
+<th>8192</th>
+<td>0.017</td>
+<td>0.017</td>
+<td>0.034</td>
+</tr>
+<tr>
+<th>16384</th>
+<td>0.037</td>
+<td>0.034</td>
+<td>0.068</td>
+</tr>
+<tr>
+<th>32768</th>
+<td>0.071</td>
+<td>0.085</td>
+<td>0.137</td>
+</tr>
+<tr>
+<th>65536</th>
+<td>0.141</td>
+<td>0.136</td>
+<td>0.266</td>
+</tr>
+<tr>
+<th>131072</th>
+<td>0.281</td>
+<td>0.278</td>
+<td>0.542</td>
+</tr>
+<tr>
+<th>262144</th>
+<td>0.599</td>
+<td>0.558</td>
+<td>1.084</td>
+</tr>
+<tr>
+<th>524288</th>
+<td>1.148</td>
+<td>1.096</td>
+<td>2.237</td>
+</tr>
+<tr>
+<th>1048576</th>
+<td>2.234</td>
+<td>2.275</td>
+<td>4.550</td>
+</tr>
+<tr>
+<th>2097152</th>
+<td>4.588</td>
+<td>4.895</td>
+<td>8.581</td>
+</tr>
+<tr>
+<th>4194304</th>
+<td>9.182</td>
+<td>9.913</td>
+<td>20.090</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Compare that to:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [12]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">mul</span><span class="p">,</span> <span class="n">box_sides</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[12]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>5376</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>or even</p>
 </div>
 </div>
 </div>
@@ -1368,7 +1495,10 @@ reduce(...)
 <div class="prompt input_prompt">In [13]:</div>
 <div class="inner_cell">
 <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span> <span class="o">*</span> <span class="n">y</span><span class="p">,</span> <span class="n">box_sides</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_filter</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Compute time for the sum of $n$ filtered random numbers, for $n$ in $[10, 26]$</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Number of list items'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Compute time (s)'</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -1378,78 +1508,14 @@ reduce(...)
 <div class="output_area">
 <div class="prompt output_prompt">Out[13]:</div>
 <div class="output_text output_subarea output_execute_result">
-<pre>5376</pre>
+<pre>Text(0,0.5,'Compute time (s)')</pre>
 </div>
 </div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Uses">Uses<a class="anchor-link" href="#Uses">¶</a></h2><p>Now, Guido van Rossum, the creator and Benevolent Dictator for Life of Python, has stated previously that:</p>
-<blockquote><p>There aren't a whole lot of associative operators. (Those are operators X for which (a X b) X c equals a X (b X c).) I think it's just about limited to +, *, &amp;, |, ^, and shortcut and/or. We already have sum(); I'd happily trade reduce() for product(), so that takes care of the two most common uses.</p>
-</blockquote>
-<p>So are there any use cases for non-associative use cases? At the risk of turning this part of the article as a rehash of the StackOverflow question <a href="https://stackoverflow.com/questions/15995/useful-code-which-uses-reduce">Useful code which uses reduce()?</a>, here are the main uses for <code>reduce()</code>:</p>
-<ul>
-<li>Flattening a list of lists</li>
-<li>Getting the intersection of $n$ lists</li>
-<li>Turning a list of digits into a number</li>
-<li>Least common multiple for 3 or more numbers</li>
-<li>Accessing deeply nested items</li>
-</ul>
-<p>Each of these use cases in Python has a 'canonical recipe' that does not use <code>reduce()</code>. In fact, let's take a look at them.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Flattening-a-list-of-lists">Flattening a list of lists<a class="anchor-link" href="#Flattening-a-list-of-lists">¶</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [14]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">lists</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1231231</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">234</span><span class="p">,</span> <span class="mi">43</span><span class="p">,</span> <span class="mi">76</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1231231</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [15]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 'Canonical' answer; can also handle arbitrary levels of nestedness</span>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="k">import</span> <span class="n">Iterable</span>
-
-<span class="k">def</span> <span class="nf">flatten</span><span class="p">(</span><span class="n">items</span><span class="p">):</span>
-    <span class="sd">"""Yield items from any nested iterable; see REF."""</span>
-    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)):</span>
-            <span class="k">yield from</span> <span class="n">flatten</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">yield</span> <span class="n">x</span>
-            
-            
-<span class="nb">list</span><span class="p">(</span><span class="n">flatten</span><span class="p">(</span><span class="n">lists</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
 <div class="output_area">
-<div class="prompt output_prompt">Out[15]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>[2, 4, 8, 1, 4, 1231231, 6, 1, 234, 43, 76, 2, 4, 8, 1, 4, 1231231, 6, 1]</pre>
+<div class="prompt"></div>
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"/>
 </div>
 </div>
 </div>
@@ -1459,422 +1525,12 @@ reduce(...)
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now with reduce:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [16]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">concat</span><span class="p">,</span> <span class="n">lists</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[16]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>[2, 4, 8, 1, 4, 1231231, 6, 1, 234, 43, 76, 2, 4, 8, 1, 4, 1231231, 6, 1]</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Getting-the-intersection-of-$n$-lists">Getting the intersection of $n$ lists<a class="anchor-link" href="#Getting-the-intersection-of-$n$-lists">¶</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [17]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">list_items</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">'apple'</span><span class="p">,</span> <span class="s1">'pear'</span><span class="p">,</span> <span class="s1">'orange'</span><span class="p">,</span> <span class="s1">'kiwi'</span><span class="p">,</span> <span class="s1">'bicycle'</span><span class="p">],</span>
-               <span class="p">[</span><span class="s1">'shark'</span><span class="p">,</span> <span class="s1">'speedo'</span><span class="p">,</span> <span class="s1">'coconut'</span><span class="p">,</span> <span class="s1">'kiwi'</span><span class="p">,</span> <span class="s1">'bicycle'</span><span class="p">],</span>
-               <span class="p">[</span><span class="s1">'coffee'</span><span class="p">,</span> <span class="s1">'tea'</span><span class="p">,</span> <span class="s1">'apple'</span><span class="p">,</span> <span class="s1">'kiwi'</span><span class="p">,</span> <span class="s1">'bicycle'</span><span class="p">]]</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [18]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 'Canonical' answer</span>
-<span class="nb">set</span><span class="p">(</span><span class="n">list_items</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="o">*</span><span class="n">list_items</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[18]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>{'bicycle', 'kiwi'}</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [19]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># With reduce. Personally, I actually prefer the first expression.</span>
-<span class="n">reduce</span><span class="p">(</span><span class="nb">set</span><span class="o">.</span><span class="n">intersection</span><span class="p">,</span> <span class="p">[</span><span class="nb">set</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">list_items</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[19]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>{'bicycle', 'kiwi'}</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Turning-a-list-of-digits-into-a-number">Turning a list of digits into a number<a class="anchor-link" href="#Turning-a-list-of-digits-into-a-number">¶</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [20]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">digits</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">24</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [21]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 'Canonical' answer</span>
-<span class="nb">int</span><span class="p">(</span><span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">digits</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[21]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>152752624</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Compared to</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [22]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span><span class="n">d</span><span class="p">:</span> <span class="mi">10</span><span class="o">*</span><span class="n">a</span><span class="o">+</span><span class="n">d</span><span class="p">,</span> <span class="n">digits</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[22]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>15275284</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Least-common-multiple-for-2-or-more-numbers">Least common multiple for 2 or more numbers<a class="anchor-link" href="#Least-common-multiple-for-2-or-more-numbers">¶</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [23]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
-
-
-<span class="n">numbers</span> <span class="o">=</span> <span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">25</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
-<span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">:</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span> <span class="o">//</span> <span class="n">math</span><span class="o">.</span><span class="n">gcd</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">),</span> <span class="n">numbers</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[23]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>300</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Accessing-deeply-nested-items">Accessing deeply nested items<a class="anchor-link" href="#Accessing-deeply-nested-items">¶</a></h3><p>In this case, reduce actually is the canonical answer to this problem in Python.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [24]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">"a"</span><span class="p">:{</span>
-        <span class="s2">"r"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="s2">"s"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-        <span class="s2">"t"</span><span class="p">:</span> <span class="mi">3</span>
-        <span class="p">},</span>
-    <span class="s2">"b"</span><span class="p">:{</span>
-        <span class="s2">"u"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="s2">"v"</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">"x"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-            <span class="s2">"y"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-            <span class="s2">"z"</span><span class="p">:</span> <span class="mi">3</span>
-        <span class="p">},</span>
-        <span class="s2">"w"</span><span class="p">:</span> <span class="mi">3</span>
-        <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [25]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s1">'b'</span><span class="p">][</span><span class="s1">'v'</span><span class="p">][</span><span class="s1">'y'</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[25]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>2</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Sometimes you just don't know in advance what the query in the nested dictionnary will be, though. Imagine being given a list of (ordered) keys as your input. This can often happen in web apps and the like. You would write it out like this:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [26]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">operator</span>
-
-<span class="c1"># The user supplies this</span>
-<span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'b'</span><span class="p">,</span> <span class="s1">'v'</span><span class="p">,</span> <span class="s1">'y'</span><span class="p">]</span>
-
-<span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">getitem</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[26]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>2</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="The-killer-use-case:-function-composition">The killer use-case: function composition<a class="anchor-link" href="#The-killer-use-case:-function-composition">¶</a></h2><p>As we've seen, reduce is not all that useful except for niche cases, and even then they can be just as readable when written with for loops.</p>
-<p>I'd like to leave you with a final use case that I like to keep around.</p>
-<p>When running a data processing pipeline, what often happens is a series of function calls that can quickly become unruly. For example:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [27]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">clean_strings</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'brown'</span><span class="p">,</span> <span class="s1">'blue'</span><span class="p">)</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'quick'</span><span class="p">,</span> <span class="s1">'slow'</span><span class="p">)</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'lazy'</span><span class="p">,</span> <span class="s1">'industrious'</span><span class="p">)</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">s</span>
-
-
-<span class="n">string</span> <span class="o">=</span> <span class="s2">"THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG"</span>
-<span class="n">clean_strings</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[27]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>'The Slow Blue Fox Jumps Over The Industrious Dog'</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>For one-time use, this could be written as a chained operation instead, by wrapping the expression in parentheses</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [28]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'brown'</span><span class="p">,</span> <span class="s1">'blue'</span><span class="p">)</span>
-       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'quick'</span><span class="p">,</span> <span class="s1">'slow'</span><span class="p">)</span>
-       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'lazy'</span><span class="p">,</span> <span class="s1">'industrious'</span><span class="p">)</span>
-       <span class="o">.</span><span class="n">title</span><span class="p">()</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[28]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>'The Slow Blue Fox Jumps Over The Industrious Dog'</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>In terms of composability though, it doesn't quite compare to using <code>reduce</code>:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [29]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">color</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'brown'</span><span class="p">,</span> <span class="s1">'blue'</span><span class="p">)</span>
-<span class="n">speed</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'quick'</span><span class="p">,</span> <span class="s1">'slow'</span><span class="p">)</span>
-<span class="n">work</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'lazy'</span><span class="p">,</span> <span class="s1">'industrious'</span><span class="p">)</span>
-
-<span class="c1"># In actual use cases, this list can get quite lengthy!</span>
-<span class="n">transforms</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">work</span><span class="p">,</span> <span class="nb">str</span><span class="o">.</span><span class="n">title</span><span class="p">]</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [30]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">call</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">function</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">function</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
-
-       
-<span class="n">reduce</span><span class="p">(</span><span class="n">call</span><span class="p">,</span> <span class="n">transforms</span><span class="p">,</span> <span class="n">string</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt output_prompt">Out[30]:</div>
-<div class="output_text output_subarea output_execute_result">
-<pre>'The Slow Blue Fox Jumps Over The Industrious Dog'</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>By splitting the concern of the <code>clean_strings()</code> function, that acts as both:</p>
+<p>So it would seem that using either <code>filter(map(func, iterable))</code> or filtering through a list comprehension gives sensibly the same performance.</p>
+<p>It would appear as though, along with <code>reduce</code>, the specific uses for <code>filter</code> are quite limited, and can be achieved though other means that are:</p>
 <ol>
-<li>A container for string cleaning methods, and</li>
-<li>The action of actually applying the functions to the string,</li>
+<li>Just as readable, and</li>
+<li>Just as fast.</li>
 </ol>
-<p>we gain added readability and maintainability by having defined <strong>what</strong> we'll be doing to the string somewhere else than <strong>when</strong> we apply it, which is neatly done in a single line.</p>
 </div>
 </div>
 </div>
@@ -1882,358 +1538,11 @@ reduce(...)
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Benchmarks">Benchmarks<a class="anchor-link" href="#Benchmarks">¶</a></h2><p>Now the kicker! Is it faster than regular chained calls, though?</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Short-string,-5-string-functions">Short string, 5 string functions<a class="anchor-link" href="#Short-string,-5-string-functions">¶</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [31]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">string</span> <span class="o">=</span> <span class="s2">"THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG"</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [32]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
-(string.lower()
-       .replace('brown', 'blue')
-       .replace('quick', 'slow')
-       .replace('lazy', 'industrious')
-       .title()
-)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>1.7 µs ± 93.4 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [33]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
-clean_strings(string)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>1.88 µs ± 53.5 ns per loop (mean ± std. dev. of 7 runs, 1000000 loops each)
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [34]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
-reduce(call, transforms, string)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>2.56 µs ± 38.1 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>So, the answer here is <strong>no</strong>. 😂</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Short-string,-50-string-functions">Short string, 50 string functions<a class="anchor-link" href="#Short-string,-50-string-functions">¶</a></h3><p>I'll skip calling the long chained call at this point, and just assume performance will be similar to calling <code>clean_strings()</code>. To do this, we'll define a little helper function so that we can repeat our <code>clean_strings()</code> 10 times.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [35]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">string</span> <span class="o">=</span> <span class="s2">"THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG"</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [36]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">repeat</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-        <span class="n">x</span> <span class="o">=</span> <span class="n">func</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">x</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [37]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
-repeat(clean_strings, 10, string)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>15.4 µs ± 246 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [38]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
-reduce(call, transforms * 10, string)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>21.6 µs ± 410 ns per loop (mean ± std. dev. of 7 runs, 10000 loops each)
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Well, no gains there either!</p>
-<h3 id="Long-string,-5-string-functions">Long string, 5 string functions<a class="anchor-link" href="#Long-string,-5-string-functions">¶</a></h3><p>And now with a very long string:</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [39]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">string</span> <span class="o">=</span> <span class="s2">"THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG"</span> <span class="o">*</span> <span class="mi">1000</span>
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [40]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
-(string.lower()
-       .replace('brown', 'blue')
-       .replace('quick', 'slow')
-       .replace('lazy', 'industrious')
-       .title()
-)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>756 µs ± 6.66 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [41]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
-clean_strings(string)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>748 µs ± 6.57 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [42]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
-reduce(call, transforms, string)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>755 µs ± 3.05 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Long-string,-50-string-functions">Long string, 50 string functions<a class="anchor-link" href="#Long-string,-50-string-functions">¶</a></h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [43]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
-repeat(clean_strings, 10, string)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>6.63 ms ± 67.4 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In [44]:</div>
-<div class="inner_cell">
-<div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
-reduce(call, transforms * 10, string)
-</pre></div>
-</div>
-</div>
-</div>
-<div class="output_wrapper">
-<div class="output">
-<div class="output_area">
-<div class="prompt"></div>
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>6.64 ms ± 25.1 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
-</pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>At this point, it looks as though the performance difference between the two methods are due to overhead, rather than execution performance.</p>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div>
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Conclusions-for-function-composition">Conclusions for function composition<a class="anchor-link" href="#Conclusions-for-function-composition">¶</a></h2><p>So as we can see, there's a cliff when chaining functions where using <code>reduce</code> starts making sense to replace chained function calls, when either:</p>
-<ol>
-<li>The number of functions to apply in the chain are high enough to become unreadable, or</li>
-<li>You won't know in advance which functions to apply, and need a way to abstract it away.</li>
-</ol>
-<center><img src="img/genetic_algo.svg" title="Genetic Algorithm" width="400"/>
-<i><b>Genetic Algorithms</b><br/>Courtesy of [CoalHMM Documentation](https://github.com/birc-aeh/coalhmm)</i></center><p>One example of this last case that comes to mind is if you were running a genetic algorithm experiment to evolve a solution to a problem that uses function composition.</p>
-<p>For more on this, I highly recommend you take a look at Mathieu Larose's article entitled <em><a href="https://mathieularose.com/function-composition-in-python/">Function Composition in Python</a></em></p>
+<h2 id="Conclusions">Conclusions<a class="anchor-link" href="#Conclusions">¶</a></h2><p>I wish the conclusion to our Higher Level Functions in Python didn't close off so abruptly! As we've just seen, there does not seem to be any good uses for <code>filter</code> in Python that can't be achieved in ways that are just as readable, and just as fast. I might need to get back to this statement later if I find one, though 😀</p>
+<p>To recap, we've taken a look at the Python functions <code>map()</code>, <code>functools.reduce()</code> and <code>filter()</code>, and seen the various ways with which they can make code more readable, or enhance performance in some bottlenecks without sacrificing clarity in the code.</p>
+<p>In <a href="higher-level-functions-python-map.html">our first installment</a>, we saw that <code>map()</code> can be a useful way to apply a function to every item in an iterable, and that it can easily fit in everyday code.</p>
+<p>In our <a href="higher-level-functions-python-reduce.html">second article</a>, we took a look at the <code>reduce()</code> function, and were able to find a few niche applications where it might be useful, related to function composition and in some ways, metaprogramming.</p>
+<p>Finally, we've now seen that the <code>filter()</code> function, while elegant and clear in its syntax, can be achieved just as easily with list- or generator comprehensions. Of all the various language elements that Python has inherited from "functional programming", it might just be the one that serves no clear use. I find it funny that Guido famously moved <code>reduce</code> to the functools module, but that <code>filter</code> might have been the clearer candidate!</p>
 </div>
 </div>
 </div>
@@ -2272,6 +1581,28 @@ reduce(call, transforms * 10, string)
                     <h1>Other articles</h1>
                     <hr />
                     <ol id="posts-list" class="hfeed">
+
+            <li><article class="hentry">
+                <header>
+                    <h1><a href="https://leblancfg.com/higher-level-functions-python-reduce.html" rel="bookmark"
+                           title="Permalink to Higher-level functions in Python, Part 2 - reduce">Higher-level functions in Python, Part 2 - reduce</a></h1>
+                </header>
+
+                <div class="entry-content">
+<footer class="post-info">
+        <abbr class="published" title="2018-06-04T00:00:00-04:00">
+                Published: Mon 04 June 2018
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="https://leblancfg.com/author/francois-leblanc.html">François Leblanc</a>
+        </address>
+<p>In <a href="https://leblancfg.com/category/python.html">Python</a>.</p>
+<p>tags: <a href="https://leblancfg.com/tag/python.html">python</a> <a href="https://leblancfg.com/tag/jupyter.html">jupyter</a> <a href="https://leblancfg.com/tag/functional.html">functional</a> <a href="https://leblancfg.com/tag/benchmarks.html">benchmarks</a> <a href="https://leblancfg.com/tag/numpy.html">numpy</a> </p>
+</footer><!-- /.post-info -->                <p>We go through uses of the Python <code>reduce</code> function, when it's useful and its performance benefits. This time, we spend some time exploring function composition, and how to manage large function chains, e.g. in a data processing pipeline.</p>
+                <a class="readmore" href="https://leblancfg.com/higher-level-functions-python-reduce.html">read more</a>
+                </div><!-- /.entry-content -->
+            </article></li>
 
             <li><article class="hentry">
                 <header>
