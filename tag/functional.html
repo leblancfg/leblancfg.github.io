@@ -1018,8 +1018,7 @@ Python provides a few higher order (or functional programming) functions in the 
 <li>lambda</li>
 <li>list comprehensions</li>
 </ul>
-<div align="right"><i>Picture from <a href="https://netflix.github.io/">Netflix OSS</a></i></div><p>This article series focuses on exploring these. In the previous article we've taken a look at <a href="higher-level-functions-python-map.html">the <code>map</code></a> and <a href="higher-level-functions-python-reduce"><code>reduce</code></a> functions. In this notebook, we'll learn more about the <code>filter</code> function in Python. Again, I will assume you already know about list expressions, (or more broadly, <a href="https://nedbatchelder.com/blog/201605/generator_comprehensions.html">generator expressions</a>).</p>
-<p>Just like I got side-tracked exploring exponential function syntax in the previous installment, this time we'll spend some time learning about function composition, and benchmarking various ways of working with function call chains in Python.</p>
+<div align="right"><i>Picture from <a href="https://netflix.github.io/">Netflix OSS</a></i></div><p>This article series focuses on exploring these. In the previous article we've taken a look at the <a href="higher-level-functions-python-map.html"><code>map</code></a> and <a href="higher-level-functions-python-reduce"><code>reduce</code></a> functions, that take other functions as arguments. In this notebook, we'll learn more about the <code>filter</code> function in Python. Again, I will assume you already know about list expressions, (or more broadly, <a href="https://nedbatchelder.com/blog/201605/generator_comprehensions.html">generator expressions</a>).</p>
 </div>
 </div>
 </div>
@@ -1213,8 +1212,16 @@ class filter(object)
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<p>Like generator expressions, <code>map</code> and <code>reduce</code>, we need to wrap <code>filter</code> with a call to <code>list()</code> in order to "consume" the items in the generator. Otherwise they stay untouched, and out of memory. This attribute is called <a href="https://en.wikipedia.org/wiki/Lazy_evaluation"><em>lazy evaluation</em></a>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Can-it-be-useful?">Can it be useful?<a class="anchor-link" href="#Can-it-be-useful?">¶</a></h2><p>Well, that's a tough one, isn't it? One way I see people saying it's useful is for lists of things that need a function applied to see if they're to be filtered or not.</p>
-<p>From the Stack Overflow post <a href="https://stackoverflow.com/questions/3013449/list-comprehension-vs-lambda-filter">list comprehension vs. lambda + filter</a>:</p>
+<p>From the Stack Overflow post <a href="https://stackoverflow.com/questions/3013449/list-comprehension-vs-lambda-filter">list comprehension vs. lambda + filter</a> by user I. J. Kennedy:</p>
 <blockquote><p>A very frequent use case is pulling out the values of some iterable X subject to a predicate P(x):</p>
 <p><code>[x for x in X if P(x)]</code></p>
 <p>but sometimes you want to apply some function to the values first:</p>
@@ -1299,8 +1306,8 @@ class filter(object)
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Which — granted, is really elegant and easy to read! — eliminates the need to recalculate the function <code>gross_sales</code> twice, right?</p>
-<p>I would contend that this, <strong>no</strong>, that's simply not the case, and can be circumvented easily by using <code>map</code>. We can map the function first and filter with the list comprehension:</p>
+<p>Which is really elegant and easy to read! And it eliminates the need to recalculate the function <code>gross_sales</code> twice, right?</p>
+<p>I would contend that's it's a non-issue, and can be circumvented easily by using <code>map</code>. We can just map the function first and filter with a list comprehension:</p>
 </div>
 </div>
 </div>
@@ -1525,8 +1532,8 @@ class filter(object)
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>So it would seem that using either <code>filter(map(func, iterable))</code> or filtering through a list comprehension gives sensibly the same performance.</p>
-<p>It would appear as though, along with <code>reduce</code>, the specific uses for <code>filter</code> are quite limited, and can be achieved though other means that are:</p>
+<p>So it would seem that using either <code>filter(map(func, iterable))</code> and filtering through a list comprehension both basically have the same performance.</p>
+<p>It would appear as though, along with <code>reduce</code>, the specific uses for <code>filter</code> are quite limited, if not non-existant. In fact, <code>filter()</code>'s effects can be achieved though other means that are:</p>
 <ol>
 <li>Just as readable, and</li>
 <li>Just as fast.</li>
@@ -1538,11 +1545,12 @@ class filter(object)
 </div>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Conclusions">Conclusions<a class="anchor-link" href="#Conclusions">¶</a></h2><p>I wish the conclusion to our Higher Level Functions in Python didn't close off so abruptly! As we've just seen, there does not seem to be any good uses for <code>filter</code> in Python that can't be achieved in ways that are just as readable, and just as fast. I might need to get back to this statement later if I find one, though 😀</p>
+<h2 id="Conclusions">Conclusions<a class="anchor-link" href="#Conclusions">¶</a></h2><p>I wish the conclusion to our Higher Level Functions in Python didn't end on such a cliff dive! As we've just seen, there does not seem to be any good uses for <code>filter</code> in Python that can't be achieved in ways that are just as readable, and just as fast. I might need to get back to this statement later if I find one, though. Do tweet at me if you find compelling evidence suggesting otherwise! 😀</p>
+<hr/>
 <p>To recap, we've taken a look at the Python functions <code>map()</code>, <code>functools.reduce()</code> and <code>filter()</code>, and seen the various ways with which they can make code more readable, or enhance performance in some bottlenecks without sacrificing clarity in the code.</p>
 <p>In <a href="higher-level-functions-python-map.html">our first installment</a>, we saw that <code>map()</code> can be a useful way to apply a function to every item in an iterable, and that it can easily fit in everyday code.</p>
 <p>In our <a href="higher-level-functions-python-reduce.html">second article</a>, we took a look at the <code>reduce()</code> function, and were able to find a few niche applications where it might be useful, related to function composition and in some ways, metaprogramming.</p>
-<p>Finally, we've now seen that the <code>filter()</code> function, while elegant and clear in its syntax, can be achieved just as easily with list- or generator comprehensions. Of all the various language elements that Python has inherited from "functional programming", it might just be the one that serves no clear use. I find it funny that Guido famously moved <code>reduce</code> to the functools module, but that <code>filter</code> might have been the clearer candidate!</p>
+<p>Finally, we've now seen that the <code>filter()</code> function, while elegant and clear in its syntax, can have its effects recreated just as easily with list or generator comprehensions. Of all the various language elements that Python has inherited from "functional programming", it might just be the one that serves no clear use. I find it funny that Guido famously moved <code>reduce</code> to the functools module, but that <code>filter</code> might have been the clearer candidate!</p>
 </div>
 </div>
 </div>
