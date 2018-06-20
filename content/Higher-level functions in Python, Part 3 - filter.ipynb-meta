@@ -4,4 +4,4 @@ Category: Python
 Tags: python, jupyter, functional, benchmarks, numpy
 Slug: higher-level-functions-python-filter
 Authors: François Leblanc
-Summary: In our final installment for the Higher Level Funciton in Python Series, we dive into the Python `filter` function. No sidetracks this time around. We simply take a look at how it's used, try to find a way where it would be superior to list comprehensions, fail, and conclude the series.
+Summary: In our final installment for the Higher Level Function in Python Series, we dive into the Python `filter` function. No sidetracks this time around. We simply take a look at how it's used, try to find a way where it would be superior to list comprehensions, fail, and conclude the series.
