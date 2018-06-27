@@ -1,44 +1,131 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-        <meta charset="utf-8" />
-        <title>Introduction to the Python Scientific Ecosystem, Part 1</title>
-        <link rel="stylesheet" href="https://leblancfg.com/theme/css/main.css" />
-        <link href="https://leblancfg.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="leblancfg.com Atom Feed" />
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
 
-        <!--[if IE]>
-            <script src="https://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
+  <link href='//fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/font-awesome.min.css">
+
+
+    <link href="https://leblancfg.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="leblancfg.com Atom">
+
+
+    <link rel="shortcut icon" href="/img/icons/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/img/icons/favicon.ico" type="image/x-icon">
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-120300361-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#330033">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#330033">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#330033">
+
+<meta name="author" content="François Leblanc" />
+<meta name="description" content="A general primer on Python for science and engineering, with an emphasis on the SciPy ecosystem of packages." />
+<meta name="keywords" content="python, jupyter, anaconda, conda, scipy, numpy, beginner, matplotlib">
+
+<meta property="og:site_name" content="leblancfg.com"/>
+<meta property="og:title" content="Introduction to the Python Scientific Ecosystem, Part 1"/>
+<meta property="og:description" content="A general primer on Python for science and engineering, with an emphasis on the SciPy ecosystem of packages."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="https://leblancfg.com/getting-started-with-python-and-jupyter-notebooks-1.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2017-08-03 00:00:00-04:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://leblancfg.com/author/francois-leblanc.html">
+<meta property="article:section" content="Python"/>
+<meta property="article:tag" content="python"/>
+<meta property="article:tag" content="jupyter"/>
+<meta property="article:tag" content="anaconda"/>
+<meta property="article:tag" content="conda"/>
+<meta property="article:tag" content="scipy"/>
+<meta property="article:tag" content="numpy"/>
+<meta property="article:tag" content="beginner"/>
+<meta property="article:tag" content="matplotlib"/>
+<meta property="og:image" content="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4">
+
+  <title>leblancfg.com &ndash; Introduction to the Python Scientific Ecosystem, Part 1</title>
+
 </head>
+<body>
+  <aside>
+    <div>
+      <a href="https://leblancfg.com">
+        <img src="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4" alt="François Leblanc" title="François Leblanc">
+      </a>
+      <h1><a href="https://leblancfg.com">François Leblanc</a></h1>
 
-<body id="index" class="home">
-        <header id="banner" class="body">
-                <h1><a href="https://leblancfg.com/">leblancfg.com </a></h1>
-                <nav><ul>
-                    <li><a href="https://leblancfg.com/pages/about.html">About</a></li>
-                    <li class="active"><a href="https://leblancfg.com/category/python.html">Python</a></li>
-                </ul></nav>
-        </header><!-- /#banner -->
-<section id="content" class="body">
-  <article>
-    <header>
-      <h1 class="entry-title">
-        <a href="https://leblancfg.com/getting-started-with-python-and-jupyter-notebooks-1.html" rel="bookmark"
-           title="Permalink to Introduction to the Python Scientific Ecosystem, Part 1">Introduction to the Python Scientific Ecosystem, Part 1</a></h1>
-    </header>
+<p>Data Science, Geospatial Python, Space Stuff</p>
+      <nav>
+        <ul class="list">
+          <li><a href="https://leblancfg.com/pages/about.html#about">About</a></li>
 
-    <div class="entry-content">
-<footer class="post-info">
-        <abbr class="published" title="2017-08-03T00:00:00-04:00">
-                Published: Thu 03 August 2017
-        </abbr>
+          <li><a href="https://kaggle.com/leblancfg" target="_blank">Kaggle</a></li>
+        </ul>
+      </nav>
 
-        <address class="vcard author">
-                By                         <a class="url fn" href="https://leblancfg.com/author/francois-leblanc.html">François Leblanc</a>
-        </address>
-<p>In <a href="https://leblancfg.com/category/python.html">Python</a>.</p>
-<p>tags: <a href="https://leblancfg.com/tag/python.html">python</a> <a href="https://leblancfg.com/tag/jupyter.html">jupyter</a> <a href="https://leblancfg.com/tag/anaconda.html">anaconda</a> <a href="https://leblancfg.com/tag/conda.html">conda</a> <a href="https://leblancfg.com/tag/scipy.html">scipy</a> <a href="https://leblancfg.com/tag/numpy.html">numpy</a> <a href="https://leblancfg.com/tag/beginner.html">beginner</a> <a href="https://leblancfg.com/tag/matplotlib.html">matplotlib</a> </p>
-</footer><!-- /.post-info -->      <style type="text/css">/*!
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/in/fran%C3%A7ois-leblanc-07294b106/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github" href="https://github.com/leblancfg" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-twitter" href="https://twitter.com/leblancfg1" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="sc-rss" href="https://leblancfg.com/feeds/all.atom.xml" target="_blank"><i class="fa fa-rss"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://leblancfg.com">    Home
+</a>
+
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+      <a href="https://leblancfg.com/feeds/all.atom.xml">    Atom
+</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="getting-started-with-python-and-jupyter-notebooks-1">Introduction to the Python Scientific Ecosystem, Part 1</h1>
+    <p>
+          Posted on August 03, 2017 in <a href="https://leblancfg.com/category/python.html">Python</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <style type="text/css">/*!
 *
 * IPython notebook
 *
@@ -1211,44 +1298,58 @@ Python is not a compiled language, but rather it is interpreted. The standard Py
 }
 </script>
 
-    </div><!-- /.entry-content -->
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://leblancfg.com/tag/python.html">python</a>
+      <a href="https://leblancfg.com/tag/jupyter.html">jupyter</a>
+      <a href="https://leblancfg.com/tag/anaconda.html">anaconda</a>
+      <a href="https://leblancfg.com/tag/conda.html">conda</a>
+      <a href="https://leblancfg.com/tag/scipy.html">scipy</a>
+      <a href="https://leblancfg.com/tag/numpy.html">numpy</a>
+      <a href="https://leblancfg.com/tag/beginner.html">beginner</a>
+      <a href="https://leblancfg.com/tag/matplotlib.html">matplotlib</a>
+    </p>
+  </div>
 
-  </article>
-</section>
-        <section id="extras" class="body">
-                <div class="blogroll">
-                        <h2>links</h2>
-                        <ul>
-                            <li><a href="https://github.com/leblancfg">leblancfg on Github</a></li>
-                            <li><a href="https://www.kaggle.com/leblancfg">leblancfg on Kaggle</a></li>
-                            <li><a href="https://twitter.com/leblancfg1">leblancfg1 on Twitter</a></li>
-                        </ul>
-                </div><!-- /.blogroll -->
-                <div class="social">
-                        <h2>social</h2>
-                        <ul>
-                            <li><a href="https://leblancfg.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
 
-                        </ul>
-                </div><!-- /.social -->
-        </section><!-- /#extras -->
 
-        <footer id="contentinfo" class="body">
-                <address id="about" class="vcard body">
-                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
-                </address><!-- /#about -->
 
-                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
-        </footer><!-- /#contentinfo -->
 
-    <script type="text/javascript">
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+</article>
 
-    ga('create', 'UA-120300361-1', 'auto');
-    ga('send', 'pageview');
-    </script>
+    <footer>
+<p>
+  &copy;  2018 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+         src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " leblancfg.com ",
+  "url" : "https://leblancfg.com",
+  "image": "https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4",
+  "description": "François Leblanc's Thoughts and Writings"
+}
+</script>
+
 </body>
 </html>
