@@ -8,9 +8,9 @@
 &lt;p&gt;By default, most distributions will install and use the open source GPU drivers called &lt;code&gt;nouveau&lt;/code&gt;, which won't cut it with what we've got in mind for this GPU. The hardest and most frustrating part of the installation process is to get the NVIDIA drivers running. I was met with a lot of black screens, flashing cursor bars, and giving up trying to back-fix things from the GRUB console.&lt;/p&gt;
 &lt;p&gt;Lots of resources exist out there, but the following have been the most useful in finally making things run:&lt;/p&gt;
 &lt;ul&gt;
-&lt;li&gt;[Nvidia CUDA Toolkit driver Install Ubuntu Mint Linux 16.04](https://www.youtube.com/watch?v=_fj4YISX3bw] by (Librebowski](https://www.youtube.com/channel/UCCX3ZAfic1j7BMH-MA2LLbg), specifically his blurb at the beginning about Manjaro&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://www.youtube.com/watch?v=_fj4YISX3bw"&gt;Nvidia CUDA Toolkit driver Install Ubuntu Mint Linux 16.04&lt;/a&gt; by &lt;a href="https://www.youtube.com/channel/UCCX3ZAfic1j7BMH-MA2LLbg"&gt;Librebowski&lt;/a&gt;, specifically his blurb at the beginning about Manjaro&lt;/li&gt;
 &lt;li&gt;&lt;a href="https://medium.com/@k_efth/deep-learning-in-arch-linux-from-start-to-finish-with-pytorch-tensorflow-nvidia-cuda-9a873c2252ed"&gt;Deep Learning Setup in Arch Linux: From Start To Finish with PyTorch + TensorFlow + Nvidia CUDA + Anaconda&lt;/a&gt; by &lt;a href="https://medium.com/@k_efth?source=post_header_lockup"&gt;Kyriakosi Efthymiadis&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;The official &lt;a href="https://www.tensorflow.org/install/install_sources"&gt;Tensorflow documentation&lt;/a&gt; for how to install it from source. Great guide, but some sections are already dated.&lt;/li&gt;
+&lt;li&gt;The official &lt;a href="https://www.tensorflow.org/install/install_sources"&gt;Tensorflow documentation&lt;/a&gt; for how to install it from source. Great guide, but some sections are already dated. Take instructions with a grain of salt.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h2&gt;Specs&lt;/h2&gt;
 &lt;ul&gt;
