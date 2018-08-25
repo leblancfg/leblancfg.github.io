@@ -20,48 +20,42 @@
 &lt;/ul&gt;
 &lt;p&gt;&lt;em&gt;Notes: I cannot be 100% sure, but I believe that connecting by HDMI sold part of my problems. YMMV&lt;/em&gt;&lt;/p&gt;
 &lt;h2&gt;Steps&lt;/h2&gt;
-&lt;ol&gt;
-&lt;li&gt;Install Manjaro from Live USB. In my case, I was getting a blank screen when trying to boot with the Non-Free Drivers option, and was forced to use Free Drivers.&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Update system&lt;/p&gt;
-&lt;p&gt;sudo pacman -Syyu&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Install NVIDIA drivers&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;In my case, I wasn't able to make the regular &lt;code&gt;nvidia&lt;/code&gt; package work, but had to go with the &lt;code&gt;390xx&lt;/code&gt; series. Go to Manjaro Settings &amp;gt; Drivers and simply install that one.&lt;/p&gt;
+&lt;h3&gt;Install Manjaro from Live USB&lt;/h3&gt;
+&lt;p&gt;I was getting a blank screen when trying to boot with the Non-Free Drivers option, so went with Free Drivers.&lt;/p&gt;
+&lt;h3&gt;Update system&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo pacman -Syyu
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Install NVIDIA drivers&lt;/h3&gt;
+&lt;p&gt;In my case, I wasn't able to make the regular &lt;code&gt;nvidia&lt;/code&gt; package work, but had to go with the &lt;code&gt;390xx&lt;/code&gt; series. This step just worked from the GUI. Go to Manjaro Settings &amp;gt; Drivers and simply install that one.&lt;/p&gt;
 &lt;p&gt;Reboot and cross your fingers.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;Install CUDA and CuDNN&lt;/p&gt;
-&lt;p&gt;sudo pacman -S cuda cudnn&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
+&lt;h3&gt;Install CUDA and CuDNN&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo pacman -S cuda cudnn
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;This next one may or may not be useful:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/extras/CUPTI/lib64
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Reboot and cross your fingers.&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Install Anaconda&lt;/li&gt;
-&lt;/ol&gt;
+&lt;h3&gt;Install Anaconda&lt;/h3&gt;
 &lt;p&gt;Next up, we download the latest Anaconda release. Since we'll be compiling TF right after, we'll grab bazel while we're at it.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo pacman -S anaconda bazel
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;Compile Tensorflow from source
-There are no handy CUDA 9.2 wheels for tensorflow available for Linux, so you'll need to compile from source. Don't worry, it'll put hair on your chest. I also ran into r1.10 asking for the &lt;code&gt;keras_applications&lt;/code&gt; Python module to be installed, so according to &lt;a href="https://stackoverflow.com/questions/51771039/error-compiling-tensorflow-from-source-no-module-named-keras-applications"&gt;this SO post&lt;/a&gt; I also pip-installed the following:&lt;/p&gt;
-&lt;p&gt;conda install keras
+&lt;h3&gt;Compile Tensorflow from source&lt;/h3&gt;
+&lt;p&gt;There are no handy CUDA 9.2 wheels for tensorflow available for Linux, so you'll need to compile from source. Don't worry, it'll put hair on your chest. I also ran into r1.10 asking for the &lt;code&gt;keras_applications&lt;/code&gt; Python module to be installed, so according to &lt;a href="https://stackoverflow.com/questions/51771039/error-compiling-tensorflow-from-source-no-module-named-keras-applications"&gt;this SO post&lt;/a&gt; I also pip-installed the following:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;conda install keras
 pip install keras_applications==1.0.4 --no-deps
 pip install keras_preprocessing==1.0.2 --no-deps
-pip install h5py==2.8.0&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
+pip install h5py==2.8.0
+&lt;/pre&gt;&lt;/div&gt;
+
+
 &lt;p&gt;Then:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git clone https://github.com/tensorflow/tensorflow
 cd tensorflow
@@ -97,14 +91,11 @@ bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
 &lt;/pre&gt;&lt;/div&gt;
 
 
-&lt;ol&gt;
-&lt;li&gt;
-&lt;p&gt;Test your build&lt;/p&gt;
-&lt;p&gt;cd ~
-python -c "import tensorflow as tf;hello = tf.constant('Hello, TensorFlow!');\
-sess = tf.Session();print(sess.run(hello));'&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;</content><category term="linux"></category><category term="manjaro"></category><category term="cuda"></category><category term="cudnn"></category><category term="tensorflow"></category><category term="GPU"></category><category term="nvidia"></category><category term="GTX960"></category></entry><entry><title>Higher-level functions in Python, Part 3 - filter</title><link href="https://leblancfg.com/higher-level-functions-python-filter.html" rel="alternate"></link><published>2018-06-14T00:00:00-04:00</published><updated>2018-06-14T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-06-14:/higher-level-functions-python-filter.html</id><summary type="html">&lt;p&gt;In our final installment for the Higher Level Function in Python Series, we dive into the Python &lt;code&gt;filter&lt;/code&gt; function. No sidetracks this time around. We simply take a look at how it's used, try to find a way where it would be superior to list comprehensions, fail, and conclude the series.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
+&lt;h3&gt;Test your build&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt;
+&lt;span class="n"&gt;python&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;import tensorflow as tf;hello = tf.constant(&amp;#39;Hello, TensorFlow!&amp;#39;);&lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="s2"&gt;sess = tf.Session();print(sess.run(hello));&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</content><category term="linux"></category><category term="manjaro"></category><category term="cuda"></category><category term="cudnn"></category><category term="tensorflow"></category><category term="GPU"></category><category term="nvidia"></category><category term="GTX960"></category></entry><entry><title>Higher-level functions in Python, Part 3 - filter</title><link href="https://leblancfg.com/higher-level-functions-python-filter.html" rel="alternate"></link><published>2018-06-14T00:00:00-04:00</published><updated>2018-06-14T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-06-14:/higher-level-functions-python-filter.html</id><summary type="html">&lt;p&gt;In our final installment for the Higher Level Function in Python Series, we dive into the Python &lt;code&gt;filter&lt;/code&gt; function. No sidetracks this time around. We simply take a look at how it's used, try to find a way where it would be superior to list comprehensions, fail, and conclude the series.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
