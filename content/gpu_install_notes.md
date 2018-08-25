@@ -38,6 +38,7 @@ Lots of resources exist out there, but the following have been the most useful i
 1. Install Manjaro from Live USB. In my case, I was getting a blank screen when trying to boot with the Non-Free Drivers option, and was forced to use Free Drivers.
 2. Update system
 
+
     sudo pacman -Syyu
 
 3. Install NVIDIA drivers
@@ -47,6 +48,7 @@ In my case, I wasn't able to make the regular `nvidia` package work, but had to 
 Reboot and cross your fingers.
 
 4. Install CUDA and CuDNN
+
 
     sudo pacman -S cuda cudnn
 
