@@ -146,48 +146,42 @@
 </ul>
 <p><em>Notes: I cannot be 100% sure, but I believe that connecting by HDMI sold part of my problems. YMMV</em></p>
 <h2>Steps</h2>
-<ol>
-<li>Install Manjaro from Live USB. In my case, I was getting a blank screen when trying to boot with the Non-Free Drivers option, and was forced to use Free Drivers.</li>
-<li>
-<p>Update system</p>
-<p>sudo pacman -Syyu</p>
-</li>
-<li>
-<p>Install NVIDIA drivers</p>
-</li>
-</ol>
-<p>In my case, I wasn't able to make the regular <code>nvidia</code> package work, but had to go with the <code>390xx</code> series. Go to Manjaro Settings &gt; Drivers and simply install that one.</p>
+<h3>Install Manjaro from Live USB</h3>
+<p>I was getting a blank screen when trying to boot with the Non-Free Drivers option, so went with Free Drivers.</p>
+<h3>Update system</h3>
+<div class="highlight"><pre><span></span>sudo pacman -Syyu
+</pre></div>
+
+
+<h3>Install NVIDIA drivers</h3>
+<p>In my case, I wasn't able to make the regular <code>nvidia</code> package work, but had to go with the <code>390xx</code> series. This step just worked from the GUI. Go to Manjaro Settings &gt; Drivers and simply install that one.</p>
 <p>Reboot and cross your fingers.</p>
-<ol>
-<li>
-<p>Install CUDA and CuDNN</p>
-<p>sudo pacman -S cuda cudnn</p>
-</li>
-</ol>
+<h3>Install CUDA and CuDNN</h3>
+<div class="highlight"><pre><span></span>sudo pacman -S cuda cudnn
+</pre></div>
+
+
 <p>This next one may or may not be useful:</p>
 <div class="highlight"><pre><span></span>export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/extras/CUPTI/lib64
 </pre></div>
 
 
 <p>Reboot and cross your fingers.</p>
-<ol>
-<li>Install Anaconda</li>
-</ol>
+<h3>Install Anaconda</h3>
 <p>Next up, we download the latest Anaconda release. Since we'll be compiling TF right after, we'll grab bazel while we're at it.</p>
 <div class="highlight"><pre><span></span>sudo pacman -S anaconda bazel
 </pre></div>
 
 
-<ol>
-<li>
-<p>Compile Tensorflow from source
-There are no handy CUDA 9.2 wheels for tensorflow available for Linux, so you'll need to compile from source. Don't worry, it'll put hair on your chest. I also ran into r1.10 asking for the <code>keras_applications</code> Python module to be installed, so according to <a href="https://stackoverflow.com/questions/51771039/error-compiling-tensorflow-from-source-no-module-named-keras-applications">this SO post</a> I also pip-installed the following:</p>
-<p>conda install keras
+<h3>Compile Tensorflow from source</h3>
+<p>There are no handy CUDA 9.2 wheels for tensorflow available for Linux, so you'll need to compile from source. Don't worry, it'll put hair on your chest. I also ran into r1.10 asking for the <code>keras_applications</code> Python module to be installed, so according to <a href="https://stackoverflow.com/questions/51771039/error-compiling-tensorflow-from-source-no-module-named-keras-applications">this SO post</a> I also pip-installed the following:</p>
+<div class="highlight"><pre><span></span>conda install keras
 pip install keras_applications==1.0.4 --no-deps
 pip install keras_preprocessing==1.0.2 --no-deps
-pip install h5py==2.8.0</p>
-</li>
-</ol>
+pip install h5py==2.8.0
+</pre></div>
+
+
 <p>Then:</p>
 <div class="highlight"><pre><span></span>git clone https://github.com/tensorflow/tensorflow
 cd tensorflow
@@ -223,14 +217,11 @@ bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
 </pre></div>
 
 
-<ol>
-<li>
-<p>Test your build</p>
-<p>cd ~
-python -c "import tensorflow as tf;hello = tf.constant('Hello, TensorFlow!');\
-sess = tf.Session();print(sess.run(hello));'</p>
-</li>
-</ol>
+<h3>Test your build</h3>
+<div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~</span>
+<span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;import tensorflow as tf;hello = tf.constant(&#39;Hello, TensorFlow!&#39;);</span><span class="se">\</span>
+<span class="s2">sess = tf.Session();print(sess.run(hello));&#39;</span>
+</pre></div>
   </div>
   <div class="tag-cloud">
     <p>

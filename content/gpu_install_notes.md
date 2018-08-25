@@ -35,20 +35,19 @@ Lots of resources exist out there, but the following have been the most useful i
 
 ## Steps
 
-1. Install Manjaro from Live USB. In my case, I was getting a blank screen when trying to boot with the Non-Free Drivers option, and was forced to use Free Drivers.
-2. Update system
+### Install Manjaro from Live USB
+I was getting a blank screen when trying to boot with the Non-Free Drivers option, so went with Free Drivers.
 
+### Update system
 
     sudo pacman -Syyu
 
-3. Install NVIDIA drivers
-
-In my case, I wasn't able to make the regular `nvidia` package work, but had to go with the `390xx` series. Go to Manjaro Settings > Drivers and simply install that one.
+### Install NVIDIA drivers
+In my case, I wasn't able to make the regular `nvidia` package work, but had to go with the `390xx` series. This step just worked from the GUI. Go to Manjaro Settings > Drivers and simply install that one.
 
 Reboot and cross your fingers.
 
-4. Install CUDA and CuDNN
-
+### Install CUDA and CuDNN
 
     sudo pacman -S cuda cudnn
 
@@ -58,13 +57,12 @@ This next one may or may not be useful:
 
 Reboot and cross your fingers.
 
-5. Install Anaconda
-
+### Install Anaconda
 Next up, we download the latest Anaconda release. Since we'll be compiling TF right after, we'll grab bazel while we're at it.
 
     sudo pacman -S anaconda bazel
 
-6. Compile Tensorflow from source
+### Compile Tensorflow from source
 There are no handy CUDA 9.2 wheels for tensorflow available for Linux, so you'll need to compile from source. Don't worry, it'll put hair on your chest. I also ran into r1.10 asking for the `keras_applications` Python module to be installed, so according to [this SO post](https://stackoverflow.com/questions/51771039/error-compiling-tensorflow-from-source-no-module-named-keras-applications) I also pip-installed the following:
 
     conda install keras
@@ -102,7 +100,7 @@ And finally, installing with pip (the exact filename might change in your case):
 
     sudo pip install /tmp/tensorflow_pkg/tensorflow-1.10.0-cp36-cp36m-linux_x86_64.whl
 
-7. Test your build
+### Test your build
 
     cd ~
     python -c "import tensorflow as tf;hello = tf.constant('Hello, TensorFlow!');\
