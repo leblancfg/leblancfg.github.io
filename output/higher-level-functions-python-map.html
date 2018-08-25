@@ -1,0 +1,2184 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/stylesheet/style.min.css">
+
+  <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/pygments/github.min.css">
+  <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/font-awesome.min.css">
+
+
+    <link href="https://leblancfg.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="leblancfg.com Atom">
+
+
+    <link rel="shortcut icon" href="/img/icons/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/img/icons/favicon.ico" type="image/x-icon">
+
+<!-- Google Analytics -->
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-120300361-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#330033">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#330033">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Microsoft EDGE -->
+    <meta name="msapplication-TileColor" content="#330033">
+
+<meta name="author" content="François Leblanc" />
+<meta name="description" content="We go through uses of the Python map function, when it&#39;s useful and its performance benefits, and get sidetracked into benchmarking different syntaxes for exponential expressions." />
+<meta name="keywords" content="python, jupyter, functional, benchmarks, numpy">
+
+<meta property="og:site_name" content="leblancfg.com"/>
+<meta property="og:title" content="Higher-level functions in Python, Part 1 - map"/>
+<meta property="og:description" content="We go through uses of the Python map function, when it&#39;s useful and its performance benefits, and get sidetracked into benchmarking different syntaxes for exponential expressions."/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:url" content="https://leblancfg.com/higher-level-functions-python-map.html"/>
+<meta property="og:type" content="article"/>
+<meta property="article:published_time" content="2018-05-30 00:00:00-04:00"/>
+<meta property="article:modified_time" content=""/>
+<meta property="article:author" content="https://leblancfg.com/author/francois-leblanc.html">
+<meta property="article:section" content="Python"/>
+<meta property="article:tag" content="python"/>
+<meta property="article:tag" content="jupyter"/>
+<meta property="article:tag" content="functional"/>
+<meta property="article:tag" content="benchmarks"/>
+<meta property="article:tag" content="numpy"/>
+<meta property="og:image" content="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4">
+
+  <title>leblancfg.com &ndash; Higher-level functions in Python, Part 1 - map</title>
+
+</head>
+<body>
+  <aside>
+    <div>
+      <a href="https://leblancfg.com">
+        <img src="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4" alt="François Leblanc" title="François Leblanc">
+      </a>
+      <h1><a href="https://leblancfg.com">François Leblanc</a></h1>
+
+<p>Data Science, Geospatial Python, Space Stuff</p>
+      <nav>
+        <ul class="list">
+          <li><a href="https://leblancfg.com/pages/about.html#about">About</a></li>
+
+          <li><a href="https://kaggle.com/leblancfg" target="_blank">Kaggle</a></li>
+        </ul>
+      </nav>
+
+      <ul class="social">
+        <li><a class="sc-linkedin" href="https://www.linkedin.com/in/fran%C3%A7ois-leblanc-07294b106/" target="_blank"><i class="fa fa-linkedin"></i></a></li>
+        <li><a class="sc-github" href="https://github.com/leblancfg" target="_blank"><i class="fa fa-github"></i></a></li>
+        <li><a class="sc-twitter" href="https://twitter.com/leblancfg1" target="_blank"><i class="fa fa-twitter"></i></a></li>
+        <li><a class="sc-rss" href="https://leblancfg.com/feeds/all.atom.xml" target="_blank"><i class="fa fa-rss"></i></a></li>
+      </ul>
+    </div>
+
+
+  </aside>
+  <main>
+
+    <nav>
+      <a href="https://leblancfg.com">    Home
+</a>
+
+      <a href="/archives.html">Archives</a>
+      <a href="/categories.html">Categories</a>
+      <a href="/tags.html">Tags</a>
+
+      <a href="https://leblancfg.com/feeds/all.atom.xml">    Atom
+</a>
+
+    </nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="higher-level-functions-python-map">Higher-level functions in Python, Part 1 - map</h1>
+    <p>
+          Posted on May 30, 2018 in <a href="https://leblancfg.com/category/python.html">Python</a>
+
+
+    </p>
+  </header>
+
+
+  <div>
+    <style type="text/css">/*!
+*
+* IPython notebook
+*
+*/
+/* CSS font colors for translated ANSI colors. */
+.ansibold {
+  font-weight: bold;
+}
+/* use dark versions for foreground, to improve visibility */
+.ansiblack {
+  color: black;
+}
+.ansired {
+  color: darkred;
+}
+.ansigreen {
+  color: darkgreen;
+}
+.ansiyellow {
+  color: #c4a000;
+}
+.ansiblue {
+  color: darkblue;
+}
+.ansipurple {
+  color: darkviolet;
+}
+.ansicyan {
+  color: steelblue;
+}
+.ansigray {
+  color: gray;
+}
+/* and light for background, for the same reason */
+.ansibgblack {
+  background-color: black;
+}
+.ansibgred {
+  background-color: red;
+}
+.ansibggreen {
+  background-color: green;
+}
+.ansibgyellow {
+  background-color: yellow;
+}
+.ansibgblue {
+  background-color: blue;
+}
+.ansibgpurple {
+  background-color: magenta;
+}
+.ansibgcyan {
+  background-color: cyan;
+}
+.ansibggray {
+  background-color: gray;
+}
+div.cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-radius: 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  width: 100%;
+  padding: 5px;
+  /* This acts as a spacer between cells, that is outside the border */
+  margin: 0px;
+  outline: none;
+  border-left-width: 1px;
+  padding-left: 5px;
+  background: linear-gradient(to right, transparent -40px, transparent 1px, transparent 1px, transparent 100%);
+}
+div.cell.jupyter-soft-selected {
+  border-left-color: #90CAF9;
+  border-left-color: #E3F2FD;
+  border-left-width: 1px;
+  padding-left: 5px;
+  border-right-color: #E3F2FD;
+  border-right-width: 1px;
+  background: #E3F2FD;
+}
+@media print {
+  div.cell.jupyter-soft-selected {
+    border-color: transparent;
+  }
+}
+div.cell.selected {
+  border-color: #ababab;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 5px, transparent 5px, transparent 100%);
+}
+@media print {
+  div.cell.selected {
+    border-color: transparent;
+  }
+}
+div.cell.selected.jupyter-soft-selected {
+  border-left-width: 0;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 7px, #E3F2FD 7px, #E3F2FD 100%);
+}
+.edit_mode div.cell.selected {
+  border-color: #66BB6A;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #66BB6A -40px, #66BB6A 5px, transparent 5px, transparent 100%);
+}
+@media print {
+  .edit_mode div.cell.selected {
+    border-color: transparent;
+  }
+}
+.prompt {
+  /* This needs to be wide enough for 3 digit prompt numbers: In[100]: */
+  min-width: 14ex;
+  /* This padding is tuned to match the padding on the CodeMirror editor. */
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace;
+  text-align: right;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+  /* Don't highlight prompt number selection */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Use default cursor */
+  cursor: default;
+}
+@media (max-width: 540px) {
+  .prompt {
+    text-align: left;
+  }
+}
+div.inner_cell {
+  min-width: 0;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_area {
+  border: 1px solid #cfcfcf;
+  border-radius: 2px;
+  background: #f7f7f7;
+  line-height: 1.21429em;
+}
+/* This is needed so that empty prompt areas can collapse to zero height when there
+   is no content in the output_subarea and the prompt. The main purpose of this is
+   to make sure that empty JavaScript output_subareas have no height. */
+div.prompt:empty {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+div.unrecognized_cell {
+  padding: 5px 5px 5px 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.unrecognized_cell .inner_cell {
+  border-radius: 2px;
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+  border: 1px solid #cfcfcf;
+  background: #eaeaea;
+}
+div.unrecognized_cell .inner_cell a {
+  color: inherit;
+  text-decoration: none;
+}
+div.unrecognized_cell .inner_cell a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+@media (max-width: 540px) {
+  div.unrecognized_cell > div.prompt {
+    display: none;
+  }
+}
+div.code_cell {
+  /* avoid page breaking on code cells when printing */
+}
+@media print {
+  div.code_cell {
+    page-break-inside: avoid;
+  }
+}
+/* any special styling for code cells that are currently running goes here */
+div.input {
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.input {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_prompt {
+  color: #303F9F;
+  border-top: 1px solid transparent;
+}
+div.input_area > div.highlight {
+  margin: 0.4em;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+div.input_area > div.highlight > pre {
+  margin: 0px;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+/* The following gets added to the <head> if it is detected that the user has a
+ * monospace font with inconsistent normal/bold/italic height.  See
+ * notebookmain.js.  Such fonts will have keywords vertically offset with
+ * respect to the rest of the text.  The user should select a better font.
+ * See: https://github.com/ipython/ipython/issues/1503
+ *
+ * .CodeMirror span {
+ *      vertical-align: bottom;
+ * }
+ */
+.CodeMirror {
+  line-height: 1.21429em;
+  /* Changed from 1em to our global default */
+  font-size: 14px;
+  height: auto;
+  /* Changed to auto to autogrow */
+  background: none;
+  /* Changed from white to allow our bg to show through */
+}
+.CodeMirror-scroll {
+  /*  The CodeMirror docs are a bit fuzzy on if overflow-y should be hidden or visible.*/
+  /*  We have found that if it is visible, vertical scrollbars appear with font size changes.*/
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+.CodeMirror-lines {
+  /* In CM2, this used to be 0.4em, but in CM3 it went to 4px. We need the em value because */
+  /* we have set a different line-height and want this to scale with that. */
+  padding: 0.4em;
+}
+.CodeMirror-linenumber {
+  padding: 0 8px 0 4px;
+}
+.CodeMirror-gutters {
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.CodeMirror pre {
+  /* In CM3 this went to 4px from 0 in CM2. We need the 0 value because of how we size */
+  /* .CodeMirror-lines */
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+}
+/*
+
+Original style from softwaremaniacs.org (c) Ivan Sagalaev <Maniac@SoftwareManiacs.Org>
+Adapted from GitHub theme
+
+*/
+.highlight-base {
+  color: #000;
+}
+.highlight-variable {
+  color: #000;
+}
+.highlight-variable-2 {
+  color: #1a1a1a;
+}
+.highlight-variable-3 {
+  color: #333333;
+}
+.highlight-string {
+  color: #BA2121;
+}
+.highlight-comment {
+  color: #408080;
+  font-style: italic;
+}
+.highlight-number {
+  color: #080;
+}
+.highlight-atom {
+  color: #88F;
+}
+.highlight-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.highlight-builtin {
+  color: #008000;
+}
+.highlight-error {
+  color: #f00;
+}
+.highlight-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.highlight-meta {
+  color: #AA22FF;
+}
+/* previously not defined, copying from default codemirror */
+.highlight-def {
+  color: #00f;
+}
+.highlight-string-2 {
+  color: #f50;
+}
+.highlight-qualifier {
+  color: #555;
+}
+.highlight-bracket {
+  color: #997;
+}
+.highlight-tag {
+  color: #170;
+}
+.highlight-attribute {
+  color: #00c;
+}
+.highlight-header {
+  color: blue;
+}
+.highlight-quote {
+  color: #090;
+}
+.highlight-link {
+  color: #00c;
+}
+/* apply the same style to codemirror */
+.cm-s-ipython span.cm-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-atom {
+  color: #88F;
+}
+.cm-s-ipython span.cm-number {
+  color: #080;
+}
+.cm-s-ipython span.cm-def {
+  color: #00f;
+}
+.cm-s-ipython span.cm-variable {
+  color: #000;
+}
+.cm-s-ipython span.cm-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-variable-2 {
+  color: #1a1a1a;
+}
+.cm-s-ipython span.cm-variable-3 {
+  color: #333333;
+}
+.cm-s-ipython span.cm-comment {
+  color: #408080;
+  font-style: italic;
+}
+.cm-s-ipython span.cm-string {
+  color: #BA2121;
+}
+.cm-s-ipython span.cm-string-2 {
+  color: #f50;
+}
+.cm-s-ipython span.cm-meta {
+  color: #AA22FF;
+}
+.cm-s-ipython span.cm-qualifier {
+  color: #555;
+}
+.cm-s-ipython span.cm-builtin {
+  color: #008000;
+}
+.cm-s-ipython span.cm-bracket {
+  color: #997;
+}
+.cm-s-ipython span.cm-tag {
+  color: #170;
+}
+.cm-s-ipython span.cm-attribute {
+  color: #00c;
+}
+.cm-s-ipython span.cm-header {
+  color: blue;
+}
+.cm-s-ipython span.cm-quote {
+  color: #090;
+}
+.cm-s-ipython span.cm-link {
+  color: #00c;
+}
+.cm-s-ipython span.cm-error {
+  color: #f00;
+}
+.cm-s-ipython span.cm-tab {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAAAXNSR0IArs4c6QAAAGFJREFUSMft1LsRQFAQheHPowAKoACx3IgEKtaEHujDjORSgWTH/ZOdnZOcM/sgk/kFFWY0qV8foQwS4MKBCS3qR6ixBJvElOobYAtivseIE120FaowJPN75GMu8j/LfMwNjh4HUpwg4LUAAAAASUVORK5CYII=);
+  background-position: right;
+  background-repeat: no-repeat;
+}
+div.output_wrapper {
+  /* this position must be relative to enable descendents to be absolute within it */
+  position: relative;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  z-index: 1;
+}
+/* class for the output area when it should be height-limited */
+div.output_scroll {
+  /* ideally, this would be max-height, but FF barfs all over that */
+  height: 24em;
+  /* FF needs this *and the wrapper* to specify full width, or it will shrinkwrap */
+  width: 100%;
+  overflow: auto;
+  border-radius: 2px;
+  -webkit-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  display: block;
+}
+/* output div while it is collapsed */
+div.output_collapsed {
+  margin: 0px;
+  padding: 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+div.out_prompt_overlay {
+  height: 100%;
+  padding: 0px 0.4em;
+  position: absolute;
+  border-radius: 2px;
+}
+div.out_prompt_overlay:hover {
+  /* use inner shadow to get border that is computed the same on WebKit/FF */
+  -webkit-box-shadow: inset 0 0 1px #000;
+  box-shadow: inset 0 0 1px #000;
+  background: rgba(240, 240, 240, 0.5);
+}
+div.output_prompt {
+  color: #D84315;
+}
+/* This class is the outer container of all output sections. */
+div.output_area {
+  padding: 0px;
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.output_area .MathJax_Display {
+  text-align: left !important;
+}
+div.output_area 
+div.output_area 
+div.output_area img,
+div.output_area svg {
+  max-width: 100%;
+  height: auto;
+}
+div.output_area img.unconfined,
+div.output_area svg.unconfined {
+  max-width: none;
+}
+/* This is needed to protect the pre formating from global settings such
+   as that of bootstrap */
+.output {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.output_area {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+div.output_area pre {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  vertical-align: baseline;
+  color: black;
+  background-color: transparent;
+  border-radius: 0;
+}
+/* This class is for the output subarea inside the output_area and after
+   the prompt div. */
+div.output_subarea {
+  overflow-x: auto;
+  padding: 0.4em;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+  max-width: calc(100% - 14ex);
+}
+div.output_scroll div.output_subarea {
+  overflow-x: visible;
+}
+/* The rest of the output_* classes are for special styling of the different
+   output types */
+/* all text output has this class: */
+div.output_text {
+  text-align: left;
+  color: #000;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+}
+/* stdout/stderr are 'text' as well as 'stream', but execute_result/error are *not* streams */
+div.output_stderr {
+  background: #fdd;
+  /* very light red background for stderr */
+}
+div.output_latex {
+  text-align: left;
+}
+/* Empty output_javascript divs should have no height */
+div.output_javascript:empty {
+  padding: 0;
+}
+.js-error {
+  color: darkred;
+}
+/* raw_input styles */
+div.raw_input_container {
+  line-height: 1.21429em;
+  padding-top: 5px;
+}
+pre.raw_input_prompt {
+  /* nothing needed here. */
+}
+input.raw_input {
+  font-family: monospace;
+  font-size: inherit;
+  color: inherit;
+  width: auto;
+  /* make sure input baseline aligns with prompt */
+  vertical-align: baseline;
+  /* padding + margin = 0.5em between prompt and cursor */
+  padding: 0em 0.25em;
+  margin: 0em 0.25em;
+}
+input.raw_input:focus {
+  box-shadow: none;
+}
+p.p-space {
+  margin-bottom: 10px;
+}
+div.output_unrecognized {
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+}
+div.output_unrecognized a {
+  color: inherit;
+  text-decoration: none;
+}
+div.output_unrecognized a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+.rendered_html {
+  color: #000;
+  /* any extras will just be numbers: */
+}
+
+
+
+.rendered_html :link {
+  text-decoration: underline;
+}
+.rendered_html :visited {
+  text-decoration: underline;
+}
+
+
+
+
+
+
+.rendered_html h1:first-child {
+  margin-top: 0.538em;
+}
+.rendered_html h2:first-child {
+  margin-top: 0.636em;
+}
+.rendered_html h3:first-child {
+  margin-top: 0.777em;
+}
+.rendered_html h4:first-child {
+  margin-top: 1em;
+}
+.rendered_html h5:first-child {
+  margin-top: 1em;
+}
+.rendered_html h6:first-child {
+  margin-top: 1em;
+}
+
+
+
+
+
+
+
+
+.rendered_html * + ul {
+  margin-top: 1em;
+}
+.rendered_html * + ol {
+  margin-top: 1em;
+}
+
+
+.rendered_html pre,
+
+
+
+.rendered_html tr,
+.rendered_html th,
+
+.rendered_html td,
+
+
+.rendered_html * + table {
+  margin-top: 1em;
+}
+
+.rendered_html * + p {
+  margin-top: 1em;
+}
+
+.rendered_html * + img {
+  margin-top: 1em;
+}
+.rendered_html img,
+
+.rendered_html img.unconfined,
+
+div.text_cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.text_cell > div.prompt {
+    display: none;
+  }
+}
+div.text_cell_render {
+  /*font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;*/
+  outline: none;
+  resize: none;
+  width: inherit;
+  border-style: none;
+  padding: 0.5em 0.5em 0.5em 0.4em;
+  color: #000;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+a.anchor-link:link {
+  text-decoration: none;
+  padding: 0px 20px;
+  visibility: hidden;
+}
+h1:hover .anchor-link,
+h2:hover .anchor-link,
+h3:hover .anchor-link,
+h4:hover .anchor-link,
+h5:hover .anchor-link,
+h6:hover .anchor-link {
+  visibility: visible;
+}
+.text_cell.rendered .input_area {
+  display: none;
+}
+.text_cell.rendered 
+.text_cell.unrendered .text_cell_render {
+  display: none;
+}
+.cm-header-1,
+.cm-header-2,
+.cm-header-3,
+.cm-header-4,
+.cm-header-5,
+.cm-header-6 {
+  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.cm-header-1 {
+  font-size: 185.7%;
+}
+.cm-header-2 {
+  font-size: 157.1%;
+}
+.cm-header-3 {
+  font-size: 128.6%;
+}
+.cm-header-4 {
+  font-size: 110%;
+}
+.cm-header-5 {
+  font-size: 100%;
+  font-style: italic;
+}
+.cm-header-6 {
+  font-size: 100%;
+  font-style: italic;
+}
+</style>
+<style type="text/css">.highlight .hll { background-color: #ffffcc }
+.highlight  { background: #f8f8f8; }
+.highlight .c { color: #408080; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #FF0000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #00A000 } /* Generic.Inserted */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0044DD } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #7D9029 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #A0A000 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mb { color: #666666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style>
+<style type="text/css">
+/* Temporary definitions which will become obsolete with Notebook release 5.0 */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-bold { font-weight: bold; }
+</style>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img align="right" src="img/map_function.png" width="200"/>
+Python provides a few higher order (or functional programming) functions in the standard library that can be quite useful:</p>
+<ul>
+<li>map</li>
+<li>filter</li>
+<li>reduce</li>
+<li>lambda</li>
+<li>list comprehensions</li>
+</ul>
+<div align="right"><i>Picture from <a href="https://swiftunboxed.com/open-source/map">SwiftUnboxed</a></i></div><p>This article series focuses on exploring these. In this notebook, we'll learn more about the <code>map</code> Python function. I will assume you already know about list expressions, but might not be so familiar with the other four.</p>
+<p>At first glance <code>map</code> seems a bit redundant — all it does is apply a function to every member in an iterable (list, dict, tuple, set, etc.)? Playing with it though, we'll see that it can be used to tidy up your code, make it more readable, and even give performance gains when used with very large iterables due to its lazy evaluation.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [1]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="k">import</span> <span class="n">repeat</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="k">import</span> <span class="n">time</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's create a simple function, which we'll use in these examples. <code>map</code> takes in a function and an iterable, and applies the first to the second. It returns a map iterator, that applies the function in turn for every item it contains. This language choice was made in order to save memory, and make loops slightly faster to process.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [2]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">square</span><span class="p">(</span><span class="mi">121</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>14641
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [3]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">121</span><span class="p">,</span> <span class="mi">122</span><span class="p">,</span> <span class="mi">123</span><span class="p">,</span> <span class="mi">124</span><span class="p">,</span> <span class="mi">129</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If you try, you get an error if you try to apply the function to the list.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [4]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="n">square</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">TypeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="ne">TypeError</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>&lt;class 'TypeError'&gt; can't multiply sequence by non-int of type 'list'
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Rather, you need to apply it to every member. Using a "traditional" for-loop, this is how you'd do it:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [5]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">square_data</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+    <span class="n">square_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">square</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+<span class="n">square_data</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[5]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>[14641, 14884, 15129, 15376, 16641]</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [6]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Of course, the same can be done with list comprehensions</span>
+<span class="p">[</span><span class="n">square</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[6]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>[14641, 14884, 15129, 15376, 16641]</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's try the same thing using <code>map</code>. Calling it directly (<code>map(func, iterable)</code>), it only defines the new iterable it creates, like a generator.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [7]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">map</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[7]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>&lt;map at 0x907b470&gt;</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To get the values, you need to cast it to a list.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [8]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[8]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>[14641, 14884, 15129, 15376, 16641]</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Using <code>map</code> has clear-cut advantages in readability when you already know you'll need to apply a function to the iterable you'll be looping over. Compare:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [9]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="n">square</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">15000</span><span class="p">:</span>
+        <span class="c1"># Do stuff</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>15129
+15376
+16641
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To <code>map</code>:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [10]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">map</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">15000</span><span class="p">:</span>
+        <span class="c1"># Do stuff</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>15129
+15376
+16641
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Or even more tersely, with a list comprehension. To me, this is clear and concise code, that does not need any comments, and is easy to maintain.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [11]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">([</span><span class="n">n</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">map</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span> <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">15000</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>[15129, 15376, 16641]
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Benchmarks">Benchmarks<a class="anchor-link" href="#Benchmarks">¶</a></h2><h3 id="Is-map-faster-than-a-list-comprehension?">Is <code>map</code> faster than a list comprehension?<a class="anchor-link" href="#Is-map-faster-than-a-list-comprehension?">¶</a></h3><p>As <code>map</code> is used to apply a function to every member in an iterable, there are a lot of similarities with Python list comprehensions, which can easily do the same. For example, here is a simple list comprehension:</p>
+<pre><code>x = [square(n) for n in range(100)]
+
+</code></pre>
+<p>Which would return a list of the square of all numbers from 0 to 99.</p>
+<p>But is one method faster than the other? Let's map a simple function over a very large array and get its sum.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [12]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">time_map</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+    <span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+
+
+<span class="k">def</span> <span class="nf">time_list_comp</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+    <span class="c1"># This is actually called a generator expression</span>
+    <span class="c1"># It does not generate the list items ahead of time</span>
+    <span class="c1"># Rather, items are calculated lazily, like `map`</span>
+    <span class="nb">sum</span><span class="p">(</span><span class="n">square</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+
+
+<span class="n">test_range</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="o">**</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">27</span><span class="p">)]</span>
+<span class="n">times_map</span> <span class="o">=</span> <span class="p">[</span><span class="n">time_map</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">test_range</span><span class="p">]</span>
+<span class="n">times_list_comp</span> <span class="o">=</span> <span class="p">[</span><span class="n">time_list_comp</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">test_range</span><span class="p">]</span>
+
+<span class="n">df_map</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">times_map</span><span class="p">,</span> <span class="n">times_list_comp</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+<span class="n">df_map</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'map'</span><span class="p">,</span> <span class="s1">'list_comp'</span><span class="p">]</span>
+<span class="n">df_map</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">test_range</span>
+<span class="n">df_map</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[12]:</div>
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>map</th>
+<th>list_comp</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>1024</th>
+<td>0.000000</td>
+<td>0.000000</td>
+</tr>
+<tr>
+<th>2048</th>
+<td>0.000000</td>
+<td>0.000000</td>
+</tr>
+<tr>
+<th>4096</th>
+<td>0.000000</td>
+<td>0.000000</td>
+</tr>
+<tr>
+<th>8192</th>
+<td>0.000000</td>
+<td>0.000000</td>
+</tr>
+<tr>
+<th>16384</th>
+<td>0.000000</td>
+<td>0.000000</td>
+</tr>
+<tr>
+<th>32768</th>
+<td>0.010000</td>
+<td>0.010000</td>
+</tr>
+<tr>
+<th>65536</th>
+<td>0.010000</td>
+<td>0.010000</td>
+</tr>
+<tr>
+<th>131072</th>
+<td>0.020000</td>
+<td>0.020000</td>
+</tr>
+<tr>
+<th>262144</th>
+<td>0.059999</td>
+<td>0.049999</td>
+</tr>
+<tr>
+<th>524288</th>
+<td>0.089999</td>
+<td>0.099999</td>
+</tr>
+<tr>
+<th>1048576</th>
+<td>0.159998</td>
+<td>0.199998</td>
+</tr>
+<tr>
+<th>2097152</th>
+<td>0.299997</td>
+<td>0.399996</td>
+</tr>
+<tr>
+<th>4194304</th>
+<td>0.569994</td>
+<td>0.779992</td>
+</tr>
+<tr>
+<th>8388608</th>
+<td>1.170988</td>
+<td>1.619984</td>
+</tr>
+<tr>
+<th>16777216</th>
+<td>2.299977</td>
+<td>3.149969</td>
+</tr>
+<tr>
+<th>33554432</th>
+<td>4.879951</td>
+<td>6.439935</td>
+</tr>
+<tr>
+<th>67108864</th>
+<td>9.279907</td>
+<td>13.139869</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [13]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_map</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">logx</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Compute time for $\sum_{x=0}^{2^</span><span class="si">{n}</span><span class="s1">} x^</span><span class="si">{2}</span><span class="s1">$, for $n$ in $[10, 26]$</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Number of list items (log)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Compute time (s)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,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
+"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So clearly <code>map</code> is faster than a list comprehension, as much as 36% faster for our last head-to-head, with an iterable with over 67M records. Note that I've started with a range of 1024 items, anything smaller and the performance was basically identical.</p>
+<blockquote><p><strong>Heuristic</strong></p>
+</blockquote>
+<p>Based on this crude benchmark, using <code>map</code> instead of list comprehensions can make a difference <strong>when iterables have around or above a million items</strong>.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="n-*-n-vs-n-**-2-vs-np.square"><code>n * n</code> vs <code>n ** 2</code> vs <code>np.square</code><a class="anchor-link" href="#n-*-n-vs-n-**-2-vs-np.square">¶</a></h3><p>I see variations on this all the time in all-Python projects, and even though unrolling all expressions of $x^{2}$ as <code>n * n</code> might be harder to read in equation-heavy code, performance also matters, and it is probably best to standardize your codebase on one or the other.</p>
+<p>So, what's faster, <code>n * n</code> or <code>n ** 2</code>... or are they equivalent? And how do they compare to numpy?</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [14]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
+
+
+<span class="k">def</span> <span class="nf">exp_2</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [15]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1024</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="n">test</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>384306618446643195
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [16]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
+sum(map(square, test))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>148 ms ± 8.52 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [17]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
+sum(map(exp_2, test))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>471 ms ± 34.9 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So almost 3 times faster.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Numpy">Numpy<a class="anchor-link" href="#Numpy">¶</a></h4><p>That certainly settles it then... How does it compare to numpy?</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [18]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_np</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1024</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [19]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">test_np</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[19]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>1431830523</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote><p><strong>Aside</strong></p>
+</blockquote>
+<p>Well... I mean it was fast, but it's wrong! What's the matter here?</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [20]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">test_np</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[20]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>array([      3,       4,       5, ..., 1048573, 1048574, 1048575])</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [21]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">test_np</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[21]:</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>array([       9,       16,       25, ..., -6291447, -4194300, -2097151], dtype=int32)</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>There it is, we're using the <a href="https://docs.scipy.org/doc/numpy/user/basics.types.html">wrong data type</a>. Numpy needed to allocate a <code>dtype=uint32</code> or <code>dtype=int64</code> and didn't. Instead, it's interpreting the squared numbers as negative because of the large number limit.</p>
+<blockquote><p><strong>End Aside</strong></p>
+</blockquote>
+<p>So we'll need to get the dtype specific either with <code>np.square</code> or <code>np.arange</code>:</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [22]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
+# Can't cast np.square to `uint32` for some reason, but `int64` works fine
+np.sum(np.square(test_np, dtype='int64'))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>6.14 ms ± 129 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [23]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
+# Or we can specify `uint32` directly from np.arange
+np.sum(np.square(np.arange(3, 1024**2, dtype='uint32')))
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>6.83 ms ± 550 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Which ends up being a whole <strong>26 times faster</strong> than the standard Python interpreter (cPython).</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Benchmarks-for-exponentials">Benchmarks for exponentials<a class="anchor-link" href="#Benchmarks-for-exponentials">¶</a></h3><p>That's fine for $n^{2}$, but what about other exponentials, say cubes? In other words, for integer-valued exponents from 1 to 15, how do these look when graphed?</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [24]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">exponent_1</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="sd">"""Returns n (* n)... k-1 times"""</span>
+    <span class="c1"># This is pretty ugly but I don't know how to code it</span>
+    <span class="c1"># without eval(), which is super slow.</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">6</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">7</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">9</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">10</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">11</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">12</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">13</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">14</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="k">if</span> <span class="n">k</span> <span class="o">==</span> <span class="mi">15</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span>
+    <span class="k">raise</span> <span class="ne">ValueError</span>
+
+
+<span class="k">def</span> <span class="nf">exponent_2</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">n</span> <span class="o">**</span> <span class="n">k</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For <code>map</code> calls with multiple arguments, the docs explicitly suggest this is the main use for <code>itertools.repeat</code>(<a href="https://stackoverflow.com/a/27025330/5531059">See Stack Overflow post</a>):</p>
+<blockquote><p>Make an iterator that returns object over and over again. Runs indefinitely unless the times argument is specified. Used as argument to <code>map()</code> for invariant parameters to the called function. Also used with <code>zip()</code> to create an invariant part of a tuple record.</p>
+</blockquote>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [25]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">time_exponent_1</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+    <span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">exponent_1</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">repeat</span><span class="p">(</span><span class="n">k</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+
+
+<span class="k">def</span> <span class="nf">time_exponent_2</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="p">()</span>
+    <span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">exponent_2</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">repeat</span><span class="p">(</span><span class="n">k</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+
+
+<span class="n">test</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1024</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">times_1</span> <span class="o">=</span> <span class="p">[</span><span class="n">time_exponent_1</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">)]</span>
+<span class="n">times_2</span> <span class="o">=</span> <span class="p">[</span><span class="n">time_exponent_2</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [26]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span><span class="n">times_1</span><span class="p">,</span> <span class="n">times_2</span><span class="p">])</span><span class="o">.</span><span class="n">T</span>
+<span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'n * n * ...'</span><span class="p">,</span> <span class="s1">'n ** k'</span><span class="p">]</span>
+<span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt output_prompt">Out[26]:</div>
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>n * n * ...</th>
+<th>n ** k</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>1</th>
+<td>0.179998</td>
+<td>0.509995</td>
+</tr>
+<tr>
+<th>2</th>
+<td>0.229998</td>
+<td>0.499995</td>
+</tr>
+<tr>
+<th>3</th>
+<td>0.359996</td>
+<td>0.509995</td>
+</tr>
+<tr>
+<th>4</th>
+<td>0.389996</td>
+<td>0.589994</td>
+</tr>
+<tr>
+<th>5</th>
+<td>0.429996</td>
+<td>0.559994</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In [27]:</div>
+<div class="inner_cell">
+<div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Compute time for $\sum_{x=3}^{2^</span><span class="si">{20}</span><span class="s1">} x^</span><span class="si">{n}</span><span class="s1">$, for $n$ in $[1, 15]$</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'k'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'secs'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="prompt"></div>
+<div class="output_png output_subarea ">
+<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAYUAAAFBCAYAAACYWrPqAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAADl0RVh0U29mdHdhcmUAbWF0cGxvdGxpYiB2ZXJzaW9uIDIuMS4yLCBodHRwOi8vbWF0cGxvdGxpYi5vcmcvNQv5yAAAIABJREFUeJzt3Xd4VGX2wPHvSQIJvST0UEIR6S00AUFFpazYFRQVFNvqWnatP11F13VddVVsKE3UtQsCrhUFlN6kIzUECKEl9JA+5/fHHULAlEkyk5tyPs+TJ5m57cwkuWfu+773vKKqGGOMMQBBbgdgjDGm5LCkYIwxJoslBWOMMVksKRhjjMliScEYY0wWSwrGGGOyWFIwxhiTxZKCMcaYLJYUjDHGZLGkYIwxJoslBWOMMVksKRhjjMliScEYY0wWSwrGGGOyWFIwxhiTxZKCMcaYLCFuB2BMaSUivYFXgDQgHrhZVdNF5FKgI3AOMAkYClQFHlPVNLfiNcYXYjOvGVM4ItIQOKyqySLyT2CVqn6ZbfmrQAbwGE5iOK6qc92J1hjfWPORMYWkqvGqmux9mAF4Ti0TkbuBH87epLhiM6aw7ErBmCISkSjgM6CvqqaJyF3AQGABsBAYBlQDHlXVVPciNSZ/lhSMKQIRqQ78D7hdVTe7HY8xRWXNR8YUkoiEAJ8AYy0hmLLCkoIxhTcC6Ak8JSLzROR6twMypqis+cgYY0wWu1IwxhiTxZKCMcaYLJYUjCkCEXlORNSHr31ux2qML6zMhTFFsyXbz58Dh3NZ72gxxGJMkVlHszFFJCJPA2OB5cBAVT3mbkTGFJ41HxlTRKr6DPBPoDvwnYhUdTkkYwrNkoJxhYhsEJEBxXCc1iKySkSOi8h9gTqOqj4JvAScB3wjIpX9tW8RWSYir4jIal9fQ3G97jyOX6jfr7f/JclbYNA1IjJHRFJEZIGbcbjBkoLLROQGEVkhIidEZK+IfCcifd2OKzsRiRWRgf7cXlXbqeq8IgeXv0eAeapaTVVfD+SBVPURYBxwPjBLRMKKuk8RiQDCgaeBC3Cqrfqi2F53Tor4++2kqk+ceiAi93r/R1JFZKqvO8lrO+/Nhine/7sTInLGHemqeiFwVyHjL9UsKbhIRP4KvAY8D9QDmgBvA5e7GVcZ0xTYUJgNvWUsCkRVHwDGAxcB00WkYmGOnU1H4FNVPQ7UAWJ83K5Qr7swr7kYxAPPAVP8vN29qlrV+9W6KAGWKapqXy58ATWAE8C1eazTBpgHHMH5Bx+WbVks8DCwFkgCJuMklu+A48BPQK2z1n8c2IgzQuY9ICzbcgVaZns8Fecf6kOcktDJ3ngf8S5vCEwDDgI7gPtyeQ25bR+L0ylbmNfi67HnAJlAivfY5+T1nmaL5VFvLKlASCF+t7W977Hn1GvMZ/0Xga+yPX4J+BmoADwAXO19/nrgbh/2V6DX7ctrxvnU/A3wFpCAc8K9OI8Yzv79PuTd/1GcirJhuWx3xt/hWcueA6YW4vfxh+2878WYfLYbBSzw9/9+Sf9yPYDy+gUMwqnBn+NJx3tC2Ab8H1ARuNB7gmztXR4LLPGePBsBB4DfgC5AqPfE8HS2/cUC64HG3pPWQuC5bMtzTArZth2YbVkQsBJ4yhtbc5xPsJfm8lrO2P7s5wryWgpx7Kx//vze02yxrPa+T5UK8XutAizyvp/5nsC924TjnKw745x81wE1vMsmAy28P78A9PFxnz6/bl9eM84V7CHgUu/v4GngpzyOf/bvdxlOMq8N/A7clct2xZkUDuIkuIXAgBy2G0U5TArWfOSecCBBVTNyWd4LZwrHF1Q1TVXn4JRoHpFtnTdUdb+q7gHmA0tVdZU6Nfu/wjmpZvemqu5W1UM4o2VGUDjdgTqq+qw3thhgIjC8kPsD319LUY7ty3sK8Lr3fUr+wx7yICKhwAygN87Um+N92U5VE3GaET/AuZoboqpHvctuU9Xt3p8fU9WFBYnJy5fXnd9r7ujd/gdV9eBccRbE6+pMSnQI+BonAbrpUZwPFI2ACcDXItLC3ZBKhpLYflheJAIRIhKSS2JoCOz2/gOeshPnj/iU/dl+Ts7h8dlDI3efta+GBY7a0RRoKCJHsj0XjHMyLyxfX0tRju3Lewpnvk8+EZFgnDLaA4HnVfXfBdzFKpxP3zeqaoGPnw9fXnd+x+wA3J7tcXsKlhiy39F9ksL/7fmFqi7N9vB9ERkBDAHecCmkEsOuFNyzGKfN94pclscDjUUk+++oCbCnCMdsfNa+4rM9PglkH0ZZP9vPZ9/huBvYoao1s31VU9UhuRzXn3dIFvTY2fn6nhYoXhERnD6aK4G3NNvIGR+374DTOf0+cGtBtvWRL68719fsnVkuBMg+QqcLTpNTWaGAuB1ESWBJwSXe5oGngLdE5AoRqSwiFURksIi8CCzF6XR9xPv8AOAy4NMiHPYeEYkUkdo47cufZVu2GrhBRIJFZBDQP9uy/TiX2qcsA46JyKMiUsm7TXsR6Z7Lcc/evigKeuzsAvGeArwO3ITT/POXgmwoIo1wmlPuAv4MdPBlfL+ITC3A8Myivu6OwLqzrjS6AGt83L5IRCTEO7w3GAgWkbDso6Ryey9y205EaorIpdke34gzjPjsObXLJUsKLlLVV4C/Ak/idHrtBu4FZqhqGs7cvoNxOsPeBm5W1U1FOOTHwI84HbMxOB1wp9yPc6I4AtyI0zZ+yr+AJ0XkiIg8pKqZ3nU744z+SQAm4YyoyskZ2xchfgpx7Ozb+v09FZG/4/zO0rxf40XknVy+ws/atjrwLfCKqs5S1ZM4I498uXGrMU4Hab788Lo7ku2qwPs66uMMXCgOT+I0IT4GjPT+/GS25bm9F7ltVwHnb/9UR/NfgCvUZs8DrPZRuSEisTijUX5yO5ayxHvHax8fV49S1Vg/HLMizqf0jqqaXtT9lSQikoIzLPZ1Vf27D+sH5L0Qkdk4HfTLVPUif+23NLCkUE5YUjDG+MJGHxlTTESkHs7w2nScm8tuVNW97kZlzJnsSsGYYuIdtqqq6hGRUUCkqj6Xz2bGFCvraDbGRyJSUUSWekc9DRORdwqyvapmZhvBU41C1mQyJpDsSsGYAhCRMUAPnOJ015668VBE6gBf5LDJjd67tE9t3xl4F6gJXKKqOwMftTG+s6RgTAGISFuc2kRNsp/sC7Gf64ALVbVclmc2JZd1NBvjI+/4/NeBJ3Du5Xgx27J8rxREJNRbywmcaqEnAxuxMQVnVwrG+MBb7G46zo1Qv+PcLHWRqp4owD56A//mdFnrW230kSlpLCkYY4zJYqOPjDHGZLGkYIwxJoslBWOMMVksKRhjjMliScEYY0wWSwrGGGOyWFIwxhiTxZKCMcaYLJYUjDHGZLGkYIwxJoslBWOMMVksKRhjjMliScEYY0wWSwrGGGOylLpJdiIiIrRZs2Zuh2GMMaXKypUrE1S1Tn7rlbqk0KxZM1asWOF2GMYYU6qIiE/zgVvzkTHGmCyWFIwxxmSxpGCMMSZLqetTyEl6ejpxcXGkpKS4HUqpFBYWRmRkJBUqVHA7FGOMy8pEUoiLi6NatWo0a9YMEXE7nFJFVUlMTCQuLo6oqCi3wzHGuCxgzUciMkVEDojI+lyW3ygia71fi0SkU2GPlZKSQnh4uCWEQhARwsPD7SrLGAMEtk9hKjAoj+U7gP6q2hH4BzChKAezhFB49t4ZY04JWFJQ1V+BQ3ksX6Sqh70PlwCRgYrFGGNKM1Vl3E9b2Rh/LODHKimjj24DvsttoYjcISIrRGTFwYMHizEs/1JV5s2bx7x581DVQu8DYOzYsWc8NsaUXW/M2carP23h67XxAT+W60lBRC7ASQqP5raOqk5Q1WhVja5TJ9+7tEuk5ORkRo0axfr161m/fj2jRo0iOTm5wPv58ccfeeKJJ0hKSmLSpEm89tprAYjWGFNSTF24g1dmb+Gqro14+JLWAT+eq6OPRKQjMAkYrKqJbsZSFLGxsQwePJi+ffuyaNEiGjVqxMyZM6lUqVLWOpUqVWL8+PH069cPgPnz55+xHJxP/7t27SImJoZdu3bxwAMPcN99952xzqWXXkqlSpW4+OKLefbZZ3n00VxzqTGmlJu2Mo6xX2/kkrb1ePHqjgQFBb7/z7WkICJNgOnATaq6xV/7febrDX5vd2vbsDpPX9Yuz3W2bt3KJ598wsSJE7nuuuuYNm0aI0eOzFqenJzMPffcw+jRowG45557ePvtt/+QGDZt2sTcuXM5fvw4rVu35u677z7j/oHZs2czb9487rvvPsLDwxk3bhz333+/H1+tMaYk+HHDPh6ZtpbzWoTz+oguhAQXT8NOwJKCiHwCDAAiRCQOeBqoAKCq7wBPAeHA297RLxmqGh2oeAItKiqKzp07A9CtWzdiY2PPWF6pUiWmTJnCL7/8AjhJIadRP0OHDiU0NJTQ0FDq1q3L/v37iYw83Qc/cOBALr74YsaOHcuYMWOsT8GYMmjRtgTu/XgVHRrVYMLN0YRVCC62YwcsKajqiHyWjwHG+Pu4+X2iD5TQ0NCsn4ODg3PsLxARBgwYUKD9ZGRk/GEfcLqj2YaTGlO2rNp1mDEfrCAqogpTR3enamjxNui43tFsjDHGsXnfcUa9t5yIqqF8eFsPalauWOwxWFIog5566ilmzZoFwKxZs3jqqacAiI+PZ8iQIW6GZkyJsWb3ER78bDW7D510OxQAdiWe5KbJSwmrEMRHY3pSt3qYK3FIaWuTjo6O1rMn2fn9999p06aNSxGVDfYemvLmmvGLWLHzMFVDQ/jHFe24sot798/uP5bCNe8s4nhKBp/f2Ztz6lXz+zFEZKUv/bZ2pWCMKXeWxx5ixc7D3NW/BW0aVOPBz9Zw/6erOJaSXuyxHE5KY+SkpRw6kcb7o3sEJCEURJmokmqMMQXxzrzt1K5SkfsvakWFYOHtedsZ9/NWVsQe5rXhnenerHaxxHEiNYNR7y1j56GTTB3dnU6NaxbLcfNiVwrGmHJl877j/LzpAKPOa0alisGEBAdx30Wt+OKu3gQHCde/u5hXftxMRqYnoHGkpGdy+/srWB9/jLdv6Mp5LSICejxfWVIwxpQr7/6yncoVg7m5d9Mznu/apBbf3NeXK7tE8vqcbVz77mJ2JQamEzo908O9H69icUwiL1/bkYFt6wXkOIVhScEYU27EHT7JzDXxjOjRJMfhntXCKvCf6zrxxogubDtwgiGvz2f6b3F+vUnU41Ee+XItP/2+n2cvd7eDOyeWFIwx5cak+TsIEhjTL+9ZBi/r1JDvHziftg2q89fP13Dfp6s5mlz0TmhV5ZmvN/DVqj08dMk53Ny7WZH36W+WFIpRTqWz8yunPXbsWF5++eXiDtWYMudQUhqfLt/FFZ0b0aBGpXzXb1SzEp/c0YuHL23Nt+v2MmTcfJbtyHWKGJ+8MnsL7y/eye39orjngpZF2legWFIoJrmVzvZHOW1jTP6mLoolJd3Dnf2b+7xNcJBwzwUtmXb3eYQEC8MnLOY/P24mvRCd0JPmx/DGnG1cH92Y/xvSpsSWqLEhqX5QlNLZ+ZXTzm7ixIlMnz6d6dOn57meMeZMSakZvL8olkva1qNl3YLfB9C5cU2+ua8fz8zawBtztjF/awLjhnemaXgVn7b/bPkunvvmd4Z2aMDzV3UosQkBymJS+O4x2LfOv/us3wEGv5DnKoUtne1LOW2AN998kx9//JEZM2acUTTPGJO/T5fv5mhyOncNaFHofVQNDeGlazsxoHVdHp++liHj5jN2WDuu6RaZ50n+23V7eXz6Os4/pw6vXt+Z4GKYE6Eoyl5ScElhS2f7Uk77ww8/JDIykhkzZpwxt4IxJn9pGR4mzY+hZ1RtujapVeT9De3YgC5NavLgZ6t5+Mu1zNtykOev6ECNyn/83/xly0Hu/3QVXZvU4p2RXakYUvJb7MteUsjnE32gFLZ0ti/ltNu3b8/q1auJi4sjKirvURPGmDPNXL2HvUdT+NdVHfy2z4Y1K/Hx7b1499ftvPLjFlbtPMwr13emV/PwrHVWxB7izg9X0KpuNSaP6k7liqXjdFvy05ahS5cuvPvuuwwbNoz4+MBP3G1MWeHxKO/+GkObBtXpf45/53cPDhL+PMDphA6tEMyIiUt46YdNpGd62BB/lNFTl9OgRiXev7UHNSqVnit8SwqlRN++fXn55ZcZOnQoCQkJbodjTKnw0+/72XbgBHf1bx6wzt1OjWvyv7/05bpujXlr7nauHr+IW6Yso2poCP8d05M61UpXH6CVzjaAvYem7FFVrhq/iIQTqcz924BimeP4u3V7eWz6OkKChM/u7E3LulUDfkxf+Vo6u3Q0chljTAEt23GIVbuO8I/L2xXbpPeDOzSgV/NwMjxa6q4QTrGkYIwpk8b/sp3wKhW5NrpxsR63VpXin0LTn8pMn0JpawYrSey9M2XNxvhjzNt8kFv7RhFWIdjtcEqVMpEUwsLCSExMtJNbIagqiYmJhIW5Mx+sMYHw7q/bqVIxmJE9m+a/sjlDmWg+ioyMJC4ujoMHD7odSqkUFhZGZGTJKt9rTGHtPnSSr9fEM6Zf8xxvKDN5KxNJoUKFCnZTlzEGgInzYwgJCuK2vnZOKIwy0XxkjDEACSdS+Wz5bq7s0oh61a1JtDAsKRhjyoypC2NJy/RwRwHKY5szWVIwxpQJJ1Iz+GBxLJe2rU+LOiXnprHSxpKCMaZM+GTpLo6lZBSpPLaxpGCMKQNSMzKZtCCG81qE07lxTbfDKdUsKRhjSr2Zq+LZfyyVu/rbVUJRBSwpiMgUETkgIutzWS4i8rqIbBORtSLSNVCxGGPKrkyP8s6v22nXsDr9WkW4HU6pF8grhanAoDyWDwZaeb/uAMYHMBZjTBk1e+M+Yg4mcfeAFiV67uPSImBJQVV/BQ7lscrlwAfqWALUFJEGgYrHGFP2qCrjf4mhaXhlBre304c/uNmn0AjYne1xnPe5PxCRO0RkhYissFIWxphTFscksmb3Ee44vznBQXaV4A9uJoWcfoM5VrRT1QmqGq2q0XXq+HdKPWNM6TV+3nYiqoZydVer3eUvbiaFOCB7ofNIwCYgNsb4ZP2eo8zfmsCtfZtZeWw/cjMpzAJu9o5C6gUcVdW9LsZjjClF3vllO9VCQxjZy8pj+1PAqqSKyCfAACBCROKAp4EKAKr6DvAtMATYBpwERgcqFmNM2bIzMYlv1+3l9vObUz3MymP7U8CSgqqOyGe5AvcE6vjGmLJrwq/e8th9rDy2v9kdzcaYUuXA8RS+WBnH1d0iqWvlsf3OkoIxplR5b2Es6Zke7jjfymMHgiUFY0ypcSwlnf8u3smQ9g2IiqjidjhlkiUFY0yp8fHSXRxPzbDCdwFkScEYUyqkpGcyecEO+raMoENkDbfDKbMsKRhjSoWvVu3h4PFU7rZJdALKkoIxpsTL9Cjv/rKdjpE1OK9FuNvhlGmWFIwxJd4PG/YRm3iSu/pbeexAs6RgjCnRVJXx87YTFVGFS9vVdzucMs+SgjGmxFoak8jV4xexbs9R7upv5bGLQ8DKXBhjTGFtjD/Giz9sYt7mg9SvHsa/r+7AddGN89/QFJklBWNMibH70En+8+NmZq6Jp3pYBR4ffC63nGelsYuTJQVjjOsSTqTy5pxtfLR0J8FBwl39W3DX+S2oUdkqoBY3SwrGGNecSM1g4q8xTJofQ0qGh+uiG/PAwFbUs0J3rrGkYIwpdqkZmXy8dBdvztlGYlIaQzrU52+XtKZFnapuh1buWVIwxhSbTI8yc/UeXpm9hbjDyZzXIpxHB51Lp8Y13Q7NeFlSMMYEnKoyd/MBXvx+M5v2Haddw+o8f2UH+rWKsJvRShhLCsaYgFq58zD//m4Ty2IP0TS8Mq+P6MKfOjQgyO45KJEsKRhjAmLr/uO8+MNmZm/cT0TVUP5xRXuGd29MhWC7Z7Yks6RgjPGr+CPJvDp7C9N+i6NKxRAeuuQcRveJokqonW5KA/stGWP8wuNRXpm9hQnzY0Dh1j5R/PmCltSuUtHt0EwBWFIwxhRZpkd5dNpavlwZxxWdG/LwoHNpVLOS22GZQrCkYIwpkoxMDw9/uZavVu3hgYGtuP+iVjaiqBSzpGCMKbSMTA8Pfr6Gr9fE89Al53Dvha3cDskUkSUFY0yhpGd6uO+TVXy3fh+PDT6Xu/rbNJllgSUFY0yBpWV4uPfj3/hx436eHNqGMf2aux2S8RNLCsaYAknNyOTP//2NnzcdYOxlbRnVJ8rtkIwfWVIwxvgsJT2TOz9cyS9bDvLcFe0Z2aup2yEZP7OkYIzxSXJaJrd/sIKF2xN44aoODO/RxO2QTADY/ebGmHydTMvg1qnLWbg9gZeu6WQJwQ0pR4vlMAFNCiIySEQ2i8g2EXksh+VNRGSuiKwSkbUiMiSQ8RhjCu5Eagajpixn6Y5EXr2uM9d0i3Q7pPInKREmDIB5/w74oQKWFEQkGHgLGAy0BUaISNuzVnsS+FxVuwDDgbcDFY8xpuCOp6Rzy5RlrNx1mNdHdOGKLo3cDqn8SU+BT0fA0T3Q4oKAHy6QVwo9gG2qGqOqacCnwOVnraNAde/PNYD4AMZjjCmAo8npjJy8jDW7j/DmiC78qWNDt0MqfzwemHE37F4KV70LjXsE/JCB7GhuBOzO9jgO6HnWOmOBH0XkL0AVYGBOOxKRO4A7AJo0sbZMYwLtyMk0bpq8jE37jvH2jV25pF19t0Mqn+b8AzZMh4Fjod2VxXLIQF4p5FT8RM96PAKYqqqRwBDgQxH5Q0yqOkFVo1U1uk6dOgEI1RhzyqGkNEZMXMrmfcd596ZulhDcsvJ9WPAKdL0F+jxQbIcNZFKIAxpnexzJH5uHbgM+B1DVxUAYEBHAmIwxeUg4kcoNE5cQc/AEE2+J5sJz67kdUvm0fQ7870FocSEM/Q8UY4HBQCaF5UArEYkSkYo4HcmzzlpnF3ARgIi0wUkKBwMYkzEmFweOpzBiwhJiE5OYMqo7/c+xq3JX7N8In98Cdc6Fa9+H4ArFeviA9SmoaoaI3Av8AAQDU1R1g4g8C6xQ1VnA34CJIvIgTtPSKFU9u4nJGBNg+4+lMGLiEvYdTeG9UT3o3SLc7ZDKp+P74KNroUJluPFzCKue/zZ+FtA7mlX1W+Dbs557KtvPG4E+gYzBGJO3+CPJ3DBxCQePp/L+rT3o3qy22yGVT2lJ8PH1kHwYRn8LNdy5H8TKXBhTjsUdPsmIiUs4kpTOB7f1pFvTWm6HVD55MmHaGNi3FoZ/Ag07uxaKJQVjyqldiU5COJ6SzodjetK5cU23Qyq/fngCNn8Lg1+C1oNcDcWSgjHl0I6EJG6YuISTaZl8fHsv2jeq4XZI5dfSd2HpeOj1Z+h5h9vRWFIwpryZtSaeJ75aR0iQ8MntvWjbsPg7M43X5u/g+8eg9VC45Dm3owEsKRhTbhxPSefpmRuYvmoPXZvU5LXru9AkvLLbYZVf8avgy1uhQSe4eiIEBbsdEWBJwZhyYeXOwzzw2Sr2HE7mgYGtuPeCloQEW+V81xzZ7Yw0qhwOIz6DilXcjiiLJQVjyrCMTA9vzd3O63O20qBGGF/c1ZtuTW3IKQBHdsHeNdDiIqhYjFdMKUfh4+sgPRlungnVStZd4z4lBRHpA6xW1SQRGQl0Bcap6s6ARmeMKbTdh07y4GerWbHzMFd2acQzl7ejeljx3h1bIiUlwK8vw4rJkJkGlWpD99ug++2BP0Fnpjt3KydsgRu/hLptAnu8QvD1SmE80ElEOgGPAJOBD4D+gQrMGFN4M1bt4e8z1gMwbnhnLu9s8yCQegIWvwWL3oD0JOgyEs79E/z2gZMkFo6DDtc6o4Dqt/f/8VXhm79CzFwY9maxzI1QGL4mhQxVVRG5HOcKYbKI3BLIwIwxBXcsJZ2nZqxnxup4opvW4tXrO9O4djnvTM5Ig5VT4dcXIekgtLkMLnwK6pzjLD/nUkjcDkvfgVX/hdUfQfMB0Ptep2kpyE99LwtedRJQv79B15v8s88AEF9KDYnIL8D3wGjgfJyidatVtUNgw/uj6OhoXbFiRXEf1pgSb0XsIR74bDV7j6Zw/0Wt+POAFuW7M9njgfXTYO5zcDgWmvVz5iWIjM59m5OHnASybAIc3wsRraH3n6Hj9VChUuFjWT/NGWnU/mq4apL/Ek0BiMhKVc3jxXvX8zEp1AduAJar6nwRaQIMUNUPih5qwVhSMOZMGZke3pizjTfmbKVRrUq8dn2X8l2uQhW2/QQ/PQP710G9Dk4yaHmR7yWoM9Jgw1ew+E2n9ETlcOg+xvmqWrdg8exaAu8Pg4ZdnI7lCmEFfUV+4e+kEAXsU9Vk7+NKQD1VjS1qoAVlScGY03YlnuSBz1bx264jXNW1Ec8Ma0c1tzqTj8Y5zS8VKkHzC6Be++L/RBy3AmY/DTsXQK1mcMGTzqfzwsahCrELnL6ILd9BcCh0vA563+NbJ3Hidpg0ECrVhNt+giruVZ/1NSn42qfwBXBetseZ3ue6FyI2Y0wRqSpfrdrDUzM3IAKvj+jCsE4uzaG85zfnpLnhK1APWRMsVo6A5v2d9vnmF0DNxnnspIgOboGfn4FN/4MqdZwaQt1GQUjFou1XBKL6OV8JW2HJeFj9Maz60Olv6H2PMxFOTlcgJw85Q0/BGWnkYkIoCF+vFFaraueznlujqp0CFlku7ErBlHdHk9P5+4z1zFoTT/dmTmdyZK1i7kz2ZDolGha/BbsWQWh16Hoz9LwTgipAzLzTXyf2OdvUbuGMuGk+wGnfr+SHAnxH98C8fzmdwxWqwHl/cU7UoVWLvu/cnDwEK6Y4/Q4n9kOdNs4xO1x7umkoIxU+uAL2rICbZ0HT3oGLx0f+bj6aDbzhnRgH7yik+1T1oiJHWkCWFEx5tjz2EA98upp9x1J44KJW/PmClgQHFd9UjaQlOZ+Ul7wNh2KgRhPodbczvDOnCWFU4eAm2D7XSRCxC5zhoBIEDbueThKRPQr2qf7kIWc0z7IJztVJ9zHOqJ4qxTibb0aq04G8+C3Yv965Qul+O0TfCj88Duu+gKsnQ4drii+mPPgWTxFdAAAcbElEQVQ7KbQAPgIa4VwbxgE3q+q2ogZaUJYUTHmUnunh9Z+38tbcbUTWqsy44Z3p0qQYO5OPxTsn4BXvQcoRiOzufDo+9zIILkBhhIw059NzzDwnUexZCZrpzDTWtM/pJFG3bc5NMmknnaGjC1+DlGPQaTgMeBxqNfXTCy0EVdjxi5Mctv4IEuy8pgufhPMfdi+us/g1KWTbaVXvNseLElxRWFIw5c3OxCTu/3Q1q3cf4equkTxzeTuqhhZThZq9a5yT3fppzifyNpc54/cb9/DP/lOOOlcPp5JE4lbn+Sp1neRwKklUqeN0Yv/yb2eo6DmD4KKnoF47/8ThLwc3O6WwK9VykoKvo52Kgb+vFOoBzwMNVXWwiLQFeqvq5KKHWjCWFEx5kZKeyYeLd/LaT1sIChKev7IDlxVHZ7LH43ziXfwmxM6HilVP9xfUahbYYx+NO7M/Iumg83xYDSeBNO4JA58pEW30pY2/k8J3wHvAE6raSURCgFV285ox/pfpUab9Fsdrs7cQfzSF/ufU4fmrOtCoZhFunvJF2klY84nTX5C4DapHOomg2y3OSbm4eTxwYKOTHPathbZXQOvBJerTd2ni7yGpEar6uYg8DqCqGSKSWaQIjTFnUFVmb9zPSz9sZuuBE3SKrMHL13XivBYB7jw9vg+WTXQKxCUfdm6yunoytL0cgl0soBcU5NQgCkQdIpMrX5NCkoiE4x2ALCK9gKMBi8qYcmZpTCL//n4Tv+06QvOIKoy/sSuD2tdHAvmpeN86WPy2M0rGkwHnDnX6C5r0sk/j5ZivSeGvwCyghYgsBOoAJWOclTGl2O97j/HSD5uZs+kA9aqH8q+rOnBtt8jTNYuWTXQqeHrS/XtgVUg+5Iztj74Vet0FtZv79ximVPI1KbQABgONgauBngXY1hhzlt2HTvLK7C3MWL2HaqEhPDroXEad14xKFb1TMno88PNYp5xzs35Qp7X/g6jVzLm/oFI5rpNk/sDXE/vfVfULEakFDAT+gzPHQs+ARWZMGZR4IpU35mzjo6U7CRLhjvOb8+f+LalROVvbfUYazLwH1n3u3JQ1+MUSM3+vKft8TQqnOpWHAu+o6kwRGRuYkIwpe06kZjBpfgwTf40hJcPDddGR3HdRKxrUOGtEUcox+GykczPURU9B379a+74pVr4mhT0i8i7OVcK/RSQUKMeF2o3xTVqGh4+X7uSNOdtITEpjcPv6/O2S1rSsm0NtnuP74L/XwMHf4Yrx0PmG4g/YlHu+JoXrgEHAy6p6REQaACXn/m1TNnk8zhy6LtWfLwqPR5m1Jp7/zN7M7kPJ9G4ezqODz6Vz41yKwB3cAv+9Gk4mwojPoNXA4g3YGC+fkoKqngSmZ3u8F9gbqKBMOefxwIbpMOc5OLrbqbPTfIBTfrlRV3fHzudDVZm35SAvfr+Z3/ceo22D6rx/awfObxWR+/DSXUvhk+shKARGf+PcJ2CMSwI6gkhEBgHjgGBgkqq+kMM61wFjce6BWKOqds1cXqnC9jnw01jnDtZ67Z0KnLELYd4LTonkitWgWd/TNXEizikRbe6qym+7DvPi95tZuuMQTWo7Resu69iQoLyqmG76xpmmsXojGDkNakcVX9DG5CBgSUFEgoG3gItxqqouF5FZqrox2zqtgMeBPqp6WEQKOM+dKTP2rHSSwY5foWYTuHKCU5/+1IxZJw85dXhOFU7b8p3zfLWGpwunRfWHavWKLeT9x1JYsDWBhdsSWLAtgQPHU4moWpFnL2/H8O5NqBiST7fb8snw7UPOlcENnxdv2WdjchHIK4UewDZVjQEQkU+By4GN2da5HXhLVQ8DqOqBAMZjSqKErTDnH7BxpjNT16B/Q/RoCAk9c73KtZ2yC20vdx4fjj1dNG3L97DmY+f5uu28TU0DoFkfqFjFb6GeSM1gaUwiC7YlsGBrAlsPnACgdpWK9GkZQd+W4fypY0Oq5FfBVNVpGpv/slPt85opfo3TmKIIZFJoBOzO9jiOP97XcA6A9y7pYGCsqn4fwJhMSXEs3mkSOjWnb//H4Lx7IbSab9vXauZMt9htlNMHsW8txHgnclk+CZa85cwA1riH0xfRfIDzibwAtf/TMz2sjTvCfO/VwKpdR8jwKKEhQfSIqs210ZH0aRlBm/rV824iyi4zHb6+35kprOstMPSVgs1HYEyABfKvMaf/krNLsoYArYABQCQwX0Taq+qRM3YkcgdwB0CTJk38H2l5oeqcPKvWL9ZmljMkH4YFrzk15z0Zzs1Z5z8MVesUfp9BQdCws/PV90FIT4ZdS04nibn/hLnPQWgNZ67d5gOcT+hnzRmsqmw/eIIFWxNYsC2RJTGJnEjNQAQ6NKrBHec3p2/LCLo2rUVYhULcTJZ6Ar64Bbb9BAP+D/o/UiL6Q4zJLpBJIQ6nLMYpkUB8DussUdV0YIeIbMZJEsuzr6SqE4AJ4JTODljEZVnyEfjfg86oHghoM0uO0pOdRLDgVacufsfrnBmzAtGxWqGS08fQ4gLncVKiczNYzFzYPs+Z3P3bh6BpH46dcwXzQ/owZ2cGC7clsO9YCgBNwyszrHND+rWMoHeLcGpWLuIE8CcOwsfXwt61cNnrTjlqY0qgAs28VqAdO3MubAEuAvbgnOhvUNUN2dYZBIxQ1VtEJAJYBXRW1cTc9mvzKRRC7EL46k6nyeb8hyAkzPkEvWsJZKYWuZklT5kZTlPJvBfgeDy0vBgGPg31i30qDgDU42HVmpUcXf45LfZ9SxNPHGkazELpyvb6Q6nW6U+c17oRjWtX9t9BE7c79yAc3wfXToXWg/y3b2N8FJDpOAsRxBDgNZz+gimq+k8ReRZYoaqzxBm4/R+cG+MygX+q6qd57dOSQgFkpjsn4wWvQM2mTo38yG6nl6edhN1LTk+qvm+t83z2ZpbmF0B4i4I3c6jC7187ncgJW5x7DQaOdYaTuiA1I5NZq+OZvGAHm/Ydp2JIED2a1uLy+glckDqX8NivkRP7IbQ6tBnmXMk061v0mkNxK50rBHBGGEXm+z9pTECUiKQQCJYUfJS4Habf7gz17DwSBr+QfyduUoK3mWWe08xydJfzfI3G0Lz/6SuJ/IZO7vjVGV66ZyVEtHZq+Jw71JX280NJaXy0ZCfvL95JwolUzq1fjdv6RnFZp4Zn9gt4Mp24137uJLO041CtAbS/Gjpe71zZFDT+LT/AF6Ogal0YOd1Jrsa4xJJCeaUKqz+G7x5xPuVeNg7aXVm4/RyKOd1Zu+NXpy8AnBNk8wFOkmjSGyp6m1r2rnWSwfafnZuxBjwOnUa4Mrpm24ETTFm4g2kr40jN8DCgdR3G9G1On5bh+U9ck54Mm79zJp/Z+qPTIV7nXOe+iQ7XQq2m+Qfw2wfw9QPOe3XjF05iMMZFlhTKo+TDzolo4wxo2heuehdqRPpn355MiF8NMXMg5henP8KTDsEVnZm6wmo4n7DDakK/v0GP250O32KkqizensjkBTv4edMBKoYEcVWXRtzaN4pz6vk41PVsJw/Bhq+cBLFrsfNck95Ocmh3pXP/xJlBwC8vwrznocVFcN0HEJpD8TtjipklhfImdgFMvwNO7IcLnoA+9we2Bn9aEuxcfPpK4sguZ3hpn/uhUi5F3wIVSoaH/62NZ9L8HWzce4zwKhW5qXdTRvZqSkTV0Px34KvDO53ksO4LOLjJ6aBvdbGTIFoPdh5/+zdYORU63QDDXi/RdZpM+WJJobzITIe5zztDPWs3h6snQqNu+W9XBhw5mcZHS3fx/qJYDhxPpVXdqozpF8XlnRsV7j4CX6k68xuv/QzWT4Pje52aTLWawf51zpXShX+3exBMieJrUrBbKUuzxO0w7TaIXwVdboJBL5SLpoodCUlMWbCDL1fGkZyeSb9WEbx0bae8K5H6kwg06Oh8Xfysc5W27nPYuQiG/se5YjKmlLKkUBqpOuUhvnvUaZ647oPTNYHKKFVl6Y5DTJq/g5837adCUBCXd27Ibf2iOLd+dfcCCwr2jszq714MxviRJYXS5uQhp3bO77OcCd2vfBdqNHI7qoBJz/Tw7bq9TJq/g3V7jlKrcgX+ckFLRvZuSt1qpW/yHWNKOksKpcmOX2H6nZB0AAY+A+f9pUxP6D5z9R7+9e0m9h1LoXmdKvzzyvZc1SWSShXL7ms2xm2WFEqDjDSnqNvCcc4NUCN+KtOzc6kqb8/bzks/bKZz45o8f1V7BpxT1/dKpMaYQrOkUNIlbHM6k/euhq43O53JZbj2fqZHeXrWev67ZBdXdG7Ii9d0yn+yGmOM31hSKKlUnbtiv3/MmXDmug+h7TC3owqolPRM7vtkFT9u3M+d/Zvz6KXn2tWBMcWs/CSFHb/C7KedcgNV6ni/13Xq+FfJ9lylWsUzvjwtCU4cgKSD3u8HnPLKSQednw/Hwt41EHW+05lcvWHgY3LR4aQ0xnywgt92Hebpy9oyuo/NVWyMG8pPUpAg507bo3uccf1JCaCZf1wvKMRJEFmJo07uSaRKxOmOXlWnNlBuJ/kTp757E0H6yZzjDKt5+riX/gt63nV6nuIyKu7wSW6Zsozdh5N564auDOnQwO2QjCm3yk9SaNb3zLLNHg8kH8p2Es92Mk86ePokfmCT8z0zLYedClQOd5p3kg7mvI4EOeucSiiNe5yZXKrWdZLLqUQTUsTJXEqZDfFHGf3eclLSM/nw1h70bB7udkjGlGvlJymcLSjIezKOgLpt8l5XFVKP/fHT/qnvmWmnT+xnX11UDi/Tw0aLYuG2BO78cCXVwkL48u7zCl+0zhjjN+U3KRSEiFMFNKwGRLR0O5oyYcaqPTz85RqaR1Rl6q3daVCjeCuqGmNyZknBFCtVZcKvMfzru030jKrNhJujqVHJKokaU1JYUjDFxuNR/vHNRt5bGMvQjg145bpOhIZY05oxJYklBVMsUtIz+dvna/hm3V5u7RPFk0Pb2D0IxpRAlhRMwB09mc7tH65g2Y5DPDGkDbef39ztkIwxubCkYAIq/kgyo95bxo6EJMYN78zlnctuRVdjygJLCiZgNu87zi1TlpGUmsH7o3twXssIt0MyxuTDkoIJiCUxidz+wQoqVQjmszt707ahixPhGGN8ZknB+N3/1sbz18/W0CS8MlNHdyeyVmW3QzLG+MiSgvGrKQt28I9vNtKtSS0m3RJNzcrlq2yHMaWdJQXjFx6P8sL3m5jwawyXtqvHuOFdCKtg9yAYU9pYUjBFdjwlnSdnrGfm6nhu6tWUscPaEWz3IBhTKllSMIWSluFh3uYDzFwdz0+/7yc1w8PDl7bmzwNaIMUxH4UxJiAsKRifeTzKip2HmbF6D9+s3cvR5HTCq1RkePfGXNU1kk6Na7odojGmiCwpmHxt2X+cGav2MHN1PHuOJFOpQjCXtKvHFZ0b0bdVBBWCy/YkQMaUJwFNCiIyCBgHBAOTVPWFXNa7BvgC6K6qKwIZk/HNvqMpzFqzh69WxfP73mMEBwl9W0bw0KXncEnb+lQJtc8TxpRFAfvPFpFg4C3gYiAOWC4is1R141nrVQPuA5YGKhbjm2Mp6Xy/bh9frdrDkh2JqEKnxjV5+rK2/KljQ+pUC3U7RGNMgAXy414PYJuqxgCIyKfA5cDGs9b7B/Ai8FAAYzG5SM3IZN7mg8xYtYefNx0gLcNDs/DK3HdhK67o0oioiCpuh2iMKUaBTAqNgN3ZHscBPbOvICJdgMaq+j8RyTUpiMgdwB0ATZo0CUCo5YvHoyyLPcRMb4fxsZQMwqtU5IYeTbiiSyM6RdawEUTGlFOBTAo5nVU0a6FIEPAqMCq/HanqBGACQHR0tOazuslBakYmK3ce5pfNB/l6TTzxR1OoXDGYS9rW44oujejbMoIQ6zA2ptwLZFKIAxpnexwJxGd7XA1oD8zzfiqtD8wSkWHW2Vx0Ho/y+75jLNyWwPytCSyPPURKuofgIKFfqwgeHXwuF7etR+WK1mFsjDktkGeE5UArEYkC9gDDgRtOLVTVo0BWLWURmQc8ZAmh8PYcSWbh1gTmb0tg0bYEEpPSAGhZtyrDuzehb8sIejavTbUwmxPZGJOzgCUFVc0QkXuBH3CGpE5R1Q0i8iywQlVnBerY5cXR5HSWxCSyYGsCC7clEJOQBECdaqGcf04d+rSMoG/LCOrXCHM5UmNMaRHQtgNV/Rb49qznnspl3QGBjKUsSMvw8Nuuw1lNQmvjjuBRqFwxmJ5RtbmhZxP6tarDOfWqWkexMaZQrEG5BFNVNu8/zoKtCSzYlsDSmEMkp2cSJM79A/de0JI+LSPo0qQWFUOsk9gYU3SWFEogVeXlHzfz2fI4Ek6kAtA8ogrXRkfSp2UEvZqHU6OS9QsYY/zPkkIJNO7nrbw1dzsD29Tlkrb16dMqgkY1K7kdljGmHLCkUMJM/y2O137ayjXdInnpmo7WN2CMKVbWEF2CLN6eyKPT1nJei3Cev7KDJQRjTLGzpFBCbDtwgjs/XEHT8CqMH9nNOo6NMa6wM08JkHAildFTl1ExJIj3RnW3TmRjjGusT8FlKemZ3P7BCg4eT+XTO3rTuHZlt0MyxpRjlhRc5PEoD362mtW7jzD+xm50tuksjTEus+YjF/37+018t34fTwxpw6D29d0OxxhjLCm45aOlO3n31xhu6tWU2/pGuR2OMcYAlhRcMW/zAZ6auYELWtfh6cva2tBTY0yJYUmhmG2MP8Y9H/1G63rVeOOGrjaxjTGmRLEzUjHadzSFW6cup1pYBaaM6k7VUOvnN8aULJYUismJ1Axunbqc4ynpTBnV3eY4MMaUSPZRtRhkZHr4y8e/sXn/cSbdEk3bhtXdDskYY3JkVwoBpqo88/VG5m4+yDPD2nFB67puh2SMMbmypBBgkxfs4MMlO7nj/OaM7NXU7XCMMSZPlhQC6Pv1+/jnt78zuH19Hht0rtvhGGNMviwpBMjq3Ud44LNVdIqsyavXdyYoyO5FMMaUfJYUAmD3oZOMeX85daqFMumWaMIqBLsdkjHG+MSSgp8dTU5n9NTlpGV4eG9UdyKqhrodkjHG+MyGpPpRWoaHu/+7kp2JSXxwa09a1q3mdkjGGFMglhT8RFX5v6/WsWh7Iv+5thO9W4S7HZIxxhSYNR/5yZtztvHlyjjuv6gVV3eLdDscY4wpFEsKfjBz9R7+M3sLV3VpxAMDW7kdjjHGFJo1HxWBx6N8u34vD3+xlp5RtfnX1R2sDLYxplSzpFAIJ9MymLYyjikLY9mRkMS59avx7k3dCA2xoafGmNLNkkIB7D+WwvuLYvlo6S6OJqfTKbIGb4zowuD29W1eBGNMmWBJwQcb4o8yef4Ovl4bT4ZHubRtfcb0i6Jb01rWXGSMKVMCmhREZBAwDggGJqnqC2ct/yswBsgADgK3qurOQMbkK49HmbflAJPm72DR9kQqVwzmxp5NGd2nGU3Dq7gdnjHGBETAkoKIBANvARcDccByEZmlqhuzrbYKiFbVkyJyN/AicH2gYvJFclom01fFMXnBDmIOJtGgRhiPDz6X4T2aUKNSBTdDM8aYgAvklUIPYJuqxgCIyKfA5UBWUlDVudnWXwKMDGA8eTpwPIUPF+/kv0t2cvhkOh0a1WDc8M4M6dCACtZfYIwpJwKZFBoBu7M9jgN65rH+bcB3OS0QkTuAOwCaNGnir/gA2LTvGJPn72Dm6njSPR4GtqnHmL5R9Iiqbf0FxphyJ5BJIaczqua4oshIIBron9NyVZ0ATACIjo7OcR8Foar8suUgkxfsYP7WBCpVCGZ4j8aM7hNFVIT1Fxhjyq9AJoU4oHG2x5FA/NkrichA4Amgv6qmBjAeUtIzmbFqD5MX7GDrgRPUqx7KI4Nac0OPJtSsXDGQhzbGmFIhkElhOdBKRKKAPcBw4IbsK4hIF+BdYJCqHghgLMzZtJ+Hv1hLYlIabRtU59XrOzG0Q0Mqhlh/gTHGnBKwpKCqGSJyL/ADzpDUKaq6QUSeBVao6izgJaAq8IW3/X6Xqg4LRDxNw6vQuXFNbusXRe/m4dZfYIwxORDVIjfRF6vo6GhdsWKF22EYY0ypIiIrVTU6v/Ws7cQYY0wWSwrGGGOyWFIwxhiTxZKCMcaYLJYUjDHGZLGkYIwxJoslBWOMMVksKRhjjMlS6m5eE5GDQImYiCebCCDB7SAKoDTFW5pihdIVb2mKFUpXvCUx1qaqWie/lUpdUiiJRGSFL3cKlhSlKd7SFCuUrnhLU6xQuuItTbGezZqPjDHGZLGkYIwxJoslBf+Y4HYABVSa4i1NsULpirc0xQqlK97SFOsZrE/BGGNMFrtSMMYYk8WSgjHGmCyWFIpARBqLyFwR+V1ENojI/W7HlB8RCRaRVSLyP7djyY+I1BSRL0Vkk/c97u12TLkRkQe9fwPrReQTEQlzO6bsRGSKiBwQkfXZnqstIrNFZKv3ey03Yzwll1hf8v4drBWRr0SkppsxZpdTvNmWPSQiKiIRbsRWGJYUiiYD+JuqtgF6AfeISFuXY8rP/cDvbgfho3HA96p6LtCJEhq3iDQC7gOiVbU9zvSzw92N6g+mAoPOeu4x4GdVbQX87H1cEkzlj7HOBtqrakdgC/B4cQeVh6n8MV5EpDFwMbCruAMqCksKRaCqe1X1N+/Px3FOWo3cjSp3IhIJDAUmuR1LfkSkOnA+MBlAVdNU9Yi7UeUpBKgkIiFAZSDe5XjOoKq/AofOevpy4H3vz+8DVxRrULnIKVZV/VFVM7wPlwCRxR5YLnJ5bwFeBR4BStVoHksKfiIizYAuwFJ3I8nTazh/pB63A/FBc+Ag8J63uWuSiFRxO6icqOoe4GWcT4R7gaOq+qO7UfmknqruBecDDlDX5Xh8dSvwndtB5EVEhgF7VHWN27EUlCUFPxCRqsA04AFVPeZ2PDkRkT8BB1R1pdux+CgE6AqMV9UuQBIlp3njDN62+MuBKKAhUEVERrobVdkkIk/gNNt+5HYsuRGRysATwFNux1IYlhSKSEQq4CSEj1R1utvx5KEPMExEYoFPgQtF5L/uhpSnOCBOVU9deX2JkyRKooHADlU9qKrpwHTgPJdj8sV+EWkA4P1+wOV48iQitwB/Am7Ukn2DVQucDwhrvP9vkcBvIlLf1ah8ZEmhCEREcNq8f1fVV9yOJy+q+riqRqpqM5xO0DmqWmI/zarqPmC3iLT2PnURsNHFkPKyC+glIpW9fxMXUUI7xc8yC7jF+/MtwEwXY8mTiAwCHgWGqepJt+PJi6quU9W6qtrM+/8WB3T1/k2XeJYUiqYPcBPOp+7V3q8hbgdVhvwF+EhE1gKdgeddjidH3quZL4HfgHU4/1clqsyBiHwCLAZai0iciNwGvABcLCJbcUbJvOBmjKfkEuubQDVgtvf/7B1Xg8wml3hLLStzYYwxJotdKRhjjMliScEYY0wWSwrGGGOyWFIwxhiTxZKCMcaYLJYUjPEDEWmWU5VMY0obSwrGGGOyWFIwxs9EpLm3iF93t2MxpqAsKRjjR96yHNOA0aq63O14jCmoELcDMKYMqYNTP+hqVd3gdjDGFIZdKRjjP0eB3Tg1sYwplexKwRj/ScOZvewHETmhqh+7HZAxBWVJwRg/UtUk74RGs0UkSVVLbDlqY3JiVVKNMcZksT4FY4wxWSwpGGOMyWJJwRhjTBZLCsYYY7JYUjDGGJPFkoIxxpgslhSMMcZk+X9AIaOPuaK0aAAAAABJRU5ErkJggg==
+"/>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So with this naive benchmark in place, it would seem as though <code>n * n * ...</code> is faster than <code>n ** k</code> for $k \leq 7$, but that margin is slim for 5 to 7. In practice, one should probably only use <code>n * n * n * n * n * n * n</code> in extraordinary circumstances. Readability counts!</p>
+<blockquote><p><strong>Heuristic</strong></p>
+</blockquote>
+<p>Use <code>n * n * ...</code> for $n$ in $[2, 4]$.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Conclusions">Conclusions<a class="anchor-link" href="#Conclusions">¶</a></h2><p>Using <code>map</code> has clear advantages over other Python methods of applying functions to iterables, and can make your code more elegant and faster.</p>
+<p>When tuning for performance,</p>
+<ol>
+<li>Switch to <code>map</code> instead of list comprehensions for iterables with around a million items or more.</li>
+<li>Unless you really can't use numpy, use <code>n * n * ...</code> instead of <code>n**k</code>, for <code>k</code> in <code>[2, 4]</code></li>
+</ol>
+<h2 id="Keep-on-reading!">Keep on reading!<a class="anchor-link" href="#Keep-on-reading!">¶</a></h2><p>Next in the <em>Higher-level functions in Python</em> series we'll take a look at <a href="higher-level-functions-python-reduce.html">the <code>reduce</code> function</a>.</p>
+</div>
+</div>
+</div>
+
+<script type="text/javascript">if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: 'center'," +
+        "    displayIndent: '0em'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['$','$'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        " linebreaks: { automatic: true, width: '95% container' }, " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+        "    } " +
+        "}); ";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+</script>
+
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://leblancfg.com/tag/python.html">python</a>
+      <a href="https://leblancfg.com/tag/jupyter.html">jupyter</a>
+      <a href="https://leblancfg.com/tag/functional.html">functional</a>
+      <a href="https://leblancfg.com/tag/benchmarks.html">benchmarks</a>
+      <a href="https://leblancfg.com/tag/numpy.html">numpy</a>
+    </p>
+  </div>
+
+
+
+
+
+</article>
+
+    <footer>
+<p>
+  &copy;  2018 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+</p>
+<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p>    </footer>
+  </main>
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " leblancfg.com ",
+  "url" : "https://leblancfg.com",
+  "image": "https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4",
+  "description": "François Leblanc's Thoughts and Writings"
+}
+</script>
+
+</body>
+</html>

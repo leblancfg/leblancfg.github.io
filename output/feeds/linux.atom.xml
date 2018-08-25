@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com - Linux</title><link href="https://leblancfg.com/" rel="alternate"></link><link href="https://leblancfg.com/feeds/linux.atom.xml" rel="self"></link><id>https://leblancfg.com/</id><updated>2018-08-24T00:00:00-04:00</updated><entry><title>Notes on installing CUDA, CuDNN and Tensorflow on Manjaro</title><link href="https://leblancfg.com/installing-cuda-cudnn-tensorflow-nvidia-gtx960.html" rel="alternate"></link><published>2018-08-24T00:00:00-04:00</published><updated>2018-08-24T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-08-24:/installing-cuda-cudnn-tensorflow-nvidia-gtx960.html</id><summary type="html">&lt;p&gt;An in-depth, step-by-step guide to installing CUDA, CuDNN and Tensorflow on Linux with an NVIDIA GeFORCE GTX960 graphics card.&lt;/p&gt;</summary><content type="html">&lt;p&gt;I've finally done it. After 50+ hours spent trying to install GPU support for Tensorflow over the span of a year and a half, I have finally done it. I'm happy to say that I have CUDA 9.2, CuDNN 7.2, and compiled Tensorflow from source well enough that I can train a Resnet on Imagenet-100 in a barely decent amount of time. Take that, cloud!&lt;/p&gt;
+&lt;p&gt;Now, NVIDIA has had a notoriously bad driver support for Linux, which some of you led to Mr Torvalds flipping a finger directed to them in a 2012 interview. And even today it is exceedingly hard to not pull your hair out trying to do so. Having spent many, many days configuring it and getting a collection of black screens, consoles and no-boots, here's what it took to install tensorflow on my machine.&lt;/p&gt;
+&lt;p&gt;I ended up using the Manjaro distribution, as it was the only one between Ubuntu, Linux Mint, Scientific Linux and Debian to just work out of the box. After further experimentation, I have to say I've grown quite used to using &lt;code&gt;pacman&lt;/code&gt; instead of &lt;code&gt;apt&lt;/code&gt;. They also support a community edition that comes bundled with the i3 window manager, which greatly fits my obsession for the last year to go mouseless (as possible). But that's another blog post.&lt;/p&gt;
+&lt;p&gt;I assume that many people have gone through the same steps as I have, and I would blame none of them for having given up before reaching the end. If there's one lesson to learn from this situation, it's that your calculated ROI on purchasing a (or many) GPUs for training neural networks should consider the possible time it will take to troubleshoot their installation.&lt;/p&gt;
+&lt;h2&gt;Research&lt;/h2&gt;
+&lt;p&gt;Before you buy anything, do your research. At the time of purchase, the GeFORCE 10xx series was still far away, and the 960 was at the top of the chart for performance / price ratio. I've spent a few dozen hours using Keras since, but as I am still a novice, this suits my needs quite nicely. As of writing, the new 20xx series is slated to be released any day now, but it's still unclear whether the tensor cores they'll be packing are going to make much difference in terms of performance.&lt;/p&gt;
+&lt;p&gt;By default, most distributions will install and use the open source GPU drivers called &lt;code&gt;nouveau&lt;/code&gt;, which won't cut it with what we've got in mind for this GPU. The hardest and most frustrating part of the installation process is to get the NVIDIA drivers running. I was met with a lot of black screens, flashing cursor bars, and giving up trying to back-fix things from the GRUB console.&lt;/p&gt;
+&lt;p&gt;Lots of resources exist out there, but the following have been the most useful in finally making things run:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;[Nvidia CUDA Toolkit driver Install Ubuntu Mint Linux 16.04](https://www.youtube.com/watch?v=_fj4YISX3bw] by (Librebowski](https://www.youtube.com/channel/UCCX3ZAfic1j7BMH-MA2LLbg), specifically his blurb at the beginning about Manjaro&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://medium.com/@k_efth/deep-learning-in-arch-linux-from-start-to-finish-with-pytorch-tensorflow-nvidia-cuda-9a873c2252ed"&gt;Deep Learning Setup in Arch Linux: From Start To Finish with PyTorch + TensorFlow + Nvidia CUDA + Anaconda&lt;/a&gt; by &lt;a href="https://medium.com/@k_efth?source=post_header_lockup"&gt;Kyriakosi Efthymiadis&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;The official &lt;a href="https://www.tensorflow.org/install/install_sources"&gt;Tensorflow documentation&lt;/a&gt; for how to install it from source. Great guide, but some sections are already dated.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Specs&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;CPU&lt;/strong&gt;: Intel(R) Core(TM) i5-6500 CPU @ 3.20GH&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;GPU&lt;/strong&gt;: NVIDIA Corporation GM206 [GeForce GTX 960]&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Monitor&lt;/strong&gt;: Asus 24" HDMI&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;Notes: I cannot be 100% sure, but I believe that connecting by HDMI sold part of my problems. YMMV&lt;/em&gt;&lt;/p&gt;
+&lt;h2&gt;Steps&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Install Manjaro from Live USB. In my case, I was getting a blank screen when trying to boot with the Non-Free Drivers option, and was forced to use Free Drivers.&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Update system&lt;/p&gt;
+&lt;p&gt;sudo pacman -Syyu&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Install NVIDIA drivers&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;In my case, I wasn't able to make the regular &lt;code&gt;nvidia&lt;/code&gt; package work, but had to go with the &lt;code&gt;390xx&lt;/code&gt; series. Go to Manjaro Settings &amp;gt; Drivers and simply install that one.&lt;/p&gt;
+&lt;p&gt;Reboot and cross your fingers.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Install CUDA and CuDNN&lt;/p&gt;
+&lt;p&gt;sudo pacman -S cuda cudnn&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This next one may or may not be useful:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/extras/CUPTI/lib64
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Reboot and cross your fingers.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Install Anaconda&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Next up, we download the latest Anaconda release. Since we'll be compiling TF right after, we'll grab bazel while we're at it.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo pacman -S anaconda bazel
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Compile Tensorflow from source
+There are no handy CUDA 9.2 wheels for tensorflow available for Linux, so you'll need to compile from source. Don't worry, it'll put hair on your chest. I also ran into r1.10 asking for the &lt;code&gt;keras_applications&lt;/code&gt; Python module to be installed, so according to &lt;a href="https://stackoverflow.com/questions/51771039/error-compiling-tensorflow-from-source-no-module-named-keras-applications"&gt;this SO post&lt;/a&gt; I also pip-installed the following:&lt;/p&gt;
+&lt;p&gt;conda install keras
+pip install keras_applications==1.0.4 --no-deps
+pip install keras_preprocessing==1.0.2 --no-deps
+pip install h5py==2.8.0&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Then:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git clone https://github.com/tensorflow/tensorflow
+cd tensorflow
+git branch r1.10
+bash configure
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You'll then be asked a series of questions you'll probably want to Google before you answer. In my case, I did:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;All default until&lt;/li&gt;
+&lt;li&gt;CUDA Support: Y&lt;/li&gt;
+&lt;li&gt;CUDA 9.2&lt;/li&gt;
+&lt;li&gt;CUDNN 7.2&lt;/li&gt;
+&lt;li&gt;TensorRT: default&lt;/li&gt;
+&lt;li&gt;NCCL: 1.3 (only one GPU on this box anyhow)&lt;/li&gt;
+&lt;li&gt;CUDA compute capabilities: 3.5,5.2&lt;ul&gt;
+&lt;li&gt;Get this from &lt;a href="https://developer.nvidia.com/cuda-gpus"&gt;here&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;compile w/ clang: default&lt;/li&gt;
+&lt;li&gt;Bazel compiler flags: -mavx -mavx2 -mfma -msse4.2&lt;/li&gt;
+&lt;li&gt;Android: default &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And finally:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;bazel build --config=opt --config=cuda //tensorflow/tools/pip_package:build_pip_package
+bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And finally, installing with pip (the exact filename might change in your case):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo pip install /tmp/tensorflow_pkg/tensorflow-1.10.0-cp36-cp36m-linux_x86_64.whl
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Test your build&lt;/p&gt;
+&lt;p&gt;cd ~
+python -c "import tensorflow as tf;hello = tf.constant('Hello, TensorFlow!');\
+sess = tf.Session();print(sess.run(hello));'&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;</content><category term="linux"></category><category term="manjaro"></category><category term="cuda"></category><category term="cudnn"></category><category term="tensorflow"></category><category term="GPU"></category><category term="nvidia"></category><category term="GTX960"></category></entry></feed>
