@@ -21,9 +21,9 @@ By default, most distributions will install and use the open source GPU drivers 
 
 Lots of resources exist out there, but the following have been the most useful in finally making things run:
 
-* [Nvidia CUDA Toolkit driver Install Ubuntu Mint Linux 16.04](https://www.youtube.com/watch?v=_fj4YISX3bw] by (Librebowski](https://www.youtube.com/channel/UCCX3ZAfic1j7BMH-MA2LLbg), specifically his blurb at the beginning about Manjaro
+* [Nvidia CUDA Toolkit driver Install Ubuntu Mint Linux 16.04](https://www.youtube.com/watch?v=_fj4YISX3bw) by [Librebowski](https://www.youtube.com/channel/UCCX3ZAfic1j7BMH-MA2LLbg), specifically his blurb at the beginning about Manjaro
 * [Deep Learning Setup in Arch Linux: From Start To Finish with PyTorch + TensorFlow + Nvidia CUDA + Anaconda](https://medium.com/@k_efth/deep-learning-in-arch-linux-from-start-to-finish-with-pytorch-tensorflow-nvidia-cuda-9a873c2252ed) by [Kyriakosi Efthymiadis](https://medium.com/@k_efth?source=post_header_lockup)
-* The official [Tensorflow documentation](https://www.tensorflow.org/install/install_sources) for how to install it from source. Great guide, but some sections are already dated.
+* The official [Tensorflow documentation](https://www.tensorflow.org/install/install_sources) for how to install it from source. Great guide, but some sections are already dated. Take instructions with a grain of salt.
 
 ## Specs
 
