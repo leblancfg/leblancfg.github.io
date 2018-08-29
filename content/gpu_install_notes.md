@@ -6,11 +6,13 @@ Slug: installing-cuda-cudnn-tensorflow-nvidia-gtx960
 Authors: François Leblanc
 Summary: An in-depth, step-by-step guide to installing CUDA, CuDNN and Tensorflow on Linux with an NVIDIA GeFORCE GTX960 graphics card.
 
-I've finally done it. After 50+ hours spent trying to install GPU support for Tensorflow over the span of a year and a half, I have finally done it. I'm happy to say that I have CUDA 9.2, CuDNN 7.2, and compiled Tensorflow from source well enough that I can train a Resnet on Imagenet-100 in a barely decent amount of time. Take that, cloud!
+I've finally done it. After 50+ hours spent trying to install GPU support for Tensorflow over the span of a year and a half, I have finally done it. I'm happy to say that I have CUDA 9.2, CuDNN 7.2, and compiled Tensorflow from source well enough that I can train a Resnet on Imagenet-100 in a barely decent amount of time by 2018 standards. Take that, cloud!
 
-Now, NVIDIA has had a notoriously bad driver support for Linux, which famously led to Mr Torvalds flipping a finger directed at them in a 2012 interview. And even today it is exceedingly hard to not pull your hair out trying to do so. Having spent many, many days configuring it and getting a collection of black screens, consoles and no-boots, here's what it took to install tensorflow on my machine.
+These notes aren't coming from an expert to be used as a flawless guide for others. I was not very knowledgeable of Linux hardware debugging when I first started this journey back in 2016, and am still now very much learning.
 
-I ended up using the Manjaro distribution, as it was the only one between Ubuntu, Linux Mint, Scientific Linux and Debian to just work out of the box. After further experimentation, I have to say I've grown quite used to using `pacman` instead of `apt`. They also support a community edition that comes bundled with the i3 window manager, which greatly fits my obsession for the last year to go mouseless (as possible). But that's another blog post.
+That being said, NVIDIA has had a notoriously bad driver support for Linux, which famously led to Mr Torvalds flipping a finger directed at them in a 2012 interview. And even today it is exceedingly hard to not pull your hair out trying to do so. Having spent many, many days configuring it and getting a collection of black screens, consoles and no-boots, here's what it took to install tensorflow on my machine.
+
+I ended up using the Manjaro distribution, as it was the only one between Ubuntu 14, 16 and 18, Linux Mint 18 and 19, Scientific Linux and Debian Jessie to just work out of the box. Even though it gets unrequited love from many fans, Arch Linux was a no-go: I still don't believe it a good use of my time to learn to build my OS from the ground up. After further experimentation in the past months, I have to say I've grown quite used to using `pacman` instead of `apt`. Manjaro also offers a community edition that comes bundled with the i3 window manager, which greatly fits my obsession for the last years to go mouseless (as possible). But that's another blog post.
 
 I assume that many people have gone through the same steps as I have, and I would blame none of them for having given up before reaching the end. If there's one lesson to learn from this situation, it's that your calculated ROI on purchasing a (or many) GPUs for training neural networks should consider the possible time it will take to troubleshoot their installation.
 
@@ -104,5 +106,5 @@ And finally, installing with pip (the exact filename might change in your case):
 
     cd ~
     python -c "import tensorflow as tf;hello = tf.constant('Hello, TensorFlow!');\
-    sess = tf.Session();print(sess.run(hello));'
+    sess = tf.Session();print(sess.run(hello));"
 
