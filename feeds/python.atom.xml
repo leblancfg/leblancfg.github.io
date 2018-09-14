@@ -1064,12 +1064,29 @@ I end up using &lt;a href=""&gt;geopandas&lt;/a&gt; on a regular basis, and one 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing code_cell rendered"&gt;
 &lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In [ ]:&lt;/div&gt;
+&lt;div class="prompt input_prompt"&gt;In [47]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="input_area"&gt;
 &lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;points&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;Point&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;]),&lt;/span&gt; &lt;span class="n"&gt;Point&lt;/span&gt;&lt;span class="p"&gt;([&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;])]&lt;/span&gt;
 &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;points&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+&lt;div class="output_area"&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_text output_error"&gt;
+&lt;pre&gt;
+&lt;span class="ansi-red-intense-fg ansi-bold"&gt;---------------------------------------------------------------------------&lt;/span&gt;
+&lt;span class="ansi-red-intense-fg ansi-bold"&gt;TypeError&lt;/span&gt;                                 Traceback (most recent call last)
+&lt;span class="ansi-green-intense-fg ansi-bold"&gt;&amp;lt;ipython-input-47-bf8d7d6f42c6&amp;gt;&lt;/span&gt; in &lt;span class="ansi-cyan-fg"&gt;&amp;lt;module&amp;gt;&lt;/span&gt;&lt;span class="ansi-blue-intense-fg ansi-bold"&gt;()&lt;/span&gt;
+&lt;span class="ansi-green-fg"&gt;      1&lt;/span&gt; points &lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;=&lt;/span&gt; &lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;[&lt;/span&gt;Point&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;(&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;[&lt;/span&gt;&lt;span class="ansi-cyan-intense-fg ansi-bold"&gt;0&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;,&lt;/span&gt; &lt;span class="ansi-cyan-intense-fg ansi-bold"&gt;0&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;]&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;)&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;,&lt;/span&gt; Point&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;(&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;[&lt;/span&gt;&lt;span class="ansi-cyan-intense-fg ansi-bold"&gt;1&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;,&lt;/span&gt; &lt;span class="ansi-cyan-intense-fg ansi-bold"&gt;1&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;]&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;)&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;]&lt;/span&gt;
+&lt;span class="ansi-green-intense-fg ansi-bold"&gt;----&amp;gt; 2&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt; &lt;/span&gt;print&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;(&lt;/span&gt;len&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;(&lt;/span&gt;set&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;(&lt;/span&gt;points&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;)&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;)&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;)&lt;/span&gt;
+
+&lt;span class="ansi-red-intense-fg ansi-bold"&gt;TypeError&lt;/span&gt;: unhashable type: 'Point'&lt;/pre&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1084,12 +1101,52 @@ I end up using &lt;a href=""&gt;geopandas&lt;/a&gt; on a regular basis, and one 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing code_cell rendered"&gt;
 &lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In [ ]:&lt;/div&gt;
+&lt;div class="prompt input_prompt"&gt;In [48]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="input_area"&gt;
 &lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;world&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;gpd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read_file&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;gpd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;datasets&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_path&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;'naturalearth_lowres'&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;world&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'geometry'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;unique&lt;/span&gt;&lt;span class="p"&gt;()))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+&lt;div class="output_area"&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_text output_error"&gt;
+&lt;pre&gt;
+&lt;span class="ansi-red-intense-fg ansi-bold"&gt;---------------------------------------------------------------------------&lt;/span&gt;
+&lt;span class="ansi-red-intense-fg ansi-bold"&gt;TypeError&lt;/span&gt;                                 Traceback (most recent call last)
+&lt;span class="ansi-green-intense-fg ansi-bold"&gt;&amp;lt;ipython-input-48-168312a37ad7&amp;gt;&lt;/span&gt; in &lt;span class="ansi-cyan-fg"&gt;&amp;lt;module&amp;gt;&lt;/span&gt;&lt;span class="ansi-blue-intense-fg ansi-bold"&gt;()&lt;/span&gt;
+&lt;span class="ansi-green-fg"&gt;      1&lt;/span&gt; world &lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;=&lt;/span&gt; gpd&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;.&lt;/span&gt;read_file&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;(&lt;/span&gt;gpd&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;.&lt;/span&gt;datasets&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;.&lt;/span&gt;get_path&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;(&lt;/span&gt;&lt;span class="ansi-blue-intense-fg ansi-bold"&gt;'naturalearth_lowres'&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;)&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;)&lt;/span&gt;
+&lt;span class="ansi-green-intense-fg ansi-bold"&gt;----&amp;gt; 2&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt; &lt;/span&gt;print&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;(&lt;/span&gt;len&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;(&lt;/span&gt;world&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;[&lt;/span&gt;&lt;span class="ansi-blue-intense-fg ansi-bold"&gt;'geometry'&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;]&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;.&lt;/span&gt;unique&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;(&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;)&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;)&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;)&lt;/span&gt;
+
+&lt;span class="ansi-green-intense-fg ansi-bold"&gt;~\AppData\Local\Continuum\anaconda3\lib\site-packages\pandas\core\series.py&lt;/span&gt; in &lt;span class="ansi-cyan-fg"&gt;unique&lt;/span&gt;&lt;span class="ansi-blue-intense-fg ansi-bold"&gt;(self)&lt;/span&gt;
+&lt;span class="ansi-green-fg"&gt;   1491&lt;/span&gt;         Categories &lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;(&lt;/span&gt;&lt;span class="ansi-cyan-intense-fg ansi-bold"&gt;3&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;,&lt;/span&gt; object&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;)&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;:&lt;/span&gt; &lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;[&lt;/span&gt;a &lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;&amp;lt;&lt;/span&gt; b &lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;&amp;lt;&lt;/span&gt; c&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;]&lt;/span&gt;
+&lt;span class="ansi-green-fg"&gt;   1492&lt;/span&gt;         """
+&lt;span class="ansi-green-intense-fg ansi-bold"&gt;-&amp;gt; 1493&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;         &lt;/span&gt;result &lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;=&lt;/span&gt; super&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;(&lt;/span&gt;Series&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;,&lt;/span&gt; self&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;)&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;.&lt;/span&gt;unique&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;(&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;)&lt;/span&gt;
+&lt;span class="ansi-green-fg"&gt;   1494&lt;/span&gt; 
+&lt;span class="ansi-green-fg"&gt;   1495&lt;/span&gt;         &lt;span class="ansi-green-intense-fg ansi-bold"&gt;if&lt;/span&gt; is_datetime64tz_dtype&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;(&lt;/span&gt;self&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;.&lt;/span&gt;dtype&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;)&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;:&lt;/span&gt;
+
+&lt;span class="ansi-green-intense-fg ansi-bold"&gt;~\AppData\Local\Continuum\anaconda3\lib\site-packages\pandas\core\base.py&lt;/span&gt; in &lt;span class="ansi-cyan-fg"&gt;unique&lt;/span&gt;&lt;span class="ansi-blue-intense-fg ansi-bold"&gt;(self)&lt;/span&gt;
+&lt;span class="ansi-green-fg"&gt;   1047&lt;/span&gt;         &lt;span class="ansi-green-intense-fg ansi-bold"&gt;else&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;:&lt;/span&gt;
+&lt;span class="ansi-green-fg"&gt;   1048&lt;/span&gt;             &lt;span class="ansi-green-intense-fg ansi-bold"&gt;from&lt;/span&gt; pandas&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;.&lt;/span&gt;core&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;.&lt;/span&gt;algorithms &lt;span class="ansi-green-intense-fg ansi-bold"&gt;import&lt;/span&gt; unique1d
+&lt;span class="ansi-green-intense-fg ansi-bold"&gt;-&amp;gt; 1049&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;             &lt;/span&gt;result &lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;=&lt;/span&gt; unique1d&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;(&lt;/span&gt;values&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;)&lt;/span&gt;
+&lt;span class="ansi-green-fg"&gt;   1050&lt;/span&gt; 
+&lt;span class="ansi-green-fg"&gt;   1051&lt;/span&gt;         &lt;span class="ansi-green-intense-fg ansi-bold"&gt;return&lt;/span&gt; result
+
+&lt;span class="ansi-green-intense-fg ansi-bold"&gt;~\AppData\Local\Continuum\anaconda3\lib\site-packages\pandas\core\algorithms.py&lt;/span&gt; in &lt;span class="ansi-cyan-fg"&gt;unique&lt;/span&gt;&lt;span class="ansi-blue-intense-fg ansi-bold"&gt;(values)&lt;/span&gt;
+&lt;span class="ansi-green-fg"&gt;    366&lt;/span&gt; 
+&lt;span class="ansi-green-fg"&gt;    367&lt;/span&gt;     table &lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;=&lt;/span&gt; htable&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;(&lt;/span&gt;len&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;(&lt;/span&gt;values&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;)&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;)&lt;/span&gt;
+&lt;span class="ansi-green-intense-fg ansi-bold"&gt;--&amp;gt; 368&lt;/span&gt;&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;     &lt;/span&gt;uniques &lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;=&lt;/span&gt; table&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;.&lt;/span&gt;unique&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;(&lt;/span&gt;values&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;)&lt;/span&gt;
+&lt;span class="ansi-green-fg"&gt;    369&lt;/span&gt;     uniques &lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;=&lt;/span&gt; _reconstruct_data&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;(&lt;/span&gt;uniques&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;,&lt;/span&gt; dtype&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;,&lt;/span&gt; original&lt;span class="ansi-yellow-intense-fg ansi-bold"&gt;)&lt;/span&gt;
+&lt;span class="ansi-green-fg"&gt;    370&lt;/span&gt; 
+
+&lt;span class="ansi-green-intense-fg ansi-bold"&gt;pandas/_libs/hashtable_class_helper.pxi&lt;/span&gt; in &lt;span class="ansi-cyan-fg"&gt;pandas._libs.hashtable.PyObjectHashTable.unique&lt;/span&gt;&lt;span class="ansi-blue-intense-fg ansi-bold"&gt;()&lt;/span&gt;
+
+&lt;span class="ansi-red-intense-fg ansi-bold"&gt;TypeError&lt;/span&gt;: unhashable type: 'Polygon'&lt;/pre&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1113,7 +1170,7 @@ I end up using &lt;a href=""&gt;geopandas&lt;/a&gt; on a regular basis, and one 
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing code_cell rendered"&gt;
 &lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In [ ]:&lt;/div&gt;
+&lt;div class="prompt input_prompt"&gt;In [49]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="input_area"&gt;
 &lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;geometries&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;world&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s1"&gt;'geometry'&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;apply&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="k"&gt;lambda&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;x&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;wkt&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;values&lt;/span&gt;
@@ -1122,14 +1179,35 @@ I end up using &lt;a href=""&gt;geopandas&lt;/a&gt; on a regular basis, and one 
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+&lt;div class="output_area"&gt;
+&lt;div class="prompt"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;POLYGON ((61.21081709172574 35.65007233330923, 62.23065148300589 35.27066396742229, 62.9846623065766 ...
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class="cell border-box-sizing code_cell rendered"&gt;
 &lt;div class="input"&gt;
-&lt;div class="prompt input_prompt"&gt;In [ ]:&lt;/div&gt;
+&lt;div class="prompt input_prompt"&gt;In [50]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
 &lt;div class="input_area"&gt;
 &lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;set&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;geometries&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+&lt;div class="output_area"&gt;
+&lt;div class="prompt output_prompt"&gt;Out[50]:&lt;/div&gt;
+&lt;div class="output_text output_subarea output_execute_result"&gt;
+&lt;pre&gt;177&lt;/pre&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
