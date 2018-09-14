@@ -1,0 +1,7 @@
+Title: Unhashable in Python - Getting the unique number of locations in a GeoDataFrame
+Date: 2018-09-14
+Category: Python
+Tags: python, mutability, shapely, geopandas
+Slug: unhashable-python-unique-locations-geometry-geodataframe
+Authors: François Leblanc
+Summary: I encounter an unhashable type error when trying to get the unique number of geometries in a GeoDataFrame, and we learn about mutability (vs immutability) of Python objects in order to sidestep the issue.
