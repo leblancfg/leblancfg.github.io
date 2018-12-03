@@ -1,5 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com</title><link href="https://leblancfg.com/" rel="alternate"></link><link href="https://leblancfg.com/feeds/all.atom.xml" rel="self"></link><id>https://leblancfg.com/</id><updated>2018-09-14T00:00:00-04:00</updated><entry><title>Unhashable in Python - Getting the unique number of locations in a GeoDataFrame</title><link href="https://leblancfg.com/unhashable-python-unique-locations-geometry-geodataframe.html" rel="alternate"></link><published>2018-09-14T00:00:00-04:00</published><updated>2018-09-14T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-09-14:/unhashable-python-unique-locations-geometry-geodataframe.html</id><summary type="html">&lt;p&gt;I encounter an unhashable type error when trying to get the unique number of geometries in a GeoDataFrame, and we learn about mutability (vs immutability) of Python objects in order to sidestep the issue.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
+<feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com</title><link href="https://leblancfg.com/" rel="alternate"></link><link href="https://leblancfg.com/feeds/all.atom.xml" rel="self"></link><id>https://leblancfg.com/</id><updated>2018-12-03T00:00:00-05:00</updated><entry><title>Installing the Azure CLI on Manjaro (Arch) with Anaconda</title><link href="https://leblancfg.com/installing-azure-cli-on-manjaro-arch-with-anaconda.html" rel="alternate"></link><published>2018-12-03T00:00:00-05:00</published><updated>2018-12-03T00:00:00-05:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-12-03:/installing-azure-cli-on-manjaro-arch-with-anaconda.html</id><summary type="html">&lt;p&gt;A short guide to troubleshooting the installation of Microsoft's Azure Command Line Interface (CLI) on Manjaro Linux&lt;/p&gt;</summary><content type="html">&lt;p&gt;I recently got access to Azure at work a few weeks back, and was trying to connect to it from my Linux workstation. As a compromise to get NVidia drivers working for my GTX960 GPU, I have Manjaro installed on it. I wasn't expecting a really seamless installation process &amp;mdash; despite the "MS♥Linux" propaganda, that boat is going to take years to turn. Case in point out of the many we've encountered: there are no free or shared tiers for &lt;a href="https://azure.microsoft.com/en-ca/pricing/details/app-service/linux/"&gt;Web App Service&lt;/a&gt; instances for Linux.&lt;/p&gt;
+&lt;p&gt;Both &lt;code&gt;awscli&lt;/code&gt; and &lt;code&gt;gcp&lt;/code&gt; are both pip-installable, but for some reason azure CLI needs to install other dependencies. However as my home setup is a little ways off the beaten path (Manjaro, with Anaconda installed) I did hit a snag worthy of sharing.&lt;/p&gt;
+&lt;p&gt;I started with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;yaourt -S python-azure-cli --noconfirm
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;blockquote&gt;
+&lt;p&gt;N.B. that last argument is highly recomended. The azure CLI is not a single install, but rather like 100 different modules, and you will have to accept/ continue every single one of them.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;but I got the error:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;rm&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;cannot&lt;/span&gt; &lt;span class="n"&gt;remove&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/tmp/yaourt-tmp-leblancfg/aur-python-azure-storage/pkg/python-azure-storage/usr/lib/python3.?/site-packages/azure/__init__.py&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;No&lt;/span&gt; &lt;span class="n"&gt;such&lt;/span&gt; &lt;span class="n"&gt;file&lt;/span&gt; &lt;span class="n"&gt;or&lt;/span&gt; &lt;span class="n"&gt;directory&lt;/span&gt;
+&lt;span class="o"&gt;==&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;ERROR&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;A&lt;/span&gt; &lt;span class="n"&gt;failure&lt;/span&gt; &lt;span class="n"&gt;occurred&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="kd"&gt;package&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;
+    &lt;span class="n"&gt;Aborting&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;
+&lt;span class="o"&gt;==&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;ERROR&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Makepkg&lt;/span&gt; &lt;span class="n"&gt;was&lt;/span&gt; &lt;span class="n"&gt;unable&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;build&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;azure&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;storage&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;If you don't get this error and the previous incantation works for you straight away, great! I've since &lt;a href="https://aur.archlinux.org/packages/python-azure-cli/"&gt;notified the package manager&lt;/a&gt;, and hopefully this gets resolved in later versions of the package.&lt;/p&gt;
+&lt;p&gt;Fortunately, Microsoft also packages a &lt;a href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-linux?view=azure-cli-latest"&gt;distribution-independent installation script&lt;/a&gt;, which you can run with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;curl -L https://aka.ms/InstallAzureCli | bash
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I thought it was in the bag but got the error:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;ERROR&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;This&lt;/span&gt; &lt;span class="n"&gt;script&lt;/span&gt; &lt;span class="n"&gt;does&lt;/span&gt; &lt;span class="n"&gt;not&lt;/span&gt; &lt;span class="n"&gt;support&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;Python&lt;/span&gt; &lt;span class="n"&gt;Anaconda&lt;/span&gt; &lt;span class="n"&gt;environment&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="n"&gt;Create&lt;/span&gt; &lt;span class="n"&gt;an&lt;/span&gt; &lt;span class="n"&gt;Anaconda&lt;/span&gt; &lt;span class="n"&gt;virtual&lt;/span&gt; &lt;span class="n"&gt;environment&lt;/span&gt; &lt;span class="n"&gt;and&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;pip&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Well darn. I want to be able to call &lt;code&gt;az&lt;/code&gt; through the whole system, not just in a virtual env. If you get this and have Anaconda installed, here's an easy fix for you.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;pip&lt;/code&gt; is calling the python version in your &lt;code&gt;PATH&lt;/code&gt;, which it gets from the Anaconda location. Behind the scenes, Arch also has a version of Python installs, which it uses for system administration. Same applies for macOS. It's usually refered to as "system Python". To bypass this, we'll temporarily remove Anaconda from our &lt;code&gt;PATH&lt;/code&gt;, install the azure client, and reinstate the original &lt;code&gt;PATH&lt;/code&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;: the following steps mess with your &lt;code&gt;PATH&lt;/code&gt; variable. If for some reason the installation doesn't work, make sure to run the last command in the block.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/blockquote&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;echo $PATH &amp;gt; tmp
+export PATH=&amp;quot;/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/opt/cuda/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl&amp;quot;
+curl -L https://aka.ms/InstallAzureCli | bash
+export PATH=&amp;quot;$(cat tmp)&amp;quot;
+source ~/.bashrc
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;For the installation, I just used the defaults. At this point, the installation should be complete. Test with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;az login
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And make sure that your Python interpreter is back to its original state with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;import sys;print(&amp;#39;Anaconda&amp;#39; in sys.executable)&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</content><category term="linux"></category><category term="manjaro"></category><category term="arch"></category><category term="azure"></category><category term="cli"></category></entry><entry><title>Unhashable in Python - Getting the unique number of locations in a GeoDataFrame</title><link href="https://leblancfg.com/unhashable-python-unique-locations-geometry-geodataframe.html" rel="alternate"></link><published>2018-09-14T00:00:00-04:00</published><updated>2018-09-14T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-09-14:/unhashable-python-unique-locations-geometry-geodataframe.html</id><summary type="html">&lt;p&gt;I encounter an unhashable type error when trying to get the unique number of geometries in a GeoDataFrame, and we learn about mutability (vs immutability) of Python objects in order to sidestep the issue.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
