@@ -154,9 +154,7 @@
 <p>Well darn. I want to be able to call <code>az</code> through the whole system, not just in a virtual env. If you get this and have Anaconda installed, here's an easy fix for you.</p>
 <p><code>pip</code> is calling the python version in your <code>PATH</code>, which it gets from the Anaconda location. Behind the scenes, Arch also has a version of Python installs, which it uses for system administration. Same applies for macOS. It's usually refered to as "system Python". To bypass this, we'll temporarily remove Anaconda from our <code>PATH</code>, install the azure client, and reinstate the original <code>PATH</code>:</p>
 <blockquote>
-<blockquote>
 <p><strong>Warning</strong>: the following steps mess with your <code>PATH</code> variable. If for some reason the installation doesn't work, make sure to run the last command in the block.</p>
-</blockquote>
 </blockquote>
 <div class="highlight"><pre><span></span>echo $PATH &gt; tmp
 export PATH=&quot;/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/opt/cuda/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl&quot;

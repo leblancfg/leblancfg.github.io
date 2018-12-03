@@ -31,9 +31,7 @@
 &lt;p&gt;Well darn. I want to be able to call &lt;code&gt;az&lt;/code&gt; through the whole system, not just in a virtual env. If you get this and have Anaconda installed, here's an easy fix for you.&lt;/p&gt;
 &lt;p&gt;&lt;code&gt;pip&lt;/code&gt; is calling the python version in your &lt;code&gt;PATH&lt;/code&gt;, which it gets from the Anaconda location. Behind the scenes, Arch also has a version of Python installs, which it uses for system administration. Same applies for macOS. It's usually refered to as "system Python". To bypass this, we'll temporarily remove Anaconda from our &lt;code&gt;PATH&lt;/code&gt;, install the azure client, and reinstate the original &lt;code&gt;PATH&lt;/code&gt;:&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;: the following steps mess with your &lt;code&gt;PATH&lt;/code&gt; variable. If for some reason the installation doesn't work, make sure to run the last command in the block.&lt;/p&gt;
-&lt;/blockquote&gt;
 &lt;/blockquote&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;echo $PATH &amp;gt; tmp
 export PATH=&amp;quot;/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/opt/cuda/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl&amp;quot;
