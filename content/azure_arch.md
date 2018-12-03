@@ -37,7 +37,7 @@ Well darn. I want to be able to call `az` through the whole system, not just in 
 
 `pip` is calling the python version in your `PATH`, which it gets from the Anaconda location. Behind the scenes, Arch also has a version of Python installs, which it uses for system administration. Same applies for macOS. It's usually refered to as "system Python". To bypass this, we'll temporarily remove Anaconda from our `PATH`, install the azure client, and reinstate the original `PATH`:
 
->>**Warning**: the following steps mess with your `PATH` variable. If for some reason the installation doesn't work, make sure to run the last command in the block.
+>**Warning**: the following steps mess with your `PATH` variable. If for some reason the installation doesn't work, make sure to run the last command in the block.
 
     echo $PATH > tmp
     export PATH="/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/opt/cuda/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"
