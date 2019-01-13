@@ -74,5 +74,4 @@ GOOGLE_ANALYTICS = 'UA-120300361-1'
 GOOGLE_ADSENSE = {
     'ca_id': 'ca-pub-9414058741554736',    # Your AdSense ID
     'page_level_ads': True,          # Allow Page Level Ads (mobile)
-    }
 }
