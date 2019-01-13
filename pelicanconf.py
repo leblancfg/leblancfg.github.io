@@ -71,16 +71,16 @@ EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'}, }
 GOOGLE_ANALYTICS = 'UA-120300361-1'
 
 # Adsense
-AD_CODE = '3662443451'
-GOOGLE_ADSENSE = {
-    'ca_id': 'ca-pub-9414058741554736',    # Your AdSense ID
-    'page_level_ads': True,          # Allow Page Level Ads (mobile)
-    'ads': {
-        'aside': AD_CODE,          # Side bar banner (all pages)
-        'main_menu': AD_CODE,      # Banner before main menu (all pages)
-        'index_top': AD_CODE,      # Banner after main menu (index only)
-        'index_bottom': AD_CODE,   # Banner before footer (index only)
-        'article_top': AD_CODE,    # Banner after article title (article only)
-        'article_bottom': AD_CODE, # Banner after article content (article only)
-    }
-}
+# AD_CODE = '3662443451'
+# GOOGLE_ADSENSE = {
+#     'ca_id': 'ca-pub-9414058741554736',    # Your AdSense ID
+#     'page_level_ads': True,          # Allow Page Level Ads (mobile)
+#     'ads': {
+#         'aside': AD_CODE,          # Side bar banner (all pages)
+#         'main_menu': AD_CODE,      # Banner before main menu (all pages)
+#         'index_top': AD_CODE,      # Banner after main menu (index only)
+#         'index_bottom': AD_CODE,   # Banner before footer (index only)
+#         'article_top': AD_CODE,    # Banner after article title (article only)
+#         'article_bottom': AD_CODE, # Banner after article content (article only)
+#     }
+# }
