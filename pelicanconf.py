@@ -38,7 +38,7 @@ MAIN_MENU = True
 HOME_HIDE_TAGS = True
 
 LINKS = (('Kaggle', 'https://kaggle.com/leblancfg')
-         ('Résumé', '/pdf/leblancfg_CV.pdf'))
+        ('Résumé', 'https://leblancfg.com/pdf/leblancfg_CV.pdf'))
 
 SOCIAL = (('linkedin', 'https://www.linkedin.com/in/fran%C3%A7ois-leblanc-07294b106/'),
           ('github', 'https://github.com/leblancfg'),
