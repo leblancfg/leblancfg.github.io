@@ -7,4 +7,4 @@ I am currently employed at Environment and Climate Change Canada. I previously w
 
 In my free time, I enjoy reading (I’m a huge sci-fi nerd!), rock climbing, conversation, cycling, musical exploration, and of course anything food-related, from amazing cocktails, weird DIY pickles, to making the perfect pork shoulder. I share this passion with my wife, who runs a wonderful [blog chronicling her culinary experiences](https://squeezemylemon.ca). People I look up to include Frank Zappa, Richard Feynman, J.K. Rowling, Peter Norvig, and Geoffrey Hinton. You can find me on [Kaggle](https://www.kaggle.com/leblancfg), [Github](https://github.com/leblancfg), [Twitter](https://twitter.com/leblancfg1) and [LinkedIn](https://www.linkedin.com/in/françois-leblanc-07294b106).
 
-You can take a look at my résumé by clicking [here](pages/leblancfg_CV.pdf).pages/leblancfg_CV.pdf).
+You can take a look at my résumé by clicking [here](leblancfg_CV.pdf).
