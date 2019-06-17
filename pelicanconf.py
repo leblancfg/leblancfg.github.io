@@ -66,10 +66,10 @@ PLUGIN_PATHS = ["./plugins"]
 PLUGINS = ["ipynb.markup"]
 
 # Define Links
-STATIC_PATHS = ["img", "extra/CNAME", "pages/leblancfgCV.pdf"]
+STATIC_PATHS = ["img", "extra/CNAME", "pages/leblancfg_CV.pdf"]
 EXTRA_PATH_METADATA = {
     "extra/CNAME": {"path": "CNAME"},
-    "pages/leblancfgCV.pdf": {"path": "pages/leblancfgCV.pdf"},
+    "pages/leblancfgCV.pdf": {"path": "pages/leblancfg_CV.pdf"},
 }
 
 # Analytics
