@@ -1,7 +1,0 @@
-Title: An Analysis of the 2019 CrossFit Open Athlete Statistics
-Date: 2019-06-10
-Category: Sport, Python	
-Tags: python, sport, crossfit, athlete, statistics
-Slug: analysis-2019-crossfit-open-athlete-statistics
-Authors: François Leblanc
-Summary: In this article, we scrape all the publicly accessible athlete stats for the 2019 CrossFit Open, and visualize what it takes to be an average or elite Crossfitter. We look into olympic weightlifting, running, workouts, Rx vs scaled, and gymnastic movements.
