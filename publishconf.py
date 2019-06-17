@@ -8,9 +8,8 @@ sys.path.append(os.curdir)
 
 from pelicanconf import *
 
-SITEURL = 'https://leblancfg.com'
+SITEURL = "https://leblancfg.com"
 RELATIVE_URLS = False
 USE_LESS = False
 DELETE_OUTPUT_DIRECTORY = True
-GOOGLE_ANALYTICS = 'UA-120300361-1'
-
+GOOGLE_ANALYTICS = "UA-120300361-1"

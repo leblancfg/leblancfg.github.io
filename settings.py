@@ -4,14 +4,14 @@
 AUTHOR = u"François Leblanc"
 SITEURL = "http://leblancfg.com"
 SITENAME = u"François Leblanc"
-LOCALE = 'en_US.utf8'
-TIMEZONE = 'America/Toronto'
+LOCALE = "en_US.utf8"
+TIMEZONE = "America/Toronto"
 
 DISPLAY_PAGES_ON_MENU = True
 WITH_PAGINATION = True
 DEFAULT_PAGINATION = 7
-FEED_ALL_ATOM = 'feeds/all.atom.xml'
-CATEGORY_FEED_ATOM = 'feeds/%s.atom.xml'
+FEED_ALL_ATOM = "feeds/all.atom.xml"
+CATEGORY_FEED_ATOM = "feeds/%s.atom.xml"
 RELATIVE_URLS = False
 DELETE_OUTPUT_DIRECTORY = True
 
@@ -25,10 +25,10 @@ SOCIAL = (
     ("Twitter", "http://twitter.com/leblancfg1"),
 )
 
-STATIC_PATHS = ['images', 'extra/CNAME']
-EXTRA_PATH_METADATA = {'extra/CNAME': {'path': 'CNAME'},}
+STATIC_PATHS = ["images", "extra/CNAME"]
+EXTRA_PATH_METADATA = {"extra/CNAME": {"path": "CNAME"}}
 
-MARKUP = ('md', 'ipynb')
+MARKUP = ("md", "ipynb")
 
-PLUGIN_PATHS = ['./plugins']
-PLUGINS = ['ipynb.markup']
+PLUGIN_PATHS = ["./plugins"]
+PLUGINS = ["ipynb.markup"]
