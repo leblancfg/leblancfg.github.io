@@ -6,12 +6,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="HandheldFriendly" content="True" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-
-  <!-- Fix Plotly -->
-  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-  <script src="https:////cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-
     <meta name="robots" content="index, follow" />
 
   <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
@@ -157,7 +151,7 @@
 <h3>Install Manjaro from Live USB</h3>
 <p>I was getting a blank screen when trying to boot with the Non-Free Drivers option, so went with Free Drivers.</p>
 <h3>Update system</h3>
-<div class="highlight"><pre><span></span>sudo pacman -Syyu
+<div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">Syyu</span>
 </pre></div>
 
 
@@ -165,36 +159,36 @@
 <p>In my case, I wasn't able to make the regular <code>nvidia</code> package work, but had to go with the <code>390xx</code> series. This step just worked from the GUI. Go to Manjaro Settings &gt; Drivers and simply install that one.</p>
 <p>Reboot and cross your fingers.</p>
 <h3>Install CUDA and CuDNN</h3>
-<div class="highlight"><pre><span></span>sudo pacman -S cuda cudnn
+<div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">S</span> <span class="n">cuda</span> <span class="n">cudnn</span>
 </pre></div>
 
 
 <p>This next one may or may not be useful:</p>
-<div class="highlight"><pre><span></span>export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/extras/CUPTI/lib64
+<div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">LD_LIBRARY_PATH</span><span class="o">=</span><span class="err">$</span><span class="n">LD_LIBRARY_PATH</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="k">local</span><span class="o">/</span><span class="n">cuda</span><span class="o">/</span><span class="n">extras</span><span class="o">/</span><span class="n">CUPTI</span><span class="o">/</span><span class="n">lib64</span>
 </pre></div>
 
 
 <p>Reboot and cross your fingers.</p>
 <h3>Install Anaconda</h3>
 <p>Next up, we download the latest Anaconda release. Since we'll be compiling TF right after, we'll grab bazel while we're at it.</p>
-<div class="highlight"><pre><span></span>sudo pacman -S anaconda bazel
+<div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">pacman</span> <span class="o">-</span><span class="n">S</span> <span class="n">anaconda</span> <span class="n">bazel</span>
 </pre></div>
 
 
 <h3>Compile Tensorflow from source</h3>
 <p>There are no handy CUDA 9.2 wheels for tensorflow available for Linux, so you'll need to compile from source. Don't worry, it'll put hair on your chest. I also ran into r1.10 asking for the <code>keras_applications</code> Python module to be installed, so according to <a href="https://stackoverflow.com/questions/51771039/error-compiling-tensorflow-from-source-no-module-named-keras-applications">this SO post</a> I also pip-installed the following:</p>
-<div class="highlight"><pre><span></span>conda install keras
-pip install keras_applications==1.0.4 --no-deps
-pip install keras_preprocessing==1.0.2 --no-deps
-pip install h5py==2.8.0
+<div class="highlight"><pre><span></span><span class="n">conda</span> <span class="n">install</span> <span class="n">keras</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">keras_applications</span><span class="o">==</span><span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">4</span> <span class="c1">--no-deps</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">keras_preprocessing</span><span class="o">==</span><span class="mi">1</span><span class="p">.</span><span class="mi">0</span><span class="p">.</span><span class="mi">2</span> <span class="c1">--no-deps</span>
+<span class="n">pip</span> <span class="n">install</span> <span class="n">h5py</span><span class="o">==</span><span class="mi">2</span><span class="p">.</span><span class="mi">8</span><span class="p">.</span><span class="mi">0</span>
 </pre></div>
 
 
 <p>Then:</p>
-<div class="highlight"><pre><span></span>git clone https://github.com/tensorflow/tensorflow
-cd tensorflow
-git branch r1.10
-bash configure
+<div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">/</span><span class="n">tensorflow</span>
+<span class="n">cd</span> <span class="n">tensorflow</span>
+<span class="n">git</span> <span class="n">branch</span> <span class="n">r1</span><span class="p">.</span><span class="mi">10</span>
+<span class="n">bash</span> <span class="n">configure</span>
 </pre></div>
 
 
@@ -215,13 +209,13 @@ bash configure
 <li>Android: default </li>
 </ul>
 <p>And finally:</p>
-<div class="highlight"><pre><span></span>bazel build --config=opt --config=cuda //tensorflow/tools/pip_package:build_pip_package
-bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
+<div class="highlight"><pre><span></span><span class="n">bazel</span> <span class="n">build</span> <span class="c1">--config=opt --config=cuda //tensorflow/tools/pip_package:build_pip_package</span>
+<span class="n">bazel</span><span class="o">-</span><span class="n">bin</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">pip_package</span><span class="o">/</span><span class="n">build_pip_package</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">tensorflow_pkg</span>
 </pre></div>
 
 
 <p>And finally, installing with pip (the exact filename might change in your case):</p>
-<div class="highlight"><pre><span></span>sudo pip install /tmp/tensorflow_pkg/tensorflow-1.10.0-cp36-cp36m-linux_x86_64.whl
+<div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">tensorflow_pkg</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">-</span><span class="mi">1</span><span class="p">.</span><span class="mi">10</span><span class="p">.</span><span class="mi">0</span><span class="o">-</span><span class="n">cp36</span><span class="o">-</span><span class="n">cp36m</span><span class="o">-</span><span class="n">linux_x86_64</span><span class="p">.</span><span class="n">whl</span>
 </pre></div>
 
 

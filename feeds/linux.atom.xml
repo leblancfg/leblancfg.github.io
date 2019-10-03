@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com - Linux</title><link href="https://leblancfg.com/" rel="alternate"></link><link href="https://leblancfg.com/feeds/linux.atom.xml" rel="self"></link><id>https://leblancfg.com/</id><updated>2018-12-03T00:00:00-05:00</updated><subtitle>Data Science, Geospatial Python, Space Stuff</subtitle><entry><title>Installing the Azure CLI on Manjaro (Arch) with Anaconda</title><link href="https://leblancfg.com/installing-azure-cli-on-manjaro-arch-with-anaconda.html" rel="alternate"></link><published>2018-12-03T00:00:00-05:00</published><updated>2018-12-03T00:00:00-05:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-12-03:/installing-azure-cli-on-manjaro-arch-with-anaconda.html</id><summary type="html">&lt;p&gt;A short guide to troubleshooting the installation of Microsoft's Azure Command Line Interface (CLI) on Manjaro Linux&lt;/p&gt;</summary><content type="html">&lt;p&gt;I recently got access to Azure at work a few weeks back, and was trying to connect to it from my Linux workstation. As a compromise to get NVidia drivers working for my GTX960 GPU, I have Manjaro installed on it. I wasn't expecting a really seamless installation process &amp;mdash; despite the "MS♥Linux" propaganda, that boat is going to take years to turn. Case in point out of the many we've encountered: there are no free or shared tiers for &lt;a href="https://azure.microsoft.com/en-ca/pricing/details/app-service/linux/"&gt;Web App Service&lt;/a&gt; instances for Linux.&lt;/p&gt;
 &lt;p&gt;Both &lt;code&gt;awscli&lt;/code&gt; and &lt;code&gt;gcp&lt;/code&gt; are both pip-installable, but for some reason azure CLI needs to install other dependencies. However as my home setup is a little ways off the beaten path (Manjaro, with Anaconda installed) I did hit a snag worthy of sharing.&lt;/p&gt;
 &lt;p&gt;I started with:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;yaourt -S python-azure-cli --noconfirm
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;yaourt&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;S&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;azure&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;cli&lt;/span&gt; &lt;span class="c1"&gt;--noconfirm&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -11,15 +11,15 @@
 &lt;/blockquote&gt;
 &lt;p&gt;but I got the error:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;rm&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;cannot&lt;/span&gt; &lt;span class="n"&gt;remove&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/tmp/yaourt-tmp-leblancfg/aur-python-azure-storage/pkg/python-azure-storage/usr/lib/python3.?/site-packages/azure/__init__.py&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;No&lt;/span&gt; &lt;span class="n"&gt;such&lt;/span&gt; &lt;span class="n"&gt;file&lt;/span&gt; &lt;span class="n"&gt;or&lt;/span&gt; &lt;span class="n"&gt;directory&lt;/span&gt;
-&lt;span class="o"&gt;==&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;gt&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;ERROR&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;A&lt;/span&gt; &lt;span class="n"&gt;failure&lt;/span&gt; &lt;span class="n"&gt;occurred&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="kd"&gt;package&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;
+&lt;span class="o"&gt;==&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;ERROR&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;A&lt;/span&gt; &lt;span class="n"&gt;failure&lt;/span&gt; &lt;span class="n"&gt;occurred&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="kd"&gt;package&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;
     &lt;span class="n"&gt;Aborting&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;
-&lt;span class="o"&gt;==&amp;amp;&lt;/span&gt;&lt;span class="n"&gt;gt&lt;/span&gt;&lt;span class="o"&gt;;&lt;/span&gt; &lt;span class="n"&gt;ERROR&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Makepkg&lt;/span&gt; &lt;span class="n"&gt;was&lt;/span&gt; &lt;span class="n"&gt;unable&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;build&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;azure&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;storage&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;span class="o"&gt;==&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;ERROR&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Makepkg&lt;/span&gt; &lt;span class="n"&gt;was&lt;/span&gt; &lt;span class="n"&gt;unable&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;build&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;azure&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;storage&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;If you don't get this error and the previous incantation works for you straight away, great! I've since &lt;a href="https://aur.archlinux.org/packages/python-azure-cli/"&gt;notified the package manager&lt;/a&gt;, and hopefully this gets resolved in later versions of the package.&lt;/p&gt;
 &lt;p&gt;Fortunately, Microsoft also packages a &lt;a href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-linux?view=azure-cli-latest"&gt;distribution-independent installation script&lt;/a&gt;, which you can run with:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;curl -L https://aka.ms/InstallAzureCli | bash
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;curl&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;L&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;aka&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ms&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;InstallAzureCli&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;bash&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -33,16 +33,16 @@
 &lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;: the following steps mess with your &lt;code&gt;PATH&lt;/code&gt; variable. If for some reason the installation doesn't work, make sure to run the second-to-last command in the block.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;echo $PATH &amp;amp;gt; tmp
-export PATH=&amp;quot;/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/opt/cuda/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl&amp;quot;
-curl -L https://aka.ms/InstallAzureCli | bash
-export PATH=&amp;quot;$(cat tmp)&amp;quot;
-source ~/.bashrc
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;PATH&lt;/span&gt; &lt;span class="o"&gt;&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;tmp&lt;/span&gt;
+&lt;span class="n"&gt;export&lt;/span&gt; &lt;span class="n"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/opt/cuda/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;curl&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;L&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;aka&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;ms&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;InstallAzureCli&lt;/span&gt; &lt;span class="o"&gt;|&lt;/span&gt; &lt;span class="n"&gt;bash&lt;/span&gt;
+&lt;span class="n"&gt;export&lt;/span&gt; &lt;span class="n"&gt;PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="ss"&gt;&amp;quot;$(cat tmp)&amp;quot;&lt;/span&gt;
+&lt;span class="k"&gt;source&lt;/span&gt; &lt;span class="o"&gt;~/&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bashrc&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;For the installation, I just used the defaults. At this point, the installation should be complete. Test with:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;az login
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;az&lt;/span&gt; &lt;span class="n"&gt;login&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -73,7 +73,7 @@ source ~/.bashrc
 &lt;h3&gt;Install Manjaro from Live USB&lt;/h3&gt;
 &lt;p&gt;I was getting a blank screen when trying to boot with the Non-Free Drivers option, so went with Free Drivers.&lt;/p&gt;
 &lt;h3&gt;Update system&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo pacman -Syyu
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;pacman&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;Syyu&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -81,36 +81,36 @@ source ~/.bashrc
 &lt;p&gt;In my case, I wasn't able to make the regular &lt;code&gt;nvidia&lt;/code&gt; package work, but had to go with the &lt;code&gt;390xx&lt;/code&gt; series. This step just worked from the GUI. Go to Manjaro Settings &amp;gt; Drivers and simply install that one.&lt;/p&gt;
 &lt;p&gt;Reboot and cross your fingers.&lt;/p&gt;
 &lt;h3&gt;Install CUDA and CuDNN&lt;/h3&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo pacman -S cuda cudnn
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;pacman&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;S&lt;/span&gt; &lt;span class="n"&gt;cuda&lt;/span&gt; &lt;span class="n"&gt;cudnn&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;This next one may or may not be useful:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/extras/CUPTI/lib64
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;export&lt;/span&gt; &lt;span class="n"&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="err"&gt;$&lt;/span&gt;&lt;span class="n"&gt;LD_LIBRARY_PATH&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="k"&gt;local&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;cuda&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;extras&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;CUPTI&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib64&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Reboot and cross your fingers.&lt;/p&gt;
 &lt;h3&gt;Install Anaconda&lt;/h3&gt;
 &lt;p&gt;Next up, we download the latest Anaconda release. Since we'll be compiling TF right after, we'll grab bazel while we're at it.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo pacman -S anaconda bazel
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;pacman&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;S&lt;/span&gt; &lt;span class="n"&gt;anaconda&lt;/span&gt; &lt;span class="n"&gt;bazel&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;h3&gt;Compile Tensorflow from source&lt;/h3&gt;
 &lt;p&gt;There are no handy CUDA 9.2 wheels for tensorflow available for Linux, so you'll need to compile from source. Don't worry, it'll put hair on your chest. I also ran into r1.10 asking for the &lt;code&gt;keras_applications&lt;/code&gt; Python module to be installed, so according to &lt;a href="https://stackoverflow.com/questions/51771039/error-compiling-tensorflow-from-source-no-module-named-keras-applications"&gt;this SO post&lt;/a&gt; I also pip-installed the following:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;conda install keras
-pip install keras_applications==1.0.4 --no-deps
-pip install keras_preprocessing==1.0.2 --no-deps
-pip install h5py==2.8.0
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;conda&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;keras&lt;/span&gt;
+&lt;span class="n"&gt;pip&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;keras_applications&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;4&lt;/span&gt; &lt;span class="c1"&gt;--no-deps&lt;/span&gt;
+&lt;span class="n"&gt;pip&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;keras_preprocessing&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="c1"&gt;--no-deps&lt;/span&gt;
+&lt;span class="n"&gt;pip&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="n"&gt;h5py&lt;/span&gt;&lt;span class="o"&gt;==&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;Then:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;git clone https://github.com/tensorflow/tensorflow
-cd tensorflow
-git branch r1.10
-bash configure
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;clone&lt;/span&gt; &lt;span class="n"&gt;https&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="o"&gt;//&lt;/span&gt;&lt;span class="n"&gt;github&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;com&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tensorflow&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tensorflow&lt;/span&gt;
+&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="n"&gt;tensorflow&lt;/span&gt;
+&lt;span class="n"&gt;git&lt;/span&gt; &lt;span class="n"&gt;branch&lt;/span&gt; &lt;span class="n"&gt;r1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;
+&lt;span class="n"&gt;bash&lt;/span&gt; &lt;span class="n"&gt;configure&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
@@ -131,13 +131,13 @@ bash configure
 &lt;li&gt;Android: default &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;And finally:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;bazel build --config=opt --config=cuda //tensorflow/tools/pip_package:build_pip_package
-bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;bazel&lt;/span&gt; &lt;span class="n"&gt;build&lt;/span&gt; &lt;span class="c1"&gt;--config=opt --config=cuda //tensorflow/tools/pip_package:build_pip_package&lt;/span&gt;
+&lt;span class="n"&gt;bazel&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;bin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tensorflow&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tools&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;pip_package&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;build_pip_package&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tensorflow_pkg&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
 &lt;p&gt;And finally, installing with pip (the exact filename might change in your case):&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;sudo pip install /tmp/tensorflow_pkg/tensorflow-1.10.0-cp36-cp36m-linux_x86_64.whl
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;sudo&lt;/span&gt; &lt;span class="n"&gt;pip&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tmp&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tensorflow_pkg&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;tensorflow&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;cp36&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;cp36m&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;linux_x86_64&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="n"&gt;whl&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
 
