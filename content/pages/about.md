@@ -1,7 +1,7 @@
 title: About
 slug: about
 
-I’m interested in data, Earth Observation, statistical learning, evolution, biological and theoretical physics, neural networks, food science, and more specifically looking to further explore geospatial analysis, generative algorithms, and adaptive learning.
+I’m interested in data, Earth Observation, statistical learning, evolution, biological and theoretical physics, neural networks, food science, and more specifically looking to further explore geospatial analysis, decision support, and adaptive learning.
 
 I am currently employed at Treasury Board of Canada Secretariat as a Data Scientist. I previously worked for the Canadian Space Agency, Environment and Climate Change Canada, and Transport Canada. Before that, I spent many years playing music and tending bar. I have a B.Sc. in Geology, with most senior-level credits in Physics. I am currently pursuing the Data Science postgraduate certificate from UC Irvine Extension.
 
