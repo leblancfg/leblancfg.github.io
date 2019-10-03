@@ -144,7 +144,7 @@
     <p>I recently got access to Azure at work a few weeks back, and was trying to connect to it from my Linux workstation. As a compromise to get NVidia drivers working for my GTX960 GPU, I have Manjaro installed on it. I wasn't expecting a really seamless installation process &mdash; despite the "MS♥Linux" propaganda, that boat is going to take years to turn. Case in point out of the many we've encountered: there are no free or shared tiers for <a href="https://azure.microsoft.com/en-ca/pricing/details/app-service/linux/">Web App Service</a> instances for Linux.</p>
 <p>Both <code>awscli</code> and <code>gcp</code> are both pip-installable, but for some reason azure CLI needs to install other dependencies. However as my home setup is a little ways off the beaten path (Manjaro, with Anaconda installed) I did hit a snag worthy of sharing.</p>
 <p>I started with:</p>
-<div class="highlight"><pre><span></span><span class="n">yaourt</span> <span class="o">-</span><span class="n">S</span> <span class="n">python</span><span class="o">-</span><span class="n">azure</span><span class="o">-</span><span class="n">cli</span> <span class="c1">--noconfirm</span>
+<div class="highlight"><pre><span></span>yaourt -S python-azure-cli --noconfirm
 </pre></div>
 
 
@@ -161,7 +161,7 @@
 
 <p>If you don't get this error and the previous incantation works for you straight away, great! I've since <a href="https://aur.archlinux.org/packages/python-azure-cli/">notified the package manager</a>, and hopefully this gets resolved in later versions of the package.</p>
 <p>Fortunately, Microsoft also packages a <a href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-linux?view=azure-cli-latest">distribution-independent installation script</a>, which you can run with:</p>
-<div class="highlight"><pre><span></span><span class="n">curl</span> <span class="o">-</span><span class="n">L</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">aka</span><span class="p">.</span><span class="n">ms</span><span class="o">/</span><span class="n">InstallAzureCli</span> <span class="o">|</span> <span class="n">bash</span>
+<div class="highlight"><pre><span></span>curl -L https://aka.ms/InstallAzureCli | bash
 </pre></div>
 
 
@@ -175,16 +175,16 @@
 <blockquote>
 <p><strong>Warning</strong>: the following steps mess with your <code>PATH</code> variable. If for some reason the installation doesn't work, make sure to run the second-to-last command in the block.</p>
 </blockquote>
-<div class="highlight"><pre><span></span><span class="n">echo</span> <span class="err">$</span><span class="n">PATH</span> <span class="o">&gt;</span> <span class="n">tmp</span>
-<span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="ss">&quot;/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/opt/cuda/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl&quot;</span>
-<span class="n">curl</span> <span class="o">-</span><span class="n">L</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">aka</span><span class="p">.</span><span class="n">ms</span><span class="o">/</span><span class="n">InstallAzureCli</span> <span class="o">|</span> <span class="n">bash</span>
-<span class="n">export</span> <span class="n">PATH</span><span class="o">=</span><span class="ss">&quot;$(cat tmp)&quot;</span>
-<span class="k">source</span> <span class="o">~/</span><span class="p">.</span><span class="n">bashrc</span>
+<div class="highlight"><pre><span></span>echo $PATH &gt; tmp
+export PATH=&quot;/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/opt/cuda/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl&quot;
+curl -L https://aka.ms/InstallAzureCli | bash
+export PATH=&quot;$(cat tmp)&quot;
+source ~/.bashrc
 </pre></div>
 
 
 <p>For the installation, I just used the defaults. At this point, the installation should be complete. Test with:</p>
-<div class="highlight"><pre><span></span><span class="n">az</span> <span class="n">login</span>
+<div class="highlight"><pre><span></span>az login
 </pre></div>
 
 
