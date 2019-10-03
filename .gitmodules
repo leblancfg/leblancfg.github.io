@@ -4,3 +4,6 @@
 [submodule "Flex"]
 	path = Flex
 	url = https://github.com/alexandrevicenzi/Flex
+[submodule "plugins/pelican-plotly"]
+	path = plugins/pelican-plotly
+	url = git://github.com/ran404/pelican-plotly.git
