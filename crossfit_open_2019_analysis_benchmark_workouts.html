@@ -12,6 +12,12 @@
 
     <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/stylesheet/style.min.css">
 
+
+  <!-- Plotly -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+  <script>requirejs.config({paths: { 'plotly': ['https://cdn.plot.ly/plotly-latest.min']},});if(!window.Plotly) {{require(['plotly'],function(plotly) {window.Plotly=plotly;});}}</script>
+
   <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/pygments/github.min.css">
   <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/brands.css">
@@ -1294,7 +1300,7 @@ h6:hover .anchor-link {
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>I've collected profile data for the 1,706,699 CrossFit athletes that have ever (presumably) participated in the CrossFit Open. Having all these statistics in one place is useful as a reference for comparison, and interesting to see how Open athletes fill their profile.</p>
 <p>In this article, we'll take a final look at some benchmark CrossFit workouts included in the athlete self-reported statistics. These include the famous Fran and Grace, as well as some more obscure ones like Filthy Fifty.</p>
-<p>It is important to remember that these statistics are <strong>all optional and self-reported</strong>. Right off the bat, the biggest problem is that people will typically not report the numbers they aren't proud of. So it's important to take this analysis with a grain of salt, and not treat it like data collected to write a scientific paper. <strong>We can still draw some very important conclusions</strong> from the analysis, keeping in mind that the numbers are probably <strong>rounded</strong>, <strong>excluded</strong>, <strong>outdated</strong> or outright <strong>false</strong>, all in order to look good. I'll do my best to include the sample size and trends in the analyses.</p>
+<p>It is important to remember that these statistics are <strong>all optional and self-reported</strong>. Right off the bat, the biggest problem is that people will typically not report the numbers they aren't proud of, or at least massage the truth a little. It might be as simple as rounding off a number here and there. So it's important to take this analysis with a grain of salt, and not treat it like data collected to write a scientific paper. <strong>We can still draw some very important conclusions</strong> from the analysis, keeping in mind that the numbers are probably <strong>rounded</strong>, <strong>excluded</strong>, <strong>outdated</strong> or outright <strong>false</strong>, all in order to look good. I'll do my best to include the sample size and trends in the analyses.</p>
 <h3 id="Goal">Goal<a class="anchor-link" href="#Goal">&#182;</a></h3><p>The reason behind this analysis is &mdash; you've guessed it, trying to optimize my training and working on my weaknesses. The sport of CrossFit is about being an all-round athlete, so if I see that I'm in the 15<sup>th</sup> percentile for one movement but 85<sup>th</sup> in another, I'll want to work on the first one instead of the second. Of course, any coach worth his/her salt would be able to tell you this, but it's another to be able to put a number on it. Put succintly:</p>
 <blockquote><p>To provide CrossFit athletes with a tool to see where their performance sits in regards to a small number of exercise standards and benchmarks. With this tool, athletes should be able to see:</p>
 <ul>
