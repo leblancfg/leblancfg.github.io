@@ -2004,8 +2004,8 @@ Python provides a few higher order (or functional programming) functions in the 
 <div class="prompt input_prompt">In&nbsp;[16]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>it
-<span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">square</span><span class="p">,</span> <span class="n">test</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
+sum(map(square, test))
 </pre></div>
 
     </div>
@@ -2036,8 +2036,8 @@ Python provides a few higher order (or functional programming) functions in the 
 <div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>it
-<span class="nb">sum</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">exp_2</span><span class="p">,</span> <span class="n">test</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
+sum(map(exp_2, test))
 </pre></div>
 
     </div>
@@ -2217,9 +2217,9 @@ Python provides a few higher order (or functional programming) functions in the 
 <div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>it
-<span class="c1"># Can&#39;t cast np.square to `uint32` for some reason, but `int64` works fine</span>
-<span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">test_np</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;int64&#39;</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
+# Can&#39;t cast np.square to `uint32` for some reason, but `int64` works fine
+np.sum(np.square(test_np, dtype=&#39;int64&#39;))
 </pre></div>
 
     </div>
@@ -2250,9 +2250,9 @@ Python provides a few higher order (or functional programming) functions in the 
 <div class="prompt input_prompt">In&nbsp;[23]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>it
-<span class="c1"># Or we can specify `uint32` directly from np.arange</span>
-<span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1024</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;uint32&#39;</span><span class="p">)))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">timeit</span>
+# Or we can specify `uint32` directly from np.arange
+np.sum(np.square(np.arange(3, 1024**2, dtype=&#39;uint32&#39;)))
 </pre></div>
 
     </div>
