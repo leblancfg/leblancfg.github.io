@@ -5,6 +5,14 @@
     - `git submodule init`
     - `git submodule update`
 2. `conda install -c conda-forge pelican ghp-import`
+3. Fix Flex base template &mdash; add the following before the stylesheets:
+
+      {% raw %}
+      <!-- Plotly -->
+      <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
+      <script>requirejs.config({paths: { 'plotly': ['https://cdn.plot.ly/plotly-latest.min']},});if(!window.Plotly) {{require(['plotly'],function(plotly) {window.Plotly=plotly;});}}</script>
+      {% endraw %}
 
 ## New article
 Once new content is written or edited, rebuild the blog to leblancfg.github.io with the following:
