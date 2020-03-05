@@ -1,0 +1,7 @@
+Title: Benchmarks for writing pandas DataFrames to SQL Server (ODBC)
+Date: 2020-03-2
+Category: Python, SQL, MS
+Tags: python, SQL Server
+Slug: benchmarks_writing_pandas_dataframe_SQL_Server
+Authors: François Leblanc
+Summary: In this article, we benchmark various methods to write data to MS SQL Server from pandas DataFrames to see which is the fastest.
