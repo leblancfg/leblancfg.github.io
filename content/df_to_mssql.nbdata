@@ -1,5 +1,5 @@
 Title: Benchmarks for writing pandas DataFrames to SQL Server (ODBC)
-Date: 2020-03-16
+Date: 2020-03-15
 Category: Python, SQL, MS
 Tags: python, SQL Server
 Slug: benchmarks_writing_pandas_dataframe_SQL_Server
