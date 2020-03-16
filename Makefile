@@ -128,4 +128,7 @@ refresh:
 	git commit -m "Updated content"
 	git push origin dev
 
-.PHONY: html help clean regenerate serve serve-global devserver stopserver publish ssh_upload rsync_upload dropbox_upload ftp_upload s3_upload cf_upload github refresh
+initial_setup:
+	git submodule update --init --recursive
+
+.PHONY: html help clean regenerate serve serve-global devserver stopserver publish ssh_upload rsync_upload dropbox_upload ftp_upload s3_upload cf_upload github refresh initial_setup

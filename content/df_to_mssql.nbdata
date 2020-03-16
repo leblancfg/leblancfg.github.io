@@ -4,4 +4,4 @@ Category: Python, SQL, MS
 Tags: python, SQL Server
 Slug: benchmarks_writing_pandas_dataframe_SQL_Server
 Authors: François Leblanc
-Summary: In this article, we benchmark various methods to write data to MS SQL Server from pandas DataFrames to see which is the fastest.
+Summary: In this article, we benchmark various methods to write data to MS SQL Server from pandas DataFrames to see which is the fastest. We compare 'multi', 'fast_executemany' and turbodbc and find the best candidate.
