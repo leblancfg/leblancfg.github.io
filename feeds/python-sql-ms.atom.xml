@@ -1,0 +1,2450 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com - Python, SQL, MS</title><link href="https://leblancfg.com/" rel="alternate"></link><link href="https://leblancfg.com/feeds/python-sql-ms.atom.xml" rel="self"></link><id>https://leblancfg.com/</id><updated>2020-03-15T00:00:00-04:00</updated><subtitle>Data Science, Geospatial Python, Space Stuff</subtitle><entry><title>Benchmarks for writing pandas DataFrames to SQL Server (ODBC)</title><link href="https://leblancfg.com/benchmarks_writing_pandas_dataframe_SQL_Server.html" rel="alternate"></link><published>2020-03-15T00:00:00-04:00</published><updated>2020-03-15T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2020-03-15:/benchmarks_writing_pandas_dataframe_SQL_Server.html</id><summary type="html">&lt;p&gt;In this article, we benchmark various methods to write data to MS SQL Server from pandas DataFrames to see which is the fastest. We compare 'multi', 'fast_executemany' and turbodbc and find the best candidate.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
+*
+* IPython notebook
+*
+*/
+/* CSS font colors for translated ANSI escape sequences */
+/* The color values are a mix of
+   http://www.xcolors.net/dl/baskerville-ivorylight and
+   http://www.xcolors.net/dl/euphrasia */
+.ansi-black-fg {
+  color: #3E424D;
+}
+.ansi-black-bg {
+  background-color: #3E424D;
+}
+.ansi-black-intense-fg {
+  color: #282C36;
+}
+.ansi-black-intense-bg {
+  background-color: #282C36;
+}
+.ansi-red-fg {
+  color: #E75C58;
+}
+.ansi-red-bg {
+  background-color: #E75C58;
+}
+.ansi-red-intense-fg {
+  color: #B22B31;
+}
+.ansi-red-intense-bg {
+  background-color: #B22B31;
+}
+.ansi-green-fg {
+  color: #00A250;
+}
+.ansi-green-bg {
+  background-color: #00A250;
+}
+.ansi-green-intense-fg {
+  color: #007427;
+}
+.ansi-green-intense-bg {
+  background-color: #007427;
+}
+.ansi-yellow-fg {
+  color: #DDB62B;
+}
+.ansi-yellow-bg {
+  background-color: #DDB62B;
+}
+.ansi-yellow-intense-fg {
+  color: #B27D12;
+}
+.ansi-yellow-intense-bg {
+  background-color: #B27D12;
+}
+.ansi-blue-fg {
+  color: #208FFB;
+}
+.ansi-blue-bg {
+  background-color: #208FFB;
+}
+.ansi-blue-intense-fg {
+  color: #0065CA;
+}
+.ansi-blue-intense-bg {
+  background-color: #0065CA;
+}
+.ansi-magenta-fg {
+  color: #D160C4;
+}
+.ansi-magenta-bg {
+  background-color: #D160C4;
+}
+.ansi-magenta-intense-fg {
+  color: #A03196;
+}
+.ansi-magenta-intense-bg {
+  background-color: #A03196;
+}
+.ansi-cyan-fg {
+  color: #60C6C8;
+}
+.ansi-cyan-bg {
+  background-color: #60C6C8;
+}
+.ansi-cyan-intense-fg {
+  color: #258F8F;
+}
+.ansi-cyan-intense-bg {
+  background-color: #258F8F;
+}
+.ansi-white-fg {
+  color: #C5C1B4;
+}
+.ansi-white-bg {
+  background-color: #C5C1B4;
+}
+.ansi-white-intense-fg {
+  color: #A1A6B2;
+}
+.ansi-white-intense-bg {
+  background-color: #A1A6B2;
+}
+.ansi-default-inverse-fg {
+  color: #FFFFFF;
+}
+.ansi-default-inverse-bg {
+  background-color: #000000;
+}
+.ansi-bold {
+  font-weight: bold;
+}
+.ansi-underline {
+  text-decoration: underline;
+}
+/* The following styles are deprecated an will be removed in a future version */
+.ansibold {
+  font-weight: bold;
+}
+.ansi-inverse {
+  outline: 0.5px dotted;
+}
+/* use dark versions for foreground, to improve visibility */
+.ansiblack {
+  color: black;
+}
+.ansired {
+  color: darkred;
+}
+.ansigreen {
+  color: darkgreen;
+}
+.ansiyellow {
+  color: #c4a000;
+}
+.ansiblue {
+  color: darkblue;
+}
+.ansipurple {
+  color: darkviolet;
+}
+.ansicyan {
+  color: steelblue;
+}
+.ansigray {
+  color: gray;
+}
+/* and light for background, for the same reason */
+.ansibgblack {
+  background-color: black;
+}
+.ansibgred {
+  background-color: red;
+}
+.ansibggreen {
+  background-color: green;
+}
+.ansibgyellow {
+  background-color: yellow;
+}
+.ansibgblue {
+  background-color: blue;
+}
+.ansibgpurple {
+  background-color: magenta;
+}
+.ansibgcyan {
+  background-color: cyan;
+}
+.ansibggray {
+  background-color: gray;
+}
+div.cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  border-radius: 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  width: 100%;
+  padding: 5px;
+  /* This acts as a spacer between cells, that is outside the border */
+  margin: 0px;
+  outline: none;
+  position: relative;
+  overflow: visible;
+}
+div.cell:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: transparent;
+}
+div.cell.jupyter-soft-selected {
+  border-left-color: #E3F2FD;
+  border-left-width: 1px;
+  padding-left: 5px;
+  border-right-color: #E3F2FD;
+  border-right-width: 1px;
+  background: #E3F2FD;
+}
+@media print {
+  div.cell.jupyter-soft-selected {
+    border-color: transparent;
+  }
+}
+div.cell.selected,
+div.cell.selected.jupyter-soft-selected {
+  border-color: #ababab;
+}
+div.cell.selected:before,
+div.cell.selected.jupyter-soft-selected:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: #42A5F5;
+}
+@media print {
+  div.cell.selected,
+  div.cell.selected.jupyter-soft-selected {
+    border-color: transparent;
+  }
+}
+.edit_mode div.cell.selected {
+  border-color: #66BB6A;
+}
+.edit_mode div.cell.selected:before {
+  position: absolute;
+  display: block;
+  top: -1px;
+  left: -1px;
+  width: 5px;
+  height: calc(100% +  2px);
+  content: '';
+  background: #66BB6A;
+}
+@media print {
+  .edit_mode div.cell.selected {
+    border-color: transparent;
+  }
+}
+.prompt {
+  /* This needs to be wide enough for 3 digit prompt numbers: In[100]: */
+  min-width: 14ex;
+  /* This padding is tuned to match the padding on the CodeMirror editor. */
+  padding: 0.4em;
+  margin: 0px;
+  font-family: monospace;
+  text-align: right;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+  /* Don't highlight prompt number selection */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  /* Use default cursor */
+  cursor: default;
+}
+@media (max-width: 540px) {
+  .prompt {
+    text-align: left;
+  }
+}
+div.inner_cell {
+  min-width: 0;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_area {
+  border: 1px solid #cfcfcf;
+  border-radius: 2px;
+  background: #f7f7f7;
+  line-height: 1.21429em;
+}
+/* This is needed so that empty prompt areas can collapse to zero height when there
+   is no content in the output_subarea and the prompt. The main purpose of this is
+   to make sure that empty JavaScript output_subareas have no height. */
+div.prompt:empty {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+div.unrecognized_cell {
+  padding: 5px 5px 5px 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.unrecognized_cell .inner_cell {
+  border-radius: 2px;
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+  border: 1px solid #cfcfcf;
+  background: #eaeaea;
+}
+div.unrecognized_cell .inner_cell a {
+  color: inherit;
+  text-decoration: none;
+}
+div.unrecognized_cell .inner_cell a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+@media (max-width: 540px) {
+  div.unrecognized_cell &gt; div.prompt {
+    display: none;
+  }
+}
+div.code_cell {
+  /* avoid page breaking on code cells when printing */
+}
+@media print {
+  div.code_cell {
+    page-break-inside: avoid;
+  }
+}
+/* any special styling for code cells that are currently running goes here */
+div.input {
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.input {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+/* input_area and input_prompt must match in top border and margin for alignment */
+div.input_prompt {
+  color: #303F9F;
+  border-top: 1px solid transparent;
+}
+div.input_area &gt; div.highlight {
+  margin: 0.4em;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+div.input_area &gt; div.highlight &gt; pre {
+  margin: 0px;
+  border: none;
+  padding: 0px;
+  background-color: transparent;
+}
+/* The following gets added to the &lt;head&gt; if it is detected that the user has a
+ * monospace font with inconsistent normal/bold/italic height.  See
+ * notebookmain.js.  Such fonts will have keywords vertically offset with
+ * respect to the rest of the text.  The user should select a better font.
+ * See: https://github.com/ipython/ipython/issues/1503
+ *
+ * .CodeMirror span {
+ *      vertical-align: bottom;
+ * }
+ */
+.CodeMirror {
+  line-height: 1.21429em;
+  /* Changed from 1em to our global default */
+  font-size: 14px;
+  height: auto;
+  /* Changed to auto to autogrow */
+  background: none;
+  /* Changed from white to allow our bg to show through */
+}
+.CodeMirror-scroll {
+  /*  The CodeMirror docs are a bit fuzzy on if overflow-y should be hidden or visible.*/
+  /*  We have found that if it is visible, vertical scrollbars appear with font size changes.*/
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+.CodeMirror-lines {
+  /* In CM2, this used to be 0.4em, but in CM3 it went to 4px. We need the em value because */
+  /* we have set a different line-height and want this to scale with that. */
+  /* Note that this should set vertical padding only, since CodeMirror assumes
+       that horizontal padding will be set on CodeMirror pre */
+  padding: 0.4em 0;
+}
+.CodeMirror-linenumber {
+  padding: 0 8px 0 4px;
+}
+.CodeMirror-gutters {
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px;
+}
+.CodeMirror pre {
+  /* In CM3 this went to 4px from 0 in CM2. This sets horizontal padding only,
+    use .CodeMirror-lines for vertical */
+  padding: 0 0.4em;
+  border: 0;
+  border-radius: 0;
+}
+.CodeMirror-cursor {
+  border-left: 1.4px solid black;
+}
+@media screen and (min-width: 2138px) and (max-width: 4319px) {
+  .CodeMirror-cursor {
+    border-left: 2px solid black;
+  }
+}
+@media screen and (min-width: 4320px) {
+  .CodeMirror-cursor {
+    border-left: 4px solid black;
+  }
+}
+/*
+
+Original style from softwaremaniacs.org (c) Ivan Sagalaev &lt;Maniac@SoftwareManiacs.Org&gt;
+Adapted from GitHub theme
+
+*/
+.highlight-base {
+  color: #000;
+}
+.highlight-variable {
+  color: #000;
+}
+.highlight-variable-2 {
+  color: #1a1a1a;
+}
+.highlight-variable-3 {
+  color: #333333;
+}
+.highlight-string {
+  color: #BA2121;
+}
+.highlight-comment {
+  color: #408080;
+  font-style: italic;
+}
+.highlight-number {
+  color: #080;
+}
+.highlight-atom {
+  color: #88F;
+}
+.highlight-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.highlight-builtin {
+  color: #008000;
+}
+.highlight-error {
+  color: #f00;
+}
+.highlight-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.highlight-meta {
+  color: #AA22FF;
+}
+/* previously not defined, copying from default codemirror */
+.highlight-def {
+  color: #00f;
+}
+.highlight-string-2 {
+  color: #f50;
+}
+.highlight-qualifier {
+  color: #555;
+}
+.highlight-bracket {
+  color: #997;
+}
+.highlight-tag {
+  color: #170;
+}
+.highlight-attribute {
+  color: #00c;
+}
+.highlight-header {
+  color: blue;
+}
+.highlight-quote {
+  color: #090;
+}
+.highlight-link {
+  color: #00c;
+}
+/* apply the same style to codemirror */
+.cm-s-ipython span.cm-keyword {
+  color: #008000;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-atom {
+  color: #88F;
+}
+.cm-s-ipython span.cm-number {
+  color: #080;
+}
+.cm-s-ipython span.cm-def {
+  color: #00f;
+}
+.cm-s-ipython span.cm-variable {
+  color: #000;
+}
+.cm-s-ipython span.cm-operator {
+  color: #AA22FF;
+  font-weight: bold;
+}
+.cm-s-ipython span.cm-variable-2 {
+  color: #1a1a1a;
+}
+.cm-s-ipython span.cm-variable-3 {
+  color: #333333;
+}
+.cm-s-ipython span.cm-comment {
+  color: #408080;
+  font-style: italic;
+}
+.cm-s-ipython span.cm-string {
+  color: #BA2121;
+}
+.cm-s-ipython span.cm-string-2 {
+  color: #f50;
+}
+.cm-s-ipython span.cm-meta {
+  color: #AA22FF;
+}
+.cm-s-ipython span.cm-qualifier {
+  color: #555;
+}
+.cm-s-ipython span.cm-builtin {
+  color: #008000;
+}
+.cm-s-ipython span.cm-bracket {
+  color: #997;
+}
+.cm-s-ipython span.cm-tag {
+  color: #170;
+}
+.cm-s-ipython span.cm-attribute {
+  color: #00c;
+}
+.cm-s-ipython span.cm-header {
+  color: blue;
+}
+.cm-s-ipython span.cm-quote {
+  color: #090;
+}
+.cm-s-ipython span.cm-link {
+  color: #00c;
+}
+.cm-s-ipython span.cm-error {
+  color: #f00;
+}
+.cm-s-ipython span.cm-tab {
+  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAMCAYAAAAkuj5RAAAAAXNSR0IArs4c6QAAAGFJREFUSMft1LsRQFAQheHPowAKoACx3IgEKtaEHujDjORSgWTH/ZOdnZOcM/sgk/kFFWY0qV8foQwS4MKBCS3qR6ixBJvElOobYAtivseIE120FaowJPN75GMu8j/LfMwNjh4HUpwg4LUAAAAASUVORK5CYII=);
+  background-position: right;
+  background-repeat: no-repeat;
+}
+div.output_wrapper {
+  /* this position must be relative to enable descendents to be absolute within it */
+  position: relative;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  z-index: 1;
+}
+/* class for the output area when it should be height-limited */
+div.output_scroll {
+  /* ideally, this would be max-height, but FF barfs all over that */
+  height: 24em;
+  /* FF needs this *and the wrapper* to specify full width, or it will shrinkwrap */
+  width: 100%;
+  overflow: auto;
+  border-radius: 2px;
+  -webkit-box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.8);
+  display: block;
+}
+/* output div while it is collapsed */
+div.output_collapsed {
+  margin: 0px;
+  padding: 0px;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+div.out_prompt_overlay {
+  height: 100%;
+  padding: 0px 0.4em;
+  position: absolute;
+  border-radius: 2px;
+}
+div.out_prompt_overlay:hover {
+  /* use inner shadow to get border that is computed the same on WebKit/FF */
+  -webkit-box-shadow: inset 0 0 1px #000;
+  box-shadow: inset 0 0 1px #000;
+  background: rgba(240, 240, 240, 0.5);
+}
+div.output_prompt {
+  color: #D84315;
+}
+/* This class is the outer container of all output sections. */
+div.output_area {
+  padding: 0px;
+  page-break-inside: avoid;
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+div.output_area .MathJax_Display {
+  text-align: left !important;
+}
+div.output_area 
+div.output_area 
+div.output_area img,
+div.output_area svg {
+  max-width: 100%;
+  height: auto;
+}
+div.output_area img.unconfined,
+div.output_area svg.unconfined {
+  max-width: none;
+}
+div.output_area .mglyph &gt; img {
+  max-width: none;
+}
+/* This is needed to protect the pre formating from global settings such
+   as that of bootstrap */
+.output {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: vertical;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: vertical;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.output_area {
+    /* Old browsers */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-box-align: stretch;
+    display: -moz-box;
+    -moz-box-orient: vertical;
+    -moz-box-align: stretch;
+    display: box;
+    box-orient: vertical;
+    box-align: stretch;
+    /* Modern browsers */
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+div.output_area pre {
+  margin: 0;
+  padding: 1px 0 1px 0;
+  border: 0;
+  vertical-align: baseline;
+  color: black;
+  background-color: transparent;
+  border-radius: 0;
+}
+/* This class is for the output subarea inside the output_area and after
+   the prompt div. */
+div.output_subarea {
+  overflow-x: auto;
+  padding: 0.4em;
+  /* Old browsers */
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  box-flex: 1;
+  /* Modern browsers */
+  flex: 1;
+  max-width: calc(100% - 14ex);
+}
+div.output_scroll div.output_subarea {
+  overflow-x: visible;
+}
+/* The rest of the output_* classes are for special styling of the different
+   output types */
+/* all text output has this class: */
+div.output_text {
+  text-align: left;
+  color: #000;
+  /* This has to match that of the the CodeMirror class line-height below */
+  line-height: 1.21429em;
+}
+/* stdout/stderr are 'text' as well as 'stream', but execute_result/error are *not* streams */
+div.output_stderr {
+  background: #fdd;
+  /* very light red background for stderr */
+}
+div.output_latex {
+  text-align: left;
+}
+/* Empty output_javascript divs should have no height */
+div.output_javascript:empty {
+  padding: 0;
+}
+.js-error {
+  color: darkred;
+}
+/* raw_input styles */
+div.raw_input_container {
+  line-height: 1.21429em;
+  padding-top: 5px;
+}
+pre.raw_input_prompt {
+  /* nothing needed here. */
+}
+input.raw_input {
+  font-family: monospace;
+  font-size: inherit;
+  color: inherit;
+  width: auto;
+  /* make sure input baseline aligns with prompt */
+  vertical-align: baseline;
+  /* padding + margin = 0.5em between prompt and cursor */
+  padding: 0em 0.25em;
+  margin: 0em 0.25em;
+}
+input.raw_input:focus {
+  box-shadow: none;
+}
+p.p-space {
+  margin-bottom: 10px;
+}
+div.output_unrecognized {
+  padding: 5px;
+  font-weight: bold;
+  color: red;
+}
+div.output_unrecognized a {
+  color: inherit;
+  text-decoration: none;
+}
+div.output_unrecognized a:hover {
+  color: inherit;
+  text-decoration: none;
+}
+.rendered_html {
+  color: #000;
+  /* any extras will just be numbers: */
+}
+
+
+
+.rendered_html :link {
+  text-decoration: underline;
+}
+.rendered_html :visited {
+  text-decoration: underline;
+}
+
+
+
+
+
+
+.rendered_html h1:first-child {
+  margin-top: 0.538em;
+}
+.rendered_html h2:first-child {
+  margin-top: 0.636em;
+}
+.rendered_html h3:first-child {
+  margin-top: 0.777em;
+}
+.rendered_html h4:first-child {
+  margin-top: 1em;
+}
+.rendered_html h5:first-child {
+  margin-top: 1em;
+}
+.rendered_html h6:first-child {
+  margin-top: 1em;
+}
+.rendered_html ul:not(.list-inline),
+.rendered_html ol:not(.list-inline) {
+  padding-left: 2em;
+}
+
+
+
+
+
+
+
+
+.rendered_html * + ul {
+  margin-top: 1em;
+}
+.rendered_html * + ol {
+  margin-top: 1em;
+}
+
+
+
+
+
+.rendered_html pre,
+
+
+
+
+.rendered_html tr,
+.rendered_html th,
+
+
+.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+.rendered_html * + table {
+  margin-top: 1em;
+}
+
+.rendered_html * + p {
+  margin-top: 1em;
+}
+
+.rendered_html * + img {
+  margin-top: 1em;
+}
+.rendered_html img,
+
+.rendered_html img.unconfined,
+
+
+.rendered_html * + .alert {
+  margin-top: 1em;
+}
+[dir="rtl"] 
+div.text_cell {
+  /* Old browsers */
+  display: -webkit-box;
+  -webkit-box-orient: horizontal;
+  -webkit-box-align: stretch;
+  display: -moz-box;
+  -moz-box-orient: horizontal;
+  -moz-box-align: stretch;
+  display: box;
+  box-orient: horizontal;
+  box-align: stretch;
+  /* Modern browsers */
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+@media (max-width: 540px) {
+  div.text_cell &gt; div.prompt {
+    display: none;
+  }
+}
+div.text_cell_render {
+  /*font-family: "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;*/
+  outline: none;
+  resize: none;
+  width: inherit;
+  border-style: none;
+  padding: 0.5em 0.5em 0.5em 0.4em;
+  color: #000;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+a.anchor-link:link {
+  text-decoration: none;
+  padding: 0px 20px;
+  visibility: hidden;
+}
+h1:hover .anchor-link,
+h2:hover .anchor-link,
+h3:hover .anchor-link,
+h4:hover .anchor-link,
+h5:hover .anchor-link,
+h6:hover .anchor-link {
+  visibility: visible;
+}
+.text_cell.rendered .input_area {
+  display: none;
+}
+.text_cell.rendered 
+.text_cell.rendered .rendered_html tr,
+.text_cell.rendered .rendered_html th,
+.text_cell.rendered 
+.text_cell.unrendered .text_cell_render {
+  display: none;
+}
+.text_cell .dropzone .input_area {
+  border: 2px dashed #bababa;
+  margin: -1px;
+}
+.cm-header-1,
+.cm-header-2,
+.cm-header-3,
+.cm-header-4,
+.cm-header-5,
+.cm-header-6 {
+  font-weight: bold;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.cm-header-1 {
+  font-size: 185.7%;
+}
+.cm-header-2 {
+  font-size: 157.1%;
+}
+.cm-header-3 {
+  font-size: 128.6%;
+}
+.cm-header-4 {
+  font-size: 110%;
+}
+.cm-header-5 {
+  font-size: 100%;
+  font-style: italic;
+}
+.cm-header-6 {
+  font-size: 100%;
+  font-style: italic;
+}
+&lt;/style&gt;
+&lt;style type="text/css"&gt;.highlight .hll { background-color: #ffffcc }
+.highlight  { background: #f8f8f8; }
+.highlight .c { color: #408080; font-style: italic } /* Comment */
+.highlight .err { border: 1px solid #FF0000 } /* Error */
+.highlight .k { color: #008000; font-weight: bold } /* Keyword */
+.highlight .o { color: #666666 } /* Operator */
+.highlight .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+.highlight .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+.highlight .cp { color: #BC7A00 } /* Comment.Preproc */
+.highlight .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+.highlight .c1 { color: #408080; font-style: italic } /* Comment.Single */
+.highlight .cs { color: #408080; font-style: italic } /* Comment.Special */
+.highlight .gd { color: #A00000 } /* Generic.Deleted */
+.highlight .ge { font-style: italic } /* Generic.Emph */
+.highlight .gr { color: #FF0000 } /* Generic.Error */
+.highlight .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+.highlight .gi { color: #00A000 } /* Generic.Inserted */
+.highlight .go { color: #888888 } /* Generic.Output */
+.highlight .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+.highlight .gs { font-weight: bold } /* Generic.Strong */
+.highlight .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+.highlight .gt { color: #0044DD } /* Generic.Traceback */
+.highlight .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+.highlight .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+.highlight .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+.highlight .kp { color: #008000 } /* Keyword.Pseudo */
+.highlight .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+.highlight .kt { color: #B00040 } /* Keyword.Type */
+.highlight .m { color: #666666 } /* Literal.Number */
+.highlight .s { color: #BA2121 } /* Literal.String */
+.highlight .na { color: #7D9029 } /* Name.Attribute */
+.highlight .nb { color: #008000 } /* Name.Builtin */
+.highlight .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+.highlight .no { color: #880000 } /* Name.Constant */
+.highlight .nd { color: #AA22FF } /* Name.Decorator */
+.highlight .ni { color: #999999; font-weight: bold } /* Name.Entity */
+.highlight .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+.highlight .nf { color: #0000FF } /* Name.Function */
+.highlight .nl { color: #A0A000 } /* Name.Label */
+.highlight .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+.highlight .nt { color: #008000; font-weight: bold } /* Name.Tag */
+.highlight .nv { color: #19177C } /* Name.Variable */
+.highlight .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+.highlight .w { color: #bbbbbb } /* Text.Whitespace */
+.highlight .mb { color: #666666 } /* Literal.Number.Bin */
+.highlight .mf { color: #666666 } /* Literal.Number.Float */
+.highlight .mh { color: #666666 } /* Literal.Number.Hex */
+.highlight .mi { color: #666666 } /* Literal.Number.Integer */
+.highlight .mo { color: #666666 } /* Literal.Number.Oct */
+.highlight .sa { color: #BA2121 } /* Literal.String.Affix */
+.highlight .sb { color: #BA2121 } /* Literal.String.Backtick */
+.highlight .sc { color: #BA2121 } /* Literal.String.Char */
+.highlight .dl { color: #BA2121 } /* Literal.String.Delimiter */
+.highlight .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+.highlight .s2 { color: #BA2121 } /* Literal.String.Double */
+.highlight .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+.highlight .sh { color: #BA2121 } /* Literal.String.Heredoc */
+.highlight .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+.highlight .sx { color: #008000 } /* Literal.String.Other */
+.highlight .sr { color: #BB6688 } /* Literal.String.Regex */
+.highlight .s1 { color: #BA2121 } /* Literal.String.Single */
+.highlight .ss { color: #19177C } /* Literal.String.Symbol */
+.highlight .bp { color: #008000 } /* Name.Builtin.Pseudo */
+.highlight .fm { color: #0000FF } /* Name.Function.Magic */
+.highlight .vc { color: #19177C } /* Name.Variable.Class */
+.highlight .vg { color: #19177C } /* Name.Variable.Global */
+.highlight .vi { color: #19177C } /* Name.Variable.Instance */
+.highlight .vm { color: #19177C } /* Name.Variable.Magic */
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */&lt;/style&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h1 id="Speed-tests-for-writing-to-MSSQL-from-pandas-(ODBC)"&gt;Speed tests for writing to MSSQL from pandas (ODBC)&lt;a class="anchor-link" href="#Speed-tests-for-writing-to-MSSQL-from-pandas-(ODBC)"&gt;&amp;#182;&lt;/a&gt;&lt;/h1&gt;&lt;p&gt;In this notebook, we'll be playing with various methods of writing data to a Microsoft SQL Server database. Compared to PostgreSQL which I was using previously, the connection is approx. an order of magnitude slower.&lt;/p&gt;
+&lt;p&gt;Trying to transmit larger volumes of data can also result in errors, as I get memory and connection timeout errors I typically was not having previously.&lt;/p&gt;
+&lt;p&gt;According to some research, this is due to the ODBC Driver. Whether this is true or not, I do not know. The naive implementation for the &lt;code&gt;.to_sql()&lt;/code&gt; method from the Pandas docs is&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;df.to_sql(name,
+          con,
+          schema=None,
+          if_exists='fail',
+          index=True,
+          index_label=None,
+          chunksize=None,
+          method=None,
+         )
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2 id="Options"&gt;Options&lt;a class="anchor-link" href="#Options"&gt;&amp;#182;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;There are various ways known to speed up the process:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Use the &lt;code&gt;method='multi'&lt;/code&gt; parameter for the &lt;code&gt;to_sql()&lt;/code&gt; method call&lt;/li&gt;
+&lt;li&gt;Add the &lt;code&gt;execute_fastmany=True&lt;/code&gt; parameter to the SQLAlchemy engine&lt;/li&gt;
+&lt;li&gt;Use both methods 1 and 2&lt;/li&gt;
+&lt;li&gt;Use &lt;code&gt;sqlalchemy_turbodbc&lt;/code&gt; instead of vanilla SQLAlchemy&lt;/li&gt;
+&lt;li&gt;Use &lt;code&gt;pymssql&lt;/code&gt; instead of SQLAlchemy&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;But so far none have been benchmarked. In this article, we will be benchmarking these methods to find the best performance in order to write data from a pandas DataFrame to Microsoft SQL Server.&lt;/p&gt;
+&lt;h2 id="Failed-implementations"&gt;Failed implementations&lt;a class="anchor-link" href="#Failed-implementations"&gt;&amp;#182;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;I also tried the following methods, but there was some issue or reason behind not including them in the list. This includes:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;BULK INSERT&lt;/code&gt;. A workaround we see a lot of in StackOverflow answers is to write your DataFrame to CSV and read it directly with BULK INSERT. I don't have those permissions on this database, so I won't include it. Feels definitely like something that &lt;strong&gt;if you can do, you should try&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;turbodbc&lt;/code&gt; + &lt;code&gt;fast_executemany&lt;/code&gt;, as this method is not implemented for that SQLAlchemy dialect&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;pymssql&lt;/code&gt; + &lt;code&gt;fast_executemany&lt;/code&gt;, as this method is also not implemented for that SQLAlchemy dialect&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h1 id="Imports"&gt;Imports&lt;a class="anchor-link" href="#Imports"&gt;&amp;#182;&lt;/a&gt;&lt;/h1&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[1]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="k"&gt;load_ext&lt;/span&gt; nb_black
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;json&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;os.path&lt;/span&gt; &lt;span class="k"&gt;import&lt;/span&gt; &lt;span class="n"&gt;expanduser&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;math&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;plt&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pandas&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;pd&lt;/span&gt;
+
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pymssql&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;ms&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sqlalchemy&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;sql&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sqlalchemy_turbodbc&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;st&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+&lt;div class="output_subarea output_stream output_stderr output_text"&gt;
+&lt;pre&gt;C:\Anaconda\lib\site-packages\ipykernel_launcher.py:12: DeprecationWarning: Using or importing the ABCs from &amp;#39;collections&amp;#39; instead of from &amp;#39;collections.abc&amp;#39; is deprecated, and in 3.8 it will stop working
+  if sys.path[0] == &amp;#39;&amp;#39;:
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+
+
+
+&lt;div id="08c7f535-349d-4187-9fb1-cd60d1018f51"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_javascript "&gt;
+&lt;script type="text/javascript"&gt;
+var element = $('#08c7f535-349d-4187-9fb1-cd60d1018f51');
+
+            setTimeout(function() {
+                var nbb_cell_id = 1;
+                var nbb_formatted_code = "%load_ext nb_black\n\nimport json\nfrom os.path import expanduser\nimport math\nimport sys\n\nimport matplotlib.pyplot as plt\nimport numpy as np\nimport pandas as pd\n\nimport pymssql as ms\nimport sqlalchemy as sql\nimport sqlalchemy_turbodbc as st";
+                var nbb_cells = Jupyter.notebook.get_cells();
+                for (var i = 0; i &lt; nbb_cells.length; ++i) {
+                    if (nbb_cells[i].input_prompt_number == nbb_cell_id) {
+                        nbb_cells[i].set_text(nbb_formatted_code);
+                        break;
+                    }
+                }
+            }, 500);
+            
+&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;We also needed to &lt;code&gt;pip install sqlalchemy_turbodbc pymssql&lt;/code&gt;, which thankfully get detected when you load SQLalchemy.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h1 id="Versions"&gt;Versions&lt;a class="anchor-link" href="#Versions"&gt;&amp;#182;&lt;/a&gt;&lt;/h1&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[20]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;SQLAlchemy version:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;sql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__version__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Pandas version&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__version__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Numpy version:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__version__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;pymssql version:&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ms&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__version__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;try&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;st&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;__version__&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;except&lt;/span&gt; &lt;span class="ne"&gt;AttributeError&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;No sqlalchemy_turbodbc version available&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;SQLAlchemy version: 1.3.5
+Pandas version 0.24.2
+Numpy version: 1.16.4
+pymssql version: 2.1.4
+No sqlalchemy_turbodbc version available
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+
+
+
+&lt;div id="b6eecbeb-9f78-4428-87a9-05cc5ea7d82f"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_javascript "&gt;
+&lt;script type="text/javascript"&gt;
+var element = $('#b6eecbeb-9f78-4428-87a9-05cc5ea7d82f');
+
+            setTimeout(function() {
+                var nbb_cell_id = 20;
+                var nbb_formatted_code = "print(\"SQLAlchemy version:\", sql.__version__)\nprint(\"Pandas version\", pd.__version__)\nprint(\"Numpy version:\", np.__version__)\nprint(\"pymssql version:\", ms.__version__)\ntry:\n    print(st.__version__)\nexcept AttributeError:\n    print(\"No sqlalchemy_turbodbc version available\")";
+                var nbb_cells = Jupyter.notebook.get_cells();
+                for (var i = 0; i &lt; nbb_cells.length; ++i) {
+                    if (nbb_cells[i].input_prompt_number == nbb_cell_id) {
+                        nbb_cells[i].set_text(nbb_formatted_code);
+                        break;
+                    }
+                }
+            }, 500);
+            
+&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h1 id="Environment"&gt;Environment&lt;a class="anchor-link" href="#Environment"&gt;&amp;#182;&lt;/a&gt;&lt;/h1&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[3]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;HOME&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;expanduser&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;~&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Enterprise DB to be used&lt;/span&gt;
+&lt;span class="n"&gt;DRIVER&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;ODBC Driver 17 for SQL Server&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;DSN&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;tbsuatsql05&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;DB&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;DS_DEV&amp;quot;&lt;/span&gt;
+&lt;span class="n"&gt;TABLE&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;perftest&amp;quot;&lt;/span&gt;
+
+&lt;span class="n"&gt;conn_sqlalchemy&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;create_engine&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;mssql+pyodbc://&lt;/span&gt;&lt;span class="si"&gt;{DSN}&lt;/span&gt;&lt;span class="s2"&gt;/&lt;/span&gt;&lt;span class="si"&gt;{DB}&lt;/span&gt;&lt;span class="s2"&gt;?driver=&lt;/span&gt;&lt;span class="si"&gt;{DRIVER}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;conn_executemany&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;create_engine&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;mssql+pyodbc://&lt;/span&gt;&lt;span class="si"&gt;{DSN}&lt;/span&gt;&lt;span class="s2"&gt;/&lt;/span&gt;&lt;span class="si"&gt;{DB}&lt;/span&gt;&lt;span class="s2"&gt;?driver=&lt;/span&gt;&lt;span class="si"&gt;{DRIVER}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;fast_executemany&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;conn_turbodbc&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;create_engine&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;mssql+turbodbc://&lt;/span&gt;&lt;span class="si"&gt;{DSN}&lt;/span&gt;&lt;span class="s2"&gt;/&lt;/span&gt;&lt;span class="si"&gt;{DB}&lt;/span&gt;&lt;span class="s2"&gt;?driver=&lt;/span&gt;&lt;span class="si"&gt;{DRIVER}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;conn_pymssql&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;sql&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;create_engine&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;mssql+pymssql://&lt;/span&gt;&lt;span class="si"&gt;{DSN}&lt;/span&gt;&lt;span class="s2"&gt;/&lt;/span&gt;&lt;span class="si"&gt;{DB}&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+
+
+
+&lt;div id="94765f9b-de0a-4a5a-97d7-d8f87c031b9d"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_javascript "&gt;
+&lt;script type="text/javascript"&gt;
+var element = $('#94765f9b-de0a-4a5a-97d7-d8f87c031b9d');
+
+            setTimeout(function() {
+                var nbb_cell_id = 3;
+                var nbb_formatted_code = "HOME = expanduser(\"~\")\n\nDRIVER = \"ODBC Driver 17 for SQL Server\"\nDSN = \"tbsuatsql05\"\nDB = \"DS_DEV\"\nTABLE = \"perftest\"\n\nconn_sqlalchemy = sql.create_engine(f\"mssql+pyodbc://{DSN}/{DB}?driver={DRIVER}\")\nconn_executemany = sql.create_engine(\n    f\"mssql+pyodbc://{DSN}/{DB}?driver={DRIVER}\", fast_executemany=True\n)\nconn_turbodbc = sql.create_engine(f\"mssql+turbodbc://{DSN}/{DB}?driver={DRIVER}\")\nconn_pymssql = sql.create_engine(f\"mssql+pymssql://{DSN}/{DB}\")";
+                var nbb_cells = Jupyter.notebook.get_cells();
+                for (var i = 0; i &lt; nbb_cells.length; ++i) {
+                    if (nbb_cells[i].input_prompt_number == nbb_cell_id) {
+                        nbb_cells[i].set_text(nbb_formatted_code);
+                        break;
+                    }
+                }
+            }, 500);
+            
+&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h2 id="Create-dummy-dataset"&gt;Create dummy dataset&lt;a class="anchor-link" href="#Create-dummy-dataset"&gt;&amp;#182;&lt;/a&gt;&lt;/h2&gt;&lt;p&gt;We'll create somehing here that is sufficiently large to both have a large impact on write times, and that triggers the "too many arguments" error when trying to write with the &lt;code&gt;'multi'&lt;/code&gt; parameter.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[4]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DataFrame&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;random&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;random&lt;/span&gt;&lt;span class="p"&gt;((&lt;/span&gt;&lt;span class="mi"&gt;10&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt; &lt;span class="mi"&gt;4&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
+&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;DataFrame contains&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;rows by&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;columns&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;columns&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;head&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;DataFrame contains 10000 rows by 10 columns
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt output_prompt"&gt;Out[4]:&lt;/div&gt;
+
+
+
+&lt;div class="output_html rendered_html output_subarea output_execute_result"&gt;
+&lt;div&gt;
+&lt;style scoped&gt;
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+&lt;/style&gt;
+&lt;table border="1" class="dataframe"&gt;
+  &lt;thead&gt;
+    &lt;tr style="text-align: right;"&gt;
+      &lt;th&gt;&lt;/th&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;th&gt;5&lt;/th&gt;
+      &lt;th&gt;6&lt;/th&gt;
+      &lt;th&gt;7&lt;/th&gt;
+      &lt;th&gt;8&lt;/th&gt;
+      &lt;th&gt;9&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;th&gt;0&lt;/th&gt;
+      &lt;td&gt;0.607888&lt;/td&gt;
+      &lt;td&gt;0.781212&lt;/td&gt;
+      &lt;td&gt;0.675627&lt;/td&gt;
+      &lt;td&gt;0.911531&lt;/td&gt;
+      &lt;td&gt;0.441672&lt;/td&gt;
+      &lt;td&gt;0.201854&lt;/td&gt;
+      &lt;td&gt;0.466212&lt;/td&gt;
+      &lt;td&gt;0.487489&lt;/td&gt;
+      &lt;td&gt;0.233816&lt;/td&gt;
+      &lt;td&gt;0.997825&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;1&lt;/th&gt;
+      &lt;td&gt;0.365243&lt;/td&gt;
+      &lt;td&gt;0.662150&lt;/td&gt;
+      &lt;td&gt;0.374518&lt;/td&gt;
+      &lt;td&gt;0.303049&lt;/td&gt;
+      &lt;td&gt;0.718934&lt;/td&gt;
+      &lt;td&gt;0.066836&lt;/td&gt;
+      &lt;td&gt;0.659033&lt;/td&gt;
+      &lt;td&gt;0.958759&lt;/td&gt;
+      &lt;td&gt;0.821536&lt;/td&gt;
+      &lt;td&gt;0.538544&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;2&lt;/th&gt;
+      &lt;td&gt;0.640548&lt;/td&gt;
+      &lt;td&gt;0.575734&lt;/td&gt;
+      &lt;td&gt;0.856385&lt;/td&gt;
+      &lt;td&gt;0.380706&lt;/td&gt;
+      &lt;td&gt;0.125498&lt;/td&gt;
+      &lt;td&gt;0.733077&lt;/td&gt;
+      &lt;td&gt;0.186904&lt;/td&gt;
+      &lt;td&gt;0.696862&lt;/td&gt;
+      &lt;td&gt;0.452278&lt;/td&gt;
+      &lt;td&gt;0.083290&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;3&lt;/th&gt;
+      &lt;td&gt;0.466837&lt;/td&gt;
+      &lt;td&gt;0.247153&lt;/td&gt;
+      &lt;td&gt;0.387015&lt;/td&gt;
+      &lt;td&gt;0.382428&lt;/td&gt;
+      &lt;td&gt;0.290844&lt;/td&gt;
+      &lt;td&gt;0.506672&lt;/td&gt;
+      &lt;td&gt;0.551482&lt;/td&gt;
+      &lt;td&gt;0.599074&lt;/td&gt;
+      &lt;td&gt;0.527711&lt;/td&gt;
+      &lt;td&gt;0.305163&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;th&gt;4&lt;/th&gt;
+      &lt;td&gt;0.923775&lt;/td&gt;
+      &lt;td&gt;0.127416&lt;/td&gt;
+      &lt;td&gt;0.085155&lt;/td&gt;
+      &lt;td&gt;0.924849&lt;/td&gt;
+      &lt;td&gt;0.925616&lt;/td&gt;
+      &lt;td&gt;0.896660&lt;/td&gt;
+      &lt;td&gt;0.982114&lt;/td&gt;
+      &lt;td&gt;0.851376&lt;/td&gt;
+      &lt;td&gt;0.672755&lt;/td&gt;
+      &lt;td&gt;0.859688&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+
+
+
+&lt;div id="23cc5fe6-4940-426d-9fdd-f1d515a92324"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_javascript "&gt;
+&lt;script type="text/javascript"&gt;
+var element = $('#23cc5fe6-4940-426d-9fdd-f1d515a92324');
+
+            setTimeout(function() {
+                var nbb_cell_id = 4;
+                var nbb_formatted_code = "df = pd.DataFrame(np.random.random((10 ** 4, 10)))\nprint(\"DataFrame contains\", len(df), \"rows by\", len(df.columns), \"columns\")\ndf.head()";
+                var nbb_cells = Jupyter.notebook.get_cells();
+                for (var i = 0; i &lt; nbb_cells.length; ++i) {
+                    if (nbb_cells[i].input_prompt_number == nbb_cell_id) {
+                        nbb_cells[i].set_text(nbb_formatted_code);
+                        break;
+                    }
+                }
+            }, 500);
+            
+&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[5]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;DataFrame is&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;round&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;sys&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;getsizeof&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="mi"&gt;1024&lt;/span&gt; &lt;span class="o"&gt;**&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;MB&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;DataFrame is 0.8 MB
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+
+
+
+&lt;div id="8ce7fdd3-b047-4059-9753-4cd1a4afd804"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_javascript "&gt;
+&lt;script type="text/javascript"&gt;
+var element = $('#8ce7fdd3-b047-4059-9753-4cd1a4afd804');
+
+            setTimeout(function() {
+                var nbb_cell_id = 5;
+                var nbb_formatted_code = "print(\"DataFrame is\", round(sys.getsizeof(df) / 1024 ** 2, 1), \"MB\")";
+                var nbb_cells = Jupyter.notebook.get_cells();
+                for (var i = 0; i &lt; nbb_cells.length; ++i) {
+                    if (nbb_cells[i].input_prompt_number == nbb_cell_id) {
+                        nbb_cells[i].set_text(nbb_formatted_code);
+                        break;
+                    }
+                }
+            }, 500);
+            
+&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h1 id="Results"&gt;Results&lt;a class="anchor-link" href="#Results"&gt;&amp;#182;&lt;/a&gt;&lt;/h1&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h2&gt;Option 1 &amp;mdash; Vanilla pandas&lt;/h2&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[6]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%time&lt;/span&gt;
+&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_sql&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;TABLE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;conn_sqlalchemy&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;if_exists&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;replace&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;Wall time: 23.5 s
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+
+
+
+&lt;div id="565dcd82-f179-4740-97da-3d4796a72c2a"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_javascript "&gt;
+&lt;script type="text/javascript"&gt;
+var element = $('#565dcd82-f179-4740-97da-3d4796a72c2a');
+
+            setTimeout(function() {
+                var nbb_cell_id = 6;
+                var nbb_formatted_code = "%%time\ndf.to_sql(TABLE, conn_sqlalchemy, index=False, if_exists='replace')";
+                var nbb_cells = Jupyter.notebook.get_cells();
+                for (var i = 0; i &lt; nbb_cells.length; ++i) {
+                    if (nbb_cells[i].input_prompt_number == nbb_cell_id) {
+                        nbb_cells[i].set_text(nbb_formatted_code);
+                        break;
+                    }
+                }
+            }, 500);
+            
+&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h2&gt;Option 2 &amp;mdash; &lt;code&gt;df.to_sql(..., method='multi')&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;This method smashed the chunksize limit for MS SQL, so we have to break up the insert by chunks of 2100 parameters. Pandas has the &lt;code&gt;chunksize=2100&lt;/code&gt; parameter, but unfortunately in our testing we get database errors I can't troubleshoot only using pandas.&lt;/p&gt;
+&lt;p&gt;Instead, we'll build a little helper function to do this for us:&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[7]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;chunker&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;seq&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;seq&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;pos&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;pos&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;pos&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;seq&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;insert_with_progress&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;engine&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;table&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;schema&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;con&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;engine&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;connect&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+    &lt;span class="c1"&gt;# Replace table&lt;/span&gt;
+    &lt;span class="n"&gt;engine&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;execute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;DROP TABLE IF EXISTS &lt;/span&gt;&lt;span class="si"&gt;{schema}&lt;/span&gt;&lt;span class="s2"&gt;.&lt;/span&gt;&lt;span class="si"&gt;{table}&lt;/span&gt;&lt;span class="s2"&gt;;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="c1"&gt;# Insert with progress&lt;/span&gt;
+    &lt;span class="n"&gt;SQL_SERVER_CHUNK_LIMIT&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="mi"&gt;2099&lt;/span&gt;
+    &lt;span class="n"&gt;chunksize&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;math&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;floor&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;SQL_SERVER_CHUNK_LIMIT&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;columns&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+    &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;chunk&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="n"&gt;chunker&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;chunksize&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+        &lt;span class="n"&gt;chunk&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_sql&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+            &lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;table&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="n"&gt;con&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;con&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="n"&gt;if_exists&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;append&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="n"&gt;schema&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;schema&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+            &lt;span class="n"&gt;method&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;multi&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+        &lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+
+
+
+&lt;div id="d063ebdb-f7d8-412a-a03f-a3168a8f811c"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_javascript "&gt;
+&lt;script type="text/javascript"&gt;
+var element = $('#d063ebdb-f7d8-412a-a03f-a3168a8f811c');
+
+            setTimeout(function() {
+                var nbb_cell_id = 7;
+                var nbb_formatted_code = "def chunker(seq, size):\n    return (seq[pos : pos + size] for pos in range(0, len(seq), size))\n\n\ndef insert_with_progress(df, engine, table=\"\", schema=\"\"):\n    con = engine.connect()\n\n    # Replace table\n    engine.execute(f\"DROP TABLE IF EXISTS {schema}.{table};\")\n\n    # Insert with progress\n    SQL_SERVER_CHUNK_LIMIT = 2099\n    chunksize = math.floor(SQL_SERVER_CHUNK_LIMIT / len(df.columns))\n\n    for chunk in chunker(df, chunksize):\n        chunk.to_sql(\n            name=table,\n            con=con,\n            if_exists=\"append\",\n            index=False,\n            schema=schema,\n            method=\"multi\",\n        )";
+                var nbb_cells = Jupyter.notebook.get_cells();
+                for (var i = 0; i &lt; nbb_cells.length; ++i) {
+                    if (nbb_cells[i].input_prompt_number == nbb_cell_id) {
+                        nbb_cells[i].set_text(nbb_formatted_code);
+                        break;
+                    }
+                }
+            }, 500);
+            
+&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[8]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%time&lt;/span&gt;
+&lt;span class="c1"&gt;# Doing it like this errors out. Can&amp;#39;t seem to be able to debug the straight pandas call.&lt;/span&gt;
+&lt;span class="c1"&gt;# df.to_sql(TABLE, conn_sqlalchemy, index=False, if_exists=&amp;#39;replace&amp;#39;, method=&amp;#39;multi&amp;#39;, chunksize=2100)&lt;/span&gt;
+
+&lt;span class="n"&gt;insert_with_progress&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;conn_sqlalchemy&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;table&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;TABLE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;Wall time: 3.09 s
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+
+
+
+&lt;div id="8469f696-00e3-40fc-883f-73486fb34b3c"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_javascript "&gt;
+&lt;script type="text/javascript"&gt;
+var element = $('#8469f696-00e3-40fc-883f-73486fb34b3c');
+
+            setTimeout(function() {
+                var nbb_cell_id = 8;
+                var nbb_formatted_code = "%%time\n# Doing it like this errors out. Can't seem to be able to debug the straight pandas call.\n# df.to_sql(TABLE, conn_sqlalchemy, index=False, if_exists='replace', method='multi', chunksize=2100)\n\ninsert_with_progress(df, conn_sqlalchemy, table=TABLE)";
+                var nbb_cells = Jupyter.notebook.get_cells();
+                for (var i = 0; i &lt; nbb_cells.length; ++i) {
+                    if (nbb_cells[i].input_prompt_number == nbb_cell_id) {
+                        nbb_cells[i].set_text(nbb_formatted_code);
+                        break;
+                    }
+                }
+            }, 500);
+            
+&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h2&gt;Option 3 &amp;mdash; &lt;code&gt;fast_executemany=True&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;N.B. This is currently the recommended method in the pandas documentation.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[9]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%time&lt;/span&gt;
+&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_sql&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;TABLE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;conn_executemany&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;if_exists&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;replace&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;Wall time: 500 ms
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+
+
+
+&lt;div id="b440d133-fe0f-4dea-b50f-f9ee04b8aea7"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_javascript "&gt;
+&lt;script type="text/javascript"&gt;
+var element = $('#b440d133-fe0f-4dea-b50f-f9ee04b8aea7');
+
+            setTimeout(function() {
+                var nbb_cell_id = 9;
+                var nbb_formatted_code = "%%time\ndf.to_sql(TABLE, conn_executemany, index=False, if_exists='replace')";
+                var nbb_cells = Jupyter.notebook.get_cells();
+                for (var i = 0; i &lt; nbb_cells.length; ++i) {
+                    if (nbb_cells[i].input_prompt_number == nbb_cell_id) {
+                        nbb_cells[i].set_text(nbb_formatted_code);
+                        break;
+                    }
+                }
+            }, 500);
+            
+&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;For a 0.8MB table this is still remarkably slow, but we're now ~50 x faster than vanilla!&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h2&gt;Option 4 &amp;mdash; &lt;code&gt;'multi'&lt;/code&gt; + &lt;code&gt;fast_executemany&lt;/code&gt;&lt;/h2&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[10]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%time&lt;/span&gt;
+&lt;span class="n"&gt;insert_with_progress&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;conn_executemany&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;table&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;TABLE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;Wall time: 3 s
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+
+
+
+&lt;div id="b46e5ea4-f6fc-4316-9eae-077c87826540"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_javascript "&gt;
+&lt;script type="text/javascript"&gt;
+var element = $('#b46e5ea4-f6fc-4316-9eae-077c87826540');
+
+            setTimeout(function() {
+                var nbb_cell_id = 10;
+                var nbb_formatted_code = "%%time\ninsert_with_progress(df, conn_executemany, table=TABLE)";
+                var nbb_cells = Jupyter.notebook.get_cells();
+                for (var i = 0; i &lt; nbb_cells.length; ++i) {
+                    if (nbb_cells[i].input_prompt_number == nbb_cell_id) {
+                        nbb_cells[i].set_text(nbb_formatted_code);
+                        break;
+                    }
+                }
+            }, 500);
+            
+&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;Oddly, these two methods to make things faster don't compound well! We get basically the same speed as with &lt;code&gt;'multi'&lt;/code&gt;&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h2&gt;Option 5 &amp;mdash; sqlalchemy_turbodbc&lt;/h2&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[11]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%time&lt;/span&gt;
+&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_sql&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;TABLE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;conn_turbodbc&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;if_exists&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;replace&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;Wall time: 1.17 s
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+
+
+
+&lt;div id="c6e1e5d9-41fa-4ce6-9475-83912661fcef"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_javascript "&gt;
+&lt;script type="text/javascript"&gt;
+var element = $('#c6e1e5d9-41fa-4ce6-9475-83912661fcef');
+
+            setTimeout(function() {
+                var nbb_cell_id = 11;
+                var nbb_formatted_code = "%%time\ndf.to_sql(TABLE, conn_turbodbc, index=False, if_exists='replace')";
+                var nbb_cells = Jupyter.notebook.get_cells();
+                for (var i = 0; i &lt; nbb_cells.length; ++i) {
+                    if (nbb_cells[i].input_prompt_number == nbb_cell_id) {
+                        nbb_cells[i].set_text(nbb_formatted_code);
+                        break;
+                    }
+                }
+            }, 500);
+            
+&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;p&gt;So, over a 20x speedup from the vanilla settings, but still 2-3x slower than with the &lt;code&gt;fast_executemany&lt;/code&gt; option.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h2&gt;Option 6 &amp;mdash; sqlalchemy_turbodbc + &lt;code&gt;'multi'&lt;/code&gt;&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;fast_executemany&lt;/code&gt; is not available as an option when creating the engine, but we can still test with the &lt;code&gt;method='multi'&lt;/code&gt; parameter.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[12]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%time&lt;/span&gt;
+&lt;span class="n"&gt;insert_with_progress&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;conn_turbodbc&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;table&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;TABLE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;Wall time: 10.9 s
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+
+
+
+&lt;div id="1d4fa179-6e1d-421a-b5c6-b0d38121ec47"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_javascript "&gt;
+&lt;script type="text/javascript"&gt;
+var element = $('#1d4fa179-6e1d-421a-b5c6-b0d38121ec47');
+
+            setTimeout(function() {
+                var nbb_cell_id = 12;
+                var nbb_formatted_code = "%%time\ninsert_with_progress(df, conn_turbodbc, table=TABLE)";
+                var nbb_cells = Jupyter.notebook.get_cells();
+                for (var i = 0; i &lt; nbb_cells.length; ++i) {
+                    if (nbb_cells[i].input_prompt_number == nbb_cell_id) {
+                        nbb_cells[i].set_text(nbb_formatted_code);
+                        break;
+                    }
+                }
+            }, 500);
+            
+&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h2&gt;Option 7 &amp;mdash; pymssql&lt;/h2&gt;
+&lt;p&gt;Another ODBC interface that pops up in the StackOverflow answers, this one doesn't quite seem to be up to snuff. Also doesn't have the &lt;code&gt;fast_executemany&lt;/code&gt; option.&lt;/p&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[13]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%time&lt;/span&gt;
+&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;to_sql&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;TABLE&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;conn_pymssql&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;index&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;False&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;if_exists&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;replace&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;Wall time: 31.7 s
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+
+
+
+&lt;div id="831a24f1-9d17-4436-8ed6-a791f43541be"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_javascript "&gt;
+&lt;script type="text/javascript"&gt;
+var element = $('#831a24f1-9d17-4436-8ed6-a791f43541be');
+
+            setTimeout(function() {
+                var nbb_cell_id = 13;
+                var nbb_formatted_code = "%%time\ndf.to_sql(TABLE, conn_pymssql, index=False, if_exists='replace')";
+                var nbb_cells = Jupyter.notebook.get_cells();
+                for (var i = 0; i &lt; nbb_cells.length; ++i) {
+                    if (nbb_cells[i].input_prompt_number == nbb_cell_id) {
+                        nbb_cells[i].set_text(nbb_formatted_code);
+                        break;
+                    }
+                }
+            }, 500);
+            
+&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h2&gt;Option 8 &amp;mdash; pymssql + &lt;code&gt;'multi'&lt;/code&gt;&lt;/h2&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[14]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%time&lt;/span&gt;
+&lt;span class="n"&gt;insert_with_progress&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;conn_pymssql&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;table&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;TABLE&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+&lt;div class="output_subarea output_stream output_stdout output_text"&gt;
+&lt;pre&gt;Wall time: 6.42 s
+&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+
+
+
+&lt;div id="9a59a214-4e99-42e0-8024-fa73a1441f4d"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_javascript "&gt;
+&lt;script type="text/javascript"&gt;
+var element = $('#9a59a214-4e99-42e0-8024-fa73a1441f4d');
+
+            setTimeout(function() {
+                var nbb_cell_id = 14;
+                var nbb_formatted_code = "%%time\ninsert_with_progress(df, conn_pymssql, table=TABLE)";
+                var nbb_cells = Jupyter.notebook.get_cells();
+                for (var i = 0; i &lt; nbb_cells.length; ++i) {
+                    if (nbb_cells[i].input_prompt_number == nbb_cell_id) {
+                        nbb_cells[i].set_text(nbb_formatted_code);
+                        break;
+                    }
+                }
+            }, 500);
+            
+&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h1 id="Analysis"&gt;Analysis&lt;a class="anchor-link" href="#Analysis"&gt;&amp;#182;&lt;/a&gt;&lt;/h1&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing code_cell rendered"&gt;
+&lt;div class="input"&gt;
+&lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[21]:&lt;/div&gt;
+&lt;div class="inner_cell"&gt;
+    &lt;div class="input_area"&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;times&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;vanilla&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;23.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;multi&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;3.09&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;fast_executemany&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;0.5&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;multi+fast&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;turbodbc&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;1.17&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;turbodbc+multi&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;10.9&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;pymssql&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;31.7&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s2"&gt;&amp;quot;pymssql+multi&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;6.42&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="c1"&gt;# We&amp;#39;re done with the testing, so remove the testing table&lt;/span&gt;
+&lt;span class="n"&gt;conn_sqlalchemy&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;execute&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;DROP TABLE IF EXISTS &lt;/span&gt;&lt;span class="si"&gt;{TABLE}&lt;/span&gt;&lt;span class="s2"&gt;;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Then plot the results&lt;/span&gt;
+&lt;span class="n"&gt;df_times&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;pd&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;DataFrame&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;from_dict&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;times&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;orient&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;index&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;columns&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;time (s)&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;])&lt;/span&gt;
+&lt;span class="n"&gt;df_times&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;time (s)&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sort_values&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;plot&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;bar&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="n"&gt;title&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;SQL Server write times (log)&lt;/span&gt;&lt;span class="se"&gt;\n&lt;/span&gt;&lt;span class="s2"&gt;(lower is better)&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;logy&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+    &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="output_wrapper"&gt;
+&lt;div class="output"&gt;
+
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt output_prompt"&gt;Out[21]:&lt;/div&gt;
+
+
+
+
+&lt;div class="output_text output_subarea output_execute_result"&gt;
+&lt;pre&gt;&amp;lt;matplotlib.axes._subplots.AxesSubplot at 0x207eb2e48d0&amp;gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+
+
+&lt;div class="output_png output_subarea "&gt;
+&lt;img src="data:image/png;base64,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
+"
+&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;div class="output_area"&gt;
+
+    &lt;div class="prompt"&gt;&lt;/div&gt;
+
+
+
+
+
+&lt;div id="e52471cd-ed37-4a96-999f-86902efc7fcf"&gt;&lt;/div&gt;
+&lt;div class="output_subarea output_javascript "&gt;
+&lt;script type="text/javascript"&gt;
+var element = $('#e52471cd-ed37-4a96-999f-86902efc7fcf');
+
+            setTimeout(function() {
+                var nbb_cell_id = 21;
+                var nbb_formatted_code = "times = {\n    \"vanilla\": 23.5,\n    \"multi\": 3.09,\n    \"fast_executemany\": 0.5,\n    \"multi+fast\": 3,\n    \"turbodbc\": 1.17,\n    \"turbodbc+multi\": 10.9,\n    \"pymssql\": 31.7,\n    \"pymssql+multi\": 6.42,\n}\n\n# We're done with the testing, so remove the testing table\nconn_sqlalchemy.execute(f\"DROP TABLE IF EXISTS {TABLE};\")\n\n# Then plot the results\ndf_times = pd.DataFrame.from_dict(times, orient=\"index\", columns=[\"time (s)\"])\ndf_times[\"time (s)\"].sort_values().plot.bar(\n    title=\"SQL Server write times (log)\\n(lower is better)\", logy=True\n)";
+                var nbb_cells = Jupyter.notebook.get_cells();
+                for (var i = 0; i &lt; nbb_cells.length; ++i) {
+                    if (nbb_cells[i].input_prompt_number == nbb_cell_id) {
+                        nbb_cells[i].set_text(nbb_formatted_code);
+                        break;
+                    }
+                }
+            }, 500);
+            
+&lt;/script&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;/div&gt;
+&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+&lt;/div&gt;&lt;div class="inner_cell"&gt;
+&lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
+&lt;h1 id="Conclusion"&gt;Conclusion&lt;a class="anchor-link" href="#Conclusion"&gt;&amp;#182;&lt;/a&gt;&lt;/h1&gt;&lt;p&gt;So, there we are! In our testing, we've seen that writing to SQL Server through the ODBC connection is substantially slower than e.g. Postgres. There are many ways to make this process faster, but here's the definitive rule of thumb when faced with this situation.&lt;/p&gt;
+&lt;blockquote&gt;&lt;p&gt;&lt;strong&gt;Rule of thumb when writing to SQL Server from Pandas&lt;/strong&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;If you can use &lt;code&gt;BULK INSERT&lt;/code&gt;, do so&lt;/li&gt;
+&lt;li&gt;Else, pass &lt;code&gt;fast_executemany=True&lt;/code&gt; to your database engine object.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+ 
+
+
+&lt;script type="text/javascript"&gt;if (!document.getElementById('mathjaxscript_pelican_#%@#$@#')) {
+    var mathjaxscript = document.createElement('script');
+    mathjaxscript.id = 'mathjaxscript_pelican_#%@#$@#';
+    mathjaxscript.type = 'text/javascript';
+    mathjaxscript.src = '//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML';
+    mathjaxscript[(window.opera ? "innerHTML" : "text")] =
+        "MathJax.Hub.Config({" +
+        "    config: ['MMLorHTML.js']," +
+        "    TeX: { extensions: ['AMSmath.js','AMSsymbols.js','noErrors.js','noUndefined.js'], equationNumbers: { autoNumber: 'AMS' } }," +
+        "    jax: ['input/TeX','input/MathML','output/HTML-CSS']," +
+        "    extensions: ['tex2jax.js','mml2jax.js','MathMenu.js','MathZoom.js']," +
+        "    displayAlign: 'center'," +
+        "    displayIndent: '0em'," +
+        "    showMathMenu: true," +
+        "    tex2jax: { " +
+        "        inlineMath: [ ['$','$'] ], " +
+        "        displayMath: [ ['$$','$$'] ]," +
+        "        processEscapes: true," +
+        "        preview: 'TeX'," +
+        "    }, " +
+        "    'HTML-CSS': { " +
+        " linebreaks: { automatic: true, width: '95% container' }, " +
+        "        styles: { '.MathJax_Display, .MathJax .mo, .MathJax .mi, .MathJax .mn': {color: 'black ! important'} }" +
+        "    } " +
+        "}); ";
+    (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
+}
+&lt;/script&gt;
+</content><category term="Python, SQL, MS"></category><category term="python"></category><category term="SQL Server"></category></entry></feed>
