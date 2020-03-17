@@ -130,5 +130,6 @@ refresh:
 
 initial_setup:
 	git submodule update --init --recursive
+	pip install pelican ghp-import markdown
 
 .PHONY: html help clean regenerate serve serve-global devserver stopserver publish ssh_upload rsync_upload dropbox_upload ftp_upload s3_upload cf_upload github refresh initial_setup
