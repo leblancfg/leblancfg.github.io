@@ -145,124 +145,9 @@
 * IPython notebook
 *
 */
-/* CSS font colors for translated ANSI escape sequences */
-/* The color values are a mix of
-   http://www.xcolors.net/dl/baskerville-ivorylight and
-   http://www.xcolors.net/dl/euphrasia */
-.ansi-black-fg {
-  color: #3E424D;
-}
-.ansi-black-bg {
-  background-color: #3E424D;
-}
-.ansi-black-intense-fg {
-  color: #282C36;
-}
-.ansi-black-intense-bg {
-  background-color: #282C36;
-}
-.ansi-red-fg {
-  color: #E75C58;
-}
-.ansi-red-bg {
-  background-color: #E75C58;
-}
-.ansi-red-intense-fg {
-  color: #B22B31;
-}
-.ansi-red-intense-bg {
-  background-color: #B22B31;
-}
-.ansi-green-fg {
-  color: #00A250;
-}
-.ansi-green-bg {
-  background-color: #00A250;
-}
-.ansi-green-intense-fg {
-  color: #007427;
-}
-.ansi-green-intense-bg {
-  background-color: #007427;
-}
-.ansi-yellow-fg {
-  color: #DDB62B;
-}
-.ansi-yellow-bg {
-  background-color: #DDB62B;
-}
-.ansi-yellow-intense-fg {
-  color: #B27D12;
-}
-.ansi-yellow-intense-bg {
-  background-color: #B27D12;
-}
-.ansi-blue-fg {
-  color: #208FFB;
-}
-.ansi-blue-bg {
-  background-color: #208FFB;
-}
-.ansi-blue-intense-fg {
-  color: #0065CA;
-}
-.ansi-blue-intense-bg {
-  background-color: #0065CA;
-}
-.ansi-magenta-fg {
-  color: #D160C4;
-}
-.ansi-magenta-bg {
-  background-color: #D160C4;
-}
-.ansi-magenta-intense-fg {
-  color: #A03196;
-}
-.ansi-magenta-intense-bg {
-  background-color: #A03196;
-}
-.ansi-cyan-fg {
-  color: #60C6C8;
-}
-.ansi-cyan-bg {
-  background-color: #60C6C8;
-}
-.ansi-cyan-intense-fg {
-  color: #258F8F;
-}
-.ansi-cyan-intense-bg {
-  background-color: #258F8F;
-}
-.ansi-white-fg {
-  color: #C5C1B4;
-}
-.ansi-white-bg {
-  background-color: #C5C1B4;
-}
-.ansi-white-intense-fg {
-  color: #A1A6B2;
-}
-.ansi-white-intense-bg {
-  background-color: #A1A6B2;
-}
-.ansi-default-inverse-fg {
-  color: #FFFFFF;
-}
-.ansi-default-inverse-bg {
-  background-color: #000000;
-}
-.ansi-bold {
-  font-weight: bold;
-}
-.ansi-underline {
-  text-decoration: underline;
-}
-/* The following styles are deprecated an will be removed in a future version */
+/* CSS font colors for translated ANSI colors. */
 .ansibold {
   font-weight: bold;
-}
-.ansi-inverse {
-  outline: 0.5px dotted;
 }
 /* use dark versions for foreground, to improve visibility */
 .ansiblack {
@@ -341,20 +226,12 @@ div.cell {
   /* This acts as a spacer between cells, that is outside the border */
   margin: 0px;
   outline: none;
-  position: relative;
-  overflow: visible;
-}
-div.cell:before {
-  position: absolute;
-  display: block;
-  top: -1px;
-  left: -1px;
-  width: 5px;
-  height: calc(100% +  2px);
-  content: '';
-  background: transparent;
+  border-left-width: 1px;
+  padding-left: 5px;
+  background: linear-gradient(to right, transparent -40px, transparent 1px, transparent 1px, transparent 100%);
 }
 div.cell.jupyter-soft-selected {
+  border-left-color: #90CAF9;
   border-left-color: #E3F2FD;
   border-left-width: 1px;
   padding-left: 5px;
@@ -367,39 +244,27 @@ div.cell.jupyter-soft-selected {
     border-color: transparent;
   }
 }
-div.cell.selected,
-div.cell.selected.jupyter-soft-selected {
+div.cell.selected {
   border-color: #ababab;
-}
-div.cell.selected:before,
-div.cell.selected.jupyter-soft-selected:before {
-  position: absolute;
-  display: block;
-  top: -1px;
-  left: -1px;
-  width: 5px;
-  height: calc(100% +  2px);
-  content: '';
-  background: #42A5F5;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 5px, transparent 5px, transparent 100%);
 }
 @media print {
-  div.cell.selected,
-  div.cell.selected.jupyter-soft-selected {
+  div.cell.selected {
     border-color: transparent;
   }
 }
+div.cell.selected.jupyter-soft-selected {
+  border-left-width: 0;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 7px, #E3F2FD 7px, #E3F2FD 100%);
+}
 .edit_mode div.cell.selected {
   border-color: #66BB6A;
-}
-.edit_mode div.cell.selected:before {
-  position: absolute;
-  display: block;
-  top: -1px;
-  left: -1px;
-  width: 5px;
-  height: calc(100% +  2px);
-  content: '';
-  background: #66BB6A;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #66BB6A -40px, #66BB6A 5px, transparent 5px, transparent 100%);
 }
 @media print {
   .edit_mode div.cell.selected {
@@ -595,9 +460,7 @@ div.input_area > div.highlight > pre {
 .CodeMirror-lines {
   /* In CM2, this used to be 0.4em, but in CM3 it went to 4px. We need the em value because */
   /* we have set a different line-height and want this to scale with that. */
-  /* Note that this should set vertical padding only, since CodeMirror assumes
-       that horizontal padding will be set on CodeMirror pre */
-  padding: 0.4em 0;
+  padding: 0.4em;
 }
 .CodeMirror-linenumber {
   padding: 0 8px 0 4px;
@@ -607,24 +470,11 @@ div.input_area > div.highlight > pre {
   border-top-left-radius: 2px;
 }
 .CodeMirror pre {
-  /* In CM3 this went to 4px from 0 in CM2. This sets horizontal padding only,
-    use .CodeMirror-lines for vertical */
-  padding: 0 0.4em;
+  /* In CM3 this went to 4px from 0 in CM2. We need the 0 value because of how we size */
+  /* .CodeMirror-lines */
+  padding: 0;
   border: 0;
   border-radius: 0;
-}
-.CodeMirror-cursor {
-  border-left: 1.4px solid black;
-}
-@media screen and (min-width: 2138px) and (max-width: 4319px) {
-  .CodeMirror-cursor {
-    border-left: 2px solid black;
-  }
-}
-@media screen and (min-width: 4320px) {
-  .CodeMirror-cursor {
-    border-left: 4px solid black;
-  }
 }
 /*
 
@@ -872,9 +722,6 @@ div.output_area img.unconfined,
 div.output_area svg.unconfined {
   max-width: none;
 }
-div.output_area .mglyph > img {
-  max-width: none;
-}
 /* This is needed to protect the pre formating from global settings such
    as that of bootstrap */
 .output {
@@ -913,7 +760,7 @@ div.output_area .mglyph > img {
 }
 div.output_area pre {
   margin: 0;
-  padding: 1px 0 1px 0;
+  padding: 0;
   border: 0;
   vertical-align: baseline;
   color: black;
@@ -1035,10 +882,6 @@ div.output_unrecognized a:hover {
 .rendered_html h6:first-child {
   margin-top: 1em;
 }
-.rendered_html ul:not(.list-inline),
-.rendered_html ol:not(.list-inline) {
-  padding-left: 2em;
-}
 
 
 
@@ -1055,24 +898,16 @@ div.output_unrecognized a:hover {
 }
 
 
-
-
-
 .rendered_html pre,
-
 
 
 
 .rendered_html tr,
 .rendered_html th,
 
+.rendered_html td,
 
-.rendered_html tbody tr:nth-child(odd) {
-  background: #f5f5f5;
-}
-.rendered_html tbody tr:hover {
-  background: rgba(66, 165, 245, 0.2);
-}
+
 .rendered_html * + table {
   margin-top: 1em;
 }
@@ -1088,11 +923,6 @@ div.output_unrecognized a:hover {
 
 .rendered_html img.unconfined,
 
-
-.rendered_html * + .alert {
-  margin-top: 1em;
-}
-[dir="rtl"] 
 div.text_cell {
   /* Old browsers */
   display: -webkit-box;
@@ -1143,15 +973,8 @@ h6:hover .anchor-link {
   display: none;
 }
 .text_cell.rendered 
-.text_cell.rendered .rendered_html tr,
-.text_cell.rendered .rendered_html th,
-.text_cell.rendered 
 .text_cell.unrendered .text_cell_render {
   display: none;
-}
-.text_cell .dropzone .input_area {
-  border: 2px dashed #bababa;
-  margin: -1px;
 }
 .cm-header-1,
 .cm-header-2,
@@ -1251,8 +1074,47 @@ h6:hover .anchor-link {
 .highlight .vg { color: #19177C } /* Name.Variable.Global */
 .highlight .vi { color: #19177C } /* Name.Variable.Instance */
 .highlight .vm { color: #19177C } /* Name.Variable.Magic */
-.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style><div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style>
+<style type="text/css">
+/* Temporary definitions which will become obsolete with Notebook release 5.0 */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-bold { font-weight: bold; }
+</style>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <blockquote><p><a href="https://leblancfg.com/crossfit_open_2019_analysis_athlete_statistics.html">Part 1: <strong>Athlete Statistics</strong></a></p>
 <p><a href="https://leblancfg.com/crossfit_open_2019_analysis_exercise_statistics.html">Part 3: <strong>Exercise Statistics</strong></a></p>
@@ -1307,7 +1169,8 @@ h6:hover .anchor-link {
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Pre-processing">Pre-processing<a class="anchor-link" href="#Pre-processing">&#182;</a></h2><p>Even though a lot of the pre-processing was done in the steps leading to this analysis (see upcoming post on scraping methodology), we still have to deal with assigning sexes to participants, and with the all-important question of how to deal with missing values.</p>
 
@@ -1331,13 +1194,14 @@ h6:hover .anchor-link {
 <span class="kn">from</span> <span class="nn">IPython.display</span> <span class="k">import</span> <span class="n">display_html</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Pull-the-data">Pull the data<a class="anchor-link" href="#Pull-the-data">&#182;</a></h3><p>In this case, our data was saved as a table in a PostgreSQL database running locally.</p>
 
@@ -1355,7 +1219,7 @@ h6:hover .anchor-link {
 <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;cf_athletes&quot;</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -1365,7 +1229,7 @@ h6:hover .anchor-link {
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[2]:</div>
+<div class="prompt output_prompt">Out[2]:</div>
 
 
 
@@ -1561,7 +1425,8 @@ h6:hover .anchor-link {
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>As we can see, a lot of the athletes simply input their name, division and age; they either don't bother entering their stats, or don't know them well enough.</p>
 
@@ -1569,7 +1434,8 @@ h6:hover .anchor-link {
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Named-Workouts">Named Workouts<a class="anchor-link" href="#Named-Workouts">&#182;</a></h2><h3 id="Fran">Fran<a class="anchor-link" href="#Fran">&#182;</a></h3><p>Fran is one of the most well-known of CrossFit workouts, as it's a simple but deadly couplet of:</p>
 <blockquote><p><strong>21-15-9 reps</strong> of:</p>
@@ -1601,7 +1467,7 @@ h6:hover .anchor-link {
 <span class="p">)</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -1611,7 +1477,7 @@ h6:hover .anchor-link {
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -1676,7 +1542,7 @@ if (outputEl) {{
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">fran</span><span class="p">,</span> <span class="s2">&quot;fran&quot;</span><span class="p">)</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -1686,7 +1552,7 @@ if (outputEl) {{
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -1765,7 +1631,8 @@ if (outputEl) {{
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We see here first a very big difference in overall numbers between men and women, as tracking &mdash; or at least entering &mdash; those numbers seem to be much more popular with the former.</p>
 <p>For the men, we see a peak for the 175-179 second bin, where we see athletes pushing to get their times under 3 minutes. A lofty goal indeed! There are similar but less pronounced peaks at and before round numbers.</p>
@@ -1775,7 +1642,8 @@ if (outputEl) {{
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Grace">Grace<a class="anchor-link" href="#Grace">&#182;</a></h3><p>Another classic, Grace is a deceptively simple benchmark, consisting of:</p>
 <blockquote><p><strong>30 clean-and-jerks of 135/95 lbs</strong>, for time.</p>
@@ -1804,7 +1672,7 @@ if (outputEl) {{
 <span class="p">)</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -1814,7 +1682,7 @@ if (outputEl) {{
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -1879,7 +1747,7 @@ if (outputEl) {{
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">grace</span><span class="p">,</span> <span class="s2">&quot;grace&quot;</span><span class="p">)</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -1889,7 +1757,7 @@ if (outputEl) {{
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -1968,7 +1836,8 @@ if (outputEl) {{
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Similar to Fran, we find skewed distributions with peaks at and before the minute marks.</p>
 <p>For men, a good first milestone would be at the three minute mark, and a lump of elite athletes peaking under two minutes.</p>
@@ -1978,7 +1847,8 @@ if (outputEl) {{
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Helen">Helen<a class="anchor-link" href="#Helen">&#182;</a></h3><p>An all-time favorite of mine, Helen consists of:</p>
 <blockquote><p><strong>3 rounds</strong> for time:</p>
@@ -2011,7 +1881,7 @@ if (outputEl) {{
 <span class="p">)</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -2021,7 +1891,7 @@ if (outputEl) {{
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -2086,7 +1956,7 @@ if (outputEl) {{
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">helen</span><span class="p">,</span> <span class="s2">&quot;helen&quot;</span><span class="p">)</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -2096,7 +1966,7 @@ if (outputEl) {{
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -2175,7 +2045,8 @@ if (outputEl) {{
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Now, here it sure looks like there's more room to play than the previous two! We see a log-normal distribution here, but with extremely wider tails compared to the other two benchmark workouts. The fact that we see three modalities (run, KBS, PU) in here to me indicates that it's harder to optimize it to a science.</p>
 <p>For men, the <strong>mean is at 10 m 11 s</strong>, and the median is at <strong>9 m 47 s</strong>. We see the largest peak right under 9 minutes, and another big peak right under the 8 minute mark, at 479 seconds.</p>
@@ -2185,7 +2056,8 @@ if (outputEl) {{
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="CrossFit-Benchmarks">CrossFit Benchmarks<a class="anchor-link" href="#CrossFit-Benchmarks">&#182;</a></h2><h3 id="Filthy50">Filthy50<a class="anchor-link" href="#Filthy50">&#182;</a></h3><p>This one was new to me as I had never heard of it before, but seems dreadful in a beautiful kind of way. I'm actually excited to try it soon! The Filthy Fifty is:</p>
 <blockquote><p><strong>For Time</strong>:</p>
@@ -2225,7 +2097,7 @@ if (outputEl) {{
 <span class="p">)</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -2235,7 +2107,7 @@ if (outputEl) {{
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -2300,7 +2172,7 @@ if (outputEl) {{
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">filt50</span><span class="p">,</span> <span class="s2">&quot;filthy50&quot;</span><span class="p">)</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -2310,7 +2182,7 @@ if (outputEl) {{
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -2389,7 +2261,8 @@ if (outputEl) {{
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>For once, we see similar time numbers for both men and women, at least compared to the other workouts. Again though, we see higher "peakedness" for the men, with the mode right under the 25-minute mark. For the men, <strong>under 22 minutes</strong> will put you in the 25% percentile, and under <strong>23 minutes 30 seconds</strong> for women.</p>
 
@@ -2397,7 +2270,8 @@ if (outputEl) {{
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h3 id="Fight-Gone-Bad">Fight Gone Bad<a class="anchor-link" href="#Fight-Gone-Bad">&#182;</a></h3><p>In what seems to be one of the hardest "old-school" benchmarks, lastly comes the Fight Gone Bad. A sprint-your-a$s-off-but-pace-yourself workout combining a shoulder-heavy mix of exercices that takes lots of strategy, planning, and mental fortitude, Fight Gone Bad represents a good number for competition potential and capacity to approach workouts with high numbers in mind.</p>
 <blockquote><p><strong>3 Rounds For Total Reps in 17 minutes</strong></p>
@@ -2432,7 +2306,7 @@ if (outputEl) {{
 <span class="p">)</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -2442,7 +2316,7 @@ if (outputEl) {{
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -2507,7 +2381,7 @@ if (outputEl) {{
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">fgb</span><span class="p">,</span> <span class="s2">&quot;fgonebad&quot;</span><span class="p">)</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -2517,7 +2391,7 @@ if (outputEl) {{
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -2596,7 +2470,8 @@ if (outputEl) {{
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>We see here large peaks at 250, 300 and 400, and apparently some participants cranking numbers past 500. An interesting metric in itself, I have the impression that I would use this benchmark in a later blog post focusing on predicting factors for high placements in the Open.</p>
 <blockquote><p><a href="https://leblancfg.com/crossfit_open_2019_analysis_athlete_statistics.html">Part 1: <strong>Athlete Statistics</strong></a></p>

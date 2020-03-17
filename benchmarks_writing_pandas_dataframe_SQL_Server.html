@@ -46,12 +46,12 @@
     <meta name="msapplication-TileColor" content="#330033">
 
 <meta name="author" content="François Leblanc" />
-<meta name="description" content="In this article, we benchmark various methods to write data to MS SQL Server from pandas DataFrames to see which is the fastest. We compare &#39;multi&#39;, &#39;fast_executemany&#39; and turbodbc and find the best candidate." />
+<meta name="description" content="In this article, we benchmark various methods to write data to MS SQL Server from pandas DataFrames to see which is the fastest. We compare multi, fast_executemany and turbodbc, and find the best candidate." />
 <meta name="keywords" content="python, SQL Server">
 
 <meta property="og:site_name" content="leblancfg.com"/>
 <meta property="og:title" content="Benchmarks for writing pandas DataFrames to SQL Server (ODBC)"/>
-<meta property="og:description" content="In this article, we benchmark various methods to write data to MS SQL Server from pandas DataFrames to see which is the fastest. We compare &#39;multi&#39;, &#39;fast_executemany&#39; and turbodbc and find the best candidate."/>
+<meta property="og:description" content="In this article, we benchmark various methods to write data to MS SQL Server from pandas DataFrames to see which is the fastest. We compare multi, fast_executemany and turbodbc, and find the best candidate."/>
 <meta property="og:locale" content="en_US"/>
 <meta property="og:url" content="https://leblancfg.com/benchmarks_writing_pandas_dataframe_SQL_Server.html"/>
 <meta property="og:type" content="article"/>
@@ -143,124 +143,9 @@
 * IPython notebook
 *
 */
-/* CSS font colors for translated ANSI escape sequences */
-/* The color values are a mix of
-   http://www.xcolors.net/dl/baskerville-ivorylight and
-   http://www.xcolors.net/dl/euphrasia */
-.ansi-black-fg {
-  color: #3E424D;
-}
-.ansi-black-bg {
-  background-color: #3E424D;
-}
-.ansi-black-intense-fg {
-  color: #282C36;
-}
-.ansi-black-intense-bg {
-  background-color: #282C36;
-}
-.ansi-red-fg {
-  color: #E75C58;
-}
-.ansi-red-bg {
-  background-color: #E75C58;
-}
-.ansi-red-intense-fg {
-  color: #B22B31;
-}
-.ansi-red-intense-bg {
-  background-color: #B22B31;
-}
-.ansi-green-fg {
-  color: #00A250;
-}
-.ansi-green-bg {
-  background-color: #00A250;
-}
-.ansi-green-intense-fg {
-  color: #007427;
-}
-.ansi-green-intense-bg {
-  background-color: #007427;
-}
-.ansi-yellow-fg {
-  color: #DDB62B;
-}
-.ansi-yellow-bg {
-  background-color: #DDB62B;
-}
-.ansi-yellow-intense-fg {
-  color: #B27D12;
-}
-.ansi-yellow-intense-bg {
-  background-color: #B27D12;
-}
-.ansi-blue-fg {
-  color: #208FFB;
-}
-.ansi-blue-bg {
-  background-color: #208FFB;
-}
-.ansi-blue-intense-fg {
-  color: #0065CA;
-}
-.ansi-blue-intense-bg {
-  background-color: #0065CA;
-}
-.ansi-magenta-fg {
-  color: #D160C4;
-}
-.ansi-magenta-bg {
-  background-color: #D160C4;
-}
-.ansi-magenta-intense-fg {
-  color: #A03196;
-}
-.ansi-magenta-intense-bg {
-  background-color: #A03196;
-}
-.ansi-cyan-fg {
-  color: #60C6C8;
-}
-.ansi-cyan-bg {
-  background-color: #60C6C8;
-}
-.ansi-cyan-intense-fg {
-  color: #258F8F;
-}
-.ansi-cyan-intense-bg {
-  background-color: #258F8F;
-}
-.ansi-white-fg {
-  color: #C5C1B4;
-}
-.ansi-white-bg {
-  background-color: #C5C1B4;
-}
-.ansi-white-intense-fg {
-  color: #A1A6B2;
-}
-.ansi-white-intense-bg {
-  background-color: #A1A6B2;
-}
-.ansi-default-inverse-fg {
-  color: #FFFFFF;
-}
-.ansi-default-inverse-bg {
-  background-color: #000000;
-}
-.ansi-bold {
-  font-weight: bold;
-}
-.ansi-underline {
-  text-decoration: underline;
-}
-/* The following styles are deprecated an will be removed in a future version */
+/* CSS font colors for translated ANSI colors. */
 .ansibold {
   font-weight: bold;
-}
-.ansi-inverse {
-  outline: 0.5px dotted;
 }
 /* use dark versions for foreground, to improve visibility */
 .ansiblack {
@@ -339,20 +224,12 @@ div.cell {
   /* This acts as a spacer between cells, that is outside the border */
   margin: 0px;
   outline: none;
-  position: relative;
-  overflow: visible;
-}
-div.cell:before {
-  position: absolute;
-  display: block;
-  top: -1px;
-  left: -1px;
-  width: 5px;
-  height: calc(100% +  2px);
-  content: '';
-  background: transparent;
+  border-left-width: 1px;
+  padding-left: 5px;
+  background: linear-gradient(to right, transparent -40px, transparent 1px, transparent 1px, transparent 100%);
 }
 div.cell.jupyter-soft-selected {
+  border-left-color: #90CAF9;
   border-left-color: #E3F2FD;
   border-left-width: 1px;
   padding-left: 5px;
@@ -365,39 +242,27 @@ div.cell.jupyter-soft-selected {
     border-color: transparent;
   }
 }
-div.cell.selected,
-div.cell.selected.jupyter-soft-selected {
+div.cell.selected {
   border-color: #ababab;
-}
-div.cell.selected:before,
-div.cell.selected.jupyter-soft-selected:before {
-  position: absolute;
-  display: block;
-  top: -1px;
-  left: -1px;
-  width: 5px;
-  height: calc(100% +  2px);
-  content: '';
-  background: #42A5F5;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 5px, transparent 5px, transparent 100%);
 }
 @media print {
-  div.cell.selected,
-  div.cell.selected.jupyter-soft-selected {
+  div.cell.selected {
     border-color: transparent;
   }
 }
+div.cell.selected.jupyter-soft-selected {
+  border-left-width: 0;
+  padding-left: 6px;
+  background: linear-gradient(to right, #42A5F5 -40px, #42A5F5 7px, #E3F2FD 7px, #E3F2FD 100%);
+}
 .edit_mode div.cell.selected {
   border-color: #66BB6A;
-}
-.edit_mode div.cell.selected:before {
-  position: absolute;
-  display: block;
-  top: -1px;
-  left: -1px;
-  width: 5px;
-  height: calc(100% +  2px);
-  content: '';
-  background: #66BB6A;
+  border-left-width: 0px;
+  padding-left: 6px;
+  background: linear-gradient(to right, #66BB6A -40px, #66BB6A 5px, transparent 5px, transparent 100%);
 }
 @media print {
   .edit_mode div.cell.selected {
@@ -593,9 +458,7 @@ div.input_area > div.highlight > pre {
 .CodeMirror-lines {
   /* In CM2, this used to be 0.4em, but in CM3 it went to 4px. We need the em value because */
   /* we have set a different line-height and want this to scale with that. */
-  /* Note that this should set vertical padding only, since CodeMirror assumes
-       that horizontal padding will be set on CodeMirror pre */
-  padding: 0.4em 0;
+  padding: 0.4em;
 }
 .CodeMirror-linenumber {
   padding: 0 8px 0 4px;
@@ -605,24 +468,11 @@ div.input_area > div.highlight > pre {
   border-top-left-radius: 2px;
 }
 .CodeMirror pre {
-  /* In CM3 this went to 4px from 0 in CM2. This sets horizontal padding only,
-    use .CodeMirror-lines for vertical */
-  padding: 0 0.4em;
+  /* In CM3 this went to 4px from 0 in CM2. We need the 0 value because of how we size */
+  /* .CodeMirror-lines */
+  padding: 0;
   border: 0;
   border-radius: 0;
-}
-.CodeMirror-cursor {
-  border-left: 1.4px solid black;
-}
-@media screen and (min-width: 2138px) and (max-width: 4319px) {
-  .CodeMirror-cursor {
-    border-left: 2px solid black;
-  }
-}
-@media screen and (min-width: 4320px) {
-  .CodeMirror-cursor {
-    border-left: 4px solid black;
-  }
 }
 /*
 
@@ -870,9 +720,6 @@ div.output_area img.unconfined,
 div.output_area svg.unconfined {
   max-width: none;
 }
-div.output_area .mglyph > img {
-  max-width: none;
-}
 /* This is needed to protect the pre formating from global settings such
    as that of bootstrap */
 .output {
@@ -911,7 +758,7 @@ div.output_area .mglyph > img {
 }
 div.output_area pre {
   margin: 0;
-  padding: 1px 0 1px 0;
+  padding: 0;
   border: 0;
   vertical-align: baseline;
   color: black;
@@ -1033,10 +880,6 @@ div.output_unrecognized a:hover {
 .rendered_html h6:first-child {
   margin-top: 1em;
 }
-.rendered_html ul:not(.list-inline),
-.rendered_html ol:not(.list-inline) {
-  padding-left: 2em;
-}
 
 
 
@@ -1053,24 +896,16 @@ div.output_unrecognized a:hover {
 }
 
 
-
-
-
 .rendered_html pre,
-
 
 
 
 .rendered_html tr,
 .rendered_html th,
 
+.rendered_html td,
 
-.rendered_html tbody tr:nth-child(odd) {
-  background: #f5f5f5;
-}
-.rendered_html tbody tr:hover {
-  background: rgba(66, 165, 245, 0.2);
-}
+
 .rendered_html * + table {
   margin-top: 1em;
 }
@@ -1086,11 +921,6 @@ div.output_unrecognized a:hover {
 
 .rendered_html img.unconfined,
 
-
-.rendered_html * + .alert {
-  margin-top: 1em;
-}
-[dir="rtl"] 
 div.text_cell {
   /* Old browsers */
   display: -webkit-box;
@@ -1141,15 +971,8 @@ h6:hover .anchor-link {
   display: none;
 }
 .text_cell.rendered 
-.text_cell.rendered .rendered_html tr,
-.text_cell.rendered .rendered_html th,
-.text_cell.rendered 
 .text_cell.unrendered .text_cell_render {
   display: none;
-}
-.text_cell .dropzone .input_area {
-  border: 2px dashed #bababa;
-  margin: -1px;
 }
 .cm-header-1,
 .cm-header-2,
@@ -1249,12 +1072,51 @@ h6:hover .anchor-link {
 .highlight .vg { color: #19177C } /* Name.Variable.Global */
 .highlight .vi { color: #19177C } /* Name.Variable.Instance */
 .highlight .vm { color: #19177C } /* Name.Variable.Magic */
-.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style><div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+.highlight .il { color: #666666 } /* Literal.Number.Integer.Long */</style>
+<style type="text/css">
+/* Temporary definitions which will become obsolete with Notebook release 5.0 */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-bold { font-weight: bold; }
+</style>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Speed-tests-for-writing-to-MSSQL-from-pandas-(ODBC)">Speed tests for writing to MSSQL from pandas (ODBC)<a class="anchor-link" href="#Speed-tests-for-writing-to-MSSQL-from-pandas-(ODBC)">&#182;</a></h1><p>In this notebook, we'll be playing with various methods of writing data to a Microsoft SQL Server database. Compared to PostgreSQL which I was using previously, the connection is approx. an order of magnitude slower.</p>
+<h1 id="Speed-tests-for-writing-to-MSSQL-from-pandas-(ODBC)">Speed tests for writing to MSSQL from pandas (ODBC)<a class="anchor-link" href="#Speed-tests-for-writing-to-MSSQL-from-pandas-(ODBC)">&#182;</a></h1><p>In this notebook, we'll be playing with various methods of writing data to a Microsoft SQL Server database. Compared to PostgreSQL, which I was using previously, the connection is approximately an order of magnitude slower. This is apparently a known issue. It boggles the mind why, and I might not be searching deep enough to understand the reasons for this, but it's something I can't work around.</p>
 <p>Trying to transmit larger volumes of data can also result in errors, as I get memory and connection timeout errors I typically was not having previously.</p>
-<p>According to some research, this is due to the ODBC Driver. Whether this is true or not, I do not know. The naive implementation for the <code>.to_sql()</code> method from the Pandas docs is</p>
+<p>According to some research, this is due to the ODBC Driver. Whether this is true or not, I do not know. The naive implementation for the <code>.to_sql()</code> method from the Pandas docs is:</p>
 
 <pre><code>df.to_sql(name,
           con,
@@ -1275,7 +1137,7 @@ h6:hover .anchor-link {
 <li>Use <code>sqlalchemy_turbodbc</code> instead of vanilla SQLAlchemy</li>
 <li>Use <code>pymssql</code> instead of SQLAlchemy</li>
 </ol>
-<p>But so far none have been benchmarked. In this article, we will be benchmarking these methods to find the best performance in order to write data from a pandas DataFrame to Microsoft SQL Server.</p>
+<p>But so far none have been benchmarked for comparison. In this article, we will be juxtaposing these methods to find the best performance in order to write data from a pandas DataFrame to Microsoft SQL Server.</p>
 <h2 id="Failed-implementations">Failed implementations<a class="anchor-link" href="#Failed-implementations">&#182;</a></h2><p>I also tried the following methods, but there was some issue or reason behind not including them in the list. This includes:</p>
 <ol>
 <li><code>BULK INSERT</code>. A workaround we see a lot of in StackOverflow answers is to write your DataFrame to CSV and read it directly with BULK INSERT. I don't have those permissions on this database, so I won't include it. Feels definitely like something that <strong>if you can do, you should try</strong>.</li>
@@ -1287,7 +1149,8 @@ h6:hover .anchor-link {
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Imports">Imports<a class="anchor-link" href="#Imports">&#182;</a></h1>
 </div>
@@ -1314,7 +1177,7 @@ h6:hover .anchor-link {
 <span class="kn">import</span> <span class="nn">sqlalchemy_turbodbc</span> <span class="k">as</span> <span class="nn">st</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -1324,7 +1187,7 @@ h6:hover .anchor-link {
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stderr output_text">
@@ -1336,16 +1199,16 @@ h6:hover .anchor-link {
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
 
 
-<div id="08c7f535-349d-4187-9fb1-cd60d1018f51"></div>
+<div id="0a61a08a-c472-414a-81d6-95ffe8bd469a"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#08c7f535-349d-4187-9fb1-cd60d1018f51');
+var element = $('#0a61a08a-c472-414a-81d6-95ffe8bd469a');
 
             setTimeout(function() {
                 var nbb_cell_id = 1;
@@ -1369,15 +1232,17 @@ var element = $('#08c7f535-349d-4187-9fb1-cd60d1018f51');
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We also needed to <code>pip install sqlalchemy_turbodbc pymssql</code>, which thankfully get detected when you load SQLalchemy.</p>
+<p>We also needed to <code>pip install sqlalchemy_turbodbc pymssql</code>, which thankfully get detected when you load them as SQLAlchemy dialects.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Versions">Versions<a class="anchor-link" href="#Versions">&#182;</a></h1>
 </div>
@@ -1398,7 +1263,7 @@ var element = $('#08c7f535-349d-4187-9fb1-cd60d1018f51');
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;No sqlalchemy_turbodbc version available&quot;</span><span class="p">)</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -1408,7 +1273,7 @@ var element = $('#08c7f535-349d-4187-9fb1-cd60d1018f51');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -1423,16 +1288,16 @@ No sqlalchemy_turbodbc version available
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
 
 
-<div id="b6eecbeb-9f78-4428-87a9-05cc5ea7d82f"></div>
+<div id="c735b29e-fe1e-4676-b354-23cca69a78b2"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#b6eecbeb-9f78-4428-87a9-05cc5ea7d82f');
+var element = $('#c735b29e-fe1e-4676-b354-23cca69a78b2');
 
             setTimeout(function() {
                 var nbb_cell_id = 20;
@@ -1456,7 +1321,8 @@ var element = $('#b6eecbeb-9f78-4428-87a9-05cc5ea7d82f');
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Environment">Environment<a class="anchor-link" href="#Environment">&#182;</a></h1>
 </div>
@@ -1483,7 +1349,7 @@ var element = $('#b6eecbeb-9f78-4428-87a9-05cc5ea7d82f');
 <span class="n">conn_pymssql</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">create_engine</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;mssql+pymssql://</span><span class="si">{DSN}</span><span class="s2">/</span><span class="si">{DB}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -1493,20 +1359,20 @@ var element = $('#b6eecbeb-9f78-4428-87a9-05cc5ea7d82f');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
 
 
-<div id="94765f9b-de0a-4a5a-97d7-d8f87c031b9d"></div>
+<div id="45b2366f-6c03-4ad0-8cae-7fc4e379f117"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#94765f9b-de0a-4a5a-97d7-d8f87c031b9d');
+var element = $('#45b2366f-6c03-4ad0-8cae-7fc4e379f117');
 
             setTimeout(function() {
                 var nbb_cell_id = 3;
-                var nbb_formatted_code = "HOME = expanduser(\"~\")\n\nDRIVER = \"ODBC Driver 17 for SQL Server\"\nDSN = \"tbsuatsql05\"\nDB = \"DS_DEV\"\nTABLE = \"perftest\"\n\nconn_sqlalchemy = sql.create_engine(f\"mssql+pyodbc://{DSN}/{DB}?driver={DRIVER}\")\nconn_executemany = sql.create_engine(\n    f\"mssql+pyodbc://{DSN}/{DB}?driver={DRIVER}\", fast_executemany=True\n)\nconn_turbodbc = sql.create_engine(f\"mssql+turbodbc://{DSN}/{DB}?driver={DRIVER}\")\nconn_pymssql = sql.create_engine(f\"mssql+pymssql://{DSN}/{DB}\")";
+                var nbb_formatted_code = "HOME = expanduser(\"~\")\n\nDRIVER = \"ODBC Driver 17 for SQL Server\"\nDSN = \"<REDACTED>\"\nDB = \"DS_DEV\"\nTABLE = \"perftest\"\n\nconn_sqlalchemy = sql.create_engine(f\"mssql+pyodbc://{DSN}/{DB}?driver={DRIVER}\")\nconn_executemany = sql.create_engine(\n    f\"mssql+pyodbc://{DSN}/{DB}?driver={DRIVER}\", fast_executemany=True\n)\nconn_turbodbc = sql.create_engine(f\"mssql+turbodbc://{DSN}/{DB}?driver={DRIVER}\")\nconn_pymssql = sql.create_engine(f\"mssql+pymssql://{DSN}/{DB}\")";
                 var nbb_cells = Jupyter.notebook.get_cells();
                 for (var i = 0; i < nbb_cells.length; ++i) {
                     if (nbb_cells[i].input_prompt_number == nbb_cell_id) {
@@ -1526,7 +1392,8 @@ var element = $('#94765f9b-de0a-4a5a-97d7-d8f87c031b9d');
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Create-dummy-dataset">Create dummy dataset<a class="anchor-link" href="#Create-dummy-dataset">&#182;</a></h2><p>We'll create somehing here that is sufficiently large to both have a large impact on write times, and that triggers the "too many arguments" error when trying to write with the <code>'multi'</code> parameter.</p>
 
@@ -1543,7 +1410,7 @@ var element = $('#94765f9b-de0a-4a5a-97d7-d8f87c031b9d');
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -1553,7 +1420,7 @@ var element = $('#94765f9b-de0a-4a5a-97d7-d8f87c031b9d');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -1564,7 +1431,7 @@ var element = $('#94765f9b-de0a-4a5a-97d7-d8f87c031b9d');
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[4]:</div>
+<div class="prompt output_prompt">Out[4]:</div>
 
 
 
@@ -1674,16 +1541,16 @@ var element = $('#94765f9b-de0a-4a5a-97d7-d8f87c031b9d');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
 
 
-<div id="23cc5fe6-4940-426d-9fdd-f1d515a92324"></div>
+<div id="511fe6b5-f82a-4bac-8e81-1541ed8a1d28"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#23cc5fe6-4940-426d-9fdd-f1d515a92324');
+var element = $('#511fe6b5-f82a-4bac-8e81-1541ed8a1d28');
 
             setTimeout(function() {
                 var nbb_cell_id = 4;
@@ -1714,7 +1581,7 @@ var element = $('#23cc5fe6-4940-426d-9fdd-f1d515a92324');
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;DataFrame is&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">df</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1024</span> <span class="o">**</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="s2">&quot;MB&quot;</span><span class="p">)</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -1724,7 +1591,7 @@ var element = $('#23cc5fe6-4940-426d-9fdd-f1d515a92324');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -1735,16 +1602,16 @@ var element = $('#23cc5fe6-4940-426d-9fdd-f1d515a92324');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
 
 
-<div id="8ce7fdd3-b047-4059-9753-4cd1a4afd804"></div>
+<div id="279feb12-96e7-4dbe-8a87-add45d9b91d9"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#8ce7fdd3-b047-4059-9753-4cd1a4afd804');
+var element = $('#279feb12-96e7-4dbe-8a87-add45d9b91d9');
 
             setTimeout(function() {
                 var nbb_cell_id = 5;
@@ -1768,14 +1635,16 @@ var element = $('#8ce7fdd3-b047-4059-9753-4cd1a4afd804');
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Results">Results<a class="anchor-link" href="#Results">&#182;</a></h1>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2>Option 1 &mdash; Vanilla pandas</h2>
 
@@ -1787,11 +1656,11 @@ var element = $('#8ce7fdd3-b047-4059-9753-4cd1a4afd804');
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
-<span class="n">df</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span><span class="n">TABLE</span><span class="p">,</span> <span class="n">conn_sqlalchemy</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s1">&#39;replace&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
+df.to_sql(TABLE, conn_sqlalchemy, index=False, if_exists=&#39;replace&#39;)
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -1801,7 +1670,7 @@ var element = $('#8ce7fdd3-b047-4059-9753-4cd1a4afd804');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -1812,16 +1681,16 @@ var element = $('#8ce7fdd3-b047-4059-9753-4cd1a4afd804');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
 
 
-<div id="565dcd82-f179-4740-97da-3d4796a72c2a"></div>
+<div id="be62d689-add4-4b82-8135-17c6b48c697d"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#565dcd82-f179-4740-97da-3d4796a72c2a');
+var element = $('#be62d689-add4-4b82-8135-17c6b48c697d');
 
             setTimeout(function() {
                 var nbb_cell_id = 6;
@@ -1845,7 +1714,8 @@ var element = $('#565dcd82-f179-4740-97da-3d4796a72c2a');
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2>Option 2 &mdash; <code>df.to_sql(..., method='multi')</code></h2>
 <p>This method smashed the chunksize limit for MS SQL, so we have to break up the insert by chunks of 2100 parameters. Pandas has the <code>chunksize=2100</code> parameter, but unfortunately in our testing we get database errors I can't troubleshoot only using pandas.</p>
@@ -1884,7 +1754,7 @@ var element = $('#565dcd82-f179-4740-97da-3d4796a72c2a');
         <span class="p">)</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -1894,16 +1764,16 @@ var element = $('#565dcd82-f179-4740-97da-3d4796a72c2a');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
 
 
-<div id="d063ebdb-f7d8-412a-a03f-a3168a8f811c"></div>
+<div id="eb820751-2223-4413-84cc-99727545400a"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#d063ebdb-f7d8-412a-a03f-a3168a8f811c');
+var element = $('#eb820751-2223-4413-84cc-99727545400a');
 
             setTimeout(function() {
                 var nbb_cell_id = 7;
@@ -1931,14 +1801,14 @@ var element = $('#d063ebdb-f7d8-412a-a03f-a3168a8f811c');
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
-<span class="c1"># Doing it like this errors out. Can&#39;t seem to be able to debug the straight pandas call.</span>
-<span class="c1"># df.to_sql(TABLE, conn_sqlalchemy, index=False, if_exists=&#39;replace&#39;, method=&#39;multi&#39;, chunksize=2100)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
+# Doing it like this errors out. Can&#39;t seem to be able to debug the straight pandas call.
+# df.to_sql(TABLE, conn_sqlalchemy, index=False, if_exists=&#39;replace&#39;, method=&#39;multi&#39;, chunksize=2100)
 
-<span class="n">insert_with_progress</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">conn_sqlalchemy</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="n">TABLE</span><span class="p">)</span>
+insert_with_progress(df, conn_sqlalchemy, table=TABLE)
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -1948,7 +1818,7 @@ var element = $('#d063ebdb-f7d8-412a-a03f-a3168a8f811c');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -1959,16 +1829,16 @@ var element = $('#d063ebdb-f7d8-412a-a03f-a3168a8f811c');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
 
 
-<div id="8469f696-00e3-40fc-883f-73486fb34b3c"></div>
+<div id="159732fa-3cd7-4a6d-b43c-cc5f2ceb731f"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#8469f696-00e3-40fc-883f-73486fb34b3c');
+var element = $('#159732fa-3cd7-4a6d-b43c-cc5f2ceb731f');
 
             setTimeout(function() {
                 var nbb_cell_id = 8;
@@ -1992,7 +1862,8 @@ var element = $('#8469f696-00e3-40fc-883f-73486fb34b3c');
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2>Option 3 &mdash; <code>fast_executemany=True</code></h2>
 <p>N.B. This is currently the recommended method in the pandas documentation.</p>
@@ -2005,11 +1876,11 @@ var element = $('#8469f696-00e3-40fc-883f-73486fb34b3c');
 <div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
-<span class="n">df</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span><span class="n">TABLE</span><span class="p">,</span> <span class="n">conn_executemany</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s1">&#39;replace&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
+df.to_sql(TABLE, conn_executemany, index=False, if_exists=&#39;replace&#39;)
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -2019,7 +1890,7 @@ var element = $('#8469f696-00e3-40fc-883f-73486fb34b3c');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -2030,16 +1901,16 @@ var element = $('#8469f696-00e3-40fc-883f-73486fb34b3c');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
 
 
-<div id="b440d133-fe0f-4dea-b50f-f9ee04b8aea7"></div>
+<div id="ecb9927d-5cfb-4f49-8ad9-19d1dc69e46e"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#b440d133-fe0f-4dea-b50f-f9ee04b8aea7');
+var element = $('#ecb9927d-5cfb-4f49-8ad9-19d1dc69e46e');
 
             setTimeout(function() {
                 var nbb_cell_id = 9;
@@ -2063,7 +1934,8 @@ var element = $('#b440d133-fe0f-4dea-b50f-f9ee04b8aea7');
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>For a 0.8MB table this is still remarkably slow, but we're now ~50 x faster than vanilla!</p>
 
@@ -2071,7 +1943,8 @@ var element = $('#b440d133-fe0f-4dea-b50f-f9ee04b8aea7');
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2>Option 4 &mdash; <code>'multi'</code> + <code>fast_executemany</code></h2>
 
@@ -2083,11 +1956,11 @@ var element = $('#b440d133-fe0f-4dea-b50f-f9ee04b8aea7');
 <div class="prompt input_prompt">In&nbsp;[10]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
-<span class="n">insert_with_progress</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">conn_executemany</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="n">TABLE</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
+insert_with_progress(df, conn_executemany, table=TABLE)
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -2097,7 +1970,7 @@ var element = $('#b440d133-fe0f-4dea-b50f-f9ee04b8aea7');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -2108,16 +1981,16 @@ var element = $('#b440d133-fe0f-4dea-b50f-f9ee04b8aea7');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
 
 
-<div id="b46e5ea4-f6fc-4316-9eae-077c87826540"></div>
+<div id="cd9ed858-6f4d-4b31-aed8-772288742691"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#b46e5ea4-f6fc-4316-9eae-077c87826540');
+var element = $('#cd9ed858-6f4d-4b31-aed8-772288742691');
 
             setTimeout(function() {
                 var nbb_cell_id = 10;
@@ -2141,7 +2014,8 @@ var element = $('#b46e5ea4-f6fc-4316-9eae-077c87826540');
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Oddly, these two methods to make things faster don't compound well! We get basically the same speed as with <code>'multi'</code></p>
 
@@ -2149,7 +2023,8 @@ var element = $('#b46e5ea4-f6fc-4316-9eae-077c87826540');
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2>Option 5 &mdash; sqlalchemy_turbodbc</h2>
 
@@ -2161,11 +2036,11 @@ var element = $('#b46e5ea4-f6fc-4316-9eae-077c87826540');
 <div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
-<span class="n">df</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span><span class="n">TABLE</span><span class="p">,</span> <span class="n">conn_turbodbc</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s1">&#39;replace&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
+df.to_sql(TABLE, conn_turbodbc, index=False, if_exists=&#39;replace&#39;)
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -2175,7 +2050,7 @@ var element = $('#b46e5ea4-f6fc-4316-9eae-077c87826540');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -2186,16 +2061,16 @@ var element = $('#b46e5ea4-f6fc-4316-9eae-077c87826540');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
 
 
-<div id="c6e1e5d9-41fa-4ce6-9475-83912661fcef"></div>
+<div id="de874db4-55b8-4587-9c2d-e1c9e485db19"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#c6e1e5d9-41fa-4ce6-9475-83912661fcef');
+var element = $('#de874db4-55b8-4587-9c2d-e1c9e485db19');
 
             setTimeout(function() {
                 var nbb_cell_id = 11;
@@ -2219,7 +2094,8 @@ var element = $('#c6e1e5d9-41fa-4ce6-9475-83912661fcef');
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>So, over a 20x speedup from the vanilla settings, but still 2-3x slower than with the <code>fast_executemany</code> option.</p>
 
@@ -2227,7 +2103,8 @@ var element = $('#c6e1e5d9-41fa-4ce6-9475-83912661fcef');
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2>Option 6 &mdash; sqlalchemy_turbodbc + <code>'multi'</code></h2>
 <p><code>fast_executemany</code> is not available as an option when creating the engine, but we can still test with the <code>method='multi'</code> parameter.</p>
@@ -2240,11 +2117,11 @@ var element = $('#c6e1e5d9-41fa-4ce6-9475-83912661fcef');
 <div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
-<span class="n">insert_with_progress</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">conn_turbodbc</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="n">TABLE</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
+insert_with_progress(df, conn_turbodbc, table=TABLE)
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -2254,7 +2131,7 @@ var element = $('#c6e1e5d9-41fa-4ce6-9475-83912661fcef');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -2265,16 +2142,16 @@ var element = $('#c6e1e5d9-41fa-4ce6-9475-83912661fcef');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
 
 
-<div id="1d4fa179-6e1d-421a-b5c6-b0d38121ec47"></div>
+<div id="a164f4b0-db7f-48cb-a488-429511e6c60f"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#1d4fa179-6e1d-421a-b5c6-b0d38121ec47');
+var element = $('#a164f4b0-db7f-48cb-a488-429511e6c60f');
 
             setTimeout(function() {
                 var nbb_cell_id = 12;
@@ -2298,7 +2175,8 @@ var element = $('#1d4fa179-6e1d-421a-b5c6-b0d38121ec47');
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2>Option 7 &mdash; pymssql</h2>
 <p>Another ODBC interface that pops up in the StackOverflow answers, this one doesn't quite seem to be up to snuff. Also doesn't have the <code>fast_executemany</code> option.</p>
@@ -2311,11 +2189,11 @@ var element = $('#1d4fa179-6e1d-421a-b5c6-b0d38121ec47');
 <div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
-<span class="n">df</span><span class="o">.</span><span class="n">to_sql</span><span class="p">(</span><span class="n">TABLE</span><span class="p">,</span> <span class="n">conn_pymssql</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s1">&#39;replace&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
+df.to_sql(TABLE, conn_pymssql, index=False, if_exists=&#39;replace&#39;)
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -2325,7 +2203,7 @@ var element = $('#1d4fa179-6e1d-421a-b5c6-b0d38121ec47');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -2336,16 +2214,16 @@ var element = $('#1d4fa179-6e1d-421a-b5c6-b0d38121ec47');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
 
 
-<div id="831a24f1-9d17-4436-8ed6-a791f43541be"></div>
+<div id="e574cfde-8436-4c45-ba0a-4920dbad38d5"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#831a24f1-9d17-4436-8ed6-a791f43541be');
+var element = $('#e574cfde-8436-4c45-ba0a-4920dbad38d5');
 
             setTimeout(function() {
                 var nbb_cell_id = 13;
@@ -2369,7 +2247,8 @@ var element = $('#831a24f1-9d17-4436-8ed6-a791f43541be');
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2>Option 8 &mdash; pymssql + <code>'multi'</code></h2>
 
@@ -2381,11 +2260,11 @@ var element = $('#831a24f1-9d17-4436-8ed6-a791f43541be');
 <div class="prompt input_prompt">In&nbsp;[14]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
-<span class="n">insert_with_progress</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">conn_pymssql</span><span class="p">,</span> <span class="n">table</span><span class="o">=</span><span class="n">TABLE</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">time</span>
+insert_with_progress(df, conn_pymssql, table=TABLE)
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -2395,7 +2274,7 @@ var element = $('#831a24f1-9d17-4436-8ed6-a791f43541be');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 <div class="output_subarea output_stream output_stdout output_text">
@@ -2406,16 +2285,16 @@ var element = $('#831a24f1-9d17-4436-8ed6-a791f43541be');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
 
 
-<div id="9a59a214-4e99-42e0-8024-fa73a1441f4d"></div>
+<div id="efafd5dc-905a-4b29-b26d-76dde98df432"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#9a59a214-4e99-42e0-8024-fa73a1441f4d');
+var element = $('#efafd5dc-905a-4b29-b26d-76dde98df432');
 
             setTimeout(function() {
                 var nbb_cell_id = 14;
@@ -2439,7 +2318,8 @@ var element = $('#9a59a214-4e99-42e0-8024-fa73a1441f4d');
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Analysis">Analysis<a class="anchor-link" href="#Analysis">&#182;</a></h1>
 </div>
@@ -2471,7 +2351,7 @@ var element = $('#9a59a214-4e99-42e0-8024-fa73a1441f4d');
 <span class="p">)</span>
 </pre></div>
 
-    </div>
+</div>
 </div>
 </div>
 
@@ -2481,7 +2361,7 @@ var element = $('#9a59a214-4e99-42e0-8024-fa73a1441f4d');
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[21]:</div>
+<div class="prompt output_prompt">Out[21]:</div>
 
 
 
@@ -2494,7 +2374,7 @@ var element = $('#9a59a214-4e99-42e0-8024-fa73a1441f4d');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
@@ -2509,16 +2389,16 @@ var element = $('#9a59a214-4e99-42e0-8024-fa73a1441f4d');
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+<div class="prompt"></div>
 
 
 
 
 
-<div id="e52471cd-ed37-4a96-999f-86902efc7fcf"></div>
+<div id="a20cfde5-a6b2-4a15-b081-ea6e6acd3da6"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#e52471cd-ed37-4a96-999f-86902efc7fcf');
+var element = $('#a20cfde5-a6b2-4a15-b081-ea6e6acd3da6');
 
             setTimeout(function() {
                 var nbb_cell_id = 21;
@@ -2542,7 +2422,8 @@ var element = $('#e52471cd-ed37-4a96-999f-86902efc7fcf');
 
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
+</div>
+<div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h1><p>So, there we are! In our testing, we've seen that writing to SQL Server through the ODBC connection is substantially slower than e.g. Postgres. There are many ways to make this process faster, but here's the definitive rule of thumb when faced with this situation.</p>
 <blockquote><p><strong>Rule of thumb when writing to SQL Server from Pandas</strong>:</p>
