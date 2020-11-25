@@ -129,6 +129,8 @@ refresh:
 	git push origin dev
 
 initial_setup:
+	python -m venv env
+	source env/bin/activate
 	git submodule update --init --recursive
 	pip install pelican ghp-import markdown
 
