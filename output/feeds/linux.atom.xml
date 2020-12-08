@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com - Linux</title><link href="https://leblancfg.com/" rel="alternate"></link><link href="https://leblancfg.com/feeds/linux.atom.xml" rel="self"></link><id>https://leblancfg.com/</id><updated>2018-12-03T00:00:00-05:00</updated><entry><title>Installing the Azure CLI on Manjaro (Arch) with Anaconda</title><link href="https://leblancfg.com/installing-azure-cli-on-manjaro-arch-with-anaconda.html" rel="alternate"></link><published>2018-12-03T00:00:00-05:00</published><updated>2018-12-03T00:00:00-05:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-12-03:/installing-azure-cli-on-manjaro-arch-with-anaconda.html</id><summary type="html">&lt;p&gt;A short guide to troubleshooting the installation of Microsoft's Azure Command Line Interface (CLI) on Manjaro Linux&lt;/p&gt;</summary><content type="html">&lt;p&gt;I recently got access to Azure at work a few weeks back, and was trying to connect to it from my Linux workstation. As a compromise to get NVidia drivers working for my GTX960 GPU, I have Manjaro installed on it. I wasn't expecting a really seamless installation process &amp;mdash; despite the "MS♥Linux" propaganda, that boat is going to take years to turn. Case in point out of the many we've encountered: there are no free or shared tiers for &lt;a href="https://azure.microsoft.com/en-ca/pricing/details/app-service/linux/"&gt;Web App Service&lt;/a&gt; instances for Linux.&lt;/p&gt;
+&lt;p&gt;Both &lt;code&gt;awscli&lt;/code&gt; and &lt;code&gt;gcp&lt;/code&gt; are both pip-installable, but for some reason azure CLI needs to install other dependencies. However as my home setup is a little ways off the beaten path (Manjaro, with Anaconda installed) I did hit a snag worthy of sharing.&lt;/p&gt;
+&lt;p&gt;I started with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;yaourt -S python-azure-cli --noconfirm&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;blockquote&gt;
+&lt;p&gt;N.B. that last argument is highly recomended. The azure CLI is not a single install, but rather like 100 different modules, and you will have to accept/ continue every single one of them.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;but I got the error:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;rm&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;cannot&lt;/span&gt; &lt;span class="n"&gt;remove&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;/tmp/yaourt-tmp-leblancfg/aur-python-azure-storage/pkg/python-azure-storage/usr/lib/python3.?/site-packages/azure/__init__.py&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;No&lt;/span&gt; &lt;span class="n"&gt;such&lt;/span&gt; &lt;span class="n"&gt;file&lt;/span&gt; &lt;span class="n"&gt;or&lt;/span&gt; &lt;span class="n"&gt;directory&lt;/span&gt;
+&lt;span class="o"&gt;==&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;ERROR&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;A&lt;/span&gt; &lt;span class="n"&gt;failure&lt;/span&gt; &lt;span class="n"&gt;occurred&lt;/span&gt; &lt;span class="k"&gt;in&lt;/span&gt; &lt;span class="kd"&gt;package&lt;/span&gt;&lt;span class="o"&gt;().&lt;/span&gt;
+    &lt;span class="n"&gt;Aborting&lt;/span&gt;&lt;span class="o"&gt;...&lt;/span&gt;
+&lt;span class="o"&gt;==&amp;gt;&lt;/span&gt; &lt;span class="n"&gt;ERROR&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;Makepkg&lt;/span&gt; &lt;span class="n"&gt;was&lt;/span&gt; &lt;span class="n"&gt;unable&lt;/span&gt; &lt;span class="n"&gt;to&lt;/span&gt; &lt;span class="n"&gt;build&lt;/span&gt; &lt;span class="n"&gt;python&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;azure&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;storage&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;If you don't get this error and the previous incantation works for you straight away, great! I've since &lt;a href="https://aur.archlinux.org/packages/python-azure-cli/"&gt;notified the package manager&lt;/a&gt;, and hopefully this gets resolved in later versions of the package.&lt;/p&gt;
+&lt;p&gt;Fortunately, Microsoft also packages a &lt;a href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-linux?view=azure-cli-latest"&gt;distribution-independent installation script&lt;/a&gt;, which you can run with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;curl -L https://aka.ms/InstallAzureCli | bash&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;I thought it was in the bag but got the error:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;ERROR&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="n"&gt;This&lt;/span&gt; &lt;span class="n"&gt;script&lt;/span&gt; &lt;span class="n"&gt;does&lt;/span&gt; &lt;span class="n"&gt;not&lt;/span&gt; &lt;span class="n"&gt;support&lt;/span&gt; &lt;span class="n"&gt;the&lt;/span&gt; &lt;span class="n"&gt;Python&lt;/span&gt; &lt;span class="n"&gt;Anaconda&lt;/span&gt; &lt;span class="n"&gt;environment&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt; &lt;span class="n"&gt;Create&lt;/span&gt; &lt;span class="n"&gt;an&lt;/span&gt; &lt;span class="n"&gt;Anaconda&lt;/span&gt; &lt;span class="n"&gt;virtual&lt;/span&gt; &lt;span class="n"&gt;environment&lt;/span&gt; &lt;span class="n"&gt;and&lt;/span&gt; &lt;span class="n"&gt;install&lt;/span&gt; &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;pip&amp;#39;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Well darn. I want to be able to call &lt;code&gt;az&lt;/code&gt; through the whole system, not just in a virtual env. If you get this and have Anaconda installed, here's an easy fix for you.&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;pip&lt;/code&gt; is calling the python version in your &lt;code&gt;PATH&lt;/code&gt;, which it gets from the Anaconda location. Behind the scenes, Arch also has a version of Python installs, which it uses for system administration. Same applies for macOS. It's usually refered to as "system Python". To bypass this, we'll temporarily remove Anaconda from our &lt;code&gt;PATH&lt;/code&gt;, install the azure client, and reinstate the original &lt;code&gt;PATH&lt;/code&gt;:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Warning&lt;/strong&gt;: the following steps mess with your &lt;code&gt;PATH&lt;/code&gt; variable. If for some reason the installation doesn't work, make sure to run the second-to-last command in the block.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;echo $PATH &amp;gt; tmp&lt;/span&gt;
+&lt;span class="err"&gt;export PATH=&amp;quot;/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/opt/cuda/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl&amp;quot;&lt;/span&gt;
+&lt;span class="err"&gt;curl -L https://aka.ms/InstallAzureCli | bash&lt;/span&gt;
+&lt;span class="err"&gt;export PATH=&amp;quot;$(cat tmp)&amp;quot;&lt;/span&gt;
+&lt;span class="err"&gt;source ~/.bashrc&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;For the installation, I just used the defaults. At this point, the installation should be complete. Test with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;az login&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And make sure that your Python interpreter is back to its original state with:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;python&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;import sys;print(&amp;#39;Anaconda&amp;#39; in sys.executable)&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</content><category term="linux"></category><category term="manjaro"></category><category term="arch"></category><category term="azure"></category><category term="cli"></category></entry><entry><title>Notes on installing CUDA, CuDNN and Tensorflow on Manjaro</title><link href="https://leblancfg.com/installing-cuda-cudnn-tensorflow-nvidia-gtx960.html" rel="alternate"></link><published>2018-08-24T00:00:00-04:00</published><updated>2018-08-24T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-08-24:/installing-cuda-cudnn-tensorflow-nvidia-gtx960.html</id><summary type="html">&lt;p&gt;An in-depth, step-by-step guide to installing CUDA, CuDNN and Tensorflow on Linux with an NVIDIA GeFORCE GTX960 graphics card.&lt;/p&gt;</summary><content type="html">&lt;p&gt;I've finally done it. After 50+ hours spent trying to install GPU support for Tensorflow over the span of a year and a half, I have finally done it. I'm happy to say that I have CUDA 9.2, CuDNN 7.2, and compiled Tensorflow from source well enough that I can train a Resnet on Imagenet-100 in a barely decent amount of time by 2018 standards. Take that, cloud!&lt;/p&gt;
+&lt;p&gt;These notes aren't coming from an expert to be used as a flawless guide for others. I was not very knowledgeable of Linux hardware debugging when I first started this journey back in 2016, and am still now very much learning.&lt;/p&gt;
+&lt;p&gt;That being said, NVIDIA has had a notoriously bad driver support for Linux, which famously led to Mr Torvalds flipping a finger directed at them in a 2012 interview. And even today it is exceedingly hard to not pull your hair out trying to do so. Having spent many, many days configuring it and getting a collection of black screens, consoles and no-boots, here's what it took to install tensorflow on my machine.&lt;/p&gt;
+&lt;p&gt;I ended up using the Manjaro distribution, as it was the only one between Ubuntu 14, 16 and 18, Linux Mint 18 and 19, Scientific Linux and Debian Jessie to just work out of the box. Even though it gets unrequited love from many fans, Arch Linux was a no-go: I still don't believe it a good use of my time to learn to build my OS from the ground up. After further experimentation in the past months, I have to say I've grown quite used to using &lt;code&gt;pacman&lt;/code&gt; instead of &lt;code&gt;apt&lt;/code&gt;. Manjaro also offers a community edition that comes bundled with the i3 window manager, which greatly fits my obsession for the last years to go mouseless (as possible). But that's another blog post.&lt;/p&gt;
+&lt;p&gt;I assume that many people have gone through the same steps as I have, and I would blame none of them for having given up before reaching the end. If there's one lesson to learn from this situation, it's that your calculated ROI on purchasing a (or many) GPUs for training neural networks should consider the possible time it will take to troubleshoot their installation.&lt;/p&gt;
+&lt;h2&gt;Research&lt;/h2&gt;
+&lt;p&gt;Before you buy anything, do your research. At the time of purchase, the GeFORCE 10xx series was still far away, and the 960 was at the top of the chart for performance / price ratio. I've spent a few dozen hours using Keras since, but as I am still a novice, this suits my needs quite nicely. As of writing, the new 20xx series is slated to be released any day now, but it's still unclear whether the tensor cores they'll be packing are going to make much difference in terms of performance.&lt;/p&gt;
+&lt;p&gt;By default, most distributions will install and use the open source GPU drivers called &lt;code&gt;nouveau&lt;/code&gt;, which won't cut it with what we've got in mind for this GPU. The hardest and most frustrating part of the installation process is to get the NVIDIA drivers running. I was met with a lot of black screens, flashing cursor bars, and giving up trying to back-fix things from the GRUB console.&lt;/p&gt;
+&lt;p&gt;Lots of resources exist out there, but the following have been the most useful in finally making things run:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href="https://www.youtube.com/watch?v=_fj4YISX3bw"&gt;Nvidia CUDA Toolkit driver Install Ubuntu Mint Linux 16.04&lt;/a&gt; by &lt;a href="https://www.youtube.com/channel/UCCX3ZAfic1j7BMH-MA2LLbg"&gt;Librebowski&lt;/a&gt;, specifically his blurb at the beginning about Manjaro&lt;/li&gt;
+&lt;li&gt;&lt;a href="https://medium.com/@k_efth/deep-learning-in-arch-linux-from-start-to-finish-with-pytorch-tensorflow-nvidia-cuda-9a873c2252ed"&gt;Deep Learning Setup in Arch Linux: From Start To Finish with PyTorch + TensorFlow + Nvidia CUDA + Anaconda&lt;/a&gt; by &lt;a href="https://medium.com/@k_efth?source=post_header_lockup"&gt;Kyriakosi Efthymiadis&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;The official &lt;a href="https://www.tensorflow.org/install/install_sources"&gt;Tensorflow documentation&lt;/a&gt; for how to install it from source. Great guide, but some sections are already dated. Take instructions with a grain of salt.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;Specs&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;CPU&lt;/strong&gt;: Intel(R) Core(TM) i5-6500 CPU @ 3.20GH&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;GPU&lt;/strong&gt;: NVIDIA Corporation GM206 [GeForce GTX 960]&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Monitor&lt;/strong&gt;: Asus 24" HDMI&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;Notes: I cannot be 100% sure, but I believe that connecting by HDMI sold part of my problems. YMMV&lt;/em&gt;&lt;/p&gt;
+&lt;h2&gt;Steps&lt;/h2&gt;
+&lt;h3&gt;Install Manjaro from Live USB&lt;/h3&gt;
+&lt;p&gt;I was getting a blank screen when trying to boot with the Non-Free Drivers option, so went with Free Drivers.&lt;/p&gt;
+&lt;h3&gt;Update system&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;sudo pacman -Syyu&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Install NVIDIA drivers&lt;/h3&gt;
+&lt;p&gt;In my case, I wasn't able to make the regular &lt;code&gt;nvidia&lt;/code&gt; package work, but had to go with the &lt;code&gt;390xx&lt;/code&gt; series. This step just worked from the GUI. Go to Manjaro Settings &amp;gt; Drivers and simply install that one.&lt;/p&gt;
+&lt;p&gt;Reboot and cross your fingers.&lt;/p&gt;
+&lt;h3&gt;Install CUDA and CuDNN&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;sudo pacman -S cuda cudnn&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;This next one may or may not be useful:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/extras/CUPTI/lib64&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Reboot and cross your fingers.&lt;/p&gt;
+&lt;h3&gt;Install Anaconda&lt;/h3&gt;
+&lt;p&gt;Next up, we download the latest Anaconda release. Since we'll be compiling TF right after, we'll grab bazel while we're at it.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;sudo pacman -S anaconda bazel&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Compile Tensorflow from source&lt;/h3&gt;
+&lt;p&gt;There are no handy CUDA 9.2 wheels for tensorflow available for Linux, so you'll need to compile from source. Don't worry, it'll put hair on your chest. I also ran into r1.10 asking for the &lt;code&gt;keras_applications&lt;/code&gt; Python module to be installed, so according to &lt;a href="https://stackoverflow.com/questions/51771039/error-compiling-tensorflow-from-source-no-module-named-keras-applications"&gt;this SO post&lt;/a&gt; I also pip-installed the following:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;conda install keras&lt;/span&gt;
+&lt;span class="err"&gt;pip install keras_applications==1.0.4 --no-deps&lt;/span&gt;
+&lt;span class="err"&gt;pip install keras_preprocessing==1.0.2 --no-deps&lt;/span&gt;
+&lt;span class="err"&gt;pip install h5py==2.8.0&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Then:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;git clone https://github.com/tensorflow/tensorflow&lt;/span&gt;
+&lt;span class="err"&gt;cd tensorflow&lt;/span&gt;
+&lt;span class="err"&gt;git branch r1.10&lt;/span&gt;
+&lt;span class="err"&gt;bash configure&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;You'll then be asked a series of questions you'll probably want to Google before you answer. In my case, I did:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;All default until&lt;/li&gt;
+&lt;li&gt;CUDA Support: Y&lt;/li&gt;
+&lt;li&gt;CUDA 9.2&lt;/li&gt;
+&lt;li&gt;CUDNN 7.2&lt;/li&gt;
+&lt;li&gt;TensorRT: default&lt;/li&gt;
+&lt;li&gt;NCCL: 1.3 (only one GPU on this box anyhow)&lt;/li&gt;
+&lt;li&gt;CUDA compute capabilities: 3.5,5.2&lt;ul&gt;
+&lt;li&gt;Get this from &lt;a href="https://developer.nvidia.com/cuda-gpus"&gt;here&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;compile w/ clang: default&lt;/li&gt;
+&lt;li&gt;Bazel compiler flags: -mavx -mavx2 -mfma -msse4.2&lt;/li&gt;
+&lt;li&gt;Android: default &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;And finally:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;bazel build --config=opt --config=cuda //tensorflow/tools/pip_package:build_pip_package&lt;/span&gt;
+&lt;span class="err"&gt;bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;And finally, installing with pip (the exact filename might change in your case):&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="err"&gt;sudo pip install /tmp/tensorflow_pkg/tensorflow-1.10.0-cp36-cp36m-linux_x86_64.whl&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;h3&gt;Test your build&lt;/h3&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="n"&gt;cd&lt;/span&gt; &lt;span class="o"&gt;~&lt;/span&gt;
+&lt;span class="n"&gt;python&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;c&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;import tensorflow as tf;hello = tf.constant(&amp;#39;Hello, TensorFlow!&amp;#39;);&lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="s2"&gt;sess = tf.Session();print(sess.run(hello));&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;</content><category term="linux"></category><category term="manjaro"></category><category term="cuda"></category><category term="cudnn"></category><category term="tensorflow"></category><category term="GPU"></category><category term="nvidia"></category><category term="GTX960"></category></entry></feed>
