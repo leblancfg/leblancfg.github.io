@@ -169,7 +169,7 @@
 <h3>Install Manjaro from Live USB</h3>
 <p>I was getting a blank screen when trying to boot with the Non-Free Drivers option, so went with Free Drivers.</p>
 <h3>Update system</h3>
-<div class="highlight"><pre><span></span>sudo pacman -Syyu
+<div class="highlight"><pre><span></span><span class="err">sudo pacman -Syyu</span>
 </pre></div>
 
 
@@ -177,36 +177,36 @@
 <p>In my case, I wasn't able to make the regular <code>nvidia</code> package work, but had to go with the <code>390xx</code> series. This step just worked from the GUI. Go to Manjaro Settings &gt; Drivers and simply install that one.</p>
 <p>Reboot and cross your fingers.</p>
 <h3>Install CUDA and CuDNN</h3>
-<div class="highlight"><pre><span></span>sudo pacman -S cuda cudnn
+<div class="highlight"><pre><span></span><span class="err">sudo pacman -S cuda cudnn</span>
 </pre></div>
 
 
 <p>This next one may or may not be useful:</p>
-<div class="highlight"><pre><span></span>export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/extras/CUPTI/lib64
+<div class="highlight"><pre><span></span><span class="err">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/extras/CUPTI/lib64</span>
 </pre></div>
 
 
 <p>Reboot and cross your fingers.</p>
 <h3>Install Anaconda</h3>
 <p>Next up, we download the latest Anaconda release. Since we'll be compiling TF right after, we'll grab bazel while we're at it.</p>
-<div class="highlight"><pre><span></span>sudo pacman -S anaconda bazel
+<div class="highlight"><pre><span></span><span class="err">sudo pacman -S anaconda bazel</span>
 </pre></div>
 
 
 <h3>Compile Tensorflow from source</h3>
 <p>There are no handy CUDA 9.2 wheels for tensorflow available for Linux, so you'll need to compile from source. Don't worry, it'll put hair on your chest. I also ran into r1.10 asking for the <code>keras_applications</code> Python module to be installed, so according to <a href="https://stackoverflow.com/questions/51771039/error-compiling-tensorflow-from-source-no-module-named-keras-applications">this SO post</a> I also pip-installed the following:</p>
-<div class="highlight"><pre><span></span>conda install keras
-pip install keras_applications==1.0.4 --no-deps
-pip install keras_preprocessing==1.0.2 --no-deps
-pip install h5py==2.8.0
+<div class="highlight"><pre><span></span><span class="err">conda install keras</span>
+<span class="err">pip install keras_applications==1.0.4 --no-deps</span>
+<span class="err">pip install keras_preprocessing==1.0.2 --no-deps</span>
+<span class="err">pip install h5py==2.8.0</span>
 </pre></div>
 
 
 <p>Then:</p>
-<div class="highlight"><pre><span></span>git clone https://github.com/tensorflow/tensorflow
-cd tensorflow
-git branch r1.10
-bash configure
+<div class="highlight"><pre><span></span><span class="err">git clone https://github.com/tensorflow/tensorflow</span>
+<span class="err">cd tensorflow</span>
+<span class="err">git branch r1.10</span>
+<span class="err">bash configure</span>
 </pre></div>
 
 
@@ -227,13 +227,13 @@ bash configure
 <li>Android: default </li>
 </ul>
 <p>And finally:</p>
-<div class="highlight"><pre><span></span>bazel build --config=opt --config=cuda //tensorflow/tools/pip_package:build_pip_package
-bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg
+<div class="highlight"><pre><span></span><span class="err">bazel build --config=opt --config=cuda //tensorflow/tools/pip_package:build_pip_package</span>
+<span class="err">bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg</span>
 </pre></div>
 
 
 <p>And finally, installing with pip (the exact filename might change in your case):</p>
-<div class="highlight"><pre><span></span>sudo pip install /tmp/tensorflow_pkg/tensorflow-1.10.0-cp36-cp36m-linux_x86_64.whl
+<div class="highlight"><pre><span></span><span class="err">sudo pip install /tmp/tensorflow_pkg/tensorflow-1.10.0-cp36-cp36m-linux_x86_64.whl</span>
 </pre></div>
 
 
