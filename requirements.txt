@@ -1,18 +1,17 @@
-Markdown==2.6.6
-pelican==3.7.1
+Markdown==3.4.1
+pelican==4.8.0
 jupyter>=1.0
 ipython>=4.0
-nbconvert==5.6.1
 beautifulsoup4
-ghp-import==0.4.1
+ghp-import==1.0.1
 pelican-jupyter==0.10.1
 
 # For notebooks
 numpy
 matplotlib
-pandas==1.1.5
+pandas==1.5.0
 scipy
 sqlalchemy
 seaborn
 sklearn
-pymc3==3.9.3
+pymc==4.2.0

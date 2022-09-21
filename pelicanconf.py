@@ -14,7 +14,7 @@ BROWSER_COLOR = "#330033"
 
 ROBOTS = "index, follow"
 
-THEME = "Flex"
+THEME = "/home/user/pelican-themes/Flex"
 PATH = "content"
 TIMEZONE = "America/Montreal"
 

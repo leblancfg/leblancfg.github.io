@@ -220,5 +220,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
+# Pelican
+output/
 env/
 # End of https://www.gitignore.io/api/vim,linux,macos,python,windows,jupyternotebooks,visualstudiocode
