@@ -124,7 +124,7 @@ github: refresh publish
 refresh:
 	rm -rf output
 	git add .
-	git commit -m "Updated content"
+	git commit -m "Updated content" --allow-empty
 	git push origin dev
 
 initial_setup:
