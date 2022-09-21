@@ -1,5 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- #
+from pathlib import Path
+
+from pelican_jupyter import markup as nb_markup
 
 AUTHOR = "François Leblanc"
 SITEURL = "http://localhost:8000"
@@ -10,11 +13,12 @@ SITEDESCRIPTION = "%s's Thoughts and Writings" % AUTHOR
 SITELOGO = "https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4"
 FAVICON = "/img/icons/favicon.ico"
 BROWSER_COLOR = "#330033"
-# PYGMENTS_STYLE = 'monokai'
+PYGMENTS_STYLE = "monokai"
 
 ROBOTS = "index, follow"
 
-THEME = "/home/user/pelican-themes/Flex"
+HOME = str(Path.home())
+THEME = f"{HOME}/src/pelican-themes/Flex"
 PATH = "content"
 TIMEZONE = "America/Montreal"
 
@@ -26,7 +30,7 @@ LOCALE = "en_US"
 DATE_FORMATS = {"en": "%B %d, %Y"}
 
 FEED_ALL_ATOM = "feeds/all.atom.xml"
-CATEGORY_FEED_ATOM = "feeds/%s.atom.xml"
+CATEGORY_FEED_ATOM = "feeds/{slug}.atom.xml"
 TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 AUTHOR_FEED_RSS = None
@@ -62,8 +66,9 @@ DEFAULT_PAGINATION = 10
 
 MARKUP = ("md", "ipynb")
 
-PLUGIN_PATHS = ["./plugins"]
-PLUGINS = ["ipynb.pelican_jupyter.markup"]  # , "pelican-plotly"]
+PLUGINS = [nb_markup]
+
+IGNORE_FILES = [".ipynb_checkpoints"]
 
 # Define Links
 STATIC_PATHS = ["img", "extra/CNAME", "pages/leblancfg_CV.pdf"]

@@ -5,6 +5,7 @@ ipython>=4.0
 beautifulsoup4
 ghp-import==1.0.1
 pelican-jupyter==0.10.1
+jinja2==2.11.3
 
 # For notebooks
 numpy
