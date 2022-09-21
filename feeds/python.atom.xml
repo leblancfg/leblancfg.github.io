@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com - Python</title><link href="https://leblancfg.com/" rel="alternate"></link><link href="https://leblancfg.com/feeds/python.atom.xml" rel="self"></link><id>https://leblancfg.com/</id><updated>2018-09-14T00:00:00-04:00</updated><entry><title>Unhashable in Python - Getting the unique number of locations in a GeoDataFrame</title><link href="https://leblancfg.com/unhashable-python-unique-locations-geometry-geodataframe.html" rel="alternate"></link><published>2018-09-14T00:00:00-04:00</published><updated>2018-09-14T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-09-14:/unhashable-python-unique-locations-geometry-geodataframe.html</id><summary type="html">&lt;p&gt;I encounter an unhashable type error when trying to get the unique number of geometries in a GeoDataFrame, and we learn about mutability (vs immutability) of Python objects in order to sidestep the issue.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
+<feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com - Python</title><link href="https://leblancfg.com/" rel="alternate"></link><link href="https://leblancfg.com/feeds/python.atom.xml" rel="self"></link><id>https://leblancfg.com/</id><updated>2018-09-14T00:00:00-04:00</updated><subtitle>Data Science, Geospatial Python, Space Stuff</subtitle><entry><title>Unhashable in Python - Getting the unique number of locations in a GeoDataFrame</title><link href="https://leblancfg.com/unhashable-python-unique-locations-geometry-geodataframe.html" rel="alternate"></link><published>2018-09-14T00:00:00-04:00</published><updated>2018-09-14T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-09-14:/unhashable-python-unique-locations-geometry-geodataframe.html</id><summary type="html">&lt;p&gt;I encounter an unhashable type error when trying to get the unique number of geometries in a GeoDataFrame, and we learn about mutability (vs immutability) of Python objects in order to sidestep the issue.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
@@ -1042,24 +1042,29 @@ h6:hover .anchor-link {
   font-style: italic;
 }
 &lt;/style&gt;
-&lt;style type="text/css"&gt; .highlight pre  .hll { background-color: #ffffcc }
- .highlight pre   { background: #f8f8f8; }
- .highlight pre  .c { color: #408080; font-style: italic } /* Comment */
+&lt;style type="text/css"&gt;pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+ .highlight pre  .hll { background-color: #ffffcc }
+ .highlight pre  { background: #f8f8f8; }
+ .highlight pre  .c { color: #3D7B7B; font-style: italic } /* Comment */
  .highlight pre  .err { border: 1px solid #FF0000 } /* Error */
  .highlight pre  .k { color: #008000; font-weight: bold } /* Keyword */
  .highlight pre  .o { color: #666666 } /* Operator */
- .highlight pre  .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
- .highlight pre  .cm { color: #408080; font-style: italic } /* Comment.Multiline */
- .highlight pre  .cp { color: #BC7A00 } /* Comment.Preproc */
- .highlight pre  .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
- .highlight pre  .c1 { color: #408080; font-style: italic } /* Comment.Single */
- .highlight pre  .cs { color: #408080; font-style: italic } /* Comment.Special */
+ .highlight pre  .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+ .highlight pre  .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+ .highlight pre  .cp { color: #9C6500 } /* Comment.Preproc */
+ .highlight pre  .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+ .highlight pre  .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+ .highlight pre  .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
  .highlight pre  .gd { color: #A00000 } /* Generic.Deleted */
  .highlight pre  .ge { font-style: italic } /* Generic.Emph */
- .highlight pre  .gr { color: #FF0000 } /* Generic.Error */
+ .highlight pre  .gr { color: #E40000 } /* Generic.Error */
  .highlight pre  .gh { color: #000080; font-weight: bold } /* Generic.Heading */
- .highlight pre  .gi { color: #00A000 } /* Generic.Inserted */
- .highlight pre  .go { color: #888888 } /* Generic.Output */
+ .highlight pre  .gi { color: #008400 } /* Generic.Inserted */
+ .highlight pre  .go { color: #717171 } /* Generic.Output */
  .highlight pre  .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
  .highlight pre  .gs { font-weight: bold } /* Generic.Strong */
  .highlight pre  .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
@@ -1072,15 +1077,15 @@ h6:hover .anchor-link {
  .highlight pre  .kt { color: #B00040 } /* Keyword.Type */
  .highlight pre  .m { color: #666666 } /* Literal.Number */
  .highlight pre  .s { color: #BA2121 } /* Literal.String */
- .highlight pre  .na { color: #7D9029 } /* Name.Attribute */
+ .highlight pre  .na { color: #687822 } /* Name.Attribute */
  .highlight pre  .nb { color: #008000 } /* Name.Builtin */
  .highlight pre  .nc { color: #0000FF; font-weight: bold } /* Name.Class */
  .highlight pre  .no { color: #880000 } /* Name.Constant */
  .highlight pre  .nd { color: #AA22FF } /* Name.Decorator */
- .highlight pre  .ni { color: #999999; font-weight: bold } /* Name.Entity */
- .highlight pre  .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+ .highlight pre  .ni { color: #717171; font-weight: bold } /* Name.Entity */
+ .highlight pre  .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
  .highlight pre  .nf { color: #0000FF } /* Name.Function */
- .highlight pre  .nl { color: #A0A000 } /* Name.Label */
+ .highlight pre  .nl { color: #767600 } /* Name.Label */
  .highlight pre  .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
  .highlight pre  .nt { color: #008000; font-weight: bold } /* Name.Tag */
  .highlight pre  .nv { color: #19177C } /* Name.Variable */
@@ -1097,11 +1102,11 @@ h6:hover .anchor-link {
  .highlight pre  .dl { color: #BA2121 } /* Literal.String.Delimiter */
  .highlight pre  .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
  .highlight pre  .s2 { color: #BA2121 } /* Literal.String.Double */
- .highlight pre  .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+ .highlight pre  .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
  .highlight pre  .sh { color: #BA2121 } /* Literal.String.Heredoc */
- .highlight pre  .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+ .highlight pre  .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
  .highlight pre  .sx { color: #008000 } /* Literal.String.Other */
- .highlight pre  .sr { color: #BB6688 } /* Literal.String.Regex */
+ .highlight pre  .sr { color: #A45A77 } /* Literal.String.Regex */
  .highlight pre  .s1 { color: #BA2121 } /* Literal.String.Single */
  .highlight pre  .ss { color: #19177C } /* Literal.String.Symbol */
  .highlight pre  .bp { color: #008000 } /* Name.Builtin.Pseudo */
@@ -1453,7 +1458,7 @@ I end up using &lt;a href=""&gt;geopandas&lt;/a&gt; on a regular basis, and one 
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;
-</content><category term="python"></category><category term="mutability"></category><category term="shapely"></category><category term="geopandas"></category></entry><entry><title>Higher-level functions in Python, Part 3 - filter</title><link href="https://leblancfg.com/higher-level-functions-python-filter.html" rel="alternate"></link><published>2018-06-14T00:00:00-04:00</published><updated>2018-06-14T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-06-14:/higher-level-functions-python-filter.html</id><summary type="html">&lt;p&gt;In our final installment for the Higher Level Function in Python Series, we dive into the Python &lt;code&gt;filter&lt;/code&gt; function. No sidetracks this time around. We simply take a look at how it's used, try to find a way where it would be superior to list comprehensions, fail, and conclude the series.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
+</content><category term="Python"></category><category term="python"></category><category term="mutability"></category><category term="shapely"></category><category term="geopandas"></category></entry><entry><title>Higher-level functions in Python, Part 3 - filter</title><link href="https://leblancfg.com/higher-level-functions-python-filter.html" rel="alternate"></link><published>2018-06-14T00:00:00-04:00</published><updated>2018-06-14T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-06-14:/higher-level-functions-python-filter.html</id><summary type="html">&lt;p&gt;In our final installment for the Higher Level Function in Python Series, we dive into the Python &lt;code&gt;filter&lt;/code&gt; function. No sidetracks this time around. We simply take a look at how it's used, try to find a way where it would be superior to list comprehensions, fail, and conclude the series.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
@@ -2496,24 +2501,29 @@ h6:hover .anchor-link {
   font-style: italic;
 }
 &lt;/style&gt;
-&lt;style type="text/css"&gt; .highlight pre  .hll { background-color: #ffffcc }
- .highlight pre   { background: #f8f8f8; }
- .highlight pre  .c { color: #408080; font-style: italic } /* Comment */
+&lt;style type="text/css"&gt;pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+ .highlight pre  .hll { background-color: #ffffcc }
+ .highlight pre  { background: #f8f8f8; }
+ .highlight pre  .c { color: #3D7B7B; font-style: italic } /* Comment */
  .highlight pre  .err { border: 1px solid #FF0000 } /* Error */
  .highlight pre  .k { color: #008000; font-weight: bold } /* Keyword */
  .highlight pre  .o { color: #666666 } /* Operator */
- .highlight pre  .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
- .highlight pre  .cm { color: #408080; font-style: italic } /* Comment.Multiline */
- .highlight pre  .cp { color: #BC7A00 } /* Comment.Preproc */
- .highlight pre  .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
- .highlight pre  .c1 { color: #408080; font-style: italic } /* Comment.Single */
- .highlight pre  .cs { color: #408080; font-style: italic } /* Comment.Special */
+ .highlight pre  .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+ .highlight pre  .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+ .highlight pre  .cp { color: #9C6500 } /* Comment.Preproc */
+ .highlight pre  .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+ .highlight pre  .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+ .highlight pre  .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
  .highlight pre  .gd { color: #A00000 } /* Generic.Deleted */
  .highlight pre  .ge { font-style: italic } /* Generic.Emph */
- .highlight pre  .gr { color: #FF0000 } /* Generic.Error */
+ .highlight pre  .gr { color: #E40000 } /* Generic.Error */
  .highlight pre  .gh { color: #000080; font-weight: bold } /* Generic.Heading */
- .highlight pre  .gi { color: #00A000 } /* Generic.Inserted */
- .highlight pre  .go { color: #888888 } /* Generic.Output */
+ .highlight pre  .gi { color: #008400 } /* Generic.Inserted */
+ .highlight pre  .go { color: #717171 } /* Generic.Output */
  .highlight pre  .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
  .highlight pre  .gs { font-weight: bold } /* Generic.Strong */
  .highlight pre  .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
@@ -2526,15 +2536,15 @@ h6:hover .anchor-link {
  .highlight pre  .kt { color: #B00040 } /* Keyword.Type */
  .highlight pre  .m { color: #666666 } /* Literal.Number */
  .highlight pre  .s { color: #BA2121 } /* Literal.String */
- .highlight pre  .na { color: #7D9029 } /* Name.Attribute */
+ .highlight pre  .na { color: #687822 } /* Name.Attribute */
  .highlight pre  .nb { color: #008000 } /* Name.Builtin */
  .highlight pre  .nc { color: #0000FF; font-weight: bold } /* Name.Class */
  .highlight pre  .no { color: #880000 } /* Name.Constant */
  .highlight pre  .nd { color: #AA22FF } /* Name.Decorator */
- .highlight pre  .ni { color: #999999; font-weight: bold } /* Name.Entity */
- .highlight pre  .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+ .highlight pre  .ni { color: #717171; font-weight: bold } /* Name.Entity */
+ .highlight pre  .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
  .highlight pre  .nf { color: #0000FF } /* Name.Function */
- .highlight pre  .nl { color: #A0A000 } /* Name.Label */
+ .highlight pre  .nl { color: #767600 } /* Name.Label */
  .highlight pre  .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
  .highlight pre  .nt { color: #008000; font-weight: bold } /* Name.Tag */
  .highlight pre  .nv { color: #19177C } /* Name.Variable */
@@ -2551,11 +2561,11 @@ h6:hover .anchor-link {
  .highlight pre  .dl { color: #BA2121 } /* Literal.String.Delimiter */
  .highlight pre  .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
  .highlight pre  .s2 { color: #BA2121 } /* Literal.String.Double */
- .highlight pre  .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+ .highlight pre  .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
  .highlight pre  .sh { color: #BA2121 } /* Literal.String.Heredoc */
- .highlight pre  .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+ .highlight pre  .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
  .highlight pre  .sx { color: #008000 } /* Literal.String.Other */
- .highlight pre  .sr { color: #BB6688 } /* Literal.String.Regex */
+ .highlight pre  .sr { color: #A45A77 } /* Literal.String.Regex */
  .highlight pre  .s1 { color: #BA2121 } /* Literal.String.Single */
  .highlight pre  .ss { color: #19177C } /* Literal.String.Symbol */
  .highlight pre  .bp { color: #008000 } /* Name.Builtin.Pseudo */
@@ -3265,7 +3275,7 @@ class filter(object)
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;
-</content><category term="python"></category><category term="jupyter"></category><category term="functional"></category><category term="benchmarks"></category><category term="numpy"></category></entry><entry><title>Higher-level functions in Python, Part 2 - reduce</title><link href="https://leblancfg.com/higher-level-functions-python-reduce.html" rel="alternate"></link><published>2018-06-04T00:00:00-04:00</published><updated>2018-06-04T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-06-04:/higher-level-functions-python-reduce.html</id><summary type="html">&lt;p&gt;We go through uses of the Python &lt;code&gt;reduce&lt;/code&gt; function, when it's useful and its performance benefits. This time, we spend some time exploring function composition, and how to manage large function chains, e.g. in a data processing pipeline.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
+</content><category term="Python"></category><category term="python"></category><category term="jupyter"></category><category term="functional"></category><category term="benchmarks"></category><category term="numpy"></category></entry><entry><title>Higher-level functions in Python, Part 2 - reduce</title><link href="https://leblancfg.com/higher-level-functions-python-reduce.html" rel="alternate"></link><published>2018-06-04T00:00:00-04:00</published><updated>2018-06-04T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-06-04:/higher-level-functions-python-reduce.html</id><summary type="html">&lt;p&gt;We go through uses of the Python &lt;code&gt;reduce&lt;/code&gt; function, when it's useful and its performance benefits. This time, we spend some time exploring function composition, and how to manage large function chains, e.g. in a data processing pipeline.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
@@ -4308,24 +4318,29 @@ h6:hover .anchor-link {
   font-style: italic;
 }
 &lt;/style&gt;
-&lt;style type="text/css"&gt; .highlight pre  .hll { background-color: #ffffcc }
- .highlight pre   { background: #f8f8f8; }
- .highlight pre  .c { color: #408080; font-style: italic } /* Comment */
+&lt;style type="text/css"&gt;pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+ .highlight pre  .hll { background-color: #ffffcc }
+ .highlight pre  { background: #f8f8f8; }
+ .highlight pre  .c { color: #3D7B7B; font-style: italic } /* Comment */
  .highlight pre  .err { border: 1px solid #FF0000 } /* Error */
  .highlight pre  .k { color: #008000; font-weight: bold } /* Keyword */
  .highlight pre  .o { color: #666666 } /* Operator */
- .highlight pre  .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
- .highlight pre  .cm { color: #408080; font-style: italic } /* Comment.Multiline */
- .highlight pre  .cp { color: #BC7A00 } /* Comment.Preproc */
- .highlight pre  .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
- .highlight pre  .c1 { color: #408080; font-style: italic } /* Comment.Single */
- .highlight pre  .cs { color: #408080; font-style: italic } /* Comment.Special */
+ .highlight pre  .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+ .highlight pre  .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+ .highlight pre  .cp { color: #9C6500 } /* Comment.Preproc */
+ .highlight pre  .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+ .highlight pre  .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+ .highlight pre  .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
  .highlight pre  .gd { color: #A00000 } /* Generic.Deleted */
  .highlight pre  .ge { font-style: italic } /* Generic.Emph */
- .highlight pre  .gr { color: #FF0000 } /* Generic.Error */
+ .highlight pre  .gr { color: #E40000 } /* Generic.Error */
  .highlight pre  .gh { color: #000080; font-weight: bold } /* Generic.Heading */
- .highlight pre  .gi { color: #00A000 } /* Generic.Inserted */
- .highlight pre  .go { color: #888888 } /* Generic.Output */
+ .highlight pre  .gi { color: #008400 } /* Generic.Inserted */
+ .highlight pre  .go { color: #717171 } /* Generic.Output */
  .highlight pre  .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
  .highlight pre  .gs { font-weight: bold } /* Generic.Strong */
  .highlight pre  .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
@@ -4338,15 +4353,15 @@ h6:hover .anchor-link {
  .highlight pre  .kt { color: #B00040 } /* Keyword.Type */
  .highlight pre  .m { color: #666666 } /* Literal.Number */
  .highlight pre  .s { color: #BA2121 } /* Literal.String */
- .highlight pre  .na { color: #7D9029 } /* Name.Attribute */
+ .highlight pre  .na { color: #687822 } /* Name.Attribute */
  .highlight pre  .nb { color: #008000 } /* Name.Builtin */
  .highlight pre  .nc { color: #0000FF; font-weight: bold } /* Name.Class */
  .highlight pre  .no { color: #880000 } /* Name.Constant */
  .highlight pre  .nd { color: #AA22FF } /* Name.Decorator */
- .highlight pre  .ni { color: #999999; font-weight: bold } /* Name.Entity */
- .highlight pre  .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+ .highlight pre  .ni { color: #717171; font-weight: bold } /* Name.Entity */
+ .highlight pre  .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
  .highlight pre  .nf { color: #0000FF } /* Name.Function */
- .highlight pre  .nl { color: #A0A000 } /* Name.Label */
+ .highlight pre  .nl { color: #767600 } /* Name.Label */
  .highlight pre  .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
  .highlight pre  .nt { color: #008000; font-weight: bold } /* Name.Tag */
  .highlight pre  .nv { color: #19177C } /* Name.Variable */
@@ -4363,11 +4378,11 @@ h6:hover .anchor-link {
  .highlight pre  .dl { color: #BA2121 } /* Literal.String.Delimiter */
  .highlight pre  .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
  .highlight pre  .s2 { color: #BA2121 } /* Literal.String.Double */
- .highlight pre  .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+ .highlight pre  .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
  .highlight pre  .sh { color: #BA2121 } /* Literal.String.Heredoc */
- .highlight pre  .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+ .highlight pre  .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
  .highlight pre  .sx { color: #008000 } /* Literal.String.Other */
- .highlight pre  .sr { color: #BB6688 } /* Literal.String.Regex */
+ .highlight pre  .sr { color: #A45A77 } /* Literal.String.Regex */
  .highlight pre  .s1 { color: #BA2121 } /* Literal.String.Single */
  .highlight pre  .ss { color: #19177C } /* Literal.String.Symbol */
  .highlight pre  .bp { color: #008000 } /* Name.Builtin.Pseudo */
@@ -5996,7 +6011,7 @@ reduce(...)
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;
-</content><category term="python"></category><category term="jupyter"></category><category term="functional"></category><category term="benchmarks"></category><category term="numpy"></category></entry><entry><title>Higher-level functions in Python, Part 1 - map</title><link href="https://leblancfg.com/higher-level-functions-python-map.html" rel="alternate"></link><published>2018-05-30T00:00:00-04:00</published><updated>2018-05-30T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-05-30:/higher-level-functions-python-map.html</id><summary type="html">&lt;p&gt;We go through uses of the Python &lt;code&gt;map&lt;/code&gt; function, when it's useful and its performance benefits, and get sidetracked into benchmarking different syntaxes for exponential expressions.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
+</content><category term="Python"></category><category term="python"></category><category term="jupyter"></category><category term="functional"></category><category term="benchmarks"></category><category term="numpy"></category></entry><entry><title>Higher-level functions in Python, Part 1 - map</title><link href="https://leblancfg.com/higher-level-functions-python-map.html" rel="alternate"></link><published>2018-05-30T00:00:00-04:00</published><updated>2018-05-30T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-05-30:/higher-level-functions-python-map.html</id><summary type="html">&lt;p&gt;We go through uses of the Python &lt;code&gt;map&lt;/code&gt; function, when it's useful and its performance benefits, and get sidetracked into benchmarking different syntaxes for exponential expressions.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
@@ -7039,24 +7054,29 @@ h6:hover .anchor-link {
   font-style: italic;
 }
 &lt;/style&gt;
-&lt;style type="text/css"&gt; .highlight pre  .hll { background-color: #ffffcc }
- .highlight pre   { background: #f8f8f8; }
- .highlight pre  .c { color: #408080; font-style: italic } /* Comment */
+&lt;style type="text/css"&gt;pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+ .highlight pre  .hll { background-color: #ffffcc }
+ .highlight pre  { background: #f8f8f8; }
+ .highlight pre  .c { color: #3D7B7B; font-style: italic } /* Comment */
  .highlight pre  .err { border: 1px solid #FF0000 } /* Error */
  .highlight pre  .k { color: #008000; font-weight: bold } /* Keyword */
  .highlight pre  .o { color: #666666 } /* Operator */
- .highlight pre  .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
- .highlight pre  .cm { color: #408080; font-style: italic } /* Comment.Multiline */
- .highlight pre  .cp { color: #BC7A00 } /* Comment.Preproc */
- .highlight pre  .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
- .highlight pre  .c1 { color: #408080; font-style: italic } /* Comment.Single */
- .highlight pre  .cs { color: #408080; font-style: italic } /* Comment.Special */
+ .highlight pre  .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+ .highlight pre  .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+ .highlight pre  .cp { color: #9C6500 } /* Comment.Preproc */
+ .highlight pre  .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+ .highlight pre  .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+ .highlight pre  .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
  .highlight pre  .gd { color: #A00000 } /* Generic.Deleted */
  .highlight pre  .ge { font-style: italic } /* Generic.Emph */
- .highlight pre  .gr { color: #FF0000 } /* Generic.Error */
+ .highlight pre  .gr { color: #E40000 } /* Generic.Error */
  .highlight pre  .gh { color: #000080; font-weight: bold } /* Generic.Heading */
- .highlight pre  .gi { color: #00A000 } /* Generic.Inserted */
- .highlight pre  .go { color: #888888 } /* Generic.Output */
+ .highlight pre  .gi { color: #008400 } /* Generic.Inserted */
+ .highlight pre  .go { color: #717171 } /* Generic.Output */
  .highlight pre  .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
  .highlight pre  .gs { font-weight: bold } /* Generic.Strong */
  .highlight pre  .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
@@ -7069,15 +7089,15 @@ h6:hover .anchor-link {
  .highlight pre  .kt { color: #B00040 } /* Keyword.Type */
  .highlight pre  .m { color: #666666 } /* Literal.Number */
  .highlight pre  .s { color: #BA2121 } /* Literal.String */
- .highlight pre  .na { color: #7D9029 } /* Name.Attribute */
+ .highlight pre  .na { color: #687822 } /* Name.Attribute */
  .highlight pre  .nb { color: #008000 } /* Name.Builtin */
  .highlight pre  .nc { color: #0000FF; font-weight: bold } /* Name.Class */
  .highlight pre  .no { color: #880000 } /* Name.Constant */
  .highlight pre  .nd { color: #AA22FF } /* Name.Decorator */
- .highlight pre  .ni { color: #999999; font-weight: bold } /* Name.Entity */
- .highlight pre  .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+ .highlight pre  .ni { color: #717171; font-weight: bold } /* Name.Entity */
+ .highlight pre  .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
  .highlight pre  .nf { color: #0000FF } /* Name.Function */
- .highlight pre  .nl { color: #A0A000 } /* Name.Label */
+ .highlight pre  .nl { color: #767600 } /* Name.Label */
  .highlight pre  .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
  .highlight pre  .nt { color: #008000; font-weight: bold } /* Name.Tag */
  .highlight pre  .nv { color: #19177C } /* Name.Variable */
@@ -7094,11 +7114,11 @@ h6:hover .anchor-link {
  .highlight pre  .dl { color: #BA2121 } /* Literal.String.Delimiter */
  .highlight pre  .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
  .highlight pre  .s2 { color: #BA2121 } /* Literal.String.Double */
- .highlight pre  .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+ .highlight pre  .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
  .highlight pre  .sh { color: #BA2121 } /* Literal.String.Heredoc */
- .highlight pre  .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+ .highlight pre  .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
  .highlight pre  .sx { color: #008000 } /* Literal.String.Other */
- .highlight pre  .sr { color: #BB6688 } /* Literal.String.Regex */
+ .highlight pre  .sr { color: #A45A77 } /* Literal.String.Regex */
  .highlight pre  .s1 { color: #BA2121 } /* Literal.String.Single */
  .highlight pre  .ss { color: #19177C } /* Literal.String.Symbol */
  .highlight pre  .bp { color: #008000 } /* Name.Builtin.Pseudo */
@@ -8379,7 +8399,7 @@ Python provides a few higher order (or functional programming) functions in the 
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;
-</content><category term="python"></category><category term="jupyter"></category><category term="functional"></category><category term="benchmarks"></category><category term="numpy"></category></entry><entry><title>Introduction to the Python Scientific Ecosystem, Part 2</title><link href="https://leblancfg.com/getting-started-with-python-and-jupyter-notebooks-2.html" rel="alternate"></link><published>2017-08-10T00:00:00-04:00</published><updated>2017-08-10T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2017-08-10:/getting-started-with-python-and-jupyter-notebooks-2.html</id><summary type="html">&lt;p&gt;A general primer on Python for science and engineering, with an emphasis on the SciPy ecosystem of packages.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
+</content><category term="Python"></category><category term="python"></category><category term="jupyter"></category><category term="functional"></category><category term="benchmarks"></category><category term="numpy"></category></entry><entry><title>Introduction to the Python Scientific Ecosystem, Part 2</title><link href="https://leblancfg.com/getting-started-with-python-and-jupyter-notebooks-2.html" rel="alternate"></link><published>2017-08-10T00:00:00-04:00</published><updated>2017-08-10T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2017-08-10:/getting-started-with-python-and-jupyter-notebooks-2.html</id><summary type="html">&lt;p&gt;A general primer on Python for science and engineering, with an emphasis on the SciPy ecosystem of packages.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
@@ -9422,24 +9442,29 @@ h6:hover .anchor-link {
   font-style: italic;
 }
 &lt;/style&gt;
-&lt;style type="text/css"&gt; .highlight pre  .hll { background-color: #ffffcc }
- .highlight pre   { background: #f8f8f8; }
- .highlight pre  .c { color: #408080; font-style: italic } /* Comment */
+&lt;style type="text/css"&gt;pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+ .highlight pre  .hll { background-color: #ffffcc }
+ .highlight pre  { background: #f8f8f8; }
+ .highlight pre  .c { color: #3D7B7B; font-style: italic } /* Comment */
  .highlight pre  .err { border: 1px solid #FF0000 } /* Error */
  .highlight pre  .k { color: #008000; font-weight: bold } /* Keyword */
  .highlight pre  .o { color: #666666 } /* Operator */
- .highlight pre  .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
- .highlight pre  .cm { color: #408080; font-style: italic } /* Comment.Multiline */
- .highlight pre  .cp { color: #BC7A00 } /* Comment.Preproc */
- .highlight pre  .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
- .highlight pre  .c1 { color: #408080; font-style: italic } /* Comment.Single */
- .highlight pre  .cs { color: #408080; font-style: italic } /* Comment.Special */
+ .highlight pre  .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+ .highlight pre  .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+ .highlight pre  .cp { color: #9C6500 } /* Comment.Preproc */
+ .highlight pre  .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+ .highlight pre  .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+ .highlight pre  .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
  .highlight pre  .gd { color: #A00000 } /* Generic.Deleted */
  .highlight pre  .ge { font-style: italic } /* Generic.Emph */
- .highlight pre  .gr { color: #FF0000 } /* Generic.Error */
+ .highlight pre  .gr { color: #E40000 } /* Generic.Error */
  .highlight pre  .gh { color: #000080; font-weight: bold } /* Generic.Heading */
- .highlight pre  .gi { color: #00A000 } /* Generic.Inserted */
- .highlight pre  .go { color: #888888 } /* Generic.Output */
+ .highlight pre  .gi { color: #008400 } /* Generic.Inserted */
+ .highlight pre  .go { color: #717171 } /* Generic.Output */
  .highlight pre  .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
  .highlight pre  .gs { font-weight: bold } /* Generic.Strong */
  .highlight pre  .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
@@ -9452,15 +9477,15 @@ h6:hover .anchor-link {
  .highlight pre  .kt { color: #B00040 } /* Keyword.Type */
  .highlight pre  .m { color: #666666 } /* Literal.Number */
  .highlight pre  .s { color: #BA2121 } /* Literal.String */
- .highlight pre  .na { color: #7D9029 } /* Name.Attribute */
+ .highlight pre  .na { color: #687822 } /* Name.Attribute */
  .highlight pre  .nb { color: #008000 } /* Name.Builtin */
  .highlight pre  .nc { color: #0000FF; font-weight: bold } /* Name.Class */
  .highlight pre  .no { color: #880000 } /* Name.Constant */
  .highlight pre  .nd { color: #AA22FF } /* Name.Decorator */
- .highlight pre  .ni { color: #999999; font-weight: bold } /* Name.Entity */
- .highlight pre  .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+ .highlight pre  .ni { color: #717171; font-weight: bold } /* Name.Entity */
+ .highlight pre  .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
  .highlight pre  .nf { color: #0000FF } /* Name.Function */
- .highlight pre  .nl { color: #A0A000 } /* Name.Label */
+ .highlight pre  .nl { color: #767600 } /* Name.Label */
  .highlight pre  .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
  .highlight pre  .nt { color: #008000; font-weight: bold } /* Name.Tag */
  .highlight pre  .nv { color: #19177C } /* Name.Variable */
@@ -9477,11 +9502,11 @@ h6:hover .anchor-link {
  .highlight pre  .dl { color: #BA2121 } /* Literal.String.Delimiter */
  .highlight pre  .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
  .highlight pre  .s2 { color: #BA2121 } /* Literal.String.Double */
- .highlight pre  .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+ .highlight pre  .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
  .highlight pre  .sh { color: #BA2121 } /* Literal.String.Heredoc */
- .highlight pre  .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+ .highlight pre  .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
  .highlight pre  .sx { color: #008000 } /* Literal.String.Other */
- .highlight pre  .sr { color: #BB6688 } /* Literal.String.Regex */
+ .highlight pre  .sr { color: #A45A77 } /* Literal.String.Regex */
  .highlight pre  .s1 { color: #BA2121 } /* Literal.String.Single */
  .highlight pre  .ss { color: #19177C } /* Literal.String.Symbol */
  .highlight pre  .bp { color: #008000 } /* Name.Builtin.Pseudo */
@@ -10165,14 +10190,13 @@ Markdown is a human-readable way to annotate plain text so that it can be parsed
 &lt;center&gt;![RADARSAT-1](https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Radarsat-1.gif/260px-Radarsat-1.gif)&lt;/center&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;
 &lt;p&gt;Jupyter Markdown cells can also use $\LaTeX$ formatting for text, labels and equations by enclosing it in dollar signs: &lt;code&gt;$\sqrt{evil}$&lt;/code&gt; gives $\sqrt{evil}$.&lt;/p&gt;
 &lt;p&gt;It can also create inline &lt;strong&gt;tables&lt;/strong&gt; with dead-simple syntax:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;markdown
-|          Movie Title           | Budget        |  Year  |
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;|          Movie Title           | Budget        |  Year  |
 |--------------------------------|---------------|--------|
 | Something Completely Different |  £80 000      |  1971  |
 |  Holy Grail                    |  \$400 000    |  1975  |
 |  Life of Brian                 |  \$4 million  |  1979  |
-|  The Meaning of Life           |  \$9 million  |  1983  |&lt;/code&gt;&lt;/pre&gt;
+|  The Meaning of Life           |  \$9 million  |  1983  |
+&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;Gives:&lt;/p&gt;
 &lt;table&gt;
 &lt;thead&gt;&lt;tr&gt;
@@ -11496,7 +11520,7 @@ Once you've generated source code, it will need to be maintained for the future.
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;
-</content><category term="python"></category><category term="jupyter"></category><category term="anaconda"></category><category term="conda"></category><category term="scipy"></category><category term="numpy"></category><category term="beginner"></category><category term="matplotlib"></category></entry><entry><title>Introduction to the Python Scientific Ecosystem, Part 1</title><link href="https://leblancfg.com/getting-started-with-python-and-jupyter-notebooks-1.html" rel="alternate"></link><published>2017-08-03T00:00:00-04:00</published><updated>2017-08-03T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2017-08-03:/getting-started-with-python-and-jupyter-notebooks-1.html</id><summary type="html">&lt;p&gt;A general primer on Python for science and engineering, with an emphasis on the SciPy ecosystem of packages.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
+</content><category term="Python"></category><category term="python"></category><category term="jupyter"></category><category term="anaconda"></category><category term="conda"></category><category term="scipy"></category><category term="numpy"></category><category term="beginner"></category><category term="matplotlib"></category></entry><entry><title>Introduction to the Python Scientific Ecosystem, Part 1</title><link href="https://leblancfg.com/getting-started-with-python-and-jupyter-notebooks-1.html" rel="alternate"></link><published>2017-08-03T00:00:00-04:00</published><updated>2017-08-03T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2017-08-03:/getting-started-with-python-and-jupyter-notebooks-1.html</id><summary type="html">&lt;p&gt;A general primer on Python for science and engineering, with an emphasis on the SciPy ecosystem of packages.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
@@ -12539,24 +12563,29 @@ h6:hover .anchor-link {
   font-style: italic;
 }
 &lt;/style&gt;
-&lt;style type="text/css"&gt; .highlight pre  .hll { background-color: #ffffcc }
- .highlight pre   { background: #f8f8f8; }
- .highlight pre  .c { color: #408080; font-style: italic } /* Comment */
+&lt;style type="text/css"&gt;pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+ .highlight pre  .hll { background-color: #ffffcc }
+ .highlight pre  { background: #f8f8f8; }
+ .highlight pre  .c { color: #3D7B7B; font-style: italic } /* Comment */
  .highlight pre  .err { border: 1px solid #FF0000 } /* Error */
  .highlight pre  .k { color: #008000; font-weight: bold } /* Keyword */
  .highlight pre  .o { color: #666666 } /* Operator */
- .highlight pre  .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
- .highlight pre  .cm { color: #408080; font-style: italic } /* Comment.Multiline */
- .highlight pre  .cp { color: #BC7A00 } /* Comment.Preproc */
- .highlight pre  .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
- .highlight pre  .c1 { color: #408080; font-style: italic } /* Comment.Single */
- .highlight pre  .cs { color: #408080; font-style: italic } /* Comment.Special */
+ .highlight pre  .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+ .highlight pre  .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+ .highlight pre  .cp { color: #9C6500 } /* Comment.Preproc */
+ .highlight pre  .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+ .highlight pre  .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+ .highlight pre  .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
  .highlight pre  .gd { color: #A00000 } /* Generic.Deleted */
  .highlight pre  .ge { font-style: italic } /* Generic.Emph */
- .highlight pre  .gr { color: #FF0000 } /* Generic.Error */
+ .highlight pre  .gr { color: #E40000 } /* Generic.Error */
  .highlight pre  .gh { color: #000080; font-weight: bold } /* Generic.Heading */
- .highlight pre  .gi { color: #00A000 } /* Generic.Inserted */
- .highlight pre  .go { color: #888888 } /* Generic.Output */
+ .highlight pre  .gi { color: #008400 } /* Generic.Inserted */
+ .highlight pre  .go { color: #717171 } /* Generic.Output */
  .highlight pre  .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
  .highlight pre  .gs { font-weight: bold } /* Generic.Strong */
  .highlight pre  .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
@@ -12569,15 +12598,15 @@ h6:hover .anchor-link {
  .highlight pre  .kt { color: #B00040 } /* Keyword.Type */
  .highlight pre  .m { color: #666666 } /* Literal.Number */
  .highlight pre  .s { color: #BA2121 } /* Literal.String */
- .highlight pre  .na { color: #7D9029 } /* Name.Attribute */
+ .highlight pre  .na { color: #687822 } /* Name.Attribute */
  .highlight pre  .nb { color: #008000 } /* Name.Builtin */
  .highlight pre  .nc { color: #0000FF; font-weight: bold } /* Name.Class */
  .highlight pre  .no { color: #880000 } /* Name.Constant */
  .highlight pre  .nd { color: #AA22FF } /* Name.Decorator */
- .highlight pre  .ni { color: #999999; font-weight: bold } /* Name.Entity */
- .highlight pre  .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+ .highlight pre  .ni { color: #717171; font-weight: bold } /* Name.Entity */
+ .highlight pre  .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
  .highlight pre  .nf { color: #0000FF } /* Name.Function */
- .highlight pre  .nl { color: #A0A000 } /* Name.Label */
+ .highlight pre  .nl { color: #767600 } /* Name.Label */
  .highlight pre  .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
  .highlight pre  .nt { color: #008000; font-weight: bold } /* Name.Tag */
  .highlight pre  .nv { color: #19177C } /* Name.Variable */
@@ -12594,11 +12623,11 @@ h6:hover .anchor-link {
  .highlight pre  .dl { color: #BA2121 } /* Literal.String.Delimiter */
  .highlight pre  .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
  .highlight pre  .s2 { color: #BA2121 } /* Literal.String.Double */
- .highlight pre  .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+ .highlight pre  .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
  .highlight pre  .sh { color: #BA2121 } /* Literal.String.Heredoc */
- .highlight pre  .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+ .highlight pre  .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
  .highlight pre  .sx { color: #008000 } /* Literal.String.Other */
- .highlight pre  .sr { color: #BB6688 } /* Literal.String.Regex */
+ .highlight pre  .sr { color: #A45A77 } /* Literal.String.Regex */
  .highlight pre  .s1 { color: #BA2121 } /* Literal.String.Single */
  .highlight pre  .ss { color: #19177C } /* Literal.String.Symbol */
  .highlight pre  .bp { color: #008000 } /* Name.Builtin.Pseudo */
@@ -12813,4 +12842,4 @@ Python is not a compiled language, but rather it is interpreted. The standard Py
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;
-</content><category term="python"></category><category term="jupyter"></category><category term="anaconda"></category><category term="conda"></category><category term="scipy"></category><category term="numpy"></category><category term="beginner"></category><category term="matplotlib"></category></entry></feed>
+</content><category term="Python"></category><category term="python"></category><category term="jupyter"></category><category term="anaconda"></category><category term="conda"></category><category term="scipy"></category><category term="numpy"></category><category term="beginner"></category><category term="matplotlib"></category></entry></feed>

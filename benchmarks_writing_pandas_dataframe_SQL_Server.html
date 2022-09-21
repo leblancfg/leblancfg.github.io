@@ -6,25 +6,39 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="HandheldFriendly" content="True" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="index, follow" />
+  <meta name="robots" content="index, follow" />
 
-  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/stylesheet/style.min.css">
 
-  <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/pygments/github.min.css">
+
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+          href="https://leblancfg.com/theme/pygments/monokai.min.css">
+
+
+
   <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/brands.css">
   <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/solid.css">
 
 
-    <link href="https://leblancfg.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="leblancfg.com Atom">
+  <link rel="shortcut icon" href="/img/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/img/icons/favicon.ico" type="image/x-icon">
+
+  <!-- Chrome, Firefox OS and Opera -->
+  <meta name="theme-color" content="#330033">
+  <!-- Windows Phone -->
+  <meta name="msapplication-navbutton-color" content="#330033">
+  <!-- iOS Safari -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Microsoft EDGE -->
+  <meta name="msapplication-TileColor" content="#330033">
+
+  <link href="https://leblancfg.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="leblancfg.com Atom">
 
 
-    <link rel="shortcut icon" href="/img/icons/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/img/icons/favicon.ico" type="image/x-icon">
-
-<!-- Google Analytics -->
 <script type="text/javascript">
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -34,104 +48,122 @@
   ga('create', 'UA-120300361-1', 'auto');
   ga('send', 'pageview');
 </script>
-<!-- End Google Analytics -->
-    <!-- Chrome, Firefox OS and Opera -->
-    <meta name="theme-color" content="#330033">
-    <!-- Windows Phone -->
-    <meta name="msapplication-navbutton-color" content="#330033">
-    <!-- iOS Safari -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <!-- Microsoft EDGE -->
-    <meta name="msapplication-TileColor" content="#330033">
+
+ 
 
 <meta name="author" content="François Leblanc" />
 <meta name="description" content="In this article, we benchmark various methods to write data to MS SQL Server from pandas DataFrames to see which is the fastest. We compare multi, fast_executemany and turbodbc, and find the best candidate." />
 <meta name="keywords" content="python, SQL Server">
 
-<meta property="og:site_name" content="leblancfg.com"/>
-<meta property="og:title" content="Benchmarks for writing pandas DataFrames to SQL Server (ODBC)"/>
-<meta property="og:description" content="In this article, we benchmark various methods to write data to MS SQL Server from pandas DataFrames to see which is the fastest. We compare multi, fast_executemany and turbodbc, and find the best candidate."/>
-<meta property="og:locale" content="en_US"/>
-<meta property="og:url" content="https://leblancfg.com/benchmarks_writing_pandas_dataframe_SQL_Server.html"/>
-<meta property="og:type" content="article"/>
-<meta property="article:published_time" content="2020-03-15 00:00:00-04:00"/>
-<meta property="article:modified_time" content=""/>
-<meta property="article:author" content="https://leblancfg.com/author/francois-leblanc.html">
-<meta property="article:section" content="Python, SQL, MS"/>
-<meta property="article:tag" content="python"/>
-<meta property="article:tag" content="SQL Server"/>
-<meta property="og:image" content="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4">
+
+  <meta property="og:site_name" content="leblancfg.com"/>
+  <meta property="og:title" content="Benchmarks for writing pandas DataFrames to SQL Server (ODBC)"/>
+  <meta property="og:description" content="In this article, we benchmark various methods to write data to MS SQL Server from pandas DataFrames to see which is the fastest. We compare multi, fast_executemany and turbodbc, and find the best candidate."/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="https://leblancfg.com/benchmarks_writing_pandas_dataframe_SQL_Server.html"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2020-03-15 00:00:00-04:00"/>
+  <meta property="article:modified_time" content=""/>
+  <meta property="article:author" content="https://leblancfg.com/author/francois-leblanc.html">
+  <meta property="article:section" content="Python, SQL, MS"/>
+  <meta property="article:tag" content="python"/>
+  <meta property="article:tag" content="SQL Server"/>
+  <meta property="og:image" content="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4">
 
   <title>leblancfg.com &ndash; Benchmarks for writing pandas DataFrames to SQL Server (ODBC)</title>
 
+
 </head>
-<body>
-  <aside>
-    <div>
-      <a href="https://leblancfg.com">
-        <img src="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4" alt="François Leblanc" title="François Leblanc">
-      </a>
-      <h1><a href="https://leblancfg.com">François Leblanc</a></h1>
+<body class="light-theme">
 
-<p>Data Science, Geospatial Python, Space Stuff</p>
-      <nav>
-        <ul class="list">
-          <li><a href="https://leblancfg.com/pages/about.html#about">About</a></li>
-          <li><a href="https://leblancfg.com/pages/projects.html#projects">Projects</a></li>
+<aside>
+  <div>
+    <a href="https://leblancfg.com/">
+      <img src="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4" alt="François Leblanc" title="François Leblanc">
+    </a>
 
-          <li><a href="https://leblancfg.resumeed.com/" target="_blank">Résumé</a></li>
-        </ul>
-      </nav>
+    <h1>
+      <a href="https://leblancfg.com/">François Leblanc</a>
+    </h1>
 
-      <ul class="social">
-          <li>
-            <a  class="sc-linkedin" href="https://www.linkedin.com/in/fran%C3%A7ois-leblanc-07294b106/" target="_blank">
-            <i class="fab fa-linkedin">
-            </i>
-          </a></li>
-          <li>
-            <a  class="sc-github" href="https://github.com/leblancfg" target="_blank">
-            <i class="fab fa-github">
-            </i>
-          </a></li>
-          <li>
-            <a  class="sc-twitter" href="https://twitter.com/leblancfg1" target="_blank">
-            <i class="fab fa-twitter">
-            </i>
-          </a></li>
-          <li>
-            <a  class="sc-rss" href="https://leblancfg.com/feeds/all.atom.xml" target="_blank">
-            <i class="fas fa-rss">
-            </i>
-          </a></li>
-      </ul>
-    </div>
+    <p>Data Science, Geospatial Python, Space Stuff</p>
 
-
-  </aside>
-  <main>
 
     <nav>
-      <a href="https://leblancfg.com">    Home
-</a>
+      <ul class="list">
 
-      <a href="/archives.html">Archives</a>
-      <a href="/categories.html">Categories</a>
-      <a href="/tags.html">Tags</a>
 
-      <a href="https://leblancfg.com/feeds/all.atom.xml">    Atom
-</a>
+            <li>
+              <a target="_self"
+                 href="https://leblancfg.com/pages/about.html#about">
+                About
+              </a>
+            </li>
+            <li>
+              <a target="_self"
+                 href="https://leblancfg.com/pages/projects.html#projects">
+                Projects
+              </a>
+            </li>
 
+          <li>
+            <a target="_self" href="https://leblancfg.resumeed.com/" >Résumé</a>
+          </li>
+      </ul>
     </nav>
+
+    <ul class="social">
+      <li>
+        <a class="sc-linkedin"
+           href="https://www.linkedin.com/in/fran%C3%A7ois-leblanc-07294b106/"
+           target="_blank">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-github"
+           href="https://github.com/leblancfg"
+           target="_blank">
+          <i class="fa-brands fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-twitter"
+           href="https://twitter.com/leblancfg1"
+           target="_blank">
+          <i class="fa-brands fa-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-rss"
+           href="https://leblancfg.com/feeds/all.atom.xml"
+           target="_blank">
+          <i class="fa-solid fa-rss"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</aside>
+  <main>
+
+<nav>
+  <a href="https://leblancfg.com/">Home</a>
+
+  <a href="/archives.html">Archives</a>
+  <a href="/categories.html">Categories</a>
+  <a href="/tags.html">Tags</a>
+
+  <a href="https://leblancfg.com/feeds/all.atom.xml">Atom</a>
+
+</nav>
 
 <article class="single">
   <header>
       
     <h1 id="benchmarks_writing_pandas_dataframe_SQL_Server">Benchmarks for writing pandas DataFrames to SQL Server (ODBC)</h1>
     <p>
-          Posted on March 15, 2020 in <a href="https://leblancfg.com/category/python-sql-ms.html">Python, SQL, MS</a>
-
+      Posted on March 15, 2020 in <a href="https://leblancfg.com/category/python-sql-ms.html">Python, SQL, MS</a>
 
     </p>
   </header>
@@ -1181,24 +1213,29 @@ h6:hover .anchor-link {
   font-style: italic;
 }
 </style>
-<style type="text/css"> .highlight pre  .hll { background-color: #ffffcc }
- .highlight pre   { background: #f8f8f8; }
- .highlight pre  .c { color: #408080; font-style: italic } /* Comment */
+<style type="text/css">pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+ .highlight pre  .hll { background-color: #ffffcc }
+ .highlight pre  { background: #f8f8f8; }
+ .highlight pre  .c { color: #3D7B7B; font-style: italic } /* Comment */
  .highlight pre  .err { border: 1px solid #FF0000 } /* Error */
  .highlight pre  .k { color: #008000; font-weight: bold } /* Keyword */
  .highlight pre  .o { color: #666666 } /* Operator */
- .highlight pre  .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
- .highlight pre  .cm { color: #408080; font-style: italic } /* Comment.Multiline */
- .highlight pre  .cp { color: #BC7A00 } /* Comment.Preproc */
- .highlight pre  .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
- .highlight pre  .c1 { color: #408080; font-style: italic } /* Comment.Single */
- .highlight pre  .cs { color: #408080; font-style: italic } /* Comment.Special */
+ .highlight pre  .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+ .highlight pre  .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+ .highlight pre  .cp { color: #9C6500 } /* Comment.Preproc */
+ .highlight pre  .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+ .highlight pre  .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+ .highlight pre  .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
  .highlight pre  .gd { color: #A00000 } /* Generic.Deleted */
  .highlight pre  .ge { font-style: italic } /* Generic.Emph */
- .highlight pre  .gr { color: #FF0000 } /* Generic.Error */
+ .highlight pre  .gr { color: #E40000 } /* Generic.Error */
  .highlight pre  .gh { color: #000080; font-weight: bold } /* Generic.Heading */
- .highlight pre  .gi { color: #00A000 } /* Generic.Inserted */
- .highlight pre  .go { color: #888888 } /* Generic.Output */
+ .highlight pre  .gi { color: #008400 } /* Generic.Inserted */
+ .highlight pre  .go { color: #717171 } /* Generic.Output */
  .highlight pre  .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
  .highlight pre  .gs { font-weight: bold } /* Generic.Strong */
  .highlight pre  .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
@@ -1211,15 +1248,15 @@ h6:hover .anchor-link {
  .highlight pre  .kt { color: #B00040 } /* Keyword.Type */
  .highlight pre  .m { color: #666666 } /* Literal.Number */
  .highlight pre  .s { color: #BA2121 } /* Literal.String */
- .highlight pre  .na { color: #7D9029 } /* Name.Attribute */
+ .highlight pre  .na { color: #687822 } /* Name.Attribute */
  .highlight pre  .nb { color: #008000 } /* Name.Builtin */
  .highlight pre  .nc { color: #0000FF; font-weight: bold } /* Name.Class */
  .highlight pre  .no { color: #880000 } /* Name.Constant */
  .highlight pre  .nd { color: #AA22FF } /* Name.Decorator */
- .highlight pre  .ni { color: #999999; font-weight: bold } /* Name.Entity */
- .highlight pre  .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+ .highlight pre  .ni { color: #717171; font-weight: bold } /* Name.Entity */
+ .highlight pre  .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
  .highlight pre  .nf { color: #0000FF } /* Name.Function */
- .highlight pre  .nl { color: #A0A000 } /* Name.Label */
+ .highlight pre  .nl { color: #767600 } /* Name.Label */
  .highlight pre  .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
  .highlight pre  .nt { color: #008000; font-weight: bold } /* Name.Tag */
  .highlight pre  .nv { color: #19177C } /* Name.Variable */
@@ -1236,11 +1273,11 @@ h6:hover .anchor-link {
  .highlight pre  .dl { color: #BA2121 } /* Literal.String.Delimiter */
  .highlight pre  .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
  .highlight pre  .s2 { color: #BA2121 } /* Literal.String.Double */
- .highlight pre  .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+ .highlight pre  .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
  .highlight pre  .sh { color: #BA2121 } /* Literal.String.Heredoc */
- .highlight pre  .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+ .highlight pre  .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
  .highlight pre  .sx { color: #008000 } /* Literal.String.Other */
- .highlight pre  .sr { color: #BB6688 } /* Literal.String.Regex */
+ .highlight pre  .sr { color: #A45A77 } /* Literal.String.Regex */
  .highlight pre  .s1 { color: #BA2121 } /* Literal.String.Single */
  .highlight pre  .ss { color: #19177C } /* Literal.String.Symbol */
  .highlight pre  .bp { color: #008000 } /* Name.Builtin.Pseudo */
@@ -1342,10 +1379,10 @@ h6:hover .anchor-link {
 
 
 
-<div id="b3bba84d-4df0-42d5-b9cd-9bed4fd3bff1"></div>
+<div id="e4773042-8eaf-4a1a-9600-5c012cb95abe"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#b3bba84d-4df0-42d5-b9cd-9bed4fd3bff1');
+var element = $('#e4773042-8eaf-4a1a-9600-5c012cb95abe');
 
             setTimeout(function() {
                 var nbb_cell_id = 1;
@@ -1429,10 +1466,10 @@ No sqlalchemy_turbodbc version available
 
 
 
-<div id="ff876323-f104-4d67-abb6-cc6c5683507d"></div>
+<div id="e831f9af-0a3b-4746-ae13-d7e02b66744f"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#ff876323-f104-4d67-abb6-cc6c5683507d');
+var element = $('#e831f9af-0a3b-4746-ae13-d7e02b66744f');
 
             setTimeout(function() {
                 var nbb_cell_id = 20;
@@ -1499,10 +1536,10 @@ var element = $('#ff876323-f104-4d67-abb6-cc6c5683507d');
 
 
 
-<div id="09c15170-348b-4548-8c1b-15c60fa0955e"></div>
+<div id="bf276649-ab7e-4632-bc17-5bc7b49ec5ea"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#09c15170-348b-4548-8c1b-15c60fa0955e');
+var element = $('#bf276649-ab7e-4632-bc17-5bc7b49ec5ea');
 
             setTimeout(function() {
                 var nbb_cell_id = 3;
@@ -1680,10 +1717,10 @@ var element = $('#09c15170-348b-4548-8c1b-15c60fa0955e');
 
 
 
-<div id="e594959d-145d-40b9-bba3-13cb8af7c433"></div>
+<div id="18802176-038d-4427-8bf1-3c5e9099a48d"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#e594959d-145d-40b9-bba3-13cb8af7c433');
+var element = $('#18802176-038d-4427-8bf1-3c5e9099a48d');
 
             setTimeout(function() {
                 var nbb_cell_id = 4;
@@ -1741,10 +1778,10 @@ var element = $('#e594959d-145d-40b9-bba3-13cb8af7c433');
 
 
 
-<div id="d81521f9-5b12-4283-9447-1cd65ecd2586"></div>
+<div id="a58dc4bc-7a8e-4c28-9dfd-3d2077b071f5"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#d81521f9-5b12-4283-9447-1cd65ecd2586');
+var element = $('#a58dc4bc-7a8e-4c28-9dfd-3d2077b071f5');
 
             setTimeout(function() {
                 var nbb_cell_id = 5;
@@ -1818,10 +1855,10 @@ var element = $('#d81521f9-5b12-4283-9447-1cd65ecd2586');
 
 
 
-<div id="f05b45cf-2d7c-468f-894e-e6bb78fb9f84"></div>
+<div id="4533619f-ed1a-4ff6-b477-52318c111ab0"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#f05b45cf-2d7c-468f-894e-e6bb78fb9f84');
+var element = $('#4533619f-ed1a-4ff6-b477-52318c111ab0');
 
             setTimeout(function() {
                 var nbb_cell_id = 6;
@@ -1900,10 +1937,10 @@ var element = $('#f05b45cf-2d7c-468f-894e-e6bb78fb9f84');
 
 
 
-<div id="062a0ca9-5a82-4fb5-98c6-e981419478ca"></div>
+<div id="982d40bf-3385-43c1-91ab-fc8022bd0f8f"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#062a0ca9-5a82-4fb5-98c6-e981419478ca');
+var element = $('#982d40bf-3385-43c1-91ab-fc8022bd0f8f');
 
             setTimeout(function() {
                 var nbb_cell_id = 7;
@@ -1965,10 +2002,10 @@ var element = $('#062a0ca9-5a82-4fb5-98c6-e981419478ca');
 
 
 
-<div id="0b78c203-5b96-45be-a70b-76fb4448862f"></div>
+<div id="68d88eaf-cf1c-4699-971a-3846c9644ad9"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#0b78c203-5b96-45be-a70b-76fb4448862f');
+var element = $('#68d88eaf-cf1c-4699-971a-3846c9644ad9');
 
             setTimeout(function() {
                 var nbb_cell_id = 8;
@@ -2036,10 +2073,10 @@ var element = $('#0b78c203-5b96-45be-a70b-76fb4448862f');
 
 
 
-<div id="5f1a9cfd-d21a-4cf5-9909-7e13df3006b6"></div>
+<div id="ec94af23-e0c7-4732-a23c-18ca69e9b2b3"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#5f1a9cfd-d21a-4cf5-9909-7e13df3006b6');
+var element = $('#ec94af23-e0c7-4732-a23c-18ca69e9b2b3');
 
             setTimeout(function() {
                 var nbb_cell_id = 9;
@@ -2114,10 +2151,10 @@ var element = $('#5f1a9cfd-d21a-4cf5-9909-7e13df3006b6');
 
 
 
-<div id="3bbdf825-a624-4a8d-9e07-ac6538dbcb76"></div>
+<div id="6ad04476-4c4a-404c-a762-baf301d56e32"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#3bbdf825-a624-4a8d-9e07-ac6538dbcb76');
+var element = $('#6ad04476-4c4a-404c-a762-baf301d56e32');
 
             setTimeout(function() {
                 var nbb_cell_id = 10;
@@ -2192,10 +2229,10 @@ var element = $('#3bbdf825-a624-4a8d-9e07-ac6538dbcb76');
 
 
 
-<div id="2be79137-e4df-4d71-99ea-f8cd2cb61306"></div>
+<div id="47b89c4c-b397-43ea-a596-aa4d56271bcd"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#2be79137-e4df-4d71-99ea-f8cd2cb61306');
+var element = $('#47b89c4c-b397-43ea-a596-aa4d56271bcd');
 
             setTimeout(function() {
                 var nbb_cell_id = 11;
@@ -2271,10 +2308,10 @@ var element = $('#2be79137-e4df-4d71-99ea-f8cd2cb61306');
 
 
 
-<div id="e7ae4f35-5594-4a2a-abf3-19697c3ee3f2"></div>
+<div id="5ae31c20-eede-4707-9088-9aca95cfd44a"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#e7ae4f35-5594-4a2a-abf3-19697c3ee3f2');
+var element = $('#5ae31c20-eede-4707-9088-9aca95cfd44a');
 
             setTimeout(function() {
                 var nbb_cell_id = 12;
@@ -2342,10 +2379,10 @@ var element = $('#e7ae4f35-5594-4a2a-abf3-19697c3ee3f2');
 
 
 
-<div id="d8c35fb4-f721-4d92-95bc-ca8e14ba145b"></div>
+<div id="65b4261c-c57d-4c44-98cb-48291e954de3"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#d8c35fb4-f721-4d92-95bc-ca8e14ba145b');
+var element = $('#65b4261c-c57d-4c44-98cb-48291e954de3');
 
             setTimeout(function() {
                 var nbb_cell_id = 13;
@@ -2412,10 +2449,10 @@ var element = $('#d8c35fb4-f721-4d92-95bc-ca8e14ba145b');
 
 
 
-<div id="c9715283-dd3e-4c14-9237-95f43bfef0ec"></div>
+<div id="49706f3c-eedf-4f52-9ad1-ddbed636854b"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#c9715283-dd3e-4c14-9237-95f43bfef0ec');
+var element = $('#49706f3c-eedf-4f52-9ad1-ddbed636854b');
 
             setTimeout(function() {
                 var nbb_cell_id = 14;
@@ -2515,10 +2552,10 @@ var element = $('#c9715283-dd3e-4c14-9237-95f43bfef0ec');
 
 
 
-<div id="b9b0f2b0-0621-47c8-8c18-12df0052d3b4"></div>
+<div id="a30933d3-281c-42df-abee-fe902c4ceefa"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#b9b0f2b0-0621-47c8-8c18-12df0052d3b4');
+var element = $('#a30933d3-281c-42df-abee-fe902c4ceefa');
 
             setTimeout(function() {
                 var nbb_cell_id = 21;
@@ -2599,13 +2636,15 @@ var element = $('#b9b0f2b0-0621-47c8-8c18-12df0052d3b4');
 
 
 
+
 </article>
 
-    <footer>
+<footer>
 <p>
-  &copy;  2019 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+  &copy; 2019  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike</a>
 </p>
-<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
 </p><p>
   <a rel="license"
      href="http://creativecommons.org/licenses/by-sa/4.0/"
@@ -2617,11 +2656,7 @@ var element = $('#b9b0f2b0-0621-47c8-8c18-12df0052d3b4');
          width="80"
          height="15"/>
   </a>
-</p>    </footer>
-  </main>
-
-
-
+</p></footer>  </main>
 
 <script type="application/ld+json">
 {
@@ -2633,6 +2668,5 @@ var element = $('#b9b0f2b0-0621-47c8-8c18-12df0052d3b4');
   "description": "François Leblanc's Thoughts and Writings"
 }
 </script>
-
 </body>
 </html>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com - Python, SQL, MS</title><link href="https://leblancfg.com/" rel="alternate"></link><link href="https://leblancfg.com/feeds/python-sql-ms.atom.xml" rel="self"></link><id>https://leblancfg.com/</id><updated>2020-03-15T00:00:00-04:00</updated><entry><title>Benchmarks for writing pandas DataFrames to SQL Server (ODBC)</title><link href="https://leblancfg.com/benchmarks_writing_pandas_dataframe_SQL_Server.html" rel="alternate"></link><published>2020-03-15T00:00:00-04:00</published><updated>2020-03-15T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2020-03-15:/benchmarks_writing_pandas_dataframe_SQL_Server.html</id><summary type="html">&lt;p&gt;In this article, we benchmark various methods to write data to MS SQL Server from pandas DataFrames to see which is the fastest. We compare &lt;code&gt;multi&lt;/code&gt;, &lt;code&gt;fast_executemany&lt;/code&gt; and &lt;code&gt;turbodbc&lt;/code&gt;, and find the best candidate.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
+<feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com - Python, SQL, MS</title><link href="https://leblancfg.com/" rel="alternate"></link><link href="https://leblancfg.com/feeds/python-sql-ms.atom.xml" rel="self"></link><id>https://leblancfg.com/</id><updated>2020-03-15T00:00:00-04:00</updated><subtitle>Data Science, Geospatial Python, Space Stuff</subtitle><entry><title>Benchmarks for writing pandas DataFrames to SQL Server (ODBC)</title><link href="https://leblancfg.com/benchmarks_writing_pandas_dataframe_SQL_Server.html" rel="alternate"></link><published>2020-03-15T00:00:00-04:00</published><updated>2020-03-15T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2020-03-15:/benchmarks_writing_pandas_dataframe_SQL_Server.html</id><summary type="html">&lt;p&gt;In this article, we benchmark various methods to write data to MS SQL Server from pandas DataFrames to see which is the fastest. We compare &lt;code&gt;multi&lt;/code&gt;, &lt;code&gt;fast_executemany&lt;/code&gt; and &lt;code&gt;turbodbc&lt;/code&gt;, and find the best candidate.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
@@ -1042,24 +1042,29 @@ h6:hover .anchor-link {
   font-style: italic;
 }
 &lt;/style&gt;
-&lt;style type="text/css"&gt; .highlight pre  .hll { background-color: #ffffcc }
- .highlight pre   { background: #f8f8f8; }
- .highlight pre  .c { color: #408080; font-style: italic } /* Comment */
+&lt;style type="text/css"&gt;pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+ .highlight pre  .hll { background-color: #ffffcc }
+ .highlight pre  { background: #f8f8f8; }
+ .highlight pre  .c { color: #3D7B7B; font-style: italic } /* Comment */
  .highlight pre  .err { border: 1px solid #FF0000 } /* Error */
  .highlight pre  .k { color: #008000; font-weight: bold } /* Keyword */
  .highlight pre  .o { color: #666666 } /* Operator */
- .highlight pre  .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
- .highlight pre  .cm { color: #408080; font-style: italic } /* Comment.Multiline */
- .highlight pre  .cp { color: #BC7A00 } /* Comment.Preproc */
- .highlight pre  .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
- .highlight pre  .c1 { color: #408080; font-style: italic } /* Comment.Single */
- .highlight pre  .cs { color: #408080; font-style: italic } /* Comment.Special */
+ .highlight pre  .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+ .highlight pre  .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+ .highlight pre  .cp { color: #9C6500 } /* Comment.Preproc */
+ .highlight pre  .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+ .highlight pre  .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+ .highlight pre  .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
  .highlight pre  .gd { color: #A00000 } /* Generic.Deleted */
  .highlight pre  .ge { font-style: italic } /* Generic.Emph */
- .highlight pre  .gr { color: #FF0000 } /* Generic.Error */
+ .highlight pre  .gr { color: #E40000 } /* Generic.Error */
  .highlight pre  .gh { color: #000080; font-weight: bold } /* Generic.Heading */
- .highlight pre  .gi { color: #00A000 } /* Generic.Inserted */
- .highlight pre  .go { color: #888888 } /* Generic.Output */
+ .highlight pre  .gi { color: #008400 } /* Generic.Inserted */
+ .highlight pre  .go { color: #717171 } /* Generic.Output */
  .highlight pre  .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
  .highlight pre  .gs { font-weight: bold } /* Generic.Strong */
  .highlight pre  .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
@@ -1072,15 +1077,15 @@ h6:hover .anchor-link {
  .highlight pre  .kt { color: #B00040 } /* Keyword.Type */
  .highlight pre  .m { color: #666666 } /* Literal.Number */
  .highlight pre  .s { color: #BA2121 } /* Literal.String */
- .highlight pre  .na { color: #7D9029 } /* Name.Attribute */
+ .highlight pre  .na { color: #687822 } /* Name.Attribute */
  .highlight pre  .nb { color: #008000 } /* Name.Builtin */
  .highlight pre  .nc { color: #0000FF; font-weight: bold } /* Name.Class */
  .highlight pre  .no { color: #880000 } /* Name.Constant */
  .highlight pre  .nd { color: #AA22FF } /* Name.Decorator */
- .highlight pre  .ni { color: #999999; font-weight: bold } /* Name.Entity */
- .highlight pre  .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+ .highlight pre  .ni { color: #717171; font-weight: bold } /* Name.Entity */
+ .highlight pre  .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
  .highlight pre  .nf { color: #0000FF } /* Name.Function */
- .highlight pre  .nl { color: #A0A000 } /* Name.Label */
+ .highlight pre  .nl { color: #767600 } /* Name.Label */
  .highlight pre  .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
  .highlight pre  .nt { color: #008000; font-weight: bold } /* Name.Tag */
  .highlight pre  .nv { color: #19177C } /* Name.Variable */
@@ -1097,11 +1102,11 @@ h6:hover .anchor-link {
  .highlight pre  .dl { color: #BA2121 } /* Literal.String.Delimiter */
  .highlight pre  .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
  .highlight pre  .s2 { color: #BA2121 } /* Literal.String.Double */
- .highlight pre  .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+ .highlight pre  .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
  .highlight pre  .sh { color: #BA2121 } /* Literal.String.Heredoc */
- .highlight pre  .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+ .highlight pre  .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
  .highlight pre  .sx { color: #008000 } /* Literal.String.Other */
- .highlight pre  .sr { color: #BB6688 } /* Literal.String.Regex */
+ .highlight pre  .sr { color: #A45A77 } /* Literal.String.Regex */
  .highlight pre  .s1 { color: #BA2121 } /* Literal.String.Single */
  .highlight pre  .ss { color: #19177C } /* Literal.String.Symbol */
  .highlight pre  .bp { color: #008000 } /* Name.Builtin.Pseudo */
@@ -1203,10 +1208,10 @@ h6:hover .anchor-link {
 
 
 
-&lt;div id="b3bba84d-4df0-42d5-b9cd-9bed4fd3bff1"&gt;&lt;/div&gt;
+&lt;div id="e4773042-8eaf-4a1a-9600-5c012cb95abe"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#b3bba84d-4df0-42d5-b9cd-9bed4fd3bff1');
+var element = $('#e4773042-8eaf-4a1a-9600-5c012cb95abe');
 
             setTimeout(function() {
                 var nbb_cell_id = 1;
@@ -1290,10 +1295,10 @@ No sqlalchemy_turbodbc version available
 
 
 
-&lt;div id="ff876323-f104-4d67-abb6-cc6c5683507d"&gt;&lt;/div&gt;
+&lt;div id="e831f9af-0a3b-4746-ae13-d7e02b66744f"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#ff876323-f104-4d67-abb6-cc6c5683507d');
+var element = $('#e831f9af-0a3b-4746-ae13-d7e02b66744f');
 
             setTimeout(function() {
                 var nbb_cell_id = 20;
@@ -1360,10 +1365,10 @@ var element = $('#ff876323-f104-4d67-abb6-cc6c5683507d');
 
 
 
-&lt;div id="09c15170-348b-4548-8c1b-15c60fa0955e"&gt;&lt;/div&gt;
+&lt;div id="bf276649-ab7e-4632-bc17-5bc7b49ec5ea"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#09c15170-348b-4548-8c1b-15c60fa0955e');
+var element = $('#bf276649-ab7e-4632-bc17-5bc7b49ec5ea');
 
             setTimeout(function() {
                 var nbb_cell_id = 3;
@@ -1541,10 +1546,10 @@ var element = $('#09c15170-348b-4548-8c1b-15c60fa0955e');
 
 
 
-&lt;div id="e594959d-145d-40b9-bba3-13cb8af7c433"&gt;&lt;/div&gt;
+&lt;div id="18802176-038d-4427-8bf1-3c5e9099a48d"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#e594959d-145d-40b9-bba3-13cb8af7c433');
+var element = $('#18802176-038d-4427-8bf1-3c5e9099a48d');
 
             setTimeout(function() {
                 var nbb_cell_id = 4;
@@ -1602,10 +1607,10 @@ var element = $('#e594959d-145d-40b9-bba3-13cb8af7c433');
 
 
 
-&lt;div id="d81521f9-5b12-4283-9447-1cd65ecd2586"&gt;&lt;/div&gt;
+&lt;div id="a58dc4bc-7a8e-4c28-9dfd-3d2077b071f5"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#d81521f9-5b12-4283-9447-1cd65ecd2586');
+var element = $('#a58dc4bc-7a8e-4c28-9dfd-3d2077b071f5');
 
             setTimeout(function() {
                 var nbb_cell_id = 5;
@@ -1679,10 +1684,10 @@ var element = $('#d81521f9-5b12-4283-9447-1cd65ecd2586');
 
 
 
-&lt;div id="f05b45cf-2d7c-468f-894e-e6bb78fb9f84"&gt;&lt;/div&gt;
+&lt;div id="4533619f-ed1a-4ff6-b477-52318c111ab0"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#f05b45cf-2d7c-468f-894e-e6bb78fb9f84');
+var element = $('#4533619f-ed1a-4ff6-b477-52318c111ab0');
 
             setTimeout(function() {
                 var nbb_cell_id = 6;
@@ -1761,10 +1766,10 @@ var element = $('#f05b45cf-2d7c-468f-894e-e6bb78fb9f84');
 
 
 
-&lt;div id="062a0ca9-5a82-4fb5-98c6-e981419478ca"&gt;&lt;/div&gt;
+&lt;div id="982d40bf-3385-43c1-91ab-fc8022bd0f8f"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#062a0ca9-5a82-4fb5-98c6-e981419478ca');
+var element = $('#982d40bf-3385-43c1-91ab-fc8022bd0f8f');
 
             setTimeout(function() {
                 var nbb_cell_id = 7;
@@ -1826,10 +1831,10 @@ var element = $('#062a0ca9-5a82-4fb5-98c6-e981419478ca');
 
 
 
-&lt;div id="0b78c203-5b96-45be-a70b-76fb4448862f"&gt;&lt;/div&gt;
+&lt;div id="68d88eaf-cf1c-4699-971a-3846c9644ad9"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#0b78c203-5b96-45be-a70b-76fb4448862f');
+var element = $('#68d88eaf-cf1c-4699-971a-3846c9644ad9');
 
             setTimeout(function() {
                 var nbb_cell_id = 8;
@@ -1897,10 +1902,10 @@ var element = $('#0b78c203-5b96-45be-a70b-76fb4448862f');
 
 
 
-&lt;div id="5f1a9cfd-d21a-4cf5-9909-7e13df3006b6"&gt;&lt;/div&gt;
+&lt;div id="ec94af23-e0c7-4732-a23c-18ca69e9b2b3"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#5f1a9cfd-d21a-4cf5-9909-7e13df3006b6');
+var element = $('#ec94af23-e0c7-4732-a23c-18ca69e9b2b3');
 
             setTimeout(function() {
                 var nbb_cell_id = 9;
@@ -1975,10 +1980,10 @@ var element = $('#5f1a9cfd-d21a-4cf5-9909-7e13df3006b6');
 
 
 
-&lt;div id="3bbdf825-a624-4a8d-9e07-ac6538dbcb76"&gt;&lt;/div&gt;
+&lt;div id="6ad04476-4c4a-404c-a762-baf301d56e32"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#3bbdf825-a624-4a8d-9e07-ac6538dbcb76');
+var element = $('#6ad04476-4c4a-404c-a762-baf301d56e32');
 
             setTimeout(function() {
                 var nbb_cell_id = 10;
@@ -2053,10 +2058,10 @@ var element = $('#3bbdf825-a624-4a8d-9e07-ac6538dbcb76');
 
 
 
-&lt;div id="2be79137-e4df-4d71-99ea-f8cd2cb61306"&gt;&lt;/div&gt;
+&lt;div id="47b89c4c-b397-43ea-a596-aa4d56271bcd"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#2be79137-e4df-4d71-99ea-f8cd2cb61306');
+var element = $('#47b89c4c-b397-43ea-a596-aa4d56271bcd');
 
             setTimeout(function() {
                 var nbb_cell_id = 11;
@@ -2132,10 +2137,10 @@ var element = $('#2be79137-e4df-4d71-99ea-f8cd2cb61306');
 
 
 
-&lt;div id="e7ae4f35-5594-4a2a-abf3-19697c3ee3f2"&gt;&lt;/div&gt;
+&lt;div id="5ae31c20-eede-4707-9088-9aca95cfd44a"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#e7ae4f35-5594-4a2a-abf3-19697c3ee3f2');
+var element = $('#5ae31c20-eede-4707-9088-9aca95cfd44a');
 
             setTimeout(function() {
                 var nbb_cell_id = 12;
@@ -2203,10 +2208,10 @@ var element = $('#e7ae4f35-5594-4a2a-abf3-19697c3ee3f2');
 
 
 
-&lt;div id="d8c35fb4-f721-4d92-95bc-ca8e14ba145b"&gt;&lt;/div&gt;
+&lt;div id="65b4261c-c57d-4c44-98cb-48291e954de3"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#d8c35fb4-f721-4d92-95bc-ca8e14ba145b');
+var element = $('#65b4261c-c57d-4c44-98cb-48291e954de3');
 
             setTimeout(function() {
                 var nbb_cell_id = 13;
@@ -2273,10 +2278,10 @@ var element = $('#d8c35fb4-f721-4d92-95bc-ca8e14ba145b');
 
 
 
-&lt;div id="c9715283-dd3e-4c14-9237-95f43bfef0ec"&gt;&lt;/div&gt;
+&lt;div id="49706f3c-eedf-4f52-9ad1-ddbed636854b"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#c9715283-dd3e-4c14-9237-95f43bfef0ec');
+var element = $('#49706f3c-eedf-4f52-9ad1-ddbed636854b');
 
             setTimeout(function() {
                 var nbb_cell_id = 14;
@@ -2376,10 +2381,10 @@ var element = $('#c9715283-dd3e-4c14-9237-95f43bfef0ec');
 
 
 
-&lt;div id="b9b0f2b0-0621-47c8-8c18-12df0052d3b4"&gt;&lt;/div&gt;
+&lt;div id="a30933d3-281c-42df-abee-fe902c4ceefa"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#b9b0f2b0-0621-47c8-8c18-12df0052d3b4');
+var element = $('#a30933d3-281c-42df-abee-fe902c4ceefa');
 
             setTimeout(function() {
                 var nbb_cell_id = 21;
@@ -2447,4 +2452,4 @@ var element = $('#b9b0f2b0-0621-47c8-8c18-12df0052d3b4');
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;
-</content><category term="python"></category><category term="SQL Server"></category></entry></feed>
+</content><category term="Python, SQL, MS"></category><category term="python"></category><category term="SQL Server"></category></entry></feed>

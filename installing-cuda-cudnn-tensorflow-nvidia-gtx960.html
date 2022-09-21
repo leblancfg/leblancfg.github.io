@@ -6,25 +6,39 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="HandheldFriendly" content="True" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="index, follow" />
+  <meta name="robots" content="index, follow" />
 
-  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/stylesheet/style.min.css">
 
-  <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/pygments/github.min.css">
+
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+          href="https://leblancfg.com/theme/pygments/monokai.min.css">
+
+
+
   <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/brands.css">
   <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/solid.css">
 
 
-    <link href="https://leblancfg.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="leblancfg.com Atom">
+  <link rel="shortcut icon" href="/img/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/img/icons/favicon.ico" type="image/x-icon">
+
+  <!-- Chrome, Firefox OS and Opera -->
+  <meta name="theme-color" content="#330033">
+  <!-- Windows Phone -->
+  <meta name="msapplication-navbutton-color" content="#330033">
+  <!-- iOS Safari -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Microsoft EDGE -->
+  <meta name="msapplication-TileColor" content="#330033">
+
+  <link href="https://leblancfg.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="leblancfg.com Atom">
 
 
-    <link rel="shortcut icon" href="/img/icons/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/img/icons/favicon.ico" type="image/x-icon">
-
-<!-- Google Analytics -->
 <script type="text/javascript">
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -34,110 +48,128 @@
   ga('create', 'UA-120300361-1', 'auto');
   ga('send', 'pageview');
 </script>
-<!-- End Google Analytics -->
-    <!-- Chrome, Firefox OS and Opera -->
-    <meta name="theme-color" content="#330033">
-    <!-- Windows Phone -->
-    <meta name="msapplication-navbutton-color" content="#330033">
-    <!-- iOS Safari -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <!-- Microsoft EDGE -->
-    <meta name="msapplication-TileColor" content="#330033">
+
+ 
 
 <meta name="author" content="François Leblanc" />
 <meta name="description" content="An in-depth, step-by-step guide to installing CUDA, CuDNN and Tensorflow on Linux with an NVIDIA GeFORCE GTX960 graphics card." />
 <meta name="keywords" content="linux, manjaro, cuda, cudnn, tensorflow, GPU, nvidia, GTX960">
 
-<meta property="og:site_name" content="leblancfg.com"/>
-<meta property="og:title" content="Notes on installing CUDA, CuDNN and Tensorflow on Manjaro"/>
-<meta property="og:description" content="An in-depth, step-by-step guide to installing CUDA, CuDNN and Tensorflow on Linux with an NVIDIA GeFORCE GTX960 graphics card."/>
-<meta property="og:locale" content="en_US"/>
-<meta property="og:url" content="https://leblancfg.com/installing-cuda-cudnn-tensorflow-nvidia-gtx960.html"/>
-<meta property="og:type" content="article"/>
-<meta property="article:published_time" content="2018-08-24 00:00:00-04:00"/>
-<meta property="article:modified_time" content=""/>
-<meta property="article:author" content="https://leblancfg.com/author/francois-leblanc.html">
-<meta property="article:section" content="Linux"/>
-<meta property="article:tag" content="linux"/>
-<meta property="article:tag" content="manjaro"/>
-<meta property="article:tag" content="cuda"/>
-<meta property="article:tag" content="cudnn"/>
-<meta property="article:tag" content="tensorflow"/>
-<meta property="article:tag" content="GPU"/>
-<meta property="article:tag" content="nvidia"/>
-<meta property="article:tag" content="GTX960"/>
-<meta property="og:image" content="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4">
+
+  <meta property="og:site_name" content="leblancfg.com"/>
+  <meta property="og:title" content="Notes on installing CUDA, CuDNN and Tensorflow on Manjaro"/>
+  <meta property="og:description" content="An in-depth, step-by-step guide to installing CUDA, CuDNN and Tensorflow on Linux with an NVIDIA GeFORCE GTX960 graphics card."/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="https://leblancfg.com/installing-cuda-cudnn-tensorflow-nvidia-gtx960.html"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2018-08-24 00:00:00-04:00"/>
+  <meta property="article:modified_time" content=""/>
+  <meta property="article:author" content="https://leblancfg.com/author/francois-leblanc.html">
+  <meta property="article:section" content="Linux"/>
+  <meta property="article:tag" content="linux"/>
+  <meta property="article:tag" content="manjaro"/>
+  <meta property="article:tag" content="cuda"/>
+  <meta property="article:tag" content="cudnn"/>
+  <meta property="article:tag" content="tensorflow"/>
+  <meta property="article:tag" content="GPU"/>
+  <meta property="article:tag" content="nvidia"/>
+  <meta property="article:tag" content="GTX960"/>
+  <meta property="og:image" content="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4">
 
   <title>leblancfg.com &ndash; Notes on installing CUDA, CuDNN and Tensorflow on Manjaro</title>
 
+
 </head>
-<body>
-  <aside>
-    <div>
-      <a href="https://leblancfg.com">
-        <img src="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4" alt="François Leblanc" title="François Leblanc">
-      </a>
-      <h1><a href="https://leblancfg.com">François Leblanc</a></h1>
+<body class="light-theme">
 
-<p>Data Science, Geospatial Python, Space Stuff</p>
-      <nav>
-        <ul class="list">
-          <li><a href="https://leblancfg.com/pages/about.html#about">About</a></li>
-          <li><a href="https://leblancfg.com/pages/projects.html#projects">Projects</a></li>
+<aside>
+  <div>
+    <a href="https://leblancfg.com/">
+      <img src="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4" alt="François Leblanc" title="François Leblanc">
+    </a>
 
-          <li><a href="https://leblancfg.resumeed.com/" target="_blank">Résumé</a></li>
-        </ul>
-      </nav>
+    <h1>
+      <a href="https://leblancfg.com/">François Leblanc</a>
+    </h1>
 
-      <ul class="social">
-          <li>
-            <a  class="sc-linkedin" href="https://www.linkedin.com/in/fran%C3%A7ois-leblanc-07294b106/" target="_blank">
-            <i class="fab fa-linkedin">
-            </i>
-          </a></li>
-          <li>
-            <a  class="sc-github" href="https://github.com/leblancfg" target="_blank">
-            <i class="fab fa-github">
-            </i>
-          </a></li>
-          <li>
-            <a  class="sc-twitter" href="https://twitter.com/leblancfg1" target="_blank">
-            <i class="fab fa-twitter">
-            </i>
-          </a></li>
-          <li>
-            <a  class="sc-rss" href="https://leblancfg.com/feeds/all.atom.xml" target="_blank">
-            <i class="fas fa-rss">
-            </i>
-          </a></li>
-      </ul>
-    </div>
+    <p>Data Science, Geospatial Python, Space Stuff</p>
 
-
-  </aside>
-  <main>
 
     <nav>
-      <a href="https://leblancfg.com">    Home
-</a>
+      <ul class="list">
 
-      <a href="/archives.html">Archives</a>
-      <a href="/categories.html">Categories</a>
-      <a href="/tags.html">Tags</a>
 
-      <a href="https://leblancfg.com/feeds/all.atom.xml">    Atom
-</a>
+            <li>
+              <a target="_self"
+                 href="https://leblancfg.com/pages/about.html#about">
+                About
+              </a>
+            </li>
+            <li>
+              <a target="_self"
+                 href="https://leblancfg.com/pages/projects.html#projects">
+                Projects
+              </a>
+            </li>
 
+          <li>
+            <a target="_self" href="https://leblancfg.resumeed.com/" >Résumé</a>
+          </li>
+      </ul>
     </nav>
+
+    <ul class="social">
+      <li>
+        <a class="sc-linkedin"
+           href="https://www.linkedin.com/in/fran%C3%A7ois-leblanc-07294b106/"
+           target="_blank">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-github"
+           href="https://github.com/leblancfg"
+           target="_blank">
+          <i class="fa-brands fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-twitter"
+           href="https://twitter.com/leblancfg1"
+           target="_blank">
+          <i class="fa-brands fa-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-rss"
+           href="https://leblancfg.com/feeds/all.atom.xml"
+           target="_blank">
+          <i class="fa-solid fa-rss"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</aside>
+  <main>
+
+<nav>
+  <a href="https://leblancfg.com/">Home</a>
+
+  <a href="/archives.html">Archives</a>
+  <a href="/categories.html">Categories</a>
+  <a href="/tags.html">Tags</a>
+
+  <a href="https://leblancfg.com/feeds/all.atom.xml">Atom</a>
+
+</nav>
 
 <article class="single">
   <header>
       
     <h1 id="installing-cuda-cudnn-tensorflow-nvidia-gtx960">Notes on installing CUDA, CuDNN and Tensorflow on Manjaro</h1>
     <p>
-          Posted on August 24, 2018 in <a href="https://leblancfg.com/category/linux.html">Linux</a>
-
+      Posted on August 24, 2018 in <a href="https://leblancfg.com/category/linux.html">Linux</a>
 
     </p>
   </header>
@@ -169,46 +201,40 @@
 <h3>Install Manjaro from Live USB</h3>
 <p>I was getting a blank screen when trying to boot with the Non-Free Drivers option, so went with Free Drivers.</p>
 <h3>Update system</h3>
-<div class="highlight"><pre><span></span><span class="err">sudo pacman -Syyu</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>sudo pacman -Syyu
+</code></pre></div>
 
 <h3>Install NVIDIA drivers</h3>
 <p>In my case, I wasn't able to make the regular <code>nvidia</code> package work, but had to go with the <code>390xx</code> series. This step just worked from the GUI. Go to Manjaro Settings &gt; Drivers and simply install that one.</p>
 <p>Reboot and cross your fingers.</p>
 <h3>Install CUDA and CuDNN</h3>
-<div class="highlight"><pre><span></span><span class="err">sudo pacman -S cuda cudnn</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>sudo pacman -S cuda cudnn
+</code></pre></div>
 
 <p>This next one may or may not be useful:</p>
-<div class="highlight"><pre><span></span><span class="err">export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/extras/CUPTI/lib64</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="n">LD_LIBRARY_PATH</span><span class="o">=$</span><span class="n">LD_LIBRARY_PATH</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">cuda</span><span class="o">/</span><span class="n">extras</span><span class="o">/</span><span class="n">CUPTI</span><span class="o">/</span><span class="n">lib64</span><span class="w"></span>
+</code></pre></div>
 
 <p>Reboot and cross your fingers.</p>
 <h3>Install Anaconda</h3>
 <p>Next up, we download the latest Anaconda release. Since we'll be compiling TF right after, we'll grab bazel while we're at it.</p>
-<div class="highlight"><pre><span></span><span class="err">sudo pacman -S anaconda bazel</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>sudo pacman -S anaconda bazel
+</code></pre></div>
 
 <h3>Compile Tensorflow from source</h3>
 <p>There are no handy CUDA 9.2 wheels for tensorflow available for Linux, so you'll need to compile from source. Don't worry, it'll put hair on your chest. I also ran into r1.10 asking for the <code>keras_applications</code> Python module to be installed, so according to <a href="https://stackoverflow.com/questions/51771039/error-compiling-tensorflow-from-source-no-module-named-keras-applications">this SO post</a> I also pip-installed the following:</p>
-<div class="highlight"><pre><span></span><span class="err">conda install keras</span>
-<span class="err">pip install keras_applications==1.0.4 --no-deps</span>
-<span class="err">pip install keras_preprocessing==1.0.2 --no-deps</span>
-<span class="err">pip install h5py==2.8.0</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>conda install keras
+pip install keras_applications==1.0.4 --no-deps
+pip install keras_preprocessing==1.0.2 --no-deps
+pip install h5py==2.8.0
+</code></pre></div>
 
 <p>Then:</p>
-<div class="highlight"><pre><span></span><span class="err">git clone https://github.com/tensorflow/tensorflow</span>
-<span class="err">cd tensorflow</span>
-<span class="err">git branch r1.10</span>
-<span class="err">bash configure</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>git clone https://github.com/tensorflow/tensorflow
+cd tensorflow
+git branch r1.10
+bash configure
+</code></pre></div>
 
 <p>You'll then be asked a series of questions you'll probably want to Google before you answer. In my case, I did:</p>
 <ul>
@@ -227,21 +253,19 @@
 <li>Android: default </li>
 </ul>
 <p>And finally:</p>
-<div class="highlight"><pre><span></span><span class="err">bazel build --config=opt --config=cuda //tensorflow/tools/pip_package:build_pip_package</span>
-<span class="err">bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code><span class="n">bazel</span><span class="w"> </span><span class="n">build</span><span class="w"> </span><span class="o">--</span><span class="n">config</span><span class="o">=</span><span class="n">opt</span><span class="w"> </span><span class="o">--</span><span class="n">config</span><span class="o">=</span><span class="n">cuda</span><span class="w"> </span><span class="o">//</span><span class="n">tensorflow</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">pip_package</span><span class="p">:</span><span class="n">build_pip_package</span><span class="w"></span>
+<span class="n">bazel</span><span class="o">-</span><span class="n">bin</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">pip_package</span><span class="o">/</span><span class="n">build_pip_package</span><span class="w"> </span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">tensorflow_pkg</span><span class="w"></span>
+</code></pre></div>
 
 <p>And finally, installing with pip (the exact filename might change in your case):</p>
-<div class="highlight"><pre><span></span><span class="err">sudo pip install /tmp/tensorflow_pkg/tensorflow-1.10.0-cp36-cp36m-linux_x86_64.whl</span>
-</pre></div>
-
+<div class="highlight"><pre><span></span><code>sudo pip install /tmp/tensorflow_pkg/tensorflow-1.10.0-cp36-cp36m-linux_x86_64.whl
+</code></pre></div>
 
 <h3>Test your build</h3>
-<div class="highlight"><pre><span></span><span class="n">cd</span> <span class="o">~</span>
+<div class="highlight"><pre><span></span><code><span class="n">cd</span> <span class="o">~</span>
 <span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;import tensorflow as tf;hello = tf.constant(&#39;Hello, TensorFlow!&#39;);</span><span class="se">\</span>
 <span class="s2">sess = tf.Session();print(sess.run(hello));&quot;</span>
-</pre></div>
+</code></pre></div>
   </div>
   <div class="tag-cloud">
     <p>
@@ -260,13 +284,15 @@
 
 
 
+
 </article>
 
-    <footer>
+<footer>
 <p>
-  &copy;  2019 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+  &copy; 2019  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike</a>
 </p>
-<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
 </p><p>
   <a rel="license"
      href="http://creativecommons.org/licenses/by-sa/4.0/"
@@ -278,11 +304,7 @@
          width="80"
          height="15"/>
   </a>
-</p>    </footer>
-  </main>
-
-
-
+</p></footer>  </main>
 
 <script type="application/ld+json">
 {
@@ -294,6 +316,5 @@
   "description": "François Leblanc's Thoughts and Writings"
 }
 </script>
-
 </body>
 </html>

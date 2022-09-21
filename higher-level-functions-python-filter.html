@@ -6,25 +6,39 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="HandheldFriendly" content="True" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="robots" content="index, follow" />
+  <meta name="robots" content="index, follow" />
 
-  <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro|Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/stylesheet/style.min.css">
 
-  <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/pygments/github.min.css">
+
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+          href="https://leblancfg.com/theme/pygments/monokai.min.css">
+
+
+
   <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/fontawesome.css">
   <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/brands.css">
   <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/solid.css">
 
 
-    <link href="https://leblancfg.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="leblancfg.com Atom">
+  <link rel="shortcut icon" href="/img/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/img/icons/favicon.ico" type="image/x-icon">
+
+  <!-- Chrome, Firefox OS and Opera -->
+  <meta name="theme-color" content="#330033">
+  <!-- Windows Phone -->
+  <meta name="msapplication-navbutton-color" content="#330033">
+  <!-- iOS Safari -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Microsoft EDGE -->
+  <meta name="msapplication-TileColor" content="#330033">
+
+  <link href="https://leblancfg.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="leblancfg.com Atom">
 
 
-    <link rel="shortcut icon" href="/img/icons/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="/img/icons/favicon.ico" type="image/x-icon">
-
-<!-- Google Analytics -->
 <script type="text/javascript">
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -34,107 +48,125 @@
   ga('create', 'UA-120300361-1', 'auto');
   ga('send', 'pageview');
 </script>
-<!-- End Google Analytics -->
-    <!-- Chrome, Firefox OS and Opera -->
-    <meta name="theme-color" content="#330033">
-    <!-- Windows Phone -->
-    <meta name="msapplication-navbutton-color" content="#330033">
-    <!-- iOS Safari -->
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <!-- Microsoft EDGE -->
-    <meta name="msapplication-TileColor" content="#330033">
+
+ 
 
 <meta name="author" content="François Leblanc" />
 <meta name="description" content="In our final installment for the Higher Level Function in Python Series, we dive into the Python filter function. No sidetracks this time around. We simply take a look at how it&#39;s used, try to find a way where it would be superior to list comprehensions, fail, and conclude the series." />
 <meta name="keywords" content="python, jupyter, functional, benchmarks, numpy">
 
-<meta property="og:site_name" content="leblancfg.com"/>
-<meta property="og:title" content="Higher-level functions in Python, Part 3 - filter"/>
-<meta property="og:description" content="In our final installment for the Higher Level Function in Python Series, we dive into the Python filter function. No sidetracks this time around. We simply take a look at how it&#39;s used, try to find a way where it would be superior to list comprehensions, fail, and conclude the series."/>
-<meta property="og:locale" content="en_US"/>
-<meta property="og:url" content="https://leblancfg.com/higher-level-functions-python-filter.html"/>
-<meta property="og:type" content="article"/>
-<meta property="article:published_time" content="2018-06-14 00:00:00-04:00"/>
-<meta property="article:modified_time" content=""/>
-<meta property="article:author" content="https://leblancfg.com/author/francois-leblanc.html">
-<meta property="article:section" content="Python"/>
-<meta property="article:tag" content="python"/>
-<meta property="article:tag" content="jupyter"/>
-<meta property="article:tag" content="functional"/>
-<meta property="article:tag" content="benchmarks"/>
-<meta property="article:tag" content="numpy"/>
-<meta property="og:image" content="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4">
+
+  <meta property="og:site_name" content="leblancfg.com"/>
+  <meta property="og:title" content="Higher-level functions in Python, Part 3 - filter"/>
+  <meta property="og:description" content="In our final installment for the Higher Level Function in Python Series, we dive into the Python filter function. No sidetracks this time around. We simply take a look at how it&#39;s used, try to find a way where it would be superior to list comprehensions, fail, and conclude the series."/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="https://leblancfg.com/higher-level-functions-python-filter.html"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2018-06-14 00:00:00-04:00"/>
+  <meta property="article:modified_time" content=""/>
+  <meta property="article:author" content="https://leblancfg.com/author/francois-leblanc.html">
+  <meta property="article:section" content="Python"/>
+  <meta property="article:tag" content="python"/>
+  <meta property="article:tag" content="jupyter"/>
+  <meta property="article:tag" content="functional"/>
+  <meta property="article:tag" content="benchmarks"/>
+  <meta property="article:tag" content="numpy"/>
+  <meta property="og:image" content="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4">
 
   <title>leblancfg.com &ndash; Higher-level functions in Python, Part 3 - filter</title>
 
+
 </head>
-<body>
-  <aside>
-    <div>
-      <a href="https://leblancfg.com">
-        <img src="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4" alt="François Leblanc" title="François Leblanc">
-      </a>
-      <h1><a href="https://leblancfg.com">François Leblanc</a></h1>
+<body class="light-theme">
 
-<p>Data Science, Geospatial Python, Space Stuff</p>
-      <nav>
-        <ul class="list">
-          <li><a href="https://leblancfg.com/pages/about.html#about">About</a></li>
-          <li><a href="https://leblancfg.com/pages/projects.html#projects">Projects</a></li>
+<aside>
+  <div>
+    <a href="https://leblancfg.com/">
+      <img src="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4" alt="François Leblanc" title="François Leblanc">
+    </a>
 
-          <li><a href="https://leblancfg.resumeed.com/" target="_blank">Résumé</a></li>
-        </ul>
-      </nav>
+    <h1>
+      <a href="https://leblancfg.com/">François Leblanc</a>
+    </h1>
 
-      <ul class="social">
-          <li>
-            <a  class="sc-linkedin" href="https://www.linkedin.com/in/fran%C3%A7ois-leblanc-07294b106/" target="_blank">
-            <i class="fab fa-linkedin">
-            </i>
-          </a></li>
-          <li>
-            <a  class="sc-github" href="https://github.com/leblancfg" target="_blank">
-            <i class="fab fa-github">
-            </i>
-          </a></li>
-          <li>
-            <a  class="sc-twitter" href="https://twitter.com/leblancfg1" target="_blank">
-            <i class="fab fa-twitter">
-            </i>
-          </a></li>
-          <li>
-            <a  class="sc-rss" href="https://leblancfg.com/feeds/all.atom.xml" target="_blank">
-            <i class="fas fa-rss">
-            </i>
-          </a></li>
-      </ul>
-    </div>
+    <p>Data Science, Geospatial Python, Space Stuff</p>
 
-
-  </aside>
-  <main>
 
     <nav>
-      <a href="https://leblancfg.com">    Home
-</a>
+      <ul class="list">
 
-      <a href="/archives.html">Archives</a>
-      <a href="/categories.html">Categories</a>
-      <a href="/tags.html">Tags</a>
 
-      <a href="https://leblancfg.com/feeds/all.atom.xml">    Atom
-</a>
+            <li>
+              <a target="_self"
+                 href="https://leblancfg.com/pages/about.html#about">
+                About
+              </a>
+            </li>
+            <li>
+              <a target="_self"
+                 href="https://leblancfg.com/pages/projects.html#projects">
+                Projects
+              </a>
+            </li>
 
+          <li>
+            <a target="_self" href="https://leblancfg.resumeed.com/" >Résumé</a>
+          </li>
+      </ul>
     </nav>
+
+    <ul class="social">
+      <li>
+        <a class="sc-linkedin"
+           href="https://www.linkedin.com/in/fran%C3%A7ois-leblanc-07294b106/"
+           target="_blank">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-github"
+           href="https://github.com/leblancfg"
+           target="_blank">
+          <i class="fa-brands fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-twitter"
+           href="https://twitter.com/leblancfg1"
+           target="_blank">
+          <i class="fa-brands fa-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-rss"
+           href="https://leblancfg.com/feeds/all.atom.xml"
+           target="_blank">
+          <i class="fa-solid fa-rss"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</aside>
+  <main>
+
+<nav>
+  <a href="https://leblancfg.com/">Home</a>
+
+  <a href="/archives.html">Archives</a>
+  <a href="/categories.html">Categories</a>
+  <a href="/tags.html">Tags</a>
+
+  <a href="https://leblancfg.com/feeds/all.atom.xml">Atom</a>
+
+</nav>
 
 <article class="single">
   <header>
       
     <h1 id="higher-level-functions-python-filter">Higher-level functions in Python, Part 3 - filter</h1>
     <p>
-          Posted on June 14, 2018 in <a href="https://leblancfg.com/category/python.html">Python</a>
-
+      Posted on June 14, 2018 in <a href="https://leblancfg.com/category/python.html">Python</a>
 
     </p>
   </header>
@@ -1184,24 +1216,29 @@ h6:hover .anchor-link {
   font-style: italic;
 }
 </style>
-<style type="text/css"> .highlight pre  .hll { background-color: #ffffcc }
- .highlight pre   { background: #f8f8f8; }
- .highlight pre  .c { color: #408080; font-style: italic } /* Comment */
+<style type="text/css">pre { line-height: 125%; }
+td.linenos .normal { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+span.linenos { color: inherit; background-color: transparent; padding-left: 5px; padding-right: 5px; }
+td.linenos .special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 5px; padding-right: 5px; }
+ .highlight pre  .hll { background-color: #ffffcc }
+ .highlight pre  { background: #f8f8f8; }
+ .highlight pre  .c { color: #3D7B7B; font-style: italic } /* Comment */
  .highlight pre  .err { border: 1px solid #FF0000 } /* Error */
  .highlight pre  .k { color: #008000; font-weight: bold } /* Keyword */
  .highlight pre  .o { color: #666666 } /* Operator */
- .highlight pre  .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
- .highlight pre  .cm { color: #408080; font-style: italic } /* Comment.Multiline */
- .highlight pre  .cp { color: #BC7A00 } /* Comment.Preproc */
- .highlight pre  .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
- .highlight pre  .c1 { color: #408080; font-style: italic } /* Comment.Single */
- .highlight pre  .cs { color: #408080; font-style: italic } /* Comment.Special */
+ .highlight pre  .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
+ .highlight pre  .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
+ .highlight pre  .cp { color: #9C6500 } /* Comment.Preproc */
+ .highlight pre  .cpf { color: #3D7B7B; font-style: italic } /* Comment.PreprocFile */
+ .highlight pre  .c1 { color: #3D7B7B; font-style: italic } /* Comment.Single */
+ .highlight pre  .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
  .highlight pre  .gd { color: #A00000 } /* Generic.Deleted */
  .highlight pre  .ge { font-style: italic } /* Generic.Emph */
- .highlight pre  .gr { color: #FF0000 } /* Generic.Error */
+ .highlight pre  .gr { color: #E40000 } /* Generic.Error */
  .highlight pre  .gh { color: #000080; font-weight: bold } /* Generic.Heading */
- .highlight pre  .gi { color: #00A000 } /* Generic.Inserted */
- .highlight pre  .go { color: #888888 } /* Generic.Output */
+ .highlight pre  .gi { color: #008400 } /* Generic.Inserted */
+ .highlight pre  .go { color: #717171 } /* Generic.Output */
  .highlight pre  .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
  .highlight pre  .gs { font-weight: bold } /* Generic.Strong */
  .highlight pre  .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
@@ -1214,15 +1251,15 @@ h6:hover .anchor-link {
  .highlight pre  .kt { color: #B00040 } /* Keyword.Type */
  .highlight pre  .m { color: #666666 } /* Literal.Number */
  .highlight pre  .s { color: #BA2121 } /* Literal.String */
- .highlight pre  .na { color: #7D9029 } /* Name.Attribute */
+ .highlight pre  .na { color: #687822 } /* Name.Attribute */
  .highlight pre  .nb { color: #008000 } /* Name.Builtin */
  .highlight pre  .nc { color: #0000FF; font-weight: bold } /* Name.Class */
  .highlight pre  .no { color: #880000 } /* Name.Constant */
  .highlight pre  .nd { color: #AA22FF } /* Name.Decorator */
- .highlight pre  .ni { color: #999999; font-weight: bold } /* Name.Entity */
- .highlight pre  .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+ .highlight pre  .ni { color: #717171; font-weight: bold } /* Name.Entity */
+ .highlight pre  .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
  .highlight pre  .nf { color: #0000FF } /* Name.Function */
- .highlight pre  .nl { color: #A0A000 } /* Name.Label */
+ .highlight pre  .nl { color: #767600 } /* Name.Label */
  .highlight pre  .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
  .highlight pre  .nt { color: #008000; font-weight: bold } /* Name.Tag */
  .highlight pre  .nv { color: #19177C } /* Name.Variable */
@@ -1239,11 +1276,11 @@ h6:hover .anchor-link {
  .highlight pre  .dl { color: #BA2121 } /* Literal.String.Delimiter */
  .highlight pre  .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
  .highlight pre  .s2 { color: #BA2121 } /* Literal.String.Double */
- .highlight pre  .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+ .highlight pre  .se { color: #AA5D1F; font-weight: bold } /* Literal.String.Escape */
  .highlight pre  .sh { color: #BA2121 } /* Literal.String.Heredoc */
- .highlight pre  .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+ .highlight pre  .si { color: #A45A77; font-weight: bold } /* Literal.String.Interpol */
  .highlight pre  .sx { color: #008000 } /* Literal.String.Other */
- .highlight pre  .sr { color: #BB6688 } /* Literal.String.Regex */
+ .highlight pre  .sr { color: #A45A77 } /* Literal.String.Regex */
  .highlight pre  .s1 { color: #BA2121 } /* Literal.String.Single */
  .highlight pre  .ss { color: #19177C } /* Literal.String.Symbol */
  .highlight pre  .bp { color: #008000 } /* Name.Builtin.Pseudo */
@@ -1969,13 +2006,15 @@ class filter(object)
 
 
 
+
 </article>
 
-    <footer>
+<footer>
 <p>
-  &copy;  2019 - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>
+  &copy; 2019  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike</a>
 </p>
-<p>    Powered by <a href="http://getpelican.com" target="_blank">Pelican</a> - <a href="https://github.com/alexandrevicenzi/flex" target="_blank">Flex</a> theme by <a href="http://alexandrevicenzi.com" target="_blank">Alexandre Vicenzi</a>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
 </p><p>
   <a rel="license"
      href="http://creativecommons.org/licenses/by-sa/4.0/"
@@ -1987,11 +2026,7 @@ class filter(object)
          width="80"
          height="15"/>
   </a>
-</p>    </footer>
-  </main>
-
-
-
+</p></footer>  </main>
 
 <script type="application/ld+json">
 {
@@ -2003,6 +2038,5 @@ class filter(object)
   "description": "François Leblanc's Thoughts and Writings"
 }
 </script>
-
 </body>
 </html>
