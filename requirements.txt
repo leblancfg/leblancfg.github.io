@@ -16,4 +16,5 @@ scipy
 sqlalchemy
 seaborn
 sklearn
-pymc==4.2.0
+pymc>=4
+corner>=2
