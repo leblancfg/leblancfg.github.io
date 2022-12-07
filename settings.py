@@ -1,9 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-P
 
-AUTHOR = u"François Leblanc"
+AUTHOR = "François Leblanc"
 SITEURL = "http://leblancfg.com"
-SITENAME = u"François Leblanc"
+SITENAME = "François Leblanc"
 LOCALE = "en_US.utf8"
 TIMEZONE = "America/Toronto"
 
@@ -20,9 +20,10 @@ GITHUB_URL = "https://github.com/leblancfg"
 DISQUS_SITENAME = "leblancfg"
 
 SOCIAL = (
-    ("LinkedIn", "https://www.linkedin.com/in/fran%C3%A7ois-leblanc-07294b106"),
-    ("GitHub", "https://github.com/leblancfg"),
-    ("Twitter", "http://twitter.com/leblancfg1"),
+    ("linkedin", "https://www.linkedin.com/in/fran%C3%A7ois-leblanc-07294b106/"),
+    ("github", "https://github.com/leblancfg"),
+    ("mastodon", "https://fosstodon.org/@leblancfg"),
+    ("rss", "https://leblancfg.com/feeds/all.atom.xml"),
 )
 
 STATIC_PATHS = ["images", "extra/CNAME"]
