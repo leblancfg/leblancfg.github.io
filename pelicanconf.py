@@ -18,7 +18,7 @@ PYGMENTS_STYLE = "monokai"
 ROBOTS = "index, follow"
 
 HOME = str(Path.home())
-THEME = f"{HOME}/src/pelican-themes/Flex"
+THEME = f"pelican-themes/Flex"
 PATH = "content"
 TIMEZONE = "America/Montreal"
 
@@ -44,7 +44,7 @@ LINKS = (("Résumé", "https://leblancfg.resumeed.com/"),)
 SOCIAL = (
     ("linkedin", "https://www.linkedin.com/in/fran%C3%A7ois-leblanc-07294b106/"),
     ("github", "https://github.com/leblancfg"),
-    ("twitter", "https://twitter.com/leblancfg1"),
+    ("mastodon", "https://fosstodon.org/@leblancfg"),
     ("rss", "https://leblancfg.com/feeds/all.atom.xml"),
 )
 
@@ -79,18 +79,3 @@ EXTRA_PATH_METADATA = {
 
 # Analytics
 GOOGLE_ANALYTICS = "UA-120300361-1"
-
-# Adsense
-# AD_CODE = '3662443451'
-# GOOGLE_ADSENSE = {
-#     'ca_id': 'ca-pub-9414058741554736',    # Your AdSense ID
-#     'page_level_ads': True,          # Allow Page Level Ads (mobile)
-#     'ads': {
-#         'aside': AD_CODE,          # Side bar banner (all pages)
-#         'main_menu': AD_CODE,      # Banner before main menu (all pages)
-#         'index_top': AD_CODE,      # Banner after main menu (index only)
-#         'index_bottom': AD_CODE,   # Banner before footer (index only)
-#         'article_top': AD_CODE,    # Banner after article title (article only)
-#         'article_bottom': AD_CODE, # Banner after article content (article only)
-#     }
-# }
