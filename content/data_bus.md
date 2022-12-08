@@ -83,4 +83,4 @@ Means our output can be surfaced in an app like:
 
         - impute_from_mean: 4
 
-So if you're working on similar projects, I'll have convinced you that the data bus pattern is a simple but powerful way to organize and manage the data and metadata in your code. Whether you're working on an ETL project or something else entirely, I highly recommend giving the data bus a try. It will make your code more readable, maintainable, and effective.
+So if you're working on similar projects, I hope I'll have convinced you that the data bus pattern is a simple but powerful way to organize and manage both the data and metadata in your code. Whether you're working on an ETL project or something else entirely, I highly recommend giving the data bus a try. It will make your code more readable, maintainable, and effective.
