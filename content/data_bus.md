@@ -41,7 +41,7 @@ databus = {
 }
 ```
 
-As you can see, the data bus is a dictionary with two keys: input and output. Each of these keys contains a nested dictionary with data and metadata keys. The data key holds the actual data that we're working with, while the metadata key holds information about the data, such as its source and destination.
+In this example, the data bus dictionary has three datasets: input, imputed and output. Each contains a nested dictionary with the actual dataset, and metadata keys. This metadata key holds information about the data, such as its source and destination.
 
 So if you need to pass a dataset to a function or method, you can pass the data bus and the key for the dataset you want to use:
 
