@@ -1,0 +1,235 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/stylesheet/style.min.css">
+
+
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+          href="https://leblancfg.com/theme/pygments/monokai.min.css">
+
+
+
+  <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/solid.css">
+
+
+  <link rel="shortcut icon" href="/img/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/img/icons/favicon.ico" type="image/x-icon">
+
+  <!-- Chrome, Firefox OS and Opera -->
+  <meta name="theme-color" content="#330033">
+  <!-- Windows Phone -->
+  <meta name="msapplication-navbutton-color" content="#330033">
+  <!-- iOS Safari -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Microsoft EDGE -->
+  <meta name="msapplication-TileColor" content="#330033">
+
+  <link href="https://leblancfg.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="leblancfg.com Atom">
+
+  <link href="https://leblancfg.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="leblancfg.com RSS">
+
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-120300361-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+ 
+
+<meta name="author" content="François Leblanc" />
+<meta name="description" content="NERDTree Bookmarks is a plugin that allows you to bookmark files and directories in NERDTree." />
+<meta name="keywords" content="vim, nerdtree, bookmarks">
+
+
+  <meta property="og:site_name" content="leblancfg.com"/>
+  <meta property="og:title" content="TIL: NERDTree Bookmarks"/>
+  <meta property="og:description" content="NERDTree Bookmarks is a plugin that allows you to bookmark files and directories in NERDTree."/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="https://leblancfg.com/til-nerdtree-bookmarks.html"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2023-03-22 00:00:00-04:00"/>
+  <meta property="article:modified_time" content=""/>
+  <meta property="article:author" content="https://leblancfg.com/author/francois-leblanc.html">
+  <meta property="article:section" content="Vim"/>
+  <meta property="article:tag" content="vim"/>
+  <meta property="article:tag" content="nerdtree"/>
+  <meta property="article:tag" content="bookmarks"/>
+  <meta property="og:image" content="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4">
+
+  <title>leblancfg.com &ndash; TIL: NERDTree Bookmarks</title>
+
+
+</head>
+<body class="light-theme">
+
+<aside>
+  <div>
+    <a href="https://leblancfg.com/">
+      <img src="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4" alt="François Leblanc" title="François Leblanc">
+    </a>
+
+    <h1>
+      <a href="https://leblancfg.com/">François Leblanc</a>
+    </h1>
+
+    <p>Data Science, Geospatial Python, Space Stuff</p>
+
+
+    <nav>
+      <ul class="list">
+
+
+            <li>
+              <a target="_self"
+                 href="https://leblancfg.com/pages/about.html#about">
+                About
+              </a>
+            </li>
+            <li>
+              <a target="_self"
+                 href="https://leblancfg.com/pages/projects.html#projects">
+                Projects
+              </a>
+            </li>
+
+          <li>
+            <a target="_self" href="https://leblancfg.resumeed.com/" >Résumé</a>
+          </li>
+      </ul>
+    </nav>
+
+    <ul class="social">
+      <li>
+        <a class="sc-linkedin"
+           href="https://www.linkedin.com/in/fran%C3%A7ois-leblanc-07294b106/"
+           target="_blank">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-github"
+           href="https://github.com/leblancfg"
+           target="_blank">
+          <i class="fa-brands fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-mastodon"
+rel="me"           href="https://fosstodon.org/@leblancfg"
+           target="_blank">
+          <i class="fa-brands fa-mastodon"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-rss"
+           href="https://leblancfg.com/feeds/all.atom.xml"
+           target="_blank">
+          <i class="fa-solid fa-rss"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</aside>
+  <main>
+
+<nav>
+  <a href="https://leblancfg.com/">Home</a>
+
+  <a href="/archives.html">Archives</a>
+  <a href="/categories.html">Categories</a>
+  <a href="/tags.html">Tags</a>
+
+  <a href="https://leblancfg.com/feeds/all.atom.xml">Atom</a>
+
+  <a href="https://leblancfg.com/feeds/all.rss.xml">RSS</a>
+</nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="til-nerdtree-bookmarks">TIL: NERDTree Bookmarks</h1>
+    <p>
+      Posted on March 22, 2023 in <a href="https://leblancfg.com/category/vim.html">Vim</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>As a developer, you probably spend a lot of time navigating through the directories of your project. Whether you're looking for a specific file, checking your tests, or exploring a new feature, it can be time-consuming to constantly type in the same directory paths. Fortunately, I just discovered a way to make this faster in a Vim plug-in I've been using for years called NERDTree.</p>
+<p>Bookmarks allow you to save your most frequently used directories and easily navigate to them with just a few keystrokes. Unlike regular bookmarks in your web browser, NERDTree bookmarks are saved to a file on your computer, so they work across multiple sessions and computer restarts.</p>
+<p>So instead of repetitively opening and closing the same directories when moving around, you can just bookmark them and quickly jump to them whenever you need to.</p>
+<h1>Creating a New Bookmark</h1>
+<p>The following commands are only accessible when your cursor is in a NERDTree pane. If you're not seeing the command show up, this might be why.</p>
+<p>To create a new bookmark, simply navigate to the directory you want to save in NERDTree, and press <code>:Bookmark</code> to assign a shortcut to that bookmark. For example, to save a bookmark in the <code>tests/</code> folder, place your cursor on top, press <code>:Bookmark</code>, and you will then be able to see this new bookmark within your NERDTree pane.</p>
+<p>By default there is no shortcut assigned to the bookmark, but a simple <code>:Bo&lt;Tab&gt;</code> should suffice.</p>
+<p><img alt="Screenshot of NERDTree bookmark called &quot;output&quot;" src="img/NERDTree_bookmark.png"></p>
+<h1>Jumping to an Existing Bookmark</h1>
+<p>To jump to an existing bookmark, you'll need to use the <code>:OpenBookmark &lt;BOOKMARK&gt;</code> command. Again, using tab completion typing e.g. <code>:OpenBookmark output</code> ends up being a quick <code>:Op&lt;Tab&gt; o&lt;Tab&gt;</code>. Try it for yourself!</p>
+<h1>Listing and Editing Bookmarks</h1>
+<p>You can list and edit all your existing bookmarks by typing <code>:EditBookmarks</code> in NERDTree. This will display a list of all your bookmarks and their corresponding shortcuts, which can be edited, deleted, etc.</p>
+<p>In conclusion, NERDTree bookmarks are a powerful feature that can save you a lot of time and make your development workflow more efficient. By creating and managing your bookmarks, you can quickly navigate through your project and focus on what really matters - writing great code!</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://leblancfg.com/tag/vim.html">vim</a>
+      <a href="https://leblancfg.com/tag/nerdtree.html">nerdtree</a>
+      <a href="https://leblancfg.com/tag/bookmarks.html">bookmarks</a>
+    </p>
+  </div>
+
+
+
+
+
+
+</article>
+
+<footer>
+<p>
+  &copy; 2019  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p></footer>  </main>
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " leblancfg.com ",
+  "url" : "https://leblancfg.com",
+  "image": "https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4",
+  "description": "François Leblanc's Thoughts and Writings"
+}
+</script>
+</body>
+</html>
