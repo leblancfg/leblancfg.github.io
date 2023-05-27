@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com - cli, unix</title><link href="https://leblancfg.com/" rel="alternate"></link><link href="https://leblancfg.com/feeds/cli-unix.atom.xml" rel="self"></link><id>https://leblancfg.com/</id><updated>2023-04-29T00:00:00-04:00</updated><subtitle>Data Science, Geospatial Python, Space Stuff</subtitle><entry><title>Level up your command line skills: The secret to being a good UNIX neighbour</title><link href="https://leblancfg.com/level-up-your-command-line-skills-the-secret-to-being-a-good-unix-neighbour.html" rel="alternate"></link><published>2023-04-29T00:00:00-04:00</published><updated>2023-04-29T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2023-04-29:/level-up-your-command-line-skills-the-secret-to-being-a-good-unix-neighbour.html</id><summary type="html">&lt;p&gt;A few tips to be a good UNIX neighbour and make your scripts more portable.&lt;/p&gt;</summary><content type="html">&lt;p&gt;The UNIX philosophy is a set of design principles that has had a huge impact on
+the development of software systems. In essence, the UNIX philosophy stresses
+the importance of keeping things simple and modular. You should think of the
+shell as a programming language of its own! Take for example this one-liner:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;curl -s &lt;span class="s1"&gt;&amp;#39;https://www.example.com/query?symbol=GOOG&amp;amp;apikey=API_KEY&amp;#39;&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.[&amp;quot;Global Quote&amp;quot;][&amp;quot;05. price&amp;quot;]&amp;#39;&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="p"&gt;|&lt;/span&gt; sqlite3 stocks.db &lt;span class="s2"&gt;&amp;quot;UPDATE portfolio SET price = &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;cat&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;, time = CURRENT_TIMESTAMP WHERE symbol = &amp;#39;GOOG&amp;#39;&amp;quot;&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; sqlite3 stocks.db &lt;span class="s2"&gt;&amp;quot;SELECT price FROM portfolio WHERE symbol = &amp;#39;GOOG&amp;#39; AND price &amp;gt; 9000&amp;quot;&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="p"&gt;|&lt;/span&gt; xargs -I &lt;span class="o"&gt;{}&lt;/span&gt; curl -X POST -H &lt;span class="s2"&gt;&amp;quot;Content-Type: application/json&amp;quot;&lt;/span&gt; -d &lt;span class="s1"&gt;&amp;#39;{&amp;quot;symbol&amp;quot;: &amp;quot;GOOG&amp;quot;, &amp;quot;price&amp;quot;: &amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;{}&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;quot;}&amp;#39;&lt;/span&gt; https://example.com/api/sell
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;In this condensed program of 4 lines, the following happens:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;We download the HTML page of Google Finance for the GOOG stock.&lt;/li&gt;
+&lt;li&gt;We extract the current price from the HTML page.&lt;/li&gt;
+&lt;li&gt;We update the price of the GOOG stock in our database.&lt;/li&gt;
+&lt;li&gt;If the price is above 9000, we send a notification to our API to sell stocks.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Getting back to the UNIX philosophy, this means writing small programs that do
+one thing well and can be combined with other programs to achieve more complex
+functionality. Other key principles of the UNIX philosophy include using plain
+text as a universal interface, favoring simple implementations over more
+complex ones, and using pipelines to combine simple programs into powerful
+workflows.&lt;/p&gt;
+&lt;p&gt;If you're writing command line tools, it's important to consider how they fit
+into the UNIX ecosystem. As part of this, it's helpful to ensure your tools can
+be easily integrated into pipelines with other tools. A key way to achieve this
+is by allowing your tool to accept input from other tools through standard
+input and output.&lt;/p&gt;
+&lt;h2&gt;Example&lt;/h2&gt;
+&lt;p&gt;Let's take a look at an example of a fictitious tool called &lt;code&gt;do_x&lt;/code&gt;. In this
+example, we define an argparse argument parser that allows the user to specify
+an input file or to use standard input by default. We also provide an option to
+output the results in JSON format. After processing the input data, we output
+the results either as a string or as a JSON object, depending on the user's
+choice.&lt;/p&gt;
+&lt;h3&gt;Starter code&lt;/h3&gt;
+&lt;p&gt;Let's start off with an example of what I might have:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;click&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;do_stuff&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input_data&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;Do stuff.&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;result&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;input_data&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+
+&lt;span class="nd"&gt;@click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="nd"&gt;@click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argument&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;filename&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;r&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="n"&gt;input_data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+    &lt;span class="c1"&gt;# Do something with input data and print it&lt;/span&gt;
+    &lt;span class="n"&gt;output_data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;do_stuff&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input_data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="c1"&gt;# Use `echo` for better compatibility&lt;/span&gt;
+    &lt;span class="n"&gt;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;echo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;output_data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="vm"&gt;__name__&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;__main__&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+    &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Here this code is straightforward: this tool is meant to be called from the
+command line with a simple filename argument. It reads the file, does something
+with the data, and prints the result. This is a good start, but it's not very
+flexible. What if we want to use this tool in a pipeline? What if we want to
+use it with standard input? What if we want to use it in a script?&lt;/p&gt;
+&lt;h3&gt;Using standard input&lt;/h3&gt;
+&lt;p&gt;The first item of business is to make this tool more flexible. Tools should
+accept data from stdin and offer to read files from an argument. Your tool's
+API should be flexible enough to handle both. In our case, we can implement
+this by specifying the filename argument as optional and setting the default
+value to stdin. This will allow us to call the tool with or without a filename
+argument, and it will read from stdin if no filename is provided.&lt;/p&gt;
+&lt;p&gt;In general, the UNIX philosophy favors passing data via pipes and standard
+input, as it allows for a more flexible and composable toolchain. This is
+because a tool can be designed to read data from standard input, process it,
+and then output the results to standard output, which can be used as input to
+another tool in the pipeline.&lt;/p&gt;
+&lt;p&gt;However, there are situations where it may be more appropriate to pass
+filepaths as arguments instead of reading data from standard input. For
+example, if a tool needs to process multiple files, it may be more convenient
+to pass the filepaths as arguments instead of requiring the user to redirect
+the contents of each file to standard input.&lt;/p&gt;
+&lt;p&gt;A good tool can handle both cases, allowing the user to pass either filepaths
+or data via standard input, depending on their preference or the specific use
+case. This can be achieved by designing the tool to first check if a filepath
+argument was passed, and if not, to read from standard input.&lt;/p&gt;
+&lt;p&gt;In our example in particular, the &lt;code&gt;click&lt;/code&gt; package handles this for us with the
+&lt;code&gt;click.File&lt;/code&gt; type, which&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Defaults to stdin if the input is set to &lt;code&gt;-&lt;/code&gt;, and&lt;/li&gt;
+&lt;li&gt;Passes a subclass of &lt;code&gt;io.TextIOBase&lt;/code&gt; (e.g. &lt;code&gt;StringIO&lt;/code&gt;) in either case.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This makes it handy as it handles the best practice case by default:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;click&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;do_stuff&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input_data&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;Do stuff.&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt;
+
+
+&lt;span class="nd"&gt;@click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="nd"&gt;@click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argument&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;filename&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;File&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_text_stream&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;stdin&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;lt;stdin&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="c1"&gt;# Let the user know why we&amp;#39;re waiting for input&lt;/span&gt;
+        &lt;span class="n"&gt;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;echo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Reading from STDIN&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="c1"&gt;# This works fine with both a file or STDIN&lt;/span&gt;
+            &lt;span class="n"&gt;input_data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+    &lt;span class="c1"&gt;# Do something with input data&lt;/span&gt;
+    &lt;span class="n"&gt;output_data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;do_stuff&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input_data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="n"&gt;output_data&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;By allowing the user to specify an input file or to use standard input, our
+tool can be easily integrated into pipelines with other tools. For example,
+let's say we have a file called &lt;code&gt;input.txt&lt;/code&gt; containing some data that we want
+to process with our tool called e.g. &lt;code&gt;cli&lt;/code&gt; and then pipe the results into
+another tool called &lt;code&gt;do_y&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ cat input.txt &lt;span class="p"&gt;|&lt;/span&gt; cli &lt;span class="p"&gt;|&lt;/span&gt; do_y
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;By default, &lt;code&gt;cli&lt;/code&gt; will read from standard input, allowing us to pipe the
+contents of &lt;code&gt;input.txt&lt;/code&gt; into it. &lt;code&gt;cli&lt;/code&gt; will then output the results to standard
+output, which can be piped into &lt;code&gt;do_y&lt;/code&gt;. This allows us to easily chain together
+multiple tools to create powerful pipelines.&lt;/p&gt;
+&lt;h3&gt;Adding JSON support&lt;/h3&gt;
+&lt;p&gt;Another important aspect of being a good UNIX neighbour is ensuring that the
+fields in your output are standard enough that they can be easily translated
+with other tools. This means using a standard delimiter, such as a tab or a
+comma, and avoiding using special characters that may cause issues when parsing
+the output with other tools.&lt;/p&gt;
+&lt;p&gt;Finally, if possible, it is also helpful to provide the option to output the
+results in JSON format. JSON is a standard data format that can be easily
+parsed and processed by many programming languages, making it a great option
+for interoperability between tools. This can be achieved by adding a flag to
+your tool that allows the user to specify the output format. Depending on the
+API you strive to provide, you may also want it to become the default.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;json&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;click&lt;/span&gt;
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;do_stuff&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input_data&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="sd"&gt;&amp;quot;&amp;quot;&amp;quot;Do stuff.&amp;quot;&amp;quot;&amp;quot;&lt;/span&gt;
+    &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;result&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;input_data&lt;/span&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+
+&lt;span class="nd"&gt;@click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;span class="nd"&gt;@click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;argument&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;filename&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;File&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;default&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_text_stream&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;stdin&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="nd"&gt;@click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;option&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;--json&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="s1"&gt;&amp;#39;-j&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;is_flag&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+    &lt;span class="n"&gt;help&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Output results in JSON format&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;lt;stdin&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="c1"&gt;# Let the user know why we&amp;#39;re waiting for input&lt;/span&gt;
+        &lt;span class="n"&gt;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;echo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Reading from STDIN&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+            &lt;span class="c1"&gt;# This works fine with both a file or STDIN&lt;/span&gt;
+            &lt;span class="n"&gt;input_data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+    &lt;span class="c1"&gt;# Do something with input data&lt;/span&gt;
+    &lt;span class="n"&gt;output_data&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;do_stuff&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;input_data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+    &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="c1"&gt;# Output results as JSON&lt;/span&gt;
+        &lt;span class="n"&gt;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;echo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dumps&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;output_data&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+
+    &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+        &lt;span class="c1"&gt;# Output results as a string&lt;/span&gt;
+        &lt;span class="n"&gt;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;echo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;output_data&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;which makes it possible e.g. to use this tool in a pipeline with &lt;code&gt;jq&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ cat input.txt &lt;span class="p"&gt;|&lt;/span&gt; cli --json &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.result&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; do_y
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;In conclusion, by designing our command line tools to be good UNIX neighbours,
+we can create powerful pipelines that allow us to efficiently process and
+analyze data. This means allowing our tools to accept input from other tools
+through standard input and output, using standard delimiters in our output
+fields, and providing the option to output results in JSON format. By following
+these principles, we can create tools that work well with others and promote
+the UNIX philosophy of modularity and simplicity.&lt;/p&gt;</content><category term="cli, unix"></category><category term="cli"></category><category term="unix"></category><category term="shell"></category><category term="bash"></category><category term="zsh"></category><category term="command line"></category><category term="terminal"></category><category term="productivity"></category><category term="click"></category><category term="python"></category></entry></feed>
