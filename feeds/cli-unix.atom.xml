@@ -189,6 +189,9 @@ API you strive to provide, you may also want it to become the default.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ cat input.txt &lt;span class="p"&gt;|&lt;/span&gt; cli --json &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.result&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; do_y
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
+&lt;p&gt;and not have to resort to more complex contorsions of string manipulation like
+&lt;code&gt;cut -f2&lt;/code&gt; &amp;mdash; or God forbid, having to use &lt;code&gt;awk&lt;/code&gt; &amp;mdash; to extract the
+result.&lt;/p&gt;
 &lt;h2&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;In conclusion, by designing our command line tools to be good UNIX neighbours,
 we can create powerful pipelines that allow us to efficiently process and
