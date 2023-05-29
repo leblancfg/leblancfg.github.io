@@ -2,7 +2,7 @@ Title: Being a good UNIX neighbour
 Date: 2023-04-29
 Category: cli, unix
 Tags: cli, unix, shell, bash, zsh, command line, terminal, productivity, click, python
-Slug: being-a-good-unix-neighbour
+Slug: level-up-your-command-line-skills-the-secret-to-being-a-good-unix-neighbour
 Authors: François Leblanc
 Summary: A few tips to be a good UNIX neighbour and make your scripts more portable.
 
