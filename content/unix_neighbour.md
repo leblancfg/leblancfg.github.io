@@ -221,6 +221,9 @@ which makes it possible e.g. to use this tool in a pipeline with `jq`:
 $ cat input.txt | cli --json | jq '.result' | do_y
 ```
 
+and not have to resort to more complex contorsions of string manipulation like
+`cut -f2` &mdash; or God forbid, having to use `awk` &mdash; to extract the
+result.
 
 ## Conclusion
 
