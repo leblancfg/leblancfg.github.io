@@ -198,15 +198,12 @@ def do_stuff(input_data):
 )
 def main(filename, json):
     if filename.name == '<stdin>':
-        # Let the user know why we're waiting for input
         click.echo('Reading from STDIN')
         
     else:
         with open(filename.name) as f:
-            # This works fine with both a file or STDIN
             input_data = f.read()
 
-    # Do something with input data
     output_data = do_stuff(input_data)
 
     if json:
