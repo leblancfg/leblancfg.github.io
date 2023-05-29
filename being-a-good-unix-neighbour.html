@@ -349,15 +349,12 @@ API you strive to provide, you may also want it to become the default.</p>
 <span class="p">)</span>
 <span class="k">def</span> <span class="nf">main</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">json</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s1">&#39;&lt;stdin&gt;&#39;</span><span class="p">:</span>
-        <span class="c1"># Let the user know why we&#39;re waiting for input</span>
         <span class="n">click</span><span class="o">.</span><span class="n">echo</span><span class="p">(</span><span class="s1">&#39;Reading from STDIN&#39;</span><span class="p">)</span>
 
     <span class="k">else</span><span class="p">:</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="c1"># This works fine with both a file or STDIN</span>
             <span class="n">input_data</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
 
-    <span class="c1"># Do something with input data</span>
     <span class="n">output_data</span> <span class="o">=</span> <span class="n">do_stuff</span><span class="p">(</span><span class="n">input_data</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">json</span><span class="p">:</span>
