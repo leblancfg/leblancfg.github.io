@@ -4,8 +4,8 @@ the development of software systems. In essence, the UNIX philosophy stresses
 the importance of keeping things simple and modular. You should think of the
 shell as a programming language of its own! Take this made-up example:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;curl -s &lt;span class="s1"&gt;&amp;#39;https://www.example.com/query?symbol=GOOG&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.price&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt;
-sqlite3 stocks.db &lt;span class="s2"&gt;&amp;quot;UPDATE portfolio SET price = &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;cat&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;, time = CURRENT_TIMESTAMP WHERE symbol = &amp;#39;GOOG&amp;#39;&amp;quot;&lt;/span&gt;
-&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; sqlite3 stocks.db &lt;span class="s2"&gt;&amp;quot;SELECT price FROM portfolio WHERE symbol = &amp;#39;GOOG&amp;#39; AND price &amp;gt; 9000 ORDER BY time DESC LIMT 1&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt;
+sqlite3 stocks.db &lt;span class="s2"&gt;&amp;quot;UPDATE portfolio SET price = &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;cat&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;, ...&amp;quot;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; sqlite3 stocks.db &lt;span class="s2"&gt;&amp;quot;SELECT price FROM portfolio WHERE price &amp;gt; 9000 AND ...&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt;
 xargs -I &lt;span class="o"&gt;{}&lt;/span&gt; curl -X POST -H &lt;span class="s2"&gt;&amp;quot;Content-Type: application/json&amp;quot;&lt;/span&gt; -d &lt;span class="s1"&gt;&amp;#39;{&amp;quot;symbol&amp;quot;: &amp;quot;GOOG&amp;quot;, &amp;quot;price&amp;quot;: &amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;{}&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;quot;}&amp;#39;&lt;/span&gt; https://example.com/api/sell
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
