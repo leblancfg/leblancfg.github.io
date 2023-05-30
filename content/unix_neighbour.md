@@ -23,7 +23,7 @@ In this (absolutely non-functional) condensed program, the following happens:
 1. We download the HTML page for the GOOG stock.
 2. Extract the current price.
 3. Update the price of the GOOG stock in our database.
-4. If the price is above 9000, we send a notification to our API to sell stocks.
+4. If the price is over 9000, we send a notification to our API to sell stocks.
 
 Getting back to the UNIX philosophy, this means writing small programs that do
 one thing well and can be combined with other programs to achieve more complex
