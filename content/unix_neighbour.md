@@ -9,21 +9,20 @@ Summary: A few tips to be a good UNIX neighbour and make your scripts more porta
 The UNIX philosophy is a set of design principles that has had a huge impact on
 the development of software systems. In essence, the UNIX philosophy stresses
 the importance of keeping things simple and modular. You should think of the
-shell as a programming language of its own! Take for example this one-liner:
+shell as a programming language of its own! Take this made-up example:
 
 ```sh
-curl -s 'https://www.example.com/query?symbol=GOOG&apikey=API_KEY' \
-| jq '.["Global Quote"]["05. price"]' \
-| sqlite3 stocks.db "UPDATE portfolio SET price = $(cat), time = CURRENT_TIMESTAMP WHERE symbol = 'GOOG'" \
-&& sqlite3 stocks.db "SELECT price FROM portfolio WHERE symbol = 'GOOG' AND price > 9000" \
-| xargs -I {} curl -X POST -H "Content-Type: application/json" -d '{"symbol": "GOOG", "price": "'{}'"}' https://example.com/api/sell
+curl -s 'https://www.example.com/query?symbol=GOOG' | jq '.price' |
+sqlite3 stocks.db "UPDATE portfolio SET price = $(cat), time = CURRENT_TIMESTAMP WHERE symbol = 'GOOG'"
+&& sqlite3 stocks.db "SELECT price FROM portfolio WHERE symbol = 'GOOG' AND price > 9000 ORDER BY time DESC LIMT 1" |
+xargs -I {} curl -X POST -H "Content-Type: application/json" -d '{"symbol": "GOOG", "price": "'{}'"}' https://example.com/api/sell
 ```
 
-In this condensed program of 4 lines, the following happens:
+In this (absolutely non-functional) condensed program, the following happens:
 
-1. We download the HTML page of Google Finance for the GOOG stock.
-2. We extract the current price from the HTML page.
-3. We update the price of the GOOG stock in our database.
+1. We download the HTML page for the GOOG stock.
+2. Extract the current price.
+3. Update the price of the GOOG stock in our database.
 4. If the price is above 9000, we send a notification to our API to sell stocks.
 
 Getting back to the UNIX philosophy, this means writing small programs that do
@@ -221,9 +220,7 @@ which makes it possible e.g. to use this tool in a pipeline with `jq`:
 $ cat input.txt | cli --json | jq '.result' | do_y
 ```
 
-and not have to resort to more complex contorsions of string manipulation like
-`cut -f2` &mdash; or God forbid, having to use `awk` &mdash; to extract the
-result.
+and not have to resort to more complex contorsions of string manipulation like `cut -f2` &mdash; or God forbid, having to use `awk` &mdash; to extract the result.
 
 ## Conclusion
 

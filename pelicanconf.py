@@ -39,7 +39,7 @@ USE_FOLDER_AS_CATEGORY = False
 MAIN_MENU = True
 HOME_HIDE_TAGS = True
 
-LINKS = (("Résumé", "https://leblancfg.resumeed.com/"),)
+LINKS = (("Résumé", "https://leblancfg.com/pages/leblancfg_CV.pdf"),)
 
 SOCIAL = (
     ("linkedin", "https://www.linkedin.com/in/fran%C3%A7ois-leblanc-07294b106/"),
