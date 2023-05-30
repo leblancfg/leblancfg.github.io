@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*- #
 from pathlib import Path
+from datetime import datetime as dt
 
 from pelican_jupyter import markup as nb_markup
 
@@ -18,7 +19,7 @@ PYGMENTS_STYLE = "monokai"
 ROBOTS = "index, follow"
 
 HOME = str(Path.home())
-THEME = f"pelican-themes/Flex"
+THEME = "pelican-themes/Flex"
 PATH = "content"
 TIMEZONE = "America/Montreal"
 
@@ -60,7 +61,7 @@ CC_LICENSE = {
     "slug": "by-sa",
 }
 
-COPYRIGHT_YEAR = 2019
+COPYRIGHT_YEAR = dt.now().year
 
 DEFAULT_PAGINATION = 10
 

@@ -13,8 +13,8 @@ shell as a programming language of its own! Take this made-up example:
 
 ```sh
 curl -s 'https://www.example.com/query?symbol=GOOG' | jq '.price' |
-sqlite3 stocks.db "UPDATE portfolio SET price = $(cat), time = CURRENT_TIMESTAMP WHERE symbol = 'GOOG'"
-&& sqlite3 stocks.db "SELECT price FROM portfolio WHERE symbol = 'GOOG' AND price > 9000 ORDER BY time DESC LIMT 1" |
+sqlite3 stocks.db "UPDATE portfolio SET price = $(cat), ..."
+&& sqlite3 stocks.db "SELECT price FROM portfolio WHERE price > 9000 AND ..." |
 xargs -I {} curl -X POST -H "Content-Type: application/json" -d '{"symbol": "GOOG", "price": "'{}'"}' https://example.com/api/sell
 ```
 
