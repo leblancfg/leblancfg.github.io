@@ -14,7 +14,7 @@ xargs -I &lt;span class="o"&gt;{}&lt;/span&gt; curl -X POST -H &lt;span class="s
 &lt;li&gt;We download the HTML page for the GOOG stock.&lt;/li&gt;
 &lt;li&gt;Extract the current price.&lt;/li&gt;
 &lt;li&gt;Update the price of the GOOG stock in our database.&lt;/li&gt;
-&lt;li&gt;If the price is above 9000, we send a notification to our API to sell stocks.&lt;/li&gt;
+&lt;li&gt;If the price is over 9000, we send a notification to our API to sell stocks.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Getting back to the UNIX philosophy, this means writing small programs that do
 one thing well and can be combined with other programs to achieve more complex
