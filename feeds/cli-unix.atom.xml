@@ -2,19 +2,18 @@
 <feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com - cli, unix</title><link href="https://leblancfg.com/" rel="alternate"></link><link href="https://leblancfg.com/feeds/cli-unix.atom.xml" rel="self"></link><id>https://leblancfg.com/</id><updated>2023-04-29T00:00:00-04:00</updated><subtitle>Data Science, Geospatial Python, Space Stuff</subtitle><entry><title>Being a good UNIX neighbour</title><link href="https://leblancfg.com/level-up-your-command-line-skills-the-secret-to-being-a-good-unix-neighbour.html" rel="alternate"></link><published>2023-04-29T00:00:00-04:00</published><updated>2023-04-29T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2023-04-29:/level-up-your-command-line-skills-the-secret-to-being-a-good-unix-neighbour.html</id><summary type="html">&lt;p&gt;A few tips to be a good UNIX neighbour and make your scripts more portable.&lt;/p&gt;</summary><content type="html">&lt;p&gt;The UNIX philosophy is a set of design principles that has had a huge impact on
 the development of software systems. In essence, the UNIX philosophy stresses
 the importance of keeping things simple and modular. You should think of the
-shell as a programming language of its own! Take for example this one-liner:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;curl -s &lt;span class="s1"&gt;&amp;#39;https://www.example.com/query?symbol=GOOG&amp;amp;apikey=API_KEY&amp;#39;&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.[&amp;quot;Global Quote&amp;quot;][&amp;quot;05. price&amp;quot;]&amp;#39;&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;span class="p"&gt;|&lt;/span&gt; sqlite3 stocks.db &lt;span class="s2"&gt;&amp;quot;UPDATE portfolio SET price = &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;cat&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;, time = CURRENT_TIMESTAMP WHERE symbol = &amp;#39;GOOG&amp;#39;&amp;quot;&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; sqlite3 stocks.db &lt;span class="s2"&gt;&amp;quot;SELECT price FROM portfolio WHERE symbol = &amp;#39;GOOG&amp;#39; AND price &amp;gt; 9000&amp;quot;&lt;/span&gt; &lt;span class="se"&gt;\&lt;/span&gt;
-&lt;span class="p"&gt;|&lt;/span&gt; xargs -I &lt;span class="o"&gt;{}&lt;/span&gt; curl -X POST -H &lt;span class="s2"&gt;&amp;quot;Content-Type: application/json&amp;quot;&lt;/span&gt; -d &lt;span class="s1"&gt;&amp;#39;{&amp;quot;symbol&amp;quot;: &amp;quot;GOOG&amp;quot;, &amp;quot;price&amp;quot;: &amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;{}&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;quot;}&amp;#39;&lt;/span&gt; https://example.com/api/sell
+shell as a programming language of its own! Take this made-up example:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;curl -s &lt;span class="s1"&gt;&amp;#39;https://www.example.com/query?symbol=GOOG&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.price&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt;
+sqlite3 stocks.db &lt;span class="s2"&gt;&amp;quot;UPDATE portfolio SET price = &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;cat&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;, time = CURRENT_TIMESTAMP WHERE symbol = &amp;#39;GOOG&amp;#39;&amp;quot;&lt;/span&gt;
+&lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; sqlite3 stocks.db &lt;span class="s2"&gt;&amp;quot;SELECT price FROM portfolio WHERE symbol = &amp;#39;GOOG&amp;#39; AND price &amp;gt; 9000 ORDER BY time DESC LIMT 1&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt;
+xargs -I &lt;span class="o"&gt;{}&lt;/span&gt; curl -X POST -H &lt;span class="s2"&gt;&amp;quot;Content-Type: application/json&amp;quot;&lt;/span&gt; -d &lt;span class="s1"&gt;&amp;#39;{&amp;quot;symbol&amp;quot;: &amp;quot;GOOG&amp;quot;, &amp;quot;price&amp;quot;: &amp;quot;&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;{}&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;&amp;quot;}&amp;#39;&lt;/span&gt; https://example.com/api/sell
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;In this condensed program of 4 lines, the following happens:&lt;/p&gt;
+&lt;p&gt;In this (absolutely non-functional) condensed program, the following happens:&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;We download the HTML page of Google Finance for the GOOG stock.&lt;/li&gt;
-&lt;li&gt;We extract the current price from the HTML page.&lt;/li&gt;
-&lt;li&gt;We update the price of the GOOG stock in our database.&lt;/li&gt;
+&lt;li&gt;We download the HTML page for the GOOG stock.&lt;/li&gt;
+&lt;li&gt;Extract the current price.&lt;/li&gt;
+&lt;li&gt;Update the price of the GOOG stock in our database.&lt;/li&gt;
 &lt;li&gt;If the price is above 9000, we send a notification to our API to sell stocks.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Getting back to the UNIX philosophy, this means writing small programs that do
@@ -189,9 +188,7 @@ API you strive to provide, you may also want it to become the default.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ cat input.txt &lt;span class="p"&gt;|&lt;/span&gt; cli --json &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.result&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; do_y
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;and not have to resort to more complex contorsions of string manipulation like
-&lt;code&gt;cut -f2&lt;/code&gt; &amp;mdash; or God forbid, having to use &lt;code&gt;awk&lt;/code&gt; &amp;mdash; to extract the
-result.&lt;/p&gt;
+&lt;p&gt;and not have to resort to more complex contorsions of string manipulation like &lt;code&gt;cut -f2&lt;/code&gt; &amp;mdash; or God forbid, having to use &lt;code&gt;awk&lt;/code&gt; &amp;mdash; to extract the result.&lt;/p&gt;
 &lt;h2&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;In conclusion, by designing our command line tools to be good UNIX neighbours,
 we can create powerful pipelines that allow us to efficiently process and
