@@ -40,13 +40,18 @@ input and output.
 
 ## Example
 Let's take a look at an example of a fictitious tool called `do_x`. In this
-example, we define an argparse argument parser that allows the user to specify
+example, we define a click argument parser that allows the user to specify
 an input file or to use standard input by default. We also provide an option to
 output the results in JSON format. After processing the input data, we output
 the results either as a string or as a JSON object, depending on the user's
 choice.
 
 ### Starter code
+
+Here we already assume that we are using the `click` cli library. If you're not
+familiar with it, you can [check out the
+documentation](https://click.palletsprojects.com). In order to install it,
+you'll need to `pip install click`.
 
 Let's start off with an example of what I might have:
 
@@ -75,9 +80,15 @@ if __name__ == '__main__':
     main()
 ```
 
-Here this code is straightforward: this tool is meant to be called from the
-command line with a simple filename argument. It reads the file, does something
-with the data, and prints the result. This is a good start, but it's not very
+Some notes: we're using `click` to parse the command line arguments. We're
+using its `echo` function to print the output instead of the stdlib `print`
+because it's more portable. We're also using `click`'s `argument` decorator to
+specify that the user must provide a filename as an argument.
+
+Otherwise this code is straightforward: this tool is meant to be called from
+the command line with a simple filename argument. It reads the file, does
+something with the data, and prints the result. We're using standard out for
+the output, which is fine in this case. It's a good start, but it's not very
 flexible. What if we want to use this tool in a pipeline? What if we want to
 use it with standard input? What if we want to use it in a script?
 
@@ -160,6 +171,11 @@ contents of `input.txt` into it. `cli` will then output the results to standard
 output, which can be piped into `do_y`. This allows us to easily chain together
 multiple tools to create powerful pipelines.
 
+Again, the tool doesn't output any useful data, so it's fine to keep the output
+as standard out. However, if we wanted to output the results to a file, we
+could do so by specifying the output file as an argument. This would allow us
+to use the tool in a script, for example.
+
 ### Adding JSON support
 
 Another important aspect of being a good UNIX neighbour is ensuring that the
@@ -174,6 +190,12 @@ parsed and processed by many programming languages, making it a great option
 for interoperability between tools. This can be achieved by adding a flag to
 your tool that allows the user to specify the output format. Depending on the
 API you strive to provide, you may also want it to become the default.
+
+Also here, since the output of the tool is meant to be used by other tools, it
+is important to output only the useful results to standard output. This means
+avoiding printing any additional information, such as status messages or
+warnings, to standard output. Instead, it is better to print these messages to
+standard error, which can be redirected to a file if needed.
 
 ```py
 import json
@@ -197,7 +219,8 @@ def do_stuff(input_data):
 )
 def main(filename, json):
     if filename.name == '<stdin>':
-        click.echo('Reading from STDIN')
+        # Notice here that we're now printing to STDERR
+        click.echo('Reading from STDIN', err=True)
         
     else:
         with open(filename.name) as f:
@@ -220,7 +243,9 @@ which makes it possible e.g. to use this tool in a pipeline with `jq`:
 $ cat input.txt | cli --json | jq '.result' | do_y
 ```
 
-and not have to resort to more complex contorsions of string manipulation like `cut -f2` &mdash; or God forbid, having to use `awk` &mdash; to extract the result.
+and not have to resort to more complex contorsions of string manipulation like
+`cut -f2` &mdash; or God forbid, having to use `awk` &mdash; to extract the
+result.
 
 ## Conclusion
 
