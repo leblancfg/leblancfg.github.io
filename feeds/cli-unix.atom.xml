@@ -29,12 +29,16 @@ is by allowing your tool to accept input from other tools through standard
 input and output.&lt;/p&gt;
 &lt;h2&gt;Example&lt;/h2&gt;
 &lt;p&gt;Let's take a look at an example of a fictitious tool called &lt;code&gt;do_x&lt;/code&gt;. In this
-example, we define an argparse argument parser that allows the user to specify
+example, we define a click argument parser that allows the user to specify
 an input file or to use standard input by default. We also provide an option to
 output the results in JSON format. After processing the input data, we output
 the results either as a string or as a JSON object, depending on the user's
 choice.&lt;/p&gt;
 &lt;h3&gt;Starter code&lt;/h3&gt;
+&lt;p&gt;Here we already assume that we are using the &lt;code&gt;click&lt;/code&gt; cli library. If you're not
+familiar with it, you can &lt;a href="https://click.palletsprojects.com"&gt;check out the
+documentation&lt;/a&gt;. In order to install it,
+you'll need to &lt;code&gt;pip install click&lt;/code&gt;.&lt;/p&gt;
 &lt;p&gt;Let's start off with an example of what I might have:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;click&lt;/span&gt;
 
@@ -60,9 +64,14 @@ choice.&lt;/p&gt;
     &lt;span class="n"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;Here this code is straightforward: this tool is meant to be called from the
-command line with a simple filename argument. It reads the file, does something
-with the data, and prints the result. This is a good start, but it's not very
+&lt;p&gt;Some notes: we're using &lt;code&gt;click&lt;/code&gt; to parse the command line arguments. We're
+using its &lt;code&gt;echo&lt;/code&gt; function to print the output instead of the stdlib &lt;code&gt;print&lt;/code&gt;
+because it's more portable. We're also using &lt;code&gt;click&lt;/code&gt;'s &lt;code&gt;argument&lt;/code&gt; decorator to
+specify that the user must provide a filename as an argument.&lt;/p&gt;
+&lt;p&gt;Otherwise this code is straightforward: this tool is meant to be called from
+the command line with a simple filename argument. It reads the file, does
+something with the data, and prints the result. We're using standard out for
+the output, which is fine in this case. It's a good start, but it's not very
 flexible. What if we want to use this tool in a pipeline? What if we want to
 use it with standard input? What if we want to use it in a script?&lt;/p&gt;
 &lt;h3&gt;Using standard input&lt;/h3&gt;
@@ -134,6 +143,10 @@ another tool called &lt;code&gt;do_y&lt;/code&gt;:&lt;/p&gt;
 contents of &lt;code&gt;input.txt&lt;/code&gt; into it. &lt;code&gt;cli&lt;/code&gt; will then output the results to standard
 output, which can be piped into &lt;code&gt;do_y&lt;/code&gt;. This allows us to easily chain together
 multiple tools to create powerful pipelines.&lt;/p&gt;
+&lt;p&gt;Again, the tool doesn't output any useful data, so it's fine to keep the output
+as standard out. However, if we wanted to output the results to a file, we
+could do so by specifying the output file as an argument. This would allow us
+to use the tool in a script, for example.&lt;/p&gt;
 &lt;h3&gt;Adding JSON support&lt;/h3&gt;
 &lt;p&gt;Another important aspect of being a good UNIX neighbour is ensuring that the
 fields in your output are standard enough that they can be easily translated
@@ -146,6 +159,11 @@ parsed and processed by many programming languages, making it a great option
 for interoperability between tools. This can be achieved by adding a flag to
 your tool that allows the user to specify the output format. Depending on the
 API you strive to provide, you may also want it to become the default.&lt;/p&gt;
+&lt;p&gt;Also here, since the output of the tool is meant to be used by other tools, it
+is important to output only the useful results to standard output. This means
+avoiding printing any additional information, such as status messages or
+warnings, to standard output. Instead, it is better to print these messages to
+standard error, which can be redirected to a file if needed.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;json&lt;/span&gt;
 &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;click&lt;/span&gt;
 
@@ -167,7 +185,8 @@ API you strive to provide, you may also want it to become the default.&lt;/p&gt;
 &lt;span class="p"&gt;)&lt;/span&gt;
 &lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt; &lt;span class="o"&gt;==&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;&amp;lt;stdin&amp;gt;&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
-        &lt;span class="n"&gt;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;echo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Reading from STDIN&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+        &lt;span class="c1"&gt;# Notice here that we&amp;#39;re now printing to STDERR&lt;/span&gt;
+        &lt;span class="n"&gt;click&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;echo&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Reading from STDIN&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;err&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="kc"&gt;True&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 
     &lt;span class="k"&gt;else&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
         &lt;span class="k"&gt;with&lt;/span&gt; &lt;span class="nb"&gt;open&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;filename&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="n"&gt;f&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
@@ -188,7 +207,9 @@ API you strive to provide, you may also want it to become the default.&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;$ cat input.txt &lt;span class="p"&gt;|&lt;/span&gt; cli --json &lt;span class="p"&gt;|&lt;/span&gt; jq &lt;span class="s1"&gt;&amp;#39;.result&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; do_y
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
-&lt;p&gt;and not have to resort to more complex contorsions of string manipulation like &lt;code&gt;cut -f2&lt;/code&gt; &amp;mdash; or God forbid, having to use &lt;code&gt;awk&lt;/code&gt; &amp;mdash; to extract the result.&lt;/p&gt;
+&lt;p&gt;and not have to resort to more complex contorsions of string manipulation like
+&lt;code&gt;cut -f2&lt;/code&gt; &amp;mdash; or God forbid, having to use &lt;code&gt;awk&lt;/code&gt; &amp;mdash; to extract the
+result.&lt;/p&gt;
 &lt;h2&gt;Conclusion&lt;/h2&gt;
 &lt;p&gt;In conclusion, by designing our command line tools to be good UNIX neighbours,
 we can create powerful pipelines that allow us to efficiently process and

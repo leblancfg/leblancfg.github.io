@@ -1,0 +1,265 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/stylesheet/style.min.css">
+
+
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+          href="https://leblancfg.com/theme/pygments/monokai.min.css">
+
+
+
+  <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/solid.css">
+
+
+  <link rel="shortcut icon" href="/img/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/img/icons/favicon.ico" type="image/x-icon">
+
+  <!-- Chrome, Firefox OS and Opera -->
+  <meta name="theme-color" content="#330033">
+  <!-- Windows Phone -->
+  <meta name="msapplication-navbutton-color" content="#330033">
+  <!-- iOS Safari -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Microsoft EDGE -->
+  <meta name="msapplication-TileColor" content="#330033">
+
+  <link href="https://leblancfg.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="leblancfg.com Atom">
+
+  <link href="https://leblancfg.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="leblancfg.com RSS">
+
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-120300361-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+ 
+
+<meta name="author" content="François Leblanc" />
+<meta name="description" content="Learn how to automate the propagation of configuration changes across all tmux panes, saving time and enhancing productivity." />
+<meta name="keywords" content="tmux, vim, shell">
+
+
+  <meta property="og:site_name" content="leblancfg.com"/>
+  <meta property="og:title" content="TIL: Automating Command Execution Across All Tmux Panes"/>
+  <meta property="og:description" content="Learn how to automate the propagation of configuration changes across all tmux panes, saving time and enhancing productivity."/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="https://leblancfg.com/automating-command-execution-across-tmux-panes.html"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2023-06-30 00:00:00-04:00"/>
+  <meta property="article:modified_time" content=""/>
+  <meta property="article:author" content="https://leblancfg.com/author/francois-leblanc.html">
+  <meta property="article:section" content="Tmux"/>
+  <meta property="article:tag" content="tmux"/>
+  <meta property="article:tag" content="vim"/>
+  <meta property="article:tag" content="shell"/>
+  <meta property="og:image" content="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4">
+
+  <title>leblancfg.com &ndash; TIL: Automating Command Execution Across All Tmux Panes</title>
+
+
+</head>
+<body class="light-theme">
+
+<aside>
+  <div>
+    <a href="https://leblancfg.com/">
+      <img src="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4" alt="François Leblanc" title="François Leblanc">
+    </a>
+
+    <h1>
+      <a href="https://leblancfg.com/">François Leblanc</a>
+    </h1>
+
+    <p>Data Science, Geospatial Python, Space Stuff</p>
+
+
+    <nav>
+      <ul class="list">
+
+
+            <li>
+              <a target="_self"
+                 href="https://leblancfg.com/pages/about.html#about">
+                About
+              </a>
+            </li>
+            <li>
+              <a target="_self"
+                 href="https://leblancfg.com/pages/projects.html#projects">
+                Projects
+              </a>
+            </li>
+
+          <li>
+            <a target="_self" href="https://leblancfg.com/pages/leblancfg_CV.pdf" >Résumé</a>
+          </li>
+      </ul>
+    </nav>
+
+    <ul class="social">
+      <li>
+        <a class="sc-linkedin"
+           href="https://www.linkedin.com/in/fran%C3%A7ois-leblanc-07294b106/"
+           target="_blank">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-github"
+           href="https://github.com/leblancfg"
+           target="_blank">
+          <i class="fa-brands fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-mastodon"
+rel="me"           href="https://fosstodon.org/@leblancfg"
+           target="_blank">
+          <i class="fa-brands fa-mastodon"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-rss"
+           href="https://leblancfg.com/feeds/all.atom.xml"
+           target="_blank">
+          <i class="fa-solid fa-rss"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</aside>
+  <main>
+
+<nav>
+  <a href="https://leblancfg.com/">Home</a>
+
+  <a href="/archives.html">Archives</a>
+  <a href="/categories.html">Categories</a>
+  <a href="/tags.html">Tags</a>
+
+  <a href="https://leblancfg.com/feeds/all.atom.xml">Atom</a>
+
+  <a href="https://leblancfg.com/feeds/all.rss.xml">RSS</a>
+</nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="automating-command-execution-across-tmux-panes">TIL: Automating Command Execution Across All Tmux Panes</h1>
+    <p>
+      Posted on June 30, 2023 in <a href="https://leblancfg.com/category/tmux.html">Tmux</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>As developers, we often find ourselves working in multiple tmux panes, each
+running different applications or instances of the same application. When we
+make changes to a configuration file, such as <code>~/.vimrc</code> for Vim or <code>~/.aliases</code>
+for our shell, we need to manually reload that configuration in each relevant
+instance. This can be a time-consuming process, especially when working with a
+large number of panes. But also, let's be wizards and automate this process!</p>
+<p>In this post, we'll explore a simple automation that can save you a lot of time
+and effort. We'll focus on a specific use case &mdash; reloading a <code>.vimrc</code>
+file across all Vim instances in tmux panes &mdash; but the pattern can be
+applied to a variety of scenarios.</p>
+<h2>The Solution</h2>
+<p>Here's a shell function that reloads the <code>.vimrc</code> file in all Vim instances
+across all tmux panes:</p>
+<div class="highlight"><pre><span></span><code><span class="k">function</span> reload-all-vim<span class="o">()</span> <span class="o">{</span>
+    tmux list-panes -aF <span class="s2">&quot;#{pane_id} #{pane_current_command}&quot;</span> <span class="p">|</span>
+    awk <span class="s1">&#39;/vim|nvim/ {print $1}&#39;</span> <span class="p">|</span>
+    xargs -I <span class="o">{}</span> tmux send-keys -t <span class="o">{}</span> <span class="s2">&quot;C-[&quot;</span> <span class="s2">&quot;:so ~/.vimrc&quot;</span> <span class="s2">&quot;C-m&quot;</span>
+<span class="o">}</span>
+</code></pre></div>
+
+<p>Let's break down this function:</p>
+<ol>
+<li><code>tmux list-panes -aF "#{pane_id} #{pane_current_command}"</code>: This command lists all panes across all tmux sessions and windows. For each pane, it prints the pane ID and the current command running in the pane.</li>
+<li><code>awk '/vim|nvim/ {print $1}'</code>: This command filters the output to only include lines where the current command is either <code>vim</code> or <code>nvim</code>, and then it prints the pane ID of those panes.</li>
+<li><code>xargs -I {} tmux send-keys -t {} "C-[" ":so ~/.vimrc" "C-m"</code>: This command takes the pane IDs output by <code>awk</code> and for each pane ID, it sends a series of keys to that pane. The keys are:<ul>
+<li><code>C-[</code> (equivalent to the <code>Esc</code> key) ensuring we're in normal mode</li>
+<li><code>:so ~/.vimrc</code> the command to reload the <code>.vimrc</code> file, and</li>
+<li><code>C-m</code> (equivalent to the <code>Enter</code> key) executing the command</li>
+</ul>
+</li>
+</ol>
+<h2>Conclusion</h2>
+<p>With this pattern, you can automate the process of propagating configuration
+changes to all relevant instances across all tmux panes. This will save you the
+time and effort of manually reloading configurations, allowing you to focus
+more on your work and less on configuration management.</p>
+<p>The pattern used in this function can be applied to a variety of scenarios.
+Here are some examples:</p>
+<ul>
+<li><strong>Reloading Shell Aliases</strong>: If you update your <code>~/.aliases</code> file, you can use a similar function to source this file in all shell panes.</li>
+<li><strong>Updating Environment Variables</strong>: If you change an environment variable in your <code>~/.bashrc</code> or <code>~/.zshrc</code> file, you can propagate this change to all shell panes.</li>
+<li><strong>Updating Git Configuration</strong>: If you change your Git configuration, you can use a similar function to propagate this change to all shell panes where you might run Git commands.</li>
+</ul>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://leblancfg.com/tag/tmux.html">tmux</a>
+      <a href="https://leblancfg.com/tag/vim.html">vim</a>
+      <a href="https://leblancfg.com/tag/shell.html">shell</a>
+    </p>
+  </div>
+
+
+
+
+
+
+</article>
+
+<footer>
+<p>
+  &copy; 2023  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p></footer>  </main>
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " leblancfg.com ",
+  "url" : "https://leblancfg.com",
+  "image": "https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4",
+  "description": "François Leblanc's Thoughts and Writings"
+}
+</script>
+</body>
+</html>

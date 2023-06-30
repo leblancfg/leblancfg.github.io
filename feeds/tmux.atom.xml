@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com - Tmux</title><link href="https://leblancfg.com/" rel="alternate"></link><link href="https://leblancfg.com/feeds/tmux.atom.xml" rel="self"></link><id>https://leblancfg.com/</id><updated>2023-06-30T00:00:00-04:00</updated><subtitle>Data Science, Geospatial Python, Space Stuff</subtitle><entry><title>TIL: Automating Command Execution Across All Tmux Panes</title><link href="https://leblancfg.com/automating-command-execution-across-tmux-panes.html" rel="alternate"></link><published>2023-06-30T00:00:00-04:00</published><updated>2023-06-30T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2023-06-30:/automating-command-execution-across-tmux-panes.html</id><summary type="html">&lt;p&gt;Learn how to automate the propagation of configuration changes across all tmux panes, saving time and enhancing productivity.&lt;/p&gt;</summary><content type="html">&lt;p&gt;As developers, we often find ourselves working in multiple tmux panes, each
+running different applications or instances of the same application. When we
+make changes to a configuration file, such as &lt;code&gt;~/.vimrc&lt;/code&gt; for Vim or &lt;code&gt;~/.aliases&lt;/code&gt;
+for our shell, we need to manually reload that configuration in each relevant
+instance. This can be a time-consuming process, especially when working with a
+large number of panes. But also, let's be wizards and automate this process!&lt;/p&gt;
+&lt;p&gt;In this post, we'll explore a simple automation that can save you a lot of time
+and effort. We'll focus on a specific use case &amp;mdash; reloading a &lt;code&gt;.vimrc&lt;/code&gt;
+file across all Vim instances in tmux panes &amp;mdash; but the pattern can be
+applied to a variety of scenarios.&lt;/p&gt;
+&lt;h2&gt;The Solution&lt;/h2&gt;
+&lt;p&gt;Here's a shell function that reloads the &lt;code&gt;.vimrc&lt;/code&gt; file in all Vim instances
+across all tmux panes:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;function&lt;/span&gt; reload-all-vim&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+    tmux list-panes -aF &lt;span class="s2"&gt;&amp;quot;#{pane_id} #{pane_current_command}&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt;
+    awk &lt;span class="s1"&gt;&amp;#39;/vim|nvim/ {print $1}&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt;
+    xargs -I &lt;span class="o"&gt;{}&lt;/span&gt; tmux send-keys -t &lt;span class="o"&gt;{}&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;C-[&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;:so ~/.vimrc&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;C-m&amp;quot;&lt;/span&gt;
+&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Let's break down this function:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;tmux list-panes -aF "#{pane_id} #{pane_current_command}"&lt;/code&gt;: This command lists all panes across all tmux sessions and windows. For each pane, it prints the pane ID and the current command running in the pane.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;awk '/vim|nvim/ {print $1}'&lt;/code&gt;: This command filters the output to only include lines where the current command is either &lt;code&gt;vim&lt;/code&gt; or &lt;code&gt;nvim&lt;/code&gt;, and then it prints the pane ID of those panes.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;xargs -I {} tmux send-keys -t {} "C-[" ":so ~/.vimrc" "C-m"&lt;/code&gt;: This command takes the pane IDs output by &lt;code&gt;awk&lt;/code&gt; and for each pane ID, it sends a series of keys to that pane. The keys are:&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;C-[&lt;/code&gt; (equivalent to the &lt;code&gt;Esc&lt;/code&gt; key) ensuring we're in normal mode&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;:so ~/.vimrc&lt;/code&gt; the command to reload the &lt;code&gt;.vimrc&lt;/code&gt; file, and&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;C-m&lt;/code&gt; (equivalent to the &lt;code&gt;Enter&lt;/code&gt; key) executing the command&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;With this pattern, you can automate the process of propagating configuration
+changes to all relevant instances across all tmux panes. This will save you the
+time and effort of manually reloading configurations, allowing you to focus
+more on your work and less on configuration management.&lt;/p&gt;
+&lt;p&gt;The pattern used in this function can be applied to a variety of scenarios.
+Here are some examples:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Reloading Shell Aliases&lt;/strong&gt;: If you update your &lt;code&gt;~/.aliases&lt;/code&gt; file, you can use a similar function to source this file in all shell panes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Updating Environment Variables&lt;/strong&gt;: If you change an environment variable in your &lt;code&gt;~/.bashrc&lt;/code&gt; or &lt;code&gt;~/.zshrc&lt;/code&gt; file, you can propagate this change to all shell panes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Updating Git Configuration&lt;/strong&gt;: If you change your Git configuration, you can use a similar function to propagate this change to all shell panes where you might run Git commands.&lt;/li&gt;
+&lt;/ul&gt;</content><category term="Tmux"></category><category term="tmux"></category><category term="vim"></category><category term="shell"></category></entry></feed>
