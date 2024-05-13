@@ -225,3 +225,4 @@ $RECYCLE.BIN/
 output/
 env/
 pelican-themes/
+dev.yml

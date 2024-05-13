@@ -12,9 +12,9 @@ markupsafe==2.0.1
 numpy
 matplotlib
 pandas==1.5.0
-scipy
-sqlalchemy
+# scipy
+# sqlalchemy
 seaborn
-sklearn
-pymc>=4
-corner>=2
+# scikit-learn
+# pymc>=4
+# corner>=2
