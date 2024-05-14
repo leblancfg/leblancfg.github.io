@@ -242,7 +242,7 @@ parallelism when sensible, based on work-load at runtime.&lt;/p&gt;
 
 &lt;h1&gt;Conclusion&lt;/h1&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;a href="https://github.com/leblancfg/sqlf/tree/f05b8f4a56a4b1cd45cbd1d1cb18978842e17200"&gt;Take a look at the whole repo at this point in the process here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Take a look at &lt;a href="https://github.com/leblancfg/sqlf/tree/f05b8f4a56a4b1cd45cbd1d1cb18978842e17200"&gt;the whole repo at this point in the process here 🔗&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;All very interesting! Nothing here we couldn't do with Python or Ruby quite
 yet, but very interesting set of first steps. I'm actually surprised by the
