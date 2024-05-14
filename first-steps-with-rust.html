@@ -272,10 +272,12 @@ sql keywords in a DDL statement. Here's the code:</p>
 <span class="p">}</span>
 </code></pre></div>
 
-<p>The idea here is to have a slightly harder example to work with; we'll then
-1. add tests
-2. make it read from a file
-3. make it glob a directory and run in parallel</p>
+<p>The idea here is to have a slightly harder example to work with; we'll then</p>
+<ol>
+<li>add tests</li>
+<li>make it read from a file</li>
+<li>make it run in parallel</li>
+</ol>
 <p>I feel like that's a good first step to get a feel for the language!</p>
 <h2>Testing</h2>
 <p>I'd be lost without tests, especially in a new language. So that was my next
@@ -311,6 +313,21 @@ your code, and they're only compiled when you run <code>cargo test</code>.</p>
 <span class="p">}</span>
 </code></pre></div>
 
+<p>which returns a satisfying:</p>
+<div class="highlight"><pre><span></span><code><span class="n">$</span><span class="w"> </span><span class="n">cargo</span><span class="w"> </span><span class="n">test</span>
+
+<span class="w">    </span><span class="n">Finished</span><span class="w"> </span><span class="n n-Quoted">`test`</span><span class="w"> </span><span class="k">profile</span><span class="w"> </span><span class="err">[</span><span class="n">unoptimized</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">debuginfo</span><span class="err">]</span><span class="w"> </span><span class="n">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mf">0.03</span><span class="n">s</span>
+<span class="w">     </span><span class="n">Running</span><span class="w"> </span><span class="n">unittests</span><span class="w"> </span><span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="p">.</span><span class="n">rs</span><span class="w"> </span><span class="p">(</span><span class="n">target</span><span class="o">/</span><span class="n">debug</span><span class="o">/</span><span class="n">deps</span><span class="o">/</span><span class="n">sqlf</span><span class="o">-</span><span class="n">9dce68afcf2c4321</span><span class="p">)</span>
+
+<span class="n">running</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="n">tests</span>
+<span class="n">test</span><span class="w"> </span><span class="n">tests</span><span class="o">::</span><span class="n">test_empty_string</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">ok</span>
+<span class="n">test</span><span class="w"> </span><span class="n">tests</span><span class="o">::</span><span class="n">test_basic_keywords</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">ok</span>
+<span class="n">test</span><span class="w"> </span><span class="n">tests</span><span class="o">::</span><span class="n">test_mixed_case_keywords</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">ok</span>
+<span class="n">test</span><span class="w"> </span><span class="n">tests</span><span class="o">::</span><span class="n">test_no_keywords</span><span class="w"> </span><span class="p">...</span><span class="w"> </span><span class="n">ok</span>
+
+<span class="n">test</span><span class="w"> </span><span class="n">result</span><span class="o">:</span><span class="w"> </span><span class="n">ok</span><span class="p">.</span><span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="n">passed</span><span class="p">;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">failed</span><span class="p">;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">ignored</span><span class="p">;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">measured</span><span class="p">;</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="n">filtered</span><span class="w"> </span><span class="k">out</span><span class="p">;</span><span class="w"> </span><span class="n">finished</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mf">0.00</span><span class="n">s</span>
+</code></pre></div>
+
 <h2>Reading from a file</h2>
 <p>Now, let's add reading in from a file. At this point we'll need to parse some
 arguments, and coming from either Python or Ruby my prior assumption is that
@@ -338,7 +355,7 @@ module provides the <code>args</code> function to get the command line arguments
 <p>And that's it for that. I won't add a test for this because the code we've just
 added would basically mean testing the stdlib, which I'm not interested in
 doing.</p>
-<h1>Look, ma, no GIL!</h1>
+<h1>Now go vroom vroom</h1>
 <p>I've been reading a bit about Rust's concurrency model, and it's pretty
 interesting. Rust doesn't have a Global Interpreter Lock (GIL) like Python, so
 you can write concurrent code without worrying about the GIL. This is a big
@@ -401,10 +418,21 @@ parallelism when sensible, based on work-load at runtime.</p>
 <blockquote>
 <p><a href="https://github.com/leblancfg/sqlf/tree/f05b8f4a56a4b1cd45cbd1d1cb18978842e17200">Take a look at the whole repo at this point in the process here</a></p>
 </blockquote>
-<p>All very interesting! Nothing here we couldn't do with Python or Ruby quite yet, but very interesting set of first steps. I'm actually surprised by the ease of use of Rust so far. Given my past horrendous experience with C back in university, I was expecting a lot more pain. But so far, so good!</p>
-<p>I'm looking forward to diving deeper into Rust and seeing how it can help me build more robust and efficient software. For thereon, I feel like it would be interesting to double down on the SQL formatter bit and see how far I can take it with a few hours here and there.</p>
-<p>The idea of course is to get a fast SQL formatter wired up to my text editor, so I can format SQL on the fly. This has been a long-standing pain point in my <code>sqlfluff</code>-linted project, and I can't say I'm very happy.</p>
-<p>Of course I'm aware of a handful of SQL formatters writtern in Rust already, but that's not the goal here; I'm just trying to learn Rust and have some fun with it. I'm sure I'll learn a lot along the way, and I'm excited to see where this journey takes me.</p>
+<p>All very interesting! Nothing here we couldn't do with Python or Ruby quite
+yet, but very interesting set of first steps. I'm actually surprised by the
+ease of use of Rust so far. Given my past horrendous experience with C back in
+university, I was expecting a lot more pain. But so far, so good!</p>
+<p>I'm looking forward to diving deeper into Rust and seeing how it can help me
+build more robust and efficient software. For thereon, I feel like it would be
+interesting to double down on the SQL formatter bit and see how far I can take
+it with a few hours here and there.</p>
+<p>The idea of course is to get a fast SQL formatter wired up to my text editor,
+so I can format SQL on the fly. This has been a long-standing pain point in my
+<code>sqlfluff</code>-linted project, and I can't say I'm very happy.</p>
+<p>Of course I'm aware of a handful of SQL formatters writtern in Rust already,
+but that's not the goal here; I'm just trying to learn Rust and have some fun
+with it. I'm sure I'll learn a lot along the way, and I'm excited to see where
+this journey takes me.</p>
 <p>Until next time!</p>
   </div>
   <div class="tag-cloud">
