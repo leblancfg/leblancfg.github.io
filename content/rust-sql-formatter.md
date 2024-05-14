@@ -129,9 +129,10 @@ fn format_sql(input: &str) -> String {
 ```
 
 The idea here is to have a slightly harder example to work with; we'll then
+
 1. add tests
 2. make it read from a file
-3. make it glob a directory and run in parallel
+3. make it run in parallel
 
 I feel like that's a good first step to get a feel for the language!
 
@@ -173,6 +174,23 @@ mod tests {
 }
 ```
 
+which returns a satisfying:
+
+```
+$ cargo test
+
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.03s
+     Running unittests src/main.rs (target/debug/deps/sqlf-9dce68afcf2c4321)
+
+running 4 tests
+test tests::test_empty_string ... ok
+test tests::test_basic_keywords ... ok
+test tests::test_mixed_case_keywords ... ok
+test tests::test_no_keywords ... ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+```
+
 ## Reading from a file
 Now, let's add reading in from a file. At this point we'll need to parse some
 arguments, and coming from either Python or Ruby my prior assumption is that
@@ -203,7 +221,7 @@ And that's it for that. I won't add a test for this because the code we've just
 added would basically mean testing the stdlib, which I'm not interested in
 doing.
 
-# Look, ma, no GIL!
+# Now go vroom vroom
 I've been reading a bit about Rust's concurrency model, and it's pretty
 interesting. Rust doesn't have a Global Interpreter Lock (GIL) like Python, so
 you can write concurrent code without worrying about the GIL. This is a big
@@ -273,12 +291,23 @@ fn process_file(path: &Path) {
 
 > [Take a look at the whole repo at this point in the process here](https://github.com/leblancfg/sqlf/tree/f05b8f4a56a4b1cd45cbd1d1cb18978842e17200)
 
-All very interesting! Nothing here we couldn't do with Python or Ruby quite yet, but very interesting set of first steps. I'm actually surprised by the ease of use of Rust so far. Given my past horrendous experience with C back in university, I was expecting a lot more pain. But so far, so good!
+All very interesting! Nothing here we couldn't do with Python or Ruby quite
+yet, but very interesting set of first steps. I'm actually surprised by the
+ease of use of Rust so far. Given my past horrendous experience with C back in
+university, I was expecting a lot more pain. But so far, so good!
 
-I'm looking forward to diving deeper into Rust and seeing how it can help me build more robust and efficient software. For thereon, I feel like it would be interesting to double down on the SQL formatter bit and see how far I can take it with a few hours here and there.
+I'm looking forward to diving deeper into Rust and seeing how it can help me
+build more robust and efficient software. For thereon, I feel like it would be
+interesting to double down on the SQL formatter bit and see how far I can take
+it with a few hours here and there.
 
-The idea of course is to get a fast SQL formatter wired up to my text editor, so I can format SQL on the fly. This has been a long-standing pain point in my `sqlfluff`-linted project, and I can't say I'm very happy.
+The idea of course is to get a fast SQL formatter wired up to my text editor,
+so I can format SQL on the fly. This has been a long-standing pain point in my
+`sqlfluff`-linted project, and I can't say I'm very happy.
 
-Of course I'm aware of a handful of SQL formatters writtern in Rust already, but that's not the goal here; I'm just trying to learn Rust and have some fun with it. I'm sure I'll learn a lot along the way, and I'm excited to see where this journey takes me.
+Of course I'm aware of a handful of SQL formatters writtern in Rust already,
+but that's not the goal here; I'm just trying to learn Rust and have some fun
+with it. I'm sure I'll learn a lot along the way, and I'm excited to see where
+this journey takes me.
 
 Until next time!
