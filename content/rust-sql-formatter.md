@@ -289,7 +289,7 @@ fn process_file(path: &Path) {
 
 # Conclusion
 
-> [Take a look at the whole repo at this point in the process here](https://github.com/leblancfg/sqlf/tree/f05b8f4a56a4b1cd45cbd1d1cb18978842e17200)
+> Take a look at [the whole repo at this point in the process here 🔗](https://github.com/leblancfg/sqlf/tree/f05b8f4a56a4b1cd45cbd1d1cb18978842e17200)
 
 All very interesting! Nothing here we couldn't do with Python or Ruby quite
 yet, but very interesting set of first steps. I'm actually surprised by the
