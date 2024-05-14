@@ -1240,6 +1240,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
  .highlight pre  .cs { color: #3D7B7B; font-style: italic } /* Comment.Special */
  .highlight pre  .gd { color: #A00000 } /* Generic.Deleted */
  .highlight pre  .ge { font-style: italic } /* Generic.Emph */
+ .highlight pre  .ges { font-weight: bold; font-style: italic } /* Generic.EmphStrong */
  .highlight pre  .gr { color: #E40000 } /* Generic.Error */
  .highlight pre  .gh { color: #000080; font-weight: bold } /* Generic.Heading */
  .highlight pre  .gi { color: #008400 } /* Generic.Inserted */
@@ -1569,7 +1570,7 @@ RGB Values for fuchsia: (255, 0, 255)
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># You can define functions. These transform items passed to them</span>
 <span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Given number `n`, returns square of that number.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Given number `n`, returns square of that number.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span>
 
 <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
@@ -2464,7 +2465,7 @@ Row means:     [ 3.  3.  3.  3.  3.]
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># You can pass arrays through functions, and it will</span>
 <span class="c1"># respect its type, and can include rounding and overflow</span>
 <span class="k">def</span> <span class="nf">square</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Given number `n`, returns its square.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Given number `n`, returns its square.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">square</span><span class="p">(</span><span class="n">numbers</span><span class="p">))</span>
@@ -3323,7 +3324,7 @@ Once you've generated source code, it will need to be maintained for the future.
 
 <footer>
 <p>
-  &copy; 2023  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike</a>
+  &copy; 2024  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike</a>
 </p>
 <p>
 Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme

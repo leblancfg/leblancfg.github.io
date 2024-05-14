@@ -12,10 +12,10 @@ applied to a variety of scenarios.&lt;/p&gt;
 &lt;h2&gt;The Solution&lt;/h2&gt;
 &lt;p&gt;Here's a shell function that reloads the &lt;code&gt;.vimrc&lt;/code&gt; file in all Vim instances
 across all tmux panes:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;function&lt;/span&gt; reload-all-vim&lt;span class="o"&gt;()&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
-    tmux list-panes -aF &lt;span class="s2"&gt;&amp;quot;#{pane_id} #{pane_current_command}&amp;quot;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt;
-    awk &lt;span class="s1"&gt;&amp;#39;/vim|nvim/ {print $1}&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt;
-    xargs -I &lt;span class="o"&gt;{}&lt;/span&gt; tmux send-keys -t &lt;span class="o"&gt;{}&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;C-[&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;:so ~/.vimrc&amp;quot;&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;C-m&amp;quot;&lt;/span&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="k"&gt;function&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;reload-all-vim&lt;span class="o"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;{&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;tmux&lt;span class="w"&gt; &lt;/span&gt;list-panes&lt;span class="w"&gt; &lt;/span&gt;-aF&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;#{pane_id} #{pane_current_command}&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;awk&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;/vim|nvim/ {print $1}&amp;#39;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;|&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;xargs&lt;span class="w"&gt; &lt;/span&gt;-I&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;{}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;tmux&lt;span class="w"&gt; &lt;/span&gt;send-keys&lt;span class="w"&gt; &lt;/span&gt;-t&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;{}&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;C-[&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;:so ~/.vimrc&amp;quot;&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;C-m&amp;quot;&lt;/span&gt;
 &lt;span class="o"&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 

@@ -214,7 +214,7 @@ rel="me"           href="https://fosstodon.org/@leblancfg"
 </code></pre></div>
 
 <p>This next one may or may not be useful:</p>
-<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="n">LD_LIBRARY_PATH</span><span class="o">=$</span><span class="n">LD_LIBRARY_PATH</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">cuda</span><span class="o">/</span><span class="n">extras</span><span class="o">/</span><span class="n">CUPTI</span><span class="o">/</span><span class="n">lib64</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="k">export</span><span class="w"> </span><span class="n">LD_LIBRARY_PATH</span><span class="o">=$</span><span class="n">LD_LIBRARY_PATH</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">cuda</span><span class="o">/</span><span class="n">extras</span><span class="o">/</span><span class="n">CUPTI</span><span class="o">/</span><span class="n">lib64</span>
 </code></pre></div>
 
 <p>Reboot and cross your fingers.</p>
@@ -255,8 +255,8 @@ bash configure
 <li>Android: default </li>
 </ul>
 <p>And finally:</p>
-<div class="highlight"><pre><span></span><code><span class="n">bazel</span><span class="w"> </span><span class="n">build</span><span class="w"> </span><span class="o">--</span><span class="n">config</span><span class="o">=</span><span class="n">opt</span><span class="w"> </span><span class="o">--</span><span class="n">config</span><span class="o">=</span><span class="n">cuda</span><span class="w"> </span><span class="o">//</span><span class="n">tensorflow</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">pip_package</span><span class="p">:</span><span class="n">build_pip_package</span><span class="w"></span>
-<span class="n">bazel</span><span class="o">-</span><span class="n">bin</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">pip_package</span><span class="o">/</span><span class="n">build_pip_package</span><span class="w"> </span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">tensorflow_pkg</span><span class="w"></span>
+<div class="highlight"><pre><span></span><code><span class="n">bazel</span><span class="w"> </span><span class="n">build</span><span class="w"> </span><span class="o">--</span><span class="n">config</span><span class="o">=</span><span class="n">opt</span><span class="w"> </span><span class="o">--</span><span class="n">config</span><span class="o">=</span><span class="n">cuda</span><span class="w"> </span><span class="o">//</span><span class="n">tensorflow</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">pip_package</span><span class="p">:</span><span class="n">build_pip_package</span>
+<span class="n">bazel</span><span class="o">-</span><span class="n">bin</span><span class="o">/</span><span class="n">tensorflow</span><span class="o">/</span><span class="n">tools</span><span class="o">/</span><span class="n">pip_package</span><span class="o">/</span><span class="n">build_pip_package</span><span class="w"> </span><span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">tensorflow_pkg</span>
 </code></pre></div>
 
 <p>And finally, installing with pip (the exact filename might change in your case):</p>
@@ -291,7 +291,7 @@ bash configure
 
 <footer>
 <p>
-  &copy; 2023  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike</a>
+  &copy; 2024  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike</a>
 </p>
 <p>
 Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme

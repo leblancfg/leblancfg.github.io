@@ -1,0 +1,455 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/stylesheet/style.min.css">
+
+
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+          href="https://leblancfg.com/theme/pygments/monokai.min.css">
+
+
+
+  <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/solid.css">
+
+
+  <link rel="shortcut icon" href="/img/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/img/icons/favicon.ico" type="image/x-icon">
+
+  <!-- Chrome, Firefox OS and Opera -->
+  <meta name="theme-color" content="#330033">
+  <!-- Windows Phone -->
+  <meta name="msapplication-navbutton-color" content="#330033">
+  <!-- iOS Safari -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Microsoft EDGE -->
+  <meta name="msapplication-TileColor" content="#330033">
+
+  <link href="https://leblancfg.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="leblancfg.com Atom">
+
+  <link href="https://leblancfg.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="leblancfg.com RSS">
+
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-120300361-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+ 
+
+<meta name="author" content="François Leblanc" />
+<meta name="description" content="Documenting my first steps with Rust, from installation to running a simple script." />
+<meta name="keywords" content="rust, programming, learning">
+
+
+  <meta property="og:site_name" content="leblancfg.com"/>
+  <meta property="og:title" content="First steps with Rust"/>
+  <meta property="og:description" content="Documenting my first steps with Rust, from installation to running a simple script."/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="https://leblancfg.com/first-steps-with-rust.html"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2024-05-13 00:00:00-04:00"/>
+  <meta property="article:modified_time" content=""/>
+  <meta property="article:author" content="https://leblancfg.com/author/francois-leblanc.html">
+  <meta property="article:section" content="Rust"/>
+  <meta property="article:tag" content="rust"/>
+  <meta property="article:tag" content="programming"/>
+  <meta property="article:tag" content="learning"/>
+  <meta property="og:image" content="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4">
+
+  <title>leblancfg.com &ndash; First steps with Rust</title>
+
+
+</head>
+<body class="light-theme">
+
+<aside>
+  <div>
+    <a href="https://leblancfg.com/">
+      <img src="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4" alt="François Leblanc" title="François Leblanc">
+    </a>
+
+    <h1>
+      <a href="https://leblancfg.com/">François Leblanc</a>
+    </h1>
+
+    <p>Data Science, Geospatial Python, Space Stuff</p>
+
+
+    <nav>
+      <ul class="list">
+
+
+            <li>
+              <a target="_self"
+                 href="https://leblancfg.com/pages/about.html#about">
+                About
+              </a>
+            </li>
+            <li>
+              <a target="_self"
+                 href="https://leblancfg.com/pages/projects.html#projects">
+                Projects
+              </a>
+            </li>
+
+          <li>
+            <a target="_self" href="https://leblancfg.com/pages/leblancfg_CV.pdf" >Résumé</a>
+          </li>
+      </ul>
+    </nav>
+
+    <ul class="social">
+      <li>
+        <a class="sc-linkedin"
+           href="https://www.linkedin.com/in/fran%C3%A7ois-leblanc-07294b106/"
+           target="_blank">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-github"
+           href="https://github.com/leblancfg"
+           target="_blank">
+          <i class="fa-brands fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-mastodon"
+rel="me"           href="https://fosstodon.org/@leblancfg"
+           target="_blank">
+          <i class="fa-brands fa-mastodon"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-rss"
+           href="https://leblancfg.com/feeds/all.atom.xml"
+           target="_blank">
+          <i class="fa-solid fa-rss"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</aside>
+  <main>
+
+<nav>
+  <a href="https://leblancfg.com/">Home</a>
+
+  <a href="/archives.html">Archives</a>
+  <a href="/categories.html">Categories</a>
+  <a href="/tags.html">Tags</a>
+
+  <a href="https://leblancfg.com/feeds/all.atom.xml">Atom</a>
+
+  <a href="https://leblancfg.com/feeds/all.rss.xml">RSS</a>
+</nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="first-steps-with-rust">First steps with Rust</h1>
+    <p>
+      Posted on May 13, 2024 in <a href="https://leblancfg.com/category/rust.html">Rust</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>In this article, I document my initial steps with Rust. From installation to
+running a simple script, I explore the foundational aspects of Rust and share
+my journey as a newcomer to this language. As a newcomer to this fast and
+efficient programming language, I've decided to document my initial foray from
+scratch. Leveraging the capabilities of GPT-4, my aim isn’t to memorize Rust's
+syntax right off the bat; instead, I'm focusing on setting up a foundational
+environment conducive to experimentation and deeper understanding of the
+language's core principles and primitives.</p>
+<p>While I recognize that the internet is replete with tutorials and guides on
+Rust, I'm just chronicling my own learning process, warts and all. I believe in
+the power of learning by teaching and sharing, and though this document may not
+offer groundbreaking insights, it certainly serves as a practical account of
+one developer's journey through the, uh, "intriguing" complexities of Rust.</p>
+<h1>Installation</h1>
+<p>I'm on a Mac and considered installing Rust using <code>brew</code>, but the official
+installation instructions are so simple that I decided to go with that. I ran
+the following command in my terminal:</p>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>--proto<span class="w"> </span><span class="s1">&#39;=https&#39;</span><span class="w"> </span>--tlsv1.2<span class="w"> </span>-sSf<span class="w"> </span>https://sh.rustup.rs<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+</code></pre></div>
+
+<p>and went with the default options. This installed <code>rustc</code> and <code>cargo</code> on my machine.</p>
+<h1>Hello world</h1>
+<p>I then created a new script with the following content:</p>
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;fn main() { println!(&quot;Hello, world!&quot;); }&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>hello.rs
+</code></pre></div>
+
+<p>, compiled and ran it with:</p>
+<div class="highlight"><pre><span></span><code>rustc<span class="w"> </span>hello.rs
+./hello
+</code></pre></div>
+
+<p>That's nice. Ok but also why the exclamations? From googling, that's a way to
+tell the compiler that it's a macro, which in this case means "you can't know
+in advance how many arguments you'll get, so just take them all". I'm sure I
+don't fully understand that yet, but good to keep in mind.</p>
+<h2>Using <code>cargo</code></h2>
+<p>But if you're going to be doing more than just a one-liner, it
+really sounds like you'll want to use <code>cargo</code>. Why? because it's a package
+manager and build system for Rust. It's like <code>npm</code> for Node.js or <code>pip</code> for
+Python. It's a tool that helps you build, test and run your Rust projects.</p>
+<p>I started off in a newly created repo from Github I'd cloned, but <code>cargo new</code>
+intends on creating a new directory for your project. Instead, you can just
+call <code>cargo init</code> in the directory you're already in.</p>
+<p>I already know I'll want to call mine <code>sqlf</code> (for SQL formatter), so I ran:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">PROJECT_NAME</span><span class="o">=</span>sqlf
+gh<span class="w"> </span>repo<span class="w"> </span>create<span class="w"> </span>--add-readme<span class="w"> </span>--private<span class="w"> </span>--gitignore<span class="o">=</span>rust<span class="w"> </span><span class="nv">$PROJECT_NAME</span>
+<span class="nb">cd</span><span class="w"> </span><span class="nv">$PROJECT_NAME</span>
+cargo<span class="w"> </span>init
+</code></pre></div>
+
+<p>This creates a new directory with the following structure:</p>
+<div class="highlight"><pre><span></span><code>tree
+.
+├──<span class="w"> </span>Cargo.toml
+├──<span class="w"> </span>LICENSE
+├──<span class="w"> </span>README.md
+└──<span class="w"> </span>src
+<span class="w">    </span>└──<span class="w"> </span>main.rs
+</code></pre></div>
+
+<p>and running <code>cargo run</code> will compile and run the project.</p>
+<div class="highlight"><pre><span></span><code><span class="n">$</span><span class="w"> </span><span class="n">cargo</span><span class="w"> </span><span class="n">run</span>
+<span class="w">   </span><span class="n">Compiling</span><span class="w"> </span><span class="n">hello_world</span><span class="w"> </span><span class="n">v0</span><span class="mf">.1.0</span><span class="w"> </span><span class="p">(</span><span class="o">/</span><span class="n">Users</span><span class="o">/</span><span class="n">leblancfg</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">github</span><span class="p">.</span><span class="n">com</span><span class="o">/</span><span class="n">leblancfg</span><span class="o">/</span><span class="n">hello_world</span><span class="p">)</span>
+<span class="w">    </span><span class="n">Finished</span><span class="w"> </span><span class="n n-Quoted">`dev`</span><span class="w"> </span><span class="k">profile</span><span class="w"> </span><span class="err">[</span><span class="n">unoptimized</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">debuginfo</span><span class="err">]</span><span class="w"> </span><span class="n">target</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="mf">2.29</span><span class="n">s</span>
+<span class="w">     </span><span class="n">Running</span><span class="w"> </span><span class="n n-Quoted">`target/debug/hello_world`</span>
+<span class="n">Hello</span><span class="p">,</span><span class="w"> </span><span class="n">world</span><span class="o">!</span>
+</code></pre></div>
+
+<h1>SQL "formatter"</h1>
+<p>I ended up writing a slightly harder sql "formatter" whose job is to uppercase
+sql keywords in a DDL statement. Here's the code:</p>
+<div class="highlight"><pre><span></span><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;select * from users as u where u.id = 1;&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">formatted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">format_sql</span><span class="p">(</span><span class="n">input</span><span class="p">);</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">formatted</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">format_sql</span><span class="p">(</span><span class="n">input</span>: <span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span><span class="w"> </span>-&gt; <span class="nb">String</span> <span class="p">{</span>
+<span class="w">    </span><span class="c1">// TODO: Add like, wayyy more and make it a separate file</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">keywords</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
+<span class="w">        </span><span class="s">&quot;select&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;from&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;where&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;insert&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;update&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;delete&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;as&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;order&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;by&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;group&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s">&quot;join&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;having&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;limit&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;offset&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;and&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;or&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;not&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;in&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;like&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;is&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;null&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s">&quot;true&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;false&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;between&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;exists&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;case&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;when&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;then&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;else&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;end&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;distinct&quot;</span><span class="p">,</span>
+<span class="w">    </span><span class="p">];</span>
+
+<span class="w">    </span><span class="n">input</span>
+<span class="w">        </span><span class="p">.</span><span class="n">split_whitespace</span><span class="p">()</span>
+<span class="w">        </span><span class="p">.</span><span class="n">map</span><span class="p">(</span><span class="o">|</span><span class="n">word</span><span class="o">|</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">keywords</span><span class="p">.</span><span class="n">contains</span><span class="p">(</span><span class="o">&amp;</span><span class="n">word</span><span class="p">.</span><span class="n">to_lowercase</span><span class="p">().</span><span class="n">as_str</span><span class="p">())</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">word</span><span class="p">.</span><span class="n">to_uppercase</span><span class="p">()</span>
+<span class="w">            </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">                </span><span class="n">word</span><span class="p">.</span><span class="n">to_string</span><span class="p">()</span>
+<span class="w">            </span><span class="p">}</span>
+<span class="w">        </span><span class="p">})</span>
+<span class="w">        </span><span class="p">.</span><span class="n">collect</span>::<span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;&gt;</span><span class="p">()</span>
+<span class="w">        </span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>The idea here is to have a slightly harder example to work with; we'll then
+1. add tests
+2. make it read from a file
+3. make it glob a directory and run in parallel</p>
+<p>I feel like that's a good first step to get a feel for the language!</p>
+<h2>Testing</h2>
+<p>I'd be lost without tests, especially in a new language. So that was my next
+step. Turns out in Rust, the recommended way to write tests in the same file as
+your code, and they're only compiled when you run <code>cargo test</code>.</p>
+<p>So I added the following tests to my script:</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#[cfg(test)]</span>
+<span class="k">mod</span> <span class="nn">tests</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="k">super</span>::<span class="o">*</span><span class="p">;</span>
+<span class="w">    </span><span class="cp">#[test]</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">test_empty_string</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">format_sql</span><span class="p">(</span><span class="n">query</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="cp">#[test]</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">test_basic_keywords</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;select * from users where id = 1&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">format_sql</span><span class="p">(</span><span class="n">query</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;SELECT * FROM users WHERE id = 1&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="cp">#[test]</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">test_mixed_case_keywords</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SeLeCt * fRoM users where ID = 1&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">format_sql</span><span class="p">(</span><span class="n">query</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;SELECT * FROM users WHERE ID = 1&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="cp">#[test]</span>
+<span class="w">    </span><span class="k">fn</span> <span class="nf">test_no_keywords</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;users * id = 1&quot;</span><span class="p">;</span>
+<span class="w">        </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">format_sql</span><span class="p">(</span><span class="n">query</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;users * id = 1&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<h2>Reading from a file</h2>
+<p>Now, let's add reading in from a file. At this point we'll need to parse some
+arguments, and coming from either Python or Ruby my prior assumption is that
+the stdlib provides just enough to get you started (that's us!), but you'd
+probably want to use a library for anything more complex than parsing an
+argument or two. The situation seems similar in Rust, where the <code>std::env</code>
+module provides the <code>args</code> function to get the command line arguments.</p>
+<div class="highlight"><pre><span></span><code><span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">env</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">fs</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">args</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">env</span>::<span class="n">args</span><span class="p">().</span><span class="n">collect</span><span class="p">();</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">args</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Usage: {} &lt;input file&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="w">        </span><span class="n">std</span>::<span class="n">process</span>::<span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">contents</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fs</span>::<span class="n">read_to_string</span><span class="p">(</span><span class="n">filename</span><span class="p">).</span><span class="n">expect</span><span class="p">(</span><span class="s">&quot;Something went wrong reading the file&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">formatted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">format_sql</span><span class="p">(</span><span class="o">&amp;</span><span class="n">contents</span><span class="p">);</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">formatted</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>
+
+<p>And that's it for that. I won't add a test for this because the code we've just
+added would basically mean testing the stdlib, which I'm not interested in
+doing.</p>
+<h1>Look, ma, no GIL!</h1>
+<p>I've been reading a bit about Rust's concurrency model, and it's pretty
+interesting. Rust doesn't have a Global Interpreter Lock (GIL) like Python, so
+you can write concurrent code without worrying about the GIL. This is a big
+deal for performance, especially on multi-core systems.</p>
+<p>What's neat about our little example is that it's already set up to be
+concurrent. We can just use the <code>rayon</code> crate to parallelize the processing of
+each file in a directory. I guess in Python, the equivalent would be using
+<code>concurrent.futures</code> or <code>multiprocessing</code>.</p>
+<p>From its documentation:</p>
+<blockquote>
+<p>Rayon is a data-parallelism library that makes it easy to convert sequential
+computations into parallel.</p>
+<p>It is lightweight and convenient for introducing parallelism into existing
+code. It guarantees data-race free executions and takes advantage of
+parallelism when sensible, based on work-load at runtime.</p>
+</blockquote>
+<p>Anywho, here's how we can do that. Start by editing the <code>Cargo.toml</code> file with:</p>
+<div class="highlight"><pre><span></span><code><span class="k">[dependencies]</span>
+<span class="n">rayon</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;1.10.0&quot;</span>
+</code></pre></div>
+
+<p>then, in <code>main.rs</code>, add the following:</p>
+<div class="highlight"><pre><span></span><code><span class="k">use</span><span class="w"> </span><span class="n">rayon</span>::<span class="n">prelude</span>::<span class="o">*</span><span class="p">;</span>
+
+<span class="o">..</span><span class="p">.</span>
+
+<span class="k">use</span><span class="w"> </span><span class="n">rayon</span>::<span class="n">prelude</span>::<span class="o">*</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">env</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">fs</span><span class="p">;</span>
+<span class="k">use</span><span class="w"> </span><span class="n">std</span>::<span class="n">path</span>::<span class="n">Path</span><span class="p">;</span>
+
+<span class="k">fn</span> <span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">args</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">env</span>::<span class="n">args</span><span class="p">().</span><span class="n">collect</span><span class="p">();</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">args</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Usage: {} &lt;input file&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="w">        </span><span class="n">std</span>::<span class="n">process</span>::<span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">paths</span>: <span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">args</span><span class="p">.</span><span class="n">into_iter</span><span class="p">().</span><span class="n">skip</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">collect</span><span class="p">();</span>
+
+<span class="w">    </span><span class="c1">// Zoom through the vec with rayon</span>
+<span class="w">    </span><span class="n">paths</span><span class="p">.</span><span class="n">par_iter</span><span class="p">().</span><span class="n">for_each</span><span class="p">(</span><span class="o">|</span><span class="n">path</span><span class="o">|</span><span class="w"> </span><span class="p">{</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">path</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">Path</span>::<span class="n">new</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
+<span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">path</span><span class="p">.</span><span class="n">is_file</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="n">process_file</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
+<span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+<span class="w">            </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{} is not a file&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">path</span><span class="p">.</span><span class="n">display</span><span class="p">());</span>
+<span class="w">        </span><span class="p">}</span>
+<span class="w">    </span><span class="p">});</span>
+<span class="p">}</span>
+
+<span class="k">fn</span> <span class="nf">process_file</span><span class="p">(</span><span class="n">path</span>: <span class="kp">&amp;</span><span class="nc">Path</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">contents</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fs</span>::<span class="n">read_to_string</span><span class="p">(</span><span class="n">path</span><span class="p">).</span><span class="n">expect</span><span class="p">(</span><span class="s">&quot;Failed to read file&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">formatted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">format_sql</span><span class="p">(</span><span class="o">&amp;</span><span class="n">contents</span><span class="p">);</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">formatted</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="o">..</span><span class="p">.</span>
+</code></pre></div>
+
+<h1>Conclusion</h1>
+<blockquote>
+<p><a href="https://github.com/leblancfg/sqlf/tree/f05b8f4a56a4b1cd45cbd1d1cb18978842e17200">Take a look at the whole repo at this point in the process here</a></p>
+</blockquote>
+<p>All very interesting! Nothing here we couldn't do with Python or Ruby quite yet, but very interesting set of first steps. I'm actually surprised by the ease of use of Rust so far. Given my past horrendous experience with C back in university, I was expecting a lot more pain. But so far, so good!</p>
+<p>I'm looking forward to diving deeper into Rust and seeing how it can help me build more robust and efficient software. For thereon, I feel like it would be interesting to double down on the SQL formatter bit and see how far I can take it with a few hours here and there.</p>
+<p>The idea of course is to get a fast SQL formatter wired up to my text editor, so I can format SQL on the fly. This has been a long-standing pain point in my <code>sqlfluff</code>-linted project, and I can't say I'm very happy.</p>
+<p>Of course I'm aware of a handful of SQL formatters writtern in Rust already, but that's not the goal here; I'm just trying to learn Rust and have some fun with it. I'm sure I'll learn a lot along the way, and I'm excited to see where this journey takes me.</p>
+<p>Until next time!</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://leblancfg.com/tag/rust.html">rust</a>
+      <a href="https://leblancfg.com/tag/programming.html">programming</a>
+      <a href="https://leblancfg.com/tag/learning.html">learning</a>
+    </p>
+  </div>
+
+
+
+
+
+
+</article>
+
+<footer>
+<p>
+  &copy; 2024  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p></footer>  </main>
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " leblancfg.com ",
+  "url" : "https://leblancfg.com",
+  "image": "https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4",
+  "description": "François Leblanc's Thoughts and Writings"
+}
+</script>
+</body>
+</html>

@@ -186,10 +186,10 @@ applied to a variety of scenarios.</p>
 <h2>The Solution</h2>
 <p>Here's a shell function that reloads the <code>.vimrc</code> file in all Vim instances
 across all tmux panes:</p>
-<div class="highlight"><pre><span></span><code><span class="k">function</span> reload-all-vim<span class="o">()</span> <span class="o">{</span>
-    tmux list-panes -aF <span class="s2">&quot;#{pane_id} #{pane_current_command}&quot;</span> <span class="p">|</span>
-    awk <span class="s1">&#39;/vim|nvim/ {print $1}&#39;</span> <span class="p">|</span>
-    xargs -I <span class="o">{}</span> tmux send-keys -t <span class="o">{}</span> <span class="s2">&quot;C-[&quot;</span> <span class="s2">&quot;:so ~/.vimrc&quot;</span> <span class="s2">&quot;C-m&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="k">function</span><span class="w"> </span>reload-all-vim<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span>tmux<span class="w"> </span>list-panes<span class="w"> </span>-aF<span class="w"> </span><span class="s2">&quot;#{pane_id} #{pane_current_command}&quot;</span><span class="w"> </span><span class="p">|</span>
+<span class="w">    </span>awk<span class="w"> </span><span class="s1">&#39;/vim|nvim/ {print $1}&#39;</span><span class="w"> </span><span class="p">|</span>
+<span class="w">    </span>xargs<span class="w"> </span>-I<span class="w"> </span><span class="o">{}</span><span class="w"> </span>tmux<span class="w"> </span>send-keys<span class="w"> </span>-t<span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="s2">&quot;C-[&quot;</span><span class="w"> </span><span class="s2">&quot;:so ~/.vimrc&quot;</span><span class="w"> </span><span class="s2">&quot;C-m&quot;</span>
 <span class="o">}</span>
 </code></pre></div>
 
@@ -234,7 +234,7 @@ Here are some examples:</p>
 
 <footer>
 <p>
-  &copy; 2023  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike</a>
+  &copy; 2024  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike</a>
 </p>
 <p>
 Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme

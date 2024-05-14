@@ -230,14 +230,14 @@ rel="me"           href="https://fosstodon.org/@leblancfg"
 <span class="k">for</span> <span class="n">step</span> <span class="ow">in</span> <span class="n">databus</span><span class="p">[</span><span class="s1">&#39;imputed_df&#39;</span><span class="p">][</span><span class="s1">&#39;metadata&#39;</span><span class="p">][</span><span class="s1">&#39;steps&#39;</span><span class="p">]:</span>
     <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">step</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
         <span class="n">imputation_steps</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">            - </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2"></span>
+<span class="s2">            - </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span>
 <span class="s2">        &quot;&quot;&quot;</span>
 </code></pre></div>
 
 <p>Means our output can be surfaced in an app like:</p>
 <div class="highlight"><pre><span></span><code>The following steps were taken to impute missing values:
 
-    - impute_from_mean: 4
+    <span class="k">-</span> impute_from_mean: 4
 </code></pre></div>
 
 <p>So if you're working on similar projects, I hope I'll have convinced you that the data bus pattern is a simple but powerful way to organize and manage both the data and metadata in your code. Whether you're working on an ETL project or something else entirely, I highly recommend giving the data bus a try. It will make your code more readable, maintainable, and effective.</p>
@@ -259,7 +259,7 @@ rel="me"           href="https://fosstodon.org/@leblancfg"
 
 <footer>
 <p>
-  &copy; 2023  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike</a>
+  &copy; 2024  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike</a>
 </p>
 <p>
 Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
