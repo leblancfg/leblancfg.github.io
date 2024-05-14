@@ -21,6 +21,7 @@ the power of learning by teaching and sharing, and though this document may not
 offer groundbreaking insights, it certainly serves as a practical account of
 one developer's journey through the, uh, "intriguing" complexities of Rust.
 
+> Take a look at [the code in the repo here 🔗](https://github.com/leblancfg/sqlf/tree/f05b8f4a56a4b1cd45cbd1d1cb18978842e17200)
 
 # Installation
 I'm on a Mac and considered installing Rust using `brew`, but the official
