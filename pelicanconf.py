@@ -3,6 +3,7 @@
 from pathlib import Path
 from datetime import datetime as dt
 
+from plugins import pelican_mp3
 from pelican_jupyter import markup as nb_markup
 
 AUTHOR = "François Leblanc"
@@ -65,9 +66,10 @@ COPYRIGHT_YEAR = dt.now().year
 
 DEFAULT_PAGINATION = 10
 
-MARKUP = ("md", "ipynb")
+MARKUP = ("md", "ipynb", "mp3")
 
-PLUGINS = [nb_markup]
+# PLUGINS = [nb_markup, pelican_mp3]
+PLUGINS = [pelican_mp3]
 
 IGNORE_FILES = [".ipynb_checkpoints"]
 
