@@ -1050,9 +1050,9 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
  .highlight pre  .hll { background-color: #ffffcc }
  .highlight pre  { background: #f8f8f8; }
  .highlight pre  .c { color: #3D7B7B; font-style: italic } /* Comment */
- .highlight pre  .err { border: 1px solid #FF0000 } /* Error */
+ .highlight pre  .err { border: 1px solid #F00 } /* Error */
  .highlight pre  .k { color: #008000; font-weight: bold } /* Keyword */
- .highlight pre  .o { color: #666666 } /* Operator */
+ .highlight pre  .o { color: #666 } /* Operator */
  .highlight pre  .ch { color: #3D7B7B; font-style: italic } /* Comment.Hashbang */
  .highlight pre  .cm { color: #3D7B7B; font-style: italic } /* Comment.Multiline */
  .highlight pre  .cp { color: #9C6500 } /* Comment.Preproc */
@@ -1069,34 +1069,34 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
  .highlight pre  .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
  .highlight pre  .gs { font-weight: bold } /* Generic.Strong */
  .highlight pre  .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
- .highlight pre  .gt { color: #0044DD } /* Generic.Traceback */
+ .highlight pre  .gt { color: #04D } /* Generic.Traceback */
  .highlight pre  .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
  .highlight pre  .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
  .highlight pre  .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
  .highlight pre  .kp { color: #008000 } /* Keyword.Pseudo */
  .highlight pre  .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
  .highlight pre  .kt { color: #B00040 } /* Keyword.Type */
- .highlight pre  .m { color: #666666 } /* Literal.Number */
+ .highlight pre  .m { color: #666 } /* Literal.Number */
  .highlight pre  .s { color: #BA2121 } /* Literal.String */
  .highlight pre  .na { color: #687822 } /* Name.Attribute */
  .highlight pre  .nb { color: #008000 } /* Name.Builtin */
- .highlight pre  .nc { color: #0000FF; font-weight: bold } /* Name.Class */
- .highlight pre  .no { color: #880000 } /* Name.Constant */
- .highlight pre  .nd { color: #AA22FF } /* Name.Decorator */
+ .highlight pre  .nc { color: #00F; font-weight: bold } /* Name.Class */
+ .highlight pre  .no { color: #800 } /* Name.Constant */
+ .highlight pre  .nd { color: #A2F } /* Name.Decorator */
  .highlight pre  .ni { color: #717171; font-weight: bold } /* Name.Entity */
  .highlight pre  .ne { color: #CB3F38; font-weight: bold } /* Name.Exception */
- .highlight pre  .nf { color: #0000FF } /* Name.Function */
+ .highlight pre  .nf { color: #00F } /* Name.Function */
  .highlight pre  .nl { color: #767600 } /* Name.Label */
- .highlight pre  .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+ .highlight pre  .nn { color: #00F; font-weight: bold } /* Name.Namespace */
  .highlight pre  .nt { color: #008000; font-weight: bold } /* Name.Tag */
  .highlight pre  .nv { color: #19177C } /* Name.Variable */
- .highlight pre  .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
- .highlight pre  .w { color: #bbbbbb } /* Text.Whitespace */
- .highlight pre  .mb { color: #666666 } /* Literal.Number.Bin */
- .highlight pre  .mf { color: #666666 } /* Literal.Number.Float */
- .highlight pre  .mh { color: #666666 } /* Literal.Number.Hex */
- .highlight pre  .mi { color: #666666 } /* Literal.Number.Integer */
- .highlight pre  .mo { color: #666666 } /* Literal.Number.Oct */
+ .highlight pre  .ow { color: #A2F; font-weight: bold } /* Operator.Word */
+ .highlight pre  .w { color: #BBB } /* Text.Whitespace */
+ .highlight pre  .mb { color: #666 } /* Literal.Number.Bin */
+ .highlight pre  .mf { color: #666 } /* Literal.Number.Float */
+ .highlight pre  .mh { color: #666 } /* Literal.Number.Hex */
+ .highlight pre  .mi { color: #666 } /* Literal.Number.Integer */
+ .highlight pre  .mo { color: #666 } /* Literal.Number.Oct */
  .highlight pre  .sa { color: #BA2121 } /* Literal.String.Affix */
  .highlight pre  .sb { color: #BA2121 } /* Literal.String.Backtick */
  .highlight pre  .sc { color: #BA2121 } /* Literal.String.Char */
@@ -1111,12 +1111,12 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
  .highlight pre  .s1 { color: #BA2121 } /* Literal.String.Single */
  .highlight pre  .ss { color: #19177C } /* Literal.String.Symbol */
  .highlight pre  .bp { color: #008000 } /* Name.Builtin.Pseudo */
- .highlight pre  .fm { color: #0000FF } /* Name.Function.Magic */
+ .highlight pre  .fm { color: #00F } /* Name.Function.Magic */
  .highlight pre  .vc { color: #19177C } /* Name.Variable.Class */
  .highlight pre  .vg { color: #19177C } /* Name.Variable.Global */
  .highlight pre  .vi { color: #19177C } /* Name.Variable.Instance */
  .highlight pre  .vm { color: #19177C } /* Name.Variable.Magic */
- .highlight pre  .il { color: #666666 } /* Literal.Number.Integer.Long */&lt;/style&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
+ .highlight pre  .il { color: #666 } /* Literal.Number.Integer.Long */&lt;/style&gt;&lt;div class="cell border-box-sizing text_cell rendered"&gt;&lt;div class="prompt input_prompt"&gt;
 &lt;/div&gt;&lt;div class="inner_cell"&gt;
 &lt;div class="text_cell_render border-box-sizing rendered_html"&gt;
 &lt;h1 id="Speed-tests-for-writing-to-MSSQL-from-pandas-(ODBC)"&gt;Speed tests for writing to MSSQL from pandas (ODBC)&lt;a class="anchor-link" href="#Speed-tests-for-writing-to-MSSQL-from-pandas-(ODBC)"&gt;&amp;#182;&lt;/a&gt;&lt;/h1&gt;&lt;p&gt;In this notebook, we'll be playing with various methods of writing data to a Microsoft SQL Server database. Compared to PostgreSQL, which I was using previously, the connection is approximately an order of magnitude slower. This is apparently a known issue. It boggles the mind why, and I might not be searching deep enough to understand the reasons for this, but it's something I can't work around.&lt;/p&gt;
@@ -1167,18 +1167,18 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
     &lt;div class="input_area"&gt;
 &lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%&lt;/span&gt;&lt;span class="k"&gt;load_ext&lt;/span&gt; nb_black
 
-&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;json&lt;/span&gt;
-&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;os.path&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;expanduser&lt;/span&gt;
-&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;math&lt;/span&gt;
-&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sys&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;json&lt;/span&gt;
+&lt;span class="kn"&gt;from&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;os.path&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;expanduser&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;math&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;sys&lt;/span&gt;
 
-&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;matplotlib.pyplot&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;plt&lt;/span&gt;
-&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;numpy&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;np&lt;/span&gt;
-&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pandas&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;pd&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;matplotlib.pyplot&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;as&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;plt&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;numpy&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;as&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;np&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;pandas&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;as&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;pd&lt;/span&gt;
 
-&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;pymssql&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;ms&lt;/span&gt;
-&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sqlalchemy&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;sql&lt;/span&gt;
-&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;sqlalchemy_turbodbc&lt;/span&gt; &lt;span class="k"&gt;as&lt;/span&gt; &lt;span class="nn"&gt;st&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;pymssql&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;as&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;ms&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;sqlalchemy&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;as&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;sql&lt;/span&gt;
+&lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;sqlalchemy_turbodbc&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="k"&gt;as&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nn"&gt;st&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
     &lt;/div&gt;
@@ -1209,10 +1209,10 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
 
 
-&lt;div id="df667fb3-1c2b-4c1c-b5b6-4f4d1f8126bc"&gt;&lt;/div&gt;
+&lt;div id="b13c0190-d230-4971-923e-22dbdc2616e2"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#df667fb3-1c2b-4c1c-b5b6-4f4d1f8126bc');
+var element = $('#b13c0190-d230-4971-923e-22dbdc2616e2');
 
             setTimeout(function() {
                 var nbb_cell_id = 1;
@@ -1296,10 +1296,10 @@ No sqlalchemy_turbodbc version available
 
 
 
-&lt;div id="5749d604-2a6d-43e8-8f72-fc1690089bab"&gt;&lt;/div&gt;
+&lt;div id="e2c9a97c-a835-469d-bc06-676613675b1e"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#5749d604-2a6d-43e8-8f72-fc1690089bab');
+var element = $('#e2c9a97c-a835-469d-bc06-676613675b1e');
 
             setTimeout(function() {
                 var nbb_cell_id = 20;
@@ -1366,10 +1366,10 @@ var element = $('#5749d604-2a6d-43e8-8f72-fc1690089bab');
 
 
 
-&lt;div id="7df389ac-534f-4f80-8fc5-ac1472669ca6"&gt;&lt;/div&gt;
+&lt;div id="fef61592-a5de-42e4-80ec-e647b17a2bd3"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#7df389ac-534f-4f80-8fc5-ac1472669ca6');
+var element = $('#fef61592-a5de-42e4-80ec-e647b17a2bd3');
 
             setTimeout(function() {
                 var nbb_cell_id = 3;
@@ -1547,10 +1547,10 @@ var element = $('#7df389ac-534f-4f80-8fc5-ac1472669ca6');
 
 
 
-&lt;div id="59aab568-9f67-471e-aff0-c285915c2881"&gt;&lt;/div&gt;
+&lt;div id="722d56be-a06a-4a57-bd27-1fe365619f46"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#59aab568-9f67-471e-aff0-c285915c2881');
+var element = $('#722d56be-a06a-4a57-bd27-1fe365619f46');
 
             setTimeout(function() {
                 var nbb_cell_id = 4;
@@ -1608,10 +1608,10 @@ var element = $('#59aab568-9f67-471e-aff0-c285915c2881');
 
 
 
-&lt;div id="494dc110-bb7a-425e-84df-4db82ec6fd07"&gt;&lt;/div&gt;
+&lt;div id="ec6427c8-9442-4a71-ae7f-7f26e35be736"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#494dc110-bb7a-425e-84df-4db82ec6fd07');
+var element = $('#ec6427c8-9442-4a71-ae7f-7f26e35be736');
 
             setTimeout(function() {
                 var nbb_cell_id = 5;
@@ -1685,10 +1685,10 @@ var element = $('#494dc110-bb7a-425e-84df-4db82ec6fd07');
 
 
 
-&lt;div id="cc6d51e1-8c12-4fae-9de8-1abce7692f95"&gt;&lt;/div&gt;
+&lt;div id="45faf810-8841-4904-a7c6-56ae2324d2b7"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#cc6d51e1-8c12-4fae-9de8-1abce7692f95');
+var element = $('#45faf810-8841-4904-a7c6-56ae2324d2b7');
 
             setTimeout(function() {
                 var nbb_cell_id = 6;
@@ -1726,11 +1726,11 @@ var element = $('#cc6d51e1-8c12-4fae-9de8-1abce7692f95');
 &lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[7]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;chunker&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;seq&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;chunker&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;seq&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;seq&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;pos&lt;/span&gt; &lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;pos&lt;/span&gt; &lt;span class="o"&gt;+&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt; &lt;span class="k"&gt;for&lt;/span&gt; &lt;span class="n"&gt;pos&lt;/span&gt; &lt;span class="ow"&gt;in&lt;/span&gt; &lt;span class="nb"&gt;range&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="nb"&gt;len&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;seq&lt;/span&gt;&lt;span class="p"&gt;),&lt;/span&gt; &lt;span class="n"&gt;size&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 
 
-&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;insert_with_progress&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;engine&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;table&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;schema&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;insert_with_progress&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;df&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;engine&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;table&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;schema&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
     &lt;span class="n"&gt;con&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;engine&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;connect&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
 
     &lt;span class="c1"&gt;# Replace table&lt;/span&gt;
@@ -1767,10 +1767,10 @@ var element = $('#cc6d51e1-8c12-4fae-9de8-1abce7692f95');
 
 
 
-&lt;div id="479f9f95-93c1-4d38-bde6-c477064fad64"&gt;&lt;/div&gt;
+&lt;div id="ff6c8434-acba-497d-9b78-e4300c1c261e"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#479f9f95-93c1-4d38-bde6-c477064fad64');
+var element = $('#ff6c8434-acba-497d-9b78-e4300c1c261e');
 
             setTimeout(function() {
                 var nbb_cell_id = 7;
@@ -1832,10 +1832,10 @@ var element = $('#479f9f95-93c1-4d38-bde6-c477064fad64');
 
 
 
-&lt;div id="9031e97a-8fb2-4ace-b537-b7288b2347aa"&gt;&lt;/div&gt;
+&lt;div id="f89de7d5-d0dd-465b-ad24-aadb38a1515e"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#9031e97a-8fb2-4ace-b537-b7288b2347aa');
+var element = $('#f89de7d5-d0dd-465b-ad24-aadb38a1515e');
 
             setTimeout(function() {
                 var nbb_cell_id = 8;
@@ -1903,10 +1903,10 @@ var element = $('#9031e97a-8fb2-4ace-b537-b7288b2347aa');
 
 
 
-&lt;div id="64803d24-5246-4e52-b9f0-02f6a9dddb59"&gt;&lt;/div&gt;
+&lt;div id="2c05cd53-9f64-497b-952a-5495e0bbdcdd"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#64803d24-5246-4e52-b9f0-02f6a9dddb59');
+var element = $('#2c05cd53-9f64-497b-952a-5495e0bbdcdd');
 
             setTimeout(function() {
                 var nbb_cell_id = 9;
@@ -1981,10 +1981,10 @@ var element = $('#64803d24-5246-4e52-b9f0-02f6a9dddb59');
 
 
 
-&lt;div id="399a9769-a498-4985-a440-87ac56eafe2f"&gt;&lt;/div&gt;
+&lt;div id="30c30d36-ceb4-44d7-97c8-6ba0d8824fea"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#399a9769-a498-4985-a440-87ac56eafe2f');
+var element = $('#30c30d36-ceb4-44d7-97c8-6ba0d8824fea');
 
             setTimeout(function() {
                 var nbb_cell_id = 10;
@@ -2059,10 +2059,10 @@ var element = $('#399a9769-a498-4985-a440-87ac56eafe2f');
 
 
 
-&lt;div id="0c6b85d9-e273-4dae-a61c-c7f17b18752e"&gt;&lt;/div&gt;
+&lt;div id="94b28cb2-ae5a-47ae-8e88-c98d71bbb0f3"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#0c6b85d9-e273-4dae-a61c-c7f17b18752e');
+var element = $('#94b28cb2-ae5a-47ae-8e88-c98d71bbb0f3');
 
             setTimeout(function() {
                 var nbb_cell_id = 11;
@@ -2138,10 +2138,10 @@ var element = $('#0c6b85d9-e273-4dae-a61c-c7f17b18752e');
 
 
 
-&lt;div id="d0393a52-f29c-481e-8ed2-d92612aab8f0"&gt;&lt;/div&gt;
+&lt;div id="59f056a6-eb19-4ca4-8dc5-3ba3e13e7cb4"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#d0393a52-f29c-481e-8ed2-d92612aab8f0');
+var element = $('#59f056a6-eb19-4ca4-8dc5-3ba3e13e7cb4');
 
             setTimeout(function() {
                 var nbb_cell_id = 12;
@@ -2209,10 +2209,10 @@ var element = $('#d0393a52-f29c-481e-8ed2-d92612aab8f0');
 
 
 
-&lt;div id="62b815ce-1978-4c09-a0ba-d9ca03615476"&gt;&lt;/div&gt;
+&lt;div id="07176ce2-5487-43e1-8fbf-ca000e1ce109"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#62b815ce-1978-4c09-a0ba-d9ca03615476');
+var element = $('#07176ce2-5487-43e1-8fbf-ca000e1ce109');
 
             setTimeout(function() {
                 var nbb_cell_id = 13;
@@ -2279,10 +2279,10 @@ var element = $('#62b815ce-1978-4c09-a0ba-d9ca03615476');
 
 
 
-&lt;div id="c945f5cf-192d-462d-9337-034ddddd6381"&gt;&lt;/div&gt;
+&lt;div id="868e9d84-5dff-4c94-a81b-8f6c8610dd03"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#c945f5cf-192d-462d-9337-034ddddd6381');
+var element = $('#868e9d84-5dff-4c94-a81b-8f6c8610dd03');
 
             setTimeout(function() {
                 var nbb_cell_id = 14;
@@ -2382,10 +2382,10 @@ var element = $('#c945f5cf-192d-462d-9337-034ddddd6381');
 
 
 
-&lt;div id="a69fb52f-daec-46eb-8ecb-a1f4d92da00c"&gt;&lt;/div&gt;
+&lt;div id="e90d0660-313f-48b5-956b-ceffa2ad5f23"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#a69fb52f-daec-46eb-8ecb-a1f4d92da00c');
+var element = $('#e90d0660-313f-48b5-956b-ceffa2ad5f23');
 
             setTimeout(function() {
                 var nbb_cell_id = 21;

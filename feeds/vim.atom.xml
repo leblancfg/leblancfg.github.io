@@ -1,5 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com - Vim</title><link href="https://leblancfg.com/" rel="alternate"></link><link href="https://leblancfg.com/feeds/vim.atom.xml" rel="self"></link><id>https://leblancfg.com/</id><updated>2023-03-22T00:00:00-04:00</updated><subtitle>Data Science, Geospatial Python, Space Stuff</subtitle><entry><title>TIL: NERDTree Bookmarks</title><link href="https://leblancfg.com/til-nerdtree-bookmarks.html" rel="alternate"></link><published>2023-03-22T00:00:00-04:00</published><updated>2023-03-22T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2023-03-22:/til-nerdtree-bookmarks.html</id><summary type="html">&lt;p&gt;NERDTree Bookmarks is a plugin that allows you to bookmark files and directories in NERDTree.&lt;/p&gt;</summary><content type="html">&lt;p&gt;As a developer, you probably spend a lot of time navigating through the directories of your project. Whether you're looking for a specific file, checking your tests, or exploring a new feature, it can be time-consuming to constantly type in the same directory paths. Fortunately, I just discovered a way to make this faster in a Vim plug-in I've been using for years called NERDTree.&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com - vim</title><link href="https://leblancfg.com/" rel="alternate"></link><link href="https://leblancfg.com/feeds/vim.atom.xml" rel="self"></link><id>https://leblancfg.com/</id><updated>2025-01-29T00:00:00-05:00</updated><subtitle>Data Science, Geospatial Python, Space Stuff</subtitle><entry><title>I miss vim</title><link href="https://leblancfg.com/i-miss-vim.html" rel="alternate"></link><published>2025-01-29T00:00:00-05:00</published><updated>2025-01-29T00:00:00-05:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2025-01-29:/i-miss-vim.html</id><summary type="html">&lt;p&gt;A short reflection on neovim's extensibility vs simplicity tradeoff&lt;/p&gt;</summary><content type="html">&lt;p&gt;I've been using &lt;a href="https://neovim.io/"&gt;neovim&lt;/a&gt; for almost two years now and I'm
+gonna go out come out and say it. &lt;strong&gt;I miss vanilla
+&lt;a href="https://www.vim.org/"&gt;vim&lt;/a&gt;&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Is neovim faster? Yes. Can it perform async tasks like a champ? Yes. Is lua
+scripting way saner than the old hodgepodge of slow vimscript? Yes. Can I make
+it do whatever the hell I want compared to Vim? Also yes.&lt;/p&gt;
+&lt;p&gt;But I miss the relative simplicity of my former vim setup. Is it just a "skill
+issue"? Partly. But it's more than that.&lt;/p&gt;
+&lt;p&gt;My vim setup was relatively straightforward and could all fit inside of a
+single, relatively large file that I could grok from top to bottom. I was using
+the &lt;a href="https://github.com/dense-analysis/ale"&gt;ALE plugin&lt;/a&gt; to contact formatters,
+linters, and language servers to get an IDE-like editing experience inside of
+Vim. It was slow and error-prone, but it took only a couple of lines to set up.
+I was typically able to troubleshoot wonky behaviour within a couple minutes.
+Coming into a new language or codebase was relatively straightforward as I
+would just add a couple lines to my ALE setup and I would have language
+specific plugins ready and opinionatedly set up.&lt;/p&gt;
+&lt;p&gt;In comparison, my new neovim settings are sprawled across 12 files, of which
+I've copied and pasted and barely understand. I've got a bunch of plugins that
+I don't even know what they do, but I'm too afraid to remove or modify them
+because I might break something.&lt;/p&gt;
+&lt;p&gt;I need a Babel Tower's equivalent of plugins standing on top of each other to
+work. For example, I use &lt;a href="https://github.com/folke/lazy.nvim"&gt;lazy&lt;/a&gt; for plugin
+management, &lt;a href="https://github.com/williamboman/mason.nvim"&gt;mason&lt;/a&gt; for LSP server
+management, &lt;a href="https://github.com/VonHeikemen/lsp-zero.nvim"&gt;lsp-zero&lt;/a&gt; to be able
+to call most of them, and the built-in LSP server support to capture what's
+standard in many editors these days.&lt;/p&gt;
+&lt;p&gt;My initial reaction when first installing them is that they felt like magic!
+But somehow, that was very disappointing, very fast. Especially Mason. Mason
+would give you an opinionated list of all the available DSPs, formatters,
+linters, etc. out there. It's great at installing and syncing, you have to give
+it that. But actually using them? No, that's too much. You'll need to manually
+configure each one of those packages by either copying and pasting something
+from the plugins creator or finding some other neovim users settings to copy.&lt;/p&gt;
+&lt;p&gt;And it's been almost two years now, you'd think I'd be out of the
+cargo-cult-config phase by now.&lt;/p&gt;
+&lt;p&gt;I'd also been using a vim color scheme that simply called one of the 16 ASCII
+colors of my terminal. This had worked well for almost 8 years. In neovim,
+somehow, I need to set up its own color scheme on top of the one that my
+terminal has. Because otherwise I can't get proper syntax highlighting as it
+talks to the language server. I find it preposterous that I would need to have
+a theme installed in order for the language server support to be properly
+shown.&lt;/p&gt;
+&lt;p&gt;I'm not saying that neovim plugins are bad. I think I'm pointing the finger at
+an evolving set of standards or values that are part of the neovim developer
+ethos vs Bram's, and bemoaning it &amp;mdash; while I hypocritically use it and
+don't participate in its development.&lt;/p&gt;
+&lt;p&gt;But if it can be distilled in a single sentence, it's this:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Make developers think less.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Which, in a way, is saying&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Be more opinionated.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2&gt;Grievances&lt;/h2&gt;
+&lt;h3&gt;I shouldn't need to manually customize most plugins&lt;/h3&gt;
+&lt;p&gt;Users will write in a variety of languages. Most of them are very popular, and
+they will use an opinionated set of packages for their linting, their DSP,
+their LSP, and so forth. I don't need to use a neovim distribution to have an
+opinionated set of how these packages work together and are set up.&lt;/p&gt;
+&lt;h3&gt;Why isn't it part of neovim core?&lt;/h3&gt;
+&lt;p&gt;Plugin writers and maintainers have been an integral part of neovim's rise and
+continued use. And I would understand why the neovim maintainers would not want
+to necessarily. Fold in some of their capabilities into neovim core, but I
+strongly think they should.&lt;/p&gt;
+&lt;h3&gt;Why do I need a color scheme?&lt;/h3&gt;
+&lt;p&gt;Neovm did land default color scheme in the 0.10 version, but to me that is
+still a non-sequitur. Why do I even need one in the first place when my
+terminal has colors that I've chosen already?&lt;/p&gt;
+&lt;p&gt;I really want to be able to only map my editor colors to the terminal in which
+I'm using. There should be no need for a color scheme in the first place to get
+proper syntax highlighting. The reason behind my required use of it is that in
+order to see language items in the "expanded universe" of LSP primitives that
+aren't mapped to standard vim objects. What's a &lt;code&gt;@lsp.type.keyword&lt;/code&gt; if not just
+a &lt;code&gt;@keyword&lt;/code&gt;? The standard vim syntax highlighting doesn't know what to do with
+it.&lt;/p&gt;
+&lt;h2&gt;Hope&lt;/h2&gt;
+&lt;p&gt;I'm actually very happy to &lt;a href="https://neovim.io/roadmap/"&gt;read the neovim
+roadmap&lt;/a&gt;. The next releases are actually slated to
+be "The year of the Nvim OOTB" (out of the box). I'm excited to see what that
+means. I'm excited to see a plugin manager, an LSP config concept, and
+auto-completion coming in the near-to-medium-term future.&lt;/p&gt;
+&lt;p&gt;I'm not calling neovim bankruptcy (yet?). I don't have the intention to move
+over to a fully-managed neovim "distribution" like LazyVim, LunarVim, or
+AstroVim. I find the thought a little bit ridiculous, really! I've spent years
+customizing my editor in a way that fits my brain, and can make abstract,
+complex changes to the codebases I work on with a few well-rehearsed keystrokes
+whose aliases I wrote myself.&lt;/p&gt;
+&lt;p&gt;But if this essay can have any impact, it is this: &lt;strong&gt;if you are contemplating
+writing a neovim plugin, form some opinions on how you and others will use
+it&lt;/strong&gt;, before you share it back to the world.&lt;/p&gt;</content><category term="vim"></category><category term="vim"></category><category term="neovim"></category></entry><entry><title>TIL: NERDTree Bookmarks</title><link href="https://leblancfg.com/til-nerdtree-bookmarks.html" rel="alternate"></link><published>2023-03-22T00:00:00-04:00</published><updated>2023-03-22T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2023-03-22:/til-nerdtree-bookmarks.html</id><summary type="html">&lt;p&gt;NERDTree Bookmarks is a plugin that allows you to bookmark files and directories in NERDTree.&lt;/p&gt;</summary><content type="html">&lt;p&gt;As a developer, you probably spend a lot of time navigating through the directories of your project. Whether you're looking for a specific file, checking your tests, or exploring a new feature, it can be time-consuming to constantly type in the same directory paths. Fortunately, I just discovered a way to make this faster in a Vim plug-in I've been using for years called NERDTree.&lt;/p&gt;
 &lt;p&gt;Bookmarks allow you to save your most frequently used directories and easily navigate to them with just a few keystrokes. Unlike regular bookmarks in your web browser, NERDTree bookmarks are saved to a file on your computer, so they work across multiple sessions and computer restarts.&lt;/p&gt;
 &lt;p&gt;So instead of repetitively opening and closing the same directories when moving around, you can just bookmark them and quickly jump to them whenever you need to.&lt;/p&gt;
 &lt;h1&gt;Creating a New Bookmark&lt;/h1&gt;
