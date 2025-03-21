@@ -1,10 +1,12 @@
-Title: Cycling up a hill
+Title: When's the best time to surve when cycling up a hill?
 Date: 2025-03-21
 Category: Physics
 Tags: cycling, physics, simulation, chart.js
-Slug: cycling-up-a-hill
+Slug: surge-cycling-up-a-hill
 Authors: François Leblanc
 Summary: A simple cycling simulator that calculates the time it takes to cycle up a hill with a surge of power.
+
+![Cycling uphill](img/12_percent_hill.jpg)
 
 ## The Physics of Cycling Uphill
 
@@ -47,8 +49,8 @@ Use the simulator below to find out!
       </div>
       <div style="min-width: 200px;">
         <label for="surge_power" style="display: block; margin-bottom: 5px; font-weight: bold;">Surge Power (W):</label>
-        <input type="range" id="surge_power_slider" min="200" max="800" value="350" style="width: 100%;">
-        <input type="number" id="surge_power" value="350" style="width: 100px;">
+        <input type="range" id="surge_power_slider" min="200" max="800" value="400" style="width: 100%;">
+        <input type="number" id="surge_power" value="400" style="width: 100px;">
       </div>
       <div style="min-width: 200px;">
         <label for="surge_duration" style="display: block; margin-bottom: 5px; font-weight: bold;">Surge Duration (s):</label>
@@ -102,8 +104,8 @@ Use the simulator below to find out!
                 </div>
               </div>
             </div>
-            <input type="range" id="frontal_area_slider" min="0.3" max="0.7" step="0.01" value="0.36" style="width: 100%;">
-            <input type="number" id="frontal_area" value="0.36" step="0.01" style="width: 100px;">
+            <input type="range" id="frontal_area_slider" min="0.3" max="0.7" step="0.01" value="0.4" style="width: 100%;">
+            <input type="number" id="frontal_area" value="0.4" step="0.01" style="width: 100px;">
           </div>
         </div>
       </div>
@@ -144,7 +146,7 @@ const dt = 0.1; // time step in seconds
 // Variables that can be modified through UI
 let m = 70; // mass of cyclist + bike in kg
 let C_d = 0.9; // drag coefficient
-let A = 0.36; // frontal area in m^2
+let A = 0.40; // frontal area in m^2
 
 // Route profile: segments with start/end distances and slope in degrees
 const route = [
@@ -432,20 +434,26 @@ function plot() {
   C_d = parseFloat(document.getElementById('drag_coefficient').value);
   A = parseFloat(document.getElementById('frontal_area').value);
   
+  // Debug: Log current values to console to verify
+  console.log("Current simulation parameters:", {
+    normalPower: normal_power,
+    surgePower: surge_power, 
+    surgeDuration: surge_duration,
+    mass: m,
+    dragCoefficient: C_d,
+    frontalArea: A
+  });
+  
   // Simulate for different surge start times
   let data = [];
   let min_time = Infinity;
   let optimal_start = 0;
   let optimal_result = null;
   
-  // Calculate time points based on route to ensure we sample the key segments well
+  // Calculate a large number of evenly-spaced time points with high granularity
   const timePoints = [];
-  for (let t = 0; t <= 200; t += 10) {
-    timePoints.push(t);
-  }
-  
-  // Add more granular points around the uphill section
-  for (let t = 10; t <= 150; t += 2) {
+  // Use 0.5 second intervals throughout the entire range for higher precision
+  for (let t = 0; t <= 200; t += 0.5) {
     timePoints.push(t);
   }
   
@@ -567,6 +575,10 @@ function plot() {
 
 // Initialize
 window.onload = function() {
+  // Force-reset the frontal area value to ensure consistency
+  document.getElementById('frontal_area').value = "0.4";
+  document.getElementById('frontal_area_slider').value = "0.4";
+  
   // Link sliders and number inputs
   const normalPowerSlider = document.getElementById('normal_power_slider');
   const normalPowerInput = document.getElementById('normal_power');
