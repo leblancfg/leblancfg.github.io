@@ -436,7 +436,10 @@ function drawElevationProfile(optimalStartPos = null, optimalEndPos = null, isOp
             callback: function(value) {
               return value + 'm';
             }
-          }
+          },
+          // Force consistent range on all devices
+          min: 0,
+          max: total_distance // 1200m
         },
         y: {
           title: {
