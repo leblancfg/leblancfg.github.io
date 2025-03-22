@@ -9,6 +9,20 @@ Summary: A simple cycling simulator that calculates the time it takes to cycle u
 ![Cycling uphill](img/12_percent_hill.jpg)
 
 ## The Physics of Cycling Uphill
+My wife and I just recently purchased new bikes, upgrading from our late 80s
+steel models to more modern ones. With it came a purchase of a erg-enabled
+indoor trainer. I've been spending a surprising amount of hours on Zwift, and
+turns out... it's great fun! I'd like to consider myself an all-round athlete,
+so it was so great dismay to notice that what I thought was being in OK shape
+is &mdash; as far as comparison with other indoor cyclists goes &mdash; very
+poor performance! This of course, was very exciting. I love a good training
+challenge.
+
+I've participated in a few races, and noticed that many strategies
+seem to be used when tackling hills. Having tried a different strategies on my
+own, I could definitely feel like some were much better than others. But was
+that due to luck and good timing on my part, or actually a good strategy? The
+good news is, cycling is mostly "basic" physics, and we can simulate it!
 
 When cycling, several forces affect your motion:
 
@@ -728,6 +742,14 @@ be appplied downhill" is a good spot to surge.
 Here, let's look at some general conclusions. Of course, this isn't real life!
 A good cyclist will be able to determine how long and how hard to push for a
 given hill, in a way where they can recover before the next hill or attack.
+
+### Don't surge downhill!
+This is the main takeaway from the simulation. Surging downhill is a waste of
+energy, as you're already moving quickly and air resistance is high. The best
+time to surge is when you're moving slowly, that is, on the uphill section.
+
+I am very guilty of this in real life... and in fact thinking about it is why I
+wrote this article in the first place!
 
 ### Don't surge before the climb!
 I often do this, telling myself I'll "spread the load" a bit before so that the
