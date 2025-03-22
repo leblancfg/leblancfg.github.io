@@ -9,20 +9,9 @@ Summary: A simple cycling simulator that calculates the time it takes to cycle u
 ![Cycling uphill](img/12_percent_hill.jpg)
 
 ## The Physics of Cycling Uphill
-My wife and I just recently purchased new bikes, upgrading from our late 80s
-steel models to more modern ones. With it came a purchase of a erg-enabled
-indoor trainer. I've been spending a surprising amount of hours on Zwift, and
-turns out... it's great fun! I'd like to consider myself an all-round athlete,
-so it was so great dismay to notice that what I thought was being in OK shape
-is &mdash; as far as comparison with other indoor cyclists goes &mdash; very
-poor performance! This of course, was very exciting. I love a good training
-challenge.
+My wife and I recently upgraded from our late 80s steel bikes to more modern ones, and purchased an erg-enabled indoor trainer. I've been spending a surprising number of hours on Zwift, and turns out... it's great fun! I consider myself an all-round athlete, so it was to my great dismay to discover that what I thought was being in OK shape is &mdash; as far as comparison with other indoor cyclists goes &mdash; relatively poor performance! This of course, was very exciting. I love a good training challenge.
 
-I've participated in a few races, and noticed that many strategies
-seem to be used when tackling hills. Having tried a different strategies on my
-own, I could definitely feel like some were much better than others. But was
-that due to luck and good timing on my part, or actually a good strategy? The
-good news is, cycling is mostly "basic" physics, and we can simulate it!
+I've participated in a few races and noticed many different strategies being used when tackling hills. Having tried various approaches myself, I could definitely feel that some were much better than others. But was that due to luck and good timing on my part, or actually a good strategy? The good news is, cycling is mostly "basic" physics, and we can simulate it!
 
 When cycling, several forces affect your motion:
 
@@ -31,10 +20,7 @@ When cycling, several forces affect your motion:
 3. **Rolling Resistance**: Friction between tires and road, linear with velocity.
 4. **Air Resistance**: Increases with the square of your velocity
 
-The simulation below models a 1'200 m route with a hill in the middle. We're
-keeping things simple: you can apply a single surge of power, and the
-simulation takes care of calculating the time it takes to cross the finish line
-at all the various points across the road, to see when it's most effective.
+The simulation below models a 1,200 m route with a hill in the middle. We're keeping things simple: you can apply a single surge of power, and the simulation calculates the time it takes to cross the finish line for various surge starting points, to see when it's most effective.
 
 ## When Should You Surge?
 
@@ -134,13 +120,17 @@ Use the simulator below to find out!
 <!-- Container for the elevation profile -->
 <div style="margin: 20px 0;">
   <h3>Elevation Profile</h3>
-  <canvas id="elevation_chart" width="800" height="200"></canvas>
+  <div style="position: relative; height: 40vh; min-height: 200px;">
+    <canvas id="elevation_chart"></canvas>
+  </div>
 </div>
 
 <!-- Container for the results chart -->
 <div style="margin: 20px 0;">
   <h3>Total Time vs. Surge Start Position</h3>
-  <canvas id="results_chart" width="800" height="400"></canvas>
+  <div style="position: relative; height: 60vh; min-height: 350px;">
+    <canvas id="results_chart"></canvas>
+  </div>
 </div>
 
 <!-- Container for optimal result -->
@@ -428,6 +418,7 @@ function drawElevationProfile(optimalStartPos = null, optimalEndPos = null, isOp
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       plugins: {
         legend: {
           display: true,
@@ -468,8 +459,24 @@ function drawElevationProfile(optimalStartPos = null, optimalEndPos = null, isOp
           },
           ticks: {
             callback: function(value) {
-              return value + 'm';
-            }
+              return Math.round(value) + 'm';
+            },
+            // Force integer values only
+            stepSize: 10
+          },
+          // Ensure reasonable range but not too tall
+          min: function(context) {
+            const elevationValues = elevationData.map(p => p.y);
+            const minElevation = Math.min(...elevationValues);
+            return Math.floor(minElevation / 10) * 10; // Round down to nearest 10
+          },
+          max: function(context) {
+            const elevationValues = elevationData.map(p => p.y);
+            const minElevation = Math.min(...elevationValues);
+            const maxElevation = Math.max(...elevationValues);
+            // Ensure at least 30 meters of range (but not more than needed)
+            const range = maxElevation - minElevation;
+            return Math.ceil((minElevation + Math.max(range, 30)) / 10) * 10; // Round up to nearest 10
           }
         }
       }
@@ -583,6 +590,7 @@ function plot() {
     },
     options: {
       responsive: true,
+      maintainAspectRatio: false,
       plugins: {
         tooltip: {
           callbacks: {
@@ -617,8 +625,19 @@ function plot() {
           },
           ticks: {
             callback: function(value) {
-              return value + 's';
+              return Math.round(value) + 's';
             }
+          },
+          // Set fixed limits with reasonable padding to avoid excessive decimal values
+          suggestedMin: function(context) {
+            const minTime = Math.min(...data.map(point => point.y));
+            return Math.floor(minTime - 1); // 1 second below, rounded down
+          },
+          suggestedMax: function(context) {
+            const minTime = Math.min(...data.map(point => point.y));
+            const maxTime = Math.max(...data.map(point => point.y));
+            // Ensure we show at least a 5 second range, but not more than needed
+            return Math.ceil(Math.max(minTime + 5, maxTime)); // Round up
           }
         }
       },
@@ -736,14 +755,9 @@ window.onload = function() {
 </script>
 
 ### Understanding the Results
-The simulation identifies the zone where your time will be minimized. There
-might be a slight wobble in sections: this is just a result of the simulation's
-granularity. Any spot on the hill between "momentum is spent" and "surge will
-be appplied downhill" is a good spot to surge.
+The simulation identifies the zone where your time will be minimized. There might be slight wobbles in some sections: this is just a result of the simulation's granularity. Any spot on the hill between where your "momentum is spent" and before your "surge would be applied downhill" is a good spot to surge.
 
-Here, let's look at some general conclusions. Of course, this isn't real life!
-A good cyclist will be able to determine how long and how hard to push for a
-given hill, in a way where they can recover before the next hill or attack.
+Let's look at some general conclusions. Of course, this isn't real life! A good cyclist will be able to determine how long and how hard to push for a given hill, in a way that allows them to recover before the next hill or attack.
 
 ### Don't surge downhill!
 This is the main takeaway from the simulation. Surging downhill is a waste of
