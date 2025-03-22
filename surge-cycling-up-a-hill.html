@@ -1,0 +1,956 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/stylesheet/style.min.css">
+
+
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+          href="https://leblancfg.com/theme/pygments/monokai.min.css">
+
+
+
+  <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/solid.css">
+
+
+  <link rel="shortcut icon" href="/img/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/img/icons/favicon.ico" type="image/x-icon">
+
+  <!-- Chrome, Firefox OS and Opera -->
+  <meta name="theme-color" content="#330033">
+  <!-- Windows Phone -->
+  <meta name="msapplication-navbutton-color" content="#330033">
+  <!-- iOS Safari -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Microsoft EDGE -->
+  <meta name="msapplication-TileColor" content="#330033">
+
+  <link href="https://leblancfg.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="leblancfg.com Atom">
+
+  <link href="https://leblancfg.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="leblancfg.com RSS">
+
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-120300361-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+ 
+
+<meta name="author" content="François Leblanc" />
+<meta name="description" content="A simple cycling simulator that calculates the time it takes to cycle up a hill with a surge of power." />
+<meta name="keywords" content="cycling, physics, simulation, chart.js">
+
+
+  <meta property="og:site_name" content="leblancfg.com"/>
+  <meta property="og:title" content="When&#39;s the best time to surge when cycling up a hill?"/>
+  <meta property="og:description" content="A simple cycling simulator that calculates the time it takes to cycle up a hill with a surge of power."/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="https://leblancfg.com/surge-cycling-up-a-hill.html"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2025-03-21 00:00:00-04:00"/>
+  <meta property="article:modified_time" content=""/>
+  <meta property="article:author" content="https://leblancfg.com/author/francois-leblanc.html">
+  <meta property="article:section" content="Physics"/>
+  <meta property="article:tag" content="cycling"/>
+  <meta property="article:tag" content="physics"/>
+  <meta property="article:tag" content="simulation"/>
+  <meta property="article:tag" content="chart.js"/>
+  <meta property="og:image" content="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4">
+
+  <title>leblancfg.com &ndash; When&#39;s the best time to surge when cycling up a hill?</title>
+
+
+</head>
+<body class="light-theme">
+
+<aside>
+  <div>
+    <a href="https://leblancfg.com/">
+      <img src="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4" alt="François Leblanc" title="François Leblanc">
+    </a>
+
+    <h1>
+      <a href="https://leblancfg.com/">François Leblanc</a>
+    </h1>
+
+    <p>Data Science, Geospatial Python, Space Stuff</p>
+
+
+    <nav>
+      <ul class="list">
+
+
+            <li>
+              <a target="_self"
+                 href="https://leblancfg.com/pages/about.html#about">
+                About
+              </a>
+            </li>
+            <li>
+              <a target="_self"
+                 href="https://leblancfg.com/pages/projects.html#projects">
+                Projects
+              </a>
+            </li>
+
+          <li>
+            <a target="_self" href="https://leblancfg.com/pages/leblancfg_CV.pdf" >Résumé</a>
+          </li>
+      </ul>
+    </nav>
+
+    <ul class="social">
+      <li>
+        <a class="sc-linkedin"
+           href="https://www.linkedin.com/in/fran%C3%A7ois-leblanc-07294b106/"
+           target="_blank">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-github"
+           href="https://github.com/leblancfg"
+           target="_blank">
+          <i class="fa-brands fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-mastodon"
+rel="me"           href="https://fosstodon.org/@leblancfg"
+           target="_blank">
+          <i class="fa-brands fa-mastodon"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-rss"
+           href="https://leblancfg.com/feeds/all.atom.xml"
+           target="_blank">
+          <i class="fa-solid fa-rss"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</aside>
+  <main>
+
+<nav>
+  <a href="https://leblancfg.com/">Home</a>
+
+  <a href="/archives.html">Archives</a>
+  <a href="/categories.html">Categories</a>
+  <a href="/tags.html">Tags</a>
+
+  <a href="https://leblancfg.com/feeds/all.atom.xml">Atom</a>
+
+  <a href="https://leblancfg.com/feeds/all.rss.xml">RSS</a>
+</nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="surge-cycling-up-a-hill">When's the best time to surge when cycling up a hill?</h1>
+    <p>
+      Posted on March 21, 2025 in <a href="https://leblancfg.com/category/physics.html">Physics</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <p><img alt="Cycling uphill" src="img/12_percent_hill.jpg"></p>
+<h2>The Physics of Cycling Uphill</h2>
+<p>When cycling, several forces affect your motion:</p>
+<ol>
+<li><strong>Propulsive Force</strong>: The power you generate divided by your velocity</li>
+<li><strong>Gravity</strong>: Pulls you down, making climbs harder. The heavier you are, the more power you need to climb.</li>
+<li><strong>Rolling Resistance</strong>: Friction between tires and road, linear with velocity.</li>
+<li><strong>Air Resistance</strong>: Increases with the square of your velocity</li>
+</ol>
+<p>The simulation below models a 1'200 m route with a hill in the middle. You can
+apply a power surge at different points to see when it's most effective.</p>
+<h2>When Should You Surge?</h2>
+<p>The key question: <strong>When is the optimal time to apply a short power surge to
+minimize your total time?</strong></p>
+<ul>
+<li>On the flat sections?</li>
+<li>At the beginning of the climb?</li>
+<li>In the middle of the climb?</li>
+<li>Near the top of the climb?</li>
+<li>During the descent?</li>
+</ul>
+<p>Use the simulator below to find out!</p>
+<!-- Input controls with better styling -->
+<div style="margin: 20px 0; padding: 15px; background: #f5f5f5; border-radius: 8px;">
+  <h3>Simulation Parameters</h3>
+
+  <!-- Primary parameters -->
+  <div style="margin-bottom: 20px;">
+    <h4>Power Settings</h4>
+    <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+      <div style="min-width: 200px;">
+        <label for="normal_power" style="display: block; margin-bottom: 5px; font-weight: bold;">Normal Power (W):</label>
+        <input type="range" id="normal_power_slider" min="100" max="400" value="200" style="width: 100%;">
+        <input type="number" id="normal_power" value="200" style="width: 100px;">
+      </div>
+      <div style="min-width: 200px;">
+        <label for="surge_power" style="display: block; margin-bottom: 5px; font-weight: bold;">Surge Power (W):</label>
+        <input type="range" id="surge_power_slider" min="200" max="800" value="400" style="width: 100%;">
+        <input type="number" id="surge_power" value="400" style="width: 100px;">
+      </div>
+      <div style="min-width: 200px;">
+        <label for="surge_duration" style="display: block; margin-bottom: 5px; font-weight: bold;">Surge Duration (s):</label>
+        <input type="range" id="surge_duration_slider" min="5" max="60" value="20" style="width: 100%;">
+        <input type="number" id="surge_duration" value="20" style="width: 100px;">
+      </div>
+    </div>
+  </div>
+
+  <!-- Advanced parameters (initially hidden) -->
+  <div>
+    <details>
+      <summary style="cursor: pointer; font-weight: bold; padding: 10px 0;">Advanced Parameters</summary>
+      <div style="margin-top: 10px; padding: 15px; background: #eee; border-radius: 5px;">
+        <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+          <div style="min-width: 200px;">
+            <label for="cyclist_mass" style="display: block; margin-bottom: 5px; font-weight: bold;">Cyclist + Bike Mass (kg):</label>
+            <input type="range" id="cyclist_mass_slider" min="50" max="100" value="70" style="width: 100%;">
+            <input type="number" id="cyclist_mass" value="70" style="width: 100px;">
+          </div>
+          <div style="min-width: 200px;">
+            <div style="display: flex; align-items: center; margin-bottom: 5px;">
+              <label for="drag_coefficient" style="font-weight: bold; margin-right: 5px;">Drag Coefficient:</label>
+              <div class="tooltip" style="position: relative; display: inline-block; cursor: help;">
+                <span style="display: inline-block; width: 16px; height: 16px; background: #666; color: white; border-radius: 50%; text-align: center; line-height: 16px; font-size: 12px;">i</span>
+                <div style="visibility: hidden; width: 250px; background-color: #555; color: #fff; text-align: left; border-radius: 6px; padding: 8px; position: absolute; z-index: 1; bottom: 125%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s; font-weight: normal; line-height: 1.4;">
+                  The drag coefficient affects air resistance. Lower values mean less drag.
+                  <br><br>
+                  <strong>Examples:</strong>
+                  <br>• 0.5: Drafting behind another cyclist
+                  <br>• 0.9: Racing position on drops
+                  <br>• 1.2: Upright position
+                </div>
+              </div>
+            </div>
+            <input type="range" id="drag_coefficient_slider" min="0.5" max="1.5" step="0.1" value="0.9" style="width: 100%;">
+            <input type="number" id="drag_coefficient" value="0.9" step="0.1" style="width: 100px;">
+          </div>
+          <div style="min-width: 200px;">
+            <div style="display: flex; align-items: center; margin-bottom: 5px;">
+              <label for="frontal_area" style="font-weight: bold; margin-right: 5px;">Frontal Area (m²):</label>
+              <div class="tooltip" style="position: relative; display: inline-block; cursor: help;">
+                <span style="display: inline-block; width: 16px; height: 16px; background: #666; color: white; border-radius: 50%; text-align: center; line-height: 16px; font-size: 12px;">i</span>
+                <div style="visibility: hidden; width: 250px; background-color: #555; color: #fff; text-align: left; border-radius: 6px; padding: 8px; position: absolute; z-index: 1; bottom: 125%; left: 50%; transform: translateX(-50%); opacity: 0; transition: opacity 0.3s; font-weight: normal; line-height: 1.4;">
+                  The frontal area is the cyclist's cross-sectional area facing the wind.
+                  <br><br>
+                  <strong>Typical values:</strong>
+                  <br>• 0.36 m²: Pro cyclist in aero position
+                  <br>• 0.5 m²: Recreational cyclist on hoods
+                  <br>• 0.6 m²: Upright position
+                </div>
+              </div>
+            </div>
+            <input type="range" id="frontal_area_slider" min="0.3" max="0.7" step="0.01" value="0.42" style="width: 100%;">
+            <input type="number" id="frontal_area" value="0.42" step="0.01" style="width: 100px;">
+          </div>
+        </div>
+      </div>
+    </details>
+  </div>
+
+  <button id="plot_button" style="margin-top: 15px; padding: 8px 16px; background: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">Run Simulation</button>
+</div>
+
+<!-- Container for the elevation profile -->
+<div style="margin: 20px 0;">
+  <h3>Elevation Profile</h3>
+  <canvas id="elevation_chart" width="800" height="200"></canvas>
+</div>
+
+<!-- Container for the results chart -->
+<div style="margin: 20px 0;">
+  <h3>Total Time vs. Surge Start Position</h3>
+  <canvas id="results_chart" width="800" height="400"></canvas>
+</div>
+
+<!-- Container for optimal result -->
+<div id="optimal_result" style="margin: 20px 0; padding: 15px; background: #e8f5e9; border-radius: 8px; display: none;">
+  <h3>Optimal Surge Zone</h3>
+  <p id="optimal_text"></p>
+  <p><em>Note: The time curve typically has a "flat spot" where multiple surge points yield similar results. This shows the entire range of surge start times that achieve the fastest overall time (within 0.1 seconds of minimum).</em></p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// Constants for the simulation
+const g = 9.81; // gravity in m/s^2
+const C_r = 0.005; // rolling resistance coefficient
+const rho = 1.2; // air density in kg/m^3
+const total_distance = 1200; // total distance in meters
+const dt = 0.1; // time step in seconds
+
+// Variables that can be modified through UI
+let m = 70; // mass of cyclist + bike in kg
+let C_d = 0.9; // drag coefficient
+let A = 0.42; // frontal area in m^2
+
+// Route profile: segments with start/end distances and slope in degrees
+const route = [
+  {start: 0, end: 100, slope: 0}, // flat
+  {start: 100, end: 600, slope: 10}, // uphill
+  {start: 600, end: 1100, slope: -10}, // downhill
+  {start: 1100, end: 1200, slope: 0} // flat
+];
+
+// Calculate elevation profile
+function calculateElevationProfile() {
+  const points = [];
+  let elevation = 0;
+
+  for (let x = 0; x <= total_distance; x += 10) {
+    let theta = getTheta(x);
+    // If moving 1 meter horizontally at this slope, how much vertical change?
+    let vertical_change = Math.tan(theta) * 10;
+
+    if (points.length > 0) {
+      elevation += vertical_change;
+    }
+
+    points.push({x: x, y: elevation});
+  }
+
+  return points;
+}
+
+// Get slope angle in radians based on position
+function getTheta(x) {
+  for (let segment of route) {
+    if (x >= segment.start && x < segment.end) {
+      return segment.slope * Math.PI / 180; // convert degrees to radians
+    }
+  }
+  return 0; // default to flat if beyond segments
+}
+
+// Get segment description based on position
+function getSegmentDescription(x) {
+  if (x < 100) return "starting flat";
+  if (x < 600) return "climbing uphill";
+  if (x < 1100) return "descending";
+  return "final flat section";
+}
+
+// Calculate steady-state speed on flat ground for a given power
+function calculateSteadyStateSpeed(power) {
+  // On flat ground, steady-state means acceleration = 0
+  // F_power + F_roll + F_drag = 0
+  // power/v - C_r*m*g - 0.5*C_d*A*rho*v^2 = 0
+
+  // Use iterative approach to find the velocity where net force is zero
+  let v = 5; // starting guess
+  const maxIterations = 50;
+  const tolerance = 0.001;
+
+  for (let i = 0; i < maxIterations; i++) {
+    let F_power = power / v;
+    let F_roll = -C_r * m * g;
+    let F_drag = -0.5 * C_d * A * rho * v * v;
+    let F_net = F_power + F_roll + F_drag;
+
+    if (Math.abs(F_net) < tolerance) {
+      break;
+    }
+
+    // Use simple proportional update to converge to solution
+    // If F_net is positive, we need to increase v
+    // If F_net is negative, we need to decrease v
+    v = v * (1 + 0.1 * Math.sign(F_net) * Math.min(1, Math.abs(F_net)));
+  }
+
+  return v;
+}
+
+// Simulate the ride and return total time
+function simulate(normal_power, surge_power, surge_duration, t_surge_start) {
+  let t = 0; // time in seconds
+  let x = 0; // position in meters
+  let v = calculateSteadyStateSpeed(normal_power); // start at steady-state speed for normal power
+
+  // For tracking position at surge start/end
+  let surge_start_pos = 0;
+  let surge_end_pos = 0;
+
+  // Data points for this simulation
+  const timePoints = [];
+  const speedPoints = [];
+  const powerPoints = [];
+  const positionPoints = [];
+
+  while (x < total_distance) {
+    let theta = getTheta(x);
+
+    // Apply surge power if within surge interval, else normal power
+    let P = (t >= t_surge_start && t < t_surge_start + surge_duration) ? surge_power : normal_power;
+
+    // Track surge position
+    if (t >= t_surge_start && surge_start_pos === 0) {
+      surge_start_pos = x;
+    }
+    if (t >= t_surge_start + surge_duration && surge_end_pos === 0) {
+      surge_end_pos = x;
+    }
+
+    // Calculate forces
+    let F_power = P / (v + 1e-6); // avoid division by zero
+    let F_gravity = -m * g * Math.sin(theta);
+    let F_roll = -C_r * m * g * Math.cos(theta);
+    let F_drag = -0.5 * C_d * A * rho * v * v;
+    let F_net = F_power + F_gravity + F_roll + F_drag;
+
+    let a = F_net / m; // acceleration
+    v += a * dt; // update velocity
+    if (v < 0) v = 0; // prevent negative velocity
+    x += v * dt; // update position
+    t += dt; // increment time
+
+    // Save data point every second
+    if (Math.round(t) === t) {
+      timePoints.push(t);
+      speedPoints.push(v);
+      powerPoints.push(P);
+      positionPoints.push(x);
+    }
+  }
+
+  return {
+    total_time: t,
+    surge_start_pos: surge_start_pos,
+    surge_end_pos: surge_end_pos,
+    data: {
+      time: timePoints,
+      speed: speedPoints,
+      power: powerPoints,
+      position: positionPoints
+    }
+  };
+}
+
+// Draw the elevation profile
+function drawElevationProfile(optimalStartPos = null, optimalEndPos = null, isOptimalZone = false) {
+  const elevationData = calculateElevationProfile();
+
+  // Create chart
+  const ctx = document.getElementById('elevation_chart').getContext('2d');
+
+  if (window.elevationChart) {
+    window.elevationChart.destroy();
+  }
+
+  const datasets = [{
+    label: 'Elevation Profile',
+    data: elevationData,
+    borderColor: '#8BC34A',
+    borderWidth: 3,
+    fill: true,
+    backgroundColor: 'rgba(139, 195, 74, 0.2)',
+    tension: 0.4
+  }];
+
+  // Add optimal surge markers if provided
+  if (optimalStartPos !== null && optimalEndPos !== null) {
+    // Find the y-values (elevation) for the start and end positions
+    let startElevation = 0;
+    let endElevation = 0;
+
+    for (const point of elevationData) {
+      if (point.x >= optimalStartPos) {
+        startElevation = point.y;
+        break;
+      }
+    }
+
+    for (const point of elevationData) {
+      if (point.x >= optimalEndPos) {
+        endElevation = point.y;
+        break;
+      }
+    }
+
+    // If this is showing an optimal zone (flat spot) rather than a single optimal point
+    if (isOptimalZone) {
+      // Add a highlighted zone for the optimal surge
+      datasets.push({
+        label: 'Optimal Surge Zone',
+        data: [
+          {x: optimalStartPos, y: startElevation},
+          {x: optimalEndPos, y: endElevation}
+        ],
+        backgroundColor: 'rgba(76, 175, 80, 0.3)',
+        borderColor: 'rgba(76, 175, 80, 0.8)',
+        borderWidth: 3,
+        fill: false,
+        pointRadius: 6,
+        pointHoverRadius: 8
+      });
+
+      // Find elevation points within the optimal zone to create a filled area
+      const zonePoints = [];
+      for (const point of elevationData) {
+        if (point.x >= optimalStartPos && point.x <= optimalEndPos) {
+          zonePoints.push(point);
+        }
+      }
+
+      // Add the filled area if we have points
+      if (zonePoints.length > 0) {
+        datasets.push({
+          label: 'Optimal Zone',
+          data: zonePoints,
+          backgroundColor: 'rgba(76, 175, 80, 0.2)',
+          borderColor: 'rgba(76, 175, 80, 0.5)',
+          borderWidth: 0,
+          fill: true,
+          pointRadius: 0
+        });
+      }
+    } else {
+      // Add start marker
+      datasets.push({
+        label: 'Surge Start',
+        data: [{x: optimalStartPos, y: startElevation}],
+        backgroundColor: '#FF5722',
+        borderColor: '#FF5722',
+        pointRadius: 8,
+        pointHoverRadius: 10
+      });
+
+      // Add end marker
+      datasets.push({
+        label: 'Surge End',
+        data: [{x: optimalEndPos, y: endElevation}],
+        backgroundColor: '#9C27B0',
+        borderColor: '#9C27B0',
+        pointRadius: 8,
+        pointHoverRadius: 10
+      });
+
+      // Add a line connecting them
+      datasets.push({
+        label: 'Optimal Surge',
+        data: [
+          {x: optimalStartPos, y: startElevation},
+          {x: optimalEndPos, y: endElevation}
+        ],
+        backgroundColor: 'rgba(255, 87, 34, 0.3)',
+        borderColor: '#FF5722',
+        borderWidth: 5,
+        borderDash: [5, 5],
+        fill: false,
+        pointRadius: 0
+      });
+    }
+  }
+
+  window.elevationChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      datasets: datasets
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          display: true,
+          position: 'top'
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              if (context.dataset.label === 'Surge Start') {
+                return `Surge starts here: ${Math.round(context.parsed.x)}m, Elevation: ${Math.round(context.parsed.y)}m`;
+              } else if (context.dataset.label === 'Surge End') {
+                return `Surge ends here: ${Math.round(context.parsed.x)}m, Elevation: ${Math.round(context.parsed.y)}m`;
+              } else {
+                return `Elevation: ${Math.round(context.parsed.y)}m, Distance: ${context.parsed.x}m`;
+              }
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          type: 'linear',
+          position: 'bottom',
+          title: {
+            display: true,
+            text: 'Distance (m)'
+          },
+          ticks: {
+            callback: function(value) {
+              return value + 'm';
+            }
+          }
+        },
+        y: {
+          title: {
+            display: true,
+            text: 'Elevation (m)'
+          },
+          ticks: {
+            callback: function(value) {
+              return value + 'm';
+            }
+          }
+        }
+      }
+    }
+  });
+}
+
+// Run simulations and plot the results
+function plot() {
+  // Get user inputs for power
+  let normal_power = parseFloat(document.getElementById('normal_power').value);
+  let surge_power = parseFloat(document.getElementById('surge_power').value);
+  let surge_duration = parseFloat(document.getElementById('surge_duration').value);
+
+  // Get advanced parameters if they exist
+  m = parseFloat(document.getElementById('cyclist_mass').value);
+  C_d = parseFloat(document.getElementById('drag_coefficient').value);
+  A = parseFloat(document.getElementById('frontal_area').value);
+
+  // Debug: Log current values to console to verify
+  console.log("Current simulation parameters:", {
+    normalPower: normal_power,
+    surgePower: surge_power, 
+    surgeDuration: surge_duration,
+    mass: m,
+    dragCoefficient: C_d,
+    frontalArea: A
+  });
+
+  // Simulate for different surge start times
+  let data = [];
+  let min_time = Infinity;
+  let optimal_start = 0;
+  let optimal_result = null;
+
+  // Calculate a large number of evenly-spaced time points with high granularity
+  const timePoints = [];
+  // Use 0.5 second intervals throughout the entire range for higher precision
+  for (let t = 0; t <= 500; t += 0.5) {
+    timePoints.push(t);
+  }
+
+  // Sort and remove duplicates
+  const uniqueTimePoints = [...new Set(timePoints)].sort((a, b) => a - b);
+
+  // Store both time-based and position-based results
+  const timeBasedData = [];
+  const positionBasedData = [];
+
+  for (let t_surge_start of uniqueTimePoints) {
+    let result = simulate(normal_power, surge_power, surge_duration, t_surge_start);
+    timeBasedData.push({x: t_surge_start, y: result.total_time, pos: result.surge_start_pos});
+    positionBasedData.push({x: result.surge_start_pos, y: result.total_time, time: t_surge_start});
+
+    if (result.total_time < min_time) {
+      min_time = result.total_time;
+      optimal_start = t_surge_start;
+      optimal_result = result;
+    }
+  }
+
+  // Sort position-based data by x (position)
+  positionBasedData.sort((a, b) => a.x - b.x);
+
+  // Use position-based data for our chart
+  data = positionBasedData;
+
+  // Find the flat spot (optimal surge zone)
+  // First, find the minimum time
+  let min_time_value = Math.min(...data.map(point => point.y));
+
+  // Find all points within 0.1 seconds of the minimum time (flat spot)
+  const tolerance = 0.1; // seconds
+  let optimalZone = data.filter(point => point.y <= min_time_value + tolerance);
+  let optimalStartPos = Math.min(...optimalZone.map(point => point.x));
+  let optimalEndPos = Math.max(...optimalZone.map(point => point.x));
+
+  // Also keep track of corresponding times for the optimal zone
+  let optimalStartTime = timeBasedData.find(p => p.pos >= optimalStartPos)?.x || optimal_start;
+  let optimalEndTime = timeBasedData.find(p => p.pos >= optimalEndPos)?.x || (optimal_start + surge_duration);
+
+  // Create chart
+  const ctx = document.getElementById('results_chart').getContext('2d');
+
+  if (window.resultsChart) {
+    window.resultsChart.destroy();
+  }
+
+  window.resultsChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      datasets: [{
+        label: 'Total Time',
+        data: data,
+        borderColor: '#2196F3',
+        borderWidth: 3,
+        pointRadius: 0,
+        pointHoverRadius: 5,
+        fill: false
+      },
+      {
+        label: 'Optimal Zone',
+        data: optimalZone,
+        backgroundColor: 'rgba(76, 175, 80, 0.3)',
+        borderColor: 'rgba(76, 175, 80, 0.8)',
+        borderWidth: 2,
+        pointRadius: 3,
+        pointHoverRadius: 5,
+        fill: false
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              const point = context.raw;
+              return `Surge at ${point.x.toFixed(0)}m (${point.time?.toFixed(1) || '?'}s) → Time: ${context.parsed.y.toFixed(1)}s`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          type: 'linear',
+          position: 'bottom',
+          title: {
+            display: true,
+            text: 'Surge Start Position (m)'
+          },
+          ticks: {
+            callback: function(value) {
+              return value + 'm';
+            }
+          },
+          // Limit x-axis to total distance
+          min: 0,
+          max: total_distance
+        },
+        y: {
+          title: {
+            display: true,
+            text: 'Total Time (s)'
+          },
+          ticks: {
+            callback: function(value) {
+              return value + 's';
+            }
+          }
+        }
+      },
+      animation: {
+        duration: 1000
+      }
+    }
+  });
+
+  // Show optimal result
+  const optimalResultElement = document.getElementById('optimal_result');
+  const optimalTextElement = document.getElementById('optimal_text');
+
+  // Determine where the surge is happening on the route
+  let surgeStartSegment = getSegmentDescription(optimal_result.surge_start_pos);
+  let surgeEndSegment = getSegmentDescription(optimal_result.surge_end_pos);
+
+  // Calculate speeds for display
+  const normalSpeed = calculateSteadyStateSpeed(normal_power);
+  const surgeSpeed = calculateSteadyStateSpeed(surge_power);
+
+  optimalTextElement.innerHTML = `
+    <strong>Fastest time:</strong> ${min_time.toFixed(1)} seconds<br>
+    <strong>Optimal surge start:</strong> ${optimal_start.toFixed(1)} seconds into the ride<br>
+    <strong>Location:</strong> Surge applied at ${optimal_result.surge_start_pos.toFixed(0)}m (${surgeStartSegment}) to ${optimal_result.surge_end_pos.toFixed(0)}m (${surgeEndSegment})<br>
+    <strong>Speeds:</strong> Normal power: ${normalSpeed.toFixed(1)} m/s (${(normalSpeed*3.6).toFixed(1)} km/h), Surge power: ${surgeSpeed.toFixed(1)} m/s (${(surgeSpeed*3.6).toFixed(1)} km/h)
+  `;
+
+  optimalResultElement.style.display = 'block';
+
+  window.resultsChart.update();
+
+  // We already have optimalStartPos and optimalEndPos directly from the position-based data
+
+  // Find the corresponding times for these positions for the result text
+  const startTimeData = timeBasedData.find(d => Math.abs(d.pos - optimalStartPos) < 1);
+  const endTimeData = timeBasedData.find(d => Math.abs(d.pos - optimalEndPos) < 1);
+  const startTimeText = startTimeData ? startTimeData.x.toFixed(1) : '?';
+  const endTimeText = endTimeData ? endTimeData.x.toFixed(1) : '?';
+
+  // Update the optimal result text to show the range
+  optimalTextElement.innerHTML = `
+    <strong>Fastest time:</strong> ${min_time_value.toFixed(1)} seconds<br>
+    <strong>Optimal surge zone:</strong> ${optimalStartPos.toFixed(0)}m to ${optimalEndPos.toFixed(0)}m<br>
+    <strong>Time equivalent:</strong> ${startTimeText}s to ${endTimeText}s into the ride<br>
+    <strong>Speeds:</strong> Normal power: ${normalSpeed.toFixed(1)} m/s (${(normalSpeed*3.6).toFixed(1)} km/h), Surge power: ${surgeSpeed.toFixed(1)} m/s (${(surgeSpeed*3.6).toFixed(1)} km/h)
+  `;
+
+  // Update the elevation profile with the optimal zone
+  drawElevationProfile(optimalStartPos, optimalEndPos, true);
+}
+
+// Initialize
+window.onload = function() {
+  // Link sliders and number inputs
+  const normalPowerSlider = document.getElementById('normal_power_slider');
+  const normalPowerInput = document.getElementById('normal_power');
+  const surgePowerSlider = document.getElementById('surge_power_slider');
+  const surgePowerInput = document.getElementById('surge_power');
+  const surgeDurationSlider = document.getElementById('surge_duration_slider');
+  const surgeDurationInput = document.getElementById('surge_duration');
+
+  // Advanced parameters
+  const cyclistMassSlider = document.getElementById('cyclist_mass_slider');
+  const cyclistMassInput = document.getElementById('cyclist_mass');
+  const dragCoefficientSlider = document.getElementById('drag_coefficient_slider');
+  const dragCoefficientInput = document.getElementById('drag_coefficient');
+  const frontalAreaSlider = document.getElementById('frontal_area_slider');
+  const frontalAreaInput = document.getElementById('frontal_area');
+
+  // Helper function to link a slider and input
+  function linkInputs(slider, input) {
+    slider.addEventListener('input', function() {
+      input.value = this.value;
+    });
+
+    input.addEventListener('input', function() {
+      slider.value = this.value;
+    });
+  }
+
+  // Link all input pairs
+  linkInputs(normalPowerSlider, normalPowerInput);
+  linkInputs(surgePowerSlider, surgePowerInput);
+  linkInputs(surgeDurationSlider, surgeDurationInput);
+  linkInputs(cyclistMassSlider, cyclistMassInput);
+  linkInputs(dragCoefficientSlider, dragCoefficientInput);
+  linkInputs(frontalAreaSlider, frontalAreaInput);
+
+  // Draw initial elevation profile without markers
+  drawElevationProfile(null, null);
+
+  // Attach plot function to button click
+  document.getElementById('plot_button').addEventListener('click', plot);
+
+  // Setup tooltips
+  const tooltipContainers = document.querySelectorAll('.tooltip');
+  tooltipContainers.forEach(container => {
+    const tooltipText = container.querySelector('div');
+
+    container.addEventListener('mouseenter', () => {
+      tooltipText.style.visibility = 'visible';
+      tooltipText.style.opacity = '1';
+    });
+
+    container.addEventListener('mouseleave', () => {
+      tooltipText.style.visibility = 'hidden';
+      tooltipText.style.opacity = '0';
+    });
+  });
+
+  // Initial plot
+  plot();
+};
+</script>
+
+<h3>Understanding the Results</h3>
+<p>The simulation identifies the zone where your time will be minimized. There
+might be a slight wobble in sections: this is just a result of the simulation's
+granularity. Any spot on the hill between "momentum is spent" and "surge will
+be appplied downhill" is a good spot to surge.</p>
+<p>Here, let's look at some general conclusions. Of course, this isn't real life!
+A good cyclist will be able to determine how long and how hard to push for a
+given hill, in a way where they can recover before the next hill or attack.</p>
+<h3>Don't surge before the climb!</h3>
+<p>I often do this, telling myself I'll "spread the load" a bit before so that the
+peak power during the ascent is lower. But in most simulations, you'll find
+that the time is dramatically slower if the surge is applied before the climb.
+This is because all the extra power is "wasted" by accelerating on flat ground
+where air resistance is the dominant force.</p>
+<h3>Don't surge before your momentum is spent!</h3>
+<p>You'll also notice that the first optimal surge point is not exactly as the
+start of the climb. This is because the surge is most effective when the rider
+is at their slowest speed, just before the climb starts.</p>
+<h3>Race Dynamics - surge at the bottom, or the crest?</h3>
+<p>In real racing, optimal surge timing can depend on tactical considerations
+beyond pure physics. This simulation doesn't model drafting, but in a race, a
+surge would be more effective at dropping riders when drafting is most useful,
+i.e. at higher speeds in the downhill section.</p>
+<p>This is why you will often see surges applied near the crest of a climb in
+professional cycling - it's a strategic move to break away from competitors!</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://leblancfg.com/tag/cycling.html">cycling</a>
+      <a href="https://leblancfg.com/tag/physics.html">physics</a>
+      <a href="https://leblancfg.com/tag/simulation.html">simulation</a>
+      <a href="https://leblancfg.com/tag/chartjs.html">chart.js</a>
+    </p>
+  </div>
+
+
+
+
+
+
+</article>
+
+<footer>
+<p>
+  &copy; 2025  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p></footer>  </main>
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " leblancfg.com ",
+  "url" : "https://leblancfg.com",
+  "image": "https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4",
+  "description": "François Leblanc's Thoughts and Writings"
+}
+</script>
+</body>
+</html>
