@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com - Physics</title><link href="https://leblancfg.com/" rel="alternate"></link><link href="https://leblancfg.com/feeds/physics.atom.xml" rel="self"></link><id>https://leblancfg.com/</id><updated>2025-03-21T00:00:00-04:00</updated><subtitle>Data Science, Geospatial Python, Space Stuff</subtitle><entry><title>When's the best time to surge when cycling up a hill?</title><link href="https://leblancfg.com/surge-cycling-up-a-hill.html" rel="alternate"></link><published>2025-03-21T00:00:00-04:00</published><updated>2025-03-21T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2025-03-21:/surge-cycling-up-a-hill.html</id><summary type="html">&lt;p&gt;A simple cycling simulator that calculates the time it takes to cycle up a hill with a surge of power.&lt;/p&gt;</summary><content type="html">&lt;p&gt;&lt;img alt="Cycling uphill" src="img/12_percent_hill.jpg"&gt;&lt;/p&gt;
 &lt;h2&gt;The Physics of Cycling Uphill&lt;/h2&gt;
+&lt;p&gt;My wife and I just recently purchased new bikes, upgrading from our late 80s
+steel models to more modern ones. With it came a purchase of a erg-enabled
+indoor trainer. I've been spending a surprising amount of hours on Zwift, and
+turns out... it's great fun! I'd like to consider myself an all-round athlete,
+so it was so great dismay to notice that what I thought was being in OK shape
+is &amp;mdash; as far as comparison with other indoor cyclists goes &amp;mdash; very
+poor performance! This of course, was very exciting. I love a good training
+challenge.&lt;/p&gt;
+&lt;p&gt;I've participated in a few races, and noticed that many strategies
+seem to be used when tackling hills. Having tried a different strategies on my
+own, I could definitely feel like some were much better than others. But was
+that due to luck and good timing on my part, or actually a good strategy? The
+good news is, cycling is mostly "basic" physics, and we can simulate it!&lt;/p&gt;
 &lt;p&gt;When cycling, several forces affect your motion:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;strong&gt;Propulsive Force&lt;/strong&gt;: The power you generate divided by your velocity&lt;/li&gt;
@@ -714,6 +727,12 @@ be appplied downhill" is a good spot to surge.&lt;/p&gt;
 &lt;p&gt;Here, let's look at some general conclusions. Of course, this isn't real life!
 A good cyclist will be able to determine how long and how hard to push for a
 given hill, in a way where they can recover before the next hill or attack.&lt;/p&gt;
+&lt;h3&gt;Don't surge downhill!&lt;/h3&gt;
+&lt;p&gt;This is the main takeaway from the simulation. Surging downhill is a waste of
+energy, as you're already moving quickly and air resistance is high. The best
+time to surge is when you're moving slowly, that is, on the uphill section.&lt;/p&gt;
+&lt;p&gt;I am very guilty of this in real life... and in fact thinking about it is why I
+wrote this article in the first place!&lt;/p&gt;
 &lt;h3&gt;Don't surge before the climb!&lt;/h3&gt;
 &lt;p&gt;I often do this, telling myself I'll "spread the load" a bit before so that the
 peak power during the ascent is lower. But in most simulations, you'll find
