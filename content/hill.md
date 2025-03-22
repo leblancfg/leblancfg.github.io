@@ -761,7 +761,9 @@ where air resistance is the dominant force.
 ### Don't surge before your momentum is spent!
 You'll also notice that the first optimal surge point is not exactly as the
 start of the climb. This is because the surge is most effective when the rider
-is at their slowest speed, just before the climb starts.
+is at their slowest speed. And as we're carrying some momentum from the flat
+section, the optimal surge point is a bit into the climb. Depending on the
+settings, this might be 20-40 meters into the climb.
 
 ### Race Dynamics - surge at the bottom, or the crest?
 In real racing, optimal surge timing can depend on tactical considerations
