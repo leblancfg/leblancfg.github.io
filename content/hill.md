@@ -17,7 +17,7 @@ When cycling, several forces affect your motion:
 3. **Rolling Resistance**: Friction between tires and road, linear with velocity.
 4. **Air Resistance**: Increases with the square of your velocity
 
-The simulation below models a 1.2km route with a hill in the middle. You can
+The simulation below models a 1'200 m route with a hill in the middle. You can
 apply a power surge at different points to see when it's most effective.
 
 ## When Should You Surge?
@@ -104,8 +104,8 @@ Use the simulator below to find out!
                 </div>
               </div>
             </div>
-            <input type="range" id="frontal_area_slider" min="0.3" max="0.7" step="0.01" value="0.4" style="width: 100%;">
-            <input type="number" id="frontal_area" value="0.4" step="0.01" style="width: 100px;">
+            <input type="range" id="frontal_area_slider" min="0.3" max="0.7" step="0.01" value="0.42" style="width: 100%;">
+            <input type="number" id="frontal_area" value="0.42" step="0.01" style="width: 100px;">
           </div>
         </div>
       </div>
@@ -129,9 +129,9 @@ Use the simulator below to find out!
 
 <!-- Container for optimal result -->
 <div id="optimal_result" style="margin: 20px 0; padding: 15px; background: #e8f5e9; border-radius: 8px; display: none;">
-  <h3>First Optimal Surge Point</h3>
+  <h3>Optimal Surge Zone</h3>
   <p id="optimal_text"></p>
-  <p><em>Note: The time curve may have flat spots where other surge points yield similar results. This shows the first point that provides the minimum time.</em></p>
+  <p><em>Note: The time curve typically has a "flat spot" where multiple surge points yield similar results. This shows the entire range of surge start times that achieve the fastest overall time (within 0.1 seconds of minimum).</em></p>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -146,7 +146,7 @@ const dt = 0.1; // time step in seconds
 // Variables that can be modified through UI
 let m = 70; // mass of cyclist + bike in kg
 let C_d = 0.9; // drag coefficient
-let A = 0.40; // frontal area in m^2
+let A = 0.42; // frontal area in m^2
 
 // Route profile: segments with start/end distances and slope in degrees
 const route = [
@@ -290,7 +290,7 @@ function simulate(normal_power, surge_power, surge_duration, t_surge_start) {
 }
 
 // Draw the elevation profile
-function drawElevationProfile(optimalStartPos = null, optimalEndPos = null) {
+function drawElevationProfile(optimalStartPos = null, optimalEndPos = null, isOptimalZone = false) {
   const elevationData = calculateElevationProfile();
   
   // Create chart
@@ -330,40 +330,79 @@ function drawElevationProfile(optimalStartPos = null, optimalEndPos = null) {
       }
     }
     
-    // Add start marker
-    datasets.push({
-      label: 'Surge Start',
-      data: [{x: optimalStartPos, y: startElevation}],
-      backgroundColor: '#FF5722',
-      borderColor: '#FF5722',
-      pointRadius: 8,
-      pointHoverRadius: 10
-    });
-    
-    // Add end marker
-    datasets.push({
-      label: 'Surge End',
-      data: [{x: optimalEndPos, y: endElevation}],
-      backgroundColor: '#9C27B0',
-      borderColor: '#9C27B0',
-      pointRadius: 8,
-      pointHoverRadius: 10
-    });
-    
-    // Add a line connecting them
-    datasets.push({
-      label: 'Optimal Surge',
-      data: [
-        {x: optimalStartPos, y: startElevation},
-        {x: optimalEndPos, y: endElevation}
-      ],
-      backgroundColor: 'rgba(255, 87, 34, 0.3)',
-      borderColor: '#FF5722',
-      borderWidth: 5,
-      borderDash: [5, 5],
-      fill: false,
-      pointRadius: 0
-    });
+    // If this is showing an optimal zone (flat spot) rather than a single optimal point
+    if (isOptimalZone) {
+      // Add a highlighted zone for the optimal surge
+      datasets.push({
+        label: 'Optimal Surge Zone',
+        data: [
+          {x: optimalStartPos, y: startElevation},
+          {x: optimalEndPos, y: endElevation}
+        ],
+        backgroundColor: 'rgba(76, 175, 80, 0.3)',
+        borderColor: 'rgba(76, 175, 80, 0.8)',
+        borderWidth: 3,
+        fill: false,
+        pointRadius: 6,
+        pointHoverRadius: 8
+      });
+      
+      // Find elevation points within the optimal zone to create a filled area
+      const zonePoints = [];
+      for (const point of elevationData) {
+        if (point.x >= optimalStartPos && point.x <= optimalEndPos) {
+          zonePoints.push(point);
+        }
+      }
+      
+      // Add the filled area if we have points
+      if (zonePoints.length > 0) {
+        datasets.push({
+          label: 'Optimal Zone',
+          data: zonePoints,
+          backgroundColor: 'rgba(76, 175, 80, 0.2)',
+          borderColor: 'rgba(76, 175, 80, 0.5)',
+          borderWidth: 0,
+          fill: true,
+          pointRadius: 0
+        });
+      }
+    } else {
+      // Add start marker
+      datasets.push({
+        label: 'Surge Start',
+        data: [{x: optimalStartPos, y: startElevation}],
+        backgroundColor: '#FF5722',
+        borderColor: '#FF5722',
+        pointRadius: 8,
+        pointHoverRadius: 10
+      });
+      
+      // Add end marker
+      datasets.push({
+        label: 'Surge End',
+        data: [{x: optimalEndPos, y: endElevation}],
+        backgroundColor: '#9C27B0',
+        borderColor: '#9C27B0',
+        pointRadius: 8,
+        pointHoverRadius: 10
+      });
+      
+      // Add a line connecting them
+      datasets.push({
+        label: 'Optimal Surge',
+        data: [
+          {x: optimalStartPos, y: startElevation},
+          {x: optimalEndPos, y: endElevation}
+        ],
+        backgroundColor: 'rgba(255, 87, 34, 0.3)',
+        borderColor: '#FF5722',
+        borderWidth: 5,
+        borderDash: [5, 5],
+        fill: false,
+        pointRadius: 0
+      });
+    }
   }
   
   window.elevationChart = new Chart(ctx, {
@@ -453,7 +492,7 @@ function plot() {
   // Calculate a large number of evenly-spaced time points with high granularity
   const timePoints = [];
   // Use 0.5 second intervals throughout the entire range for higher precision
-  for (let t = 0; t <= 200; t += 0.5) {
+  for (let t = 0; t <= 300; t += 0.5) {
     timePoints.push(t);
   }
   
@@ -471,6 +510,16 @@ function plot() {
     }
   }
   
+  // Find the flat spot (optimal surge zone)
+  // First, find the minimum time
+  let min_time_value = Math.min(...data.map(point => point.y));
+  
+  // Find all points within 0.1 seconds of the minimum time (flat spot)
+  const tolerance = 0.1; // seconds
+  let optimalZone = data.filter(point => point.y <= min_time_value + tolerance);
+  let optimalStartTime = Math.min(...optimalZone.map(point => point.x));
+  let optimalEndTime = Math.max(...optimalZone.map(point => point.x));
+  
   // Create chart
   const ctx = document.getElementById('results_chart').getContext('2d');
   
@@ -487,6 +536,16 @@ function plot() {
         borderColor: '#2196F3',
         borderWidth: 3,
         pointRadius: 0,
+        pointHoverRadius: 5,
+        fill: false
+      },
+      {
+        label: 'Optimal Zone',
+        data: optimalZone,
+        backgroundColor: 'rgba(76, 175, 80, 0.3)',
+        borderColor: 'rgba(76, 175, 80, 0.8)',
+        borderWidth: 2,
+        pointRadius: 3,
         pointHoverRadius: 5,
         fill: false
       }]
@@ -517,7 +576,7 @@ function plot() {
           },
           // Limit x-axis to 200 seconds
           min: 0,
-          max: 200
+          max: 300
         },
         y: {
           title: {
@@ -558,27 +617,34 @@ function plot() {
   
   optimalResultElement.style.display = 'block';
   
-  // Mark the optimal point on the chart
-  window.resultsChart.data.datasets.push({
-    label: 'Optimal Point',
-    data: [{x: optimal_start, y: min_time}],
-    backgroundColor: '#F44336',
-    pointRadius: 8,
-    pointHoverRadius: 10
-  });
-  
   window.resultsChart.update();
   
-  // Update the elevation profile with markers for the optimal surge
-  drawElevationProfile(optimal_result.surge_start_pos, optimal_result.surge_end_pos);
+  // Calculate the position range corresponding to the optimal time range
+  // We need to map from surge start time to position
+  
+  // Simulate surge at optimal start time
+  let startResult = simulate(normal_power, surge_power, surge_duration, optimalStartTime);
+  // Simulate surge at optimal end time
+  let endResult = simulate(normal_power, surge_power, surge_duration, optimalEndTime);
+  
+  // Get positions from the simulation results
+  let optimalStartPos = startResult.surge_start_pos;
+  let optimalEndPos = endResult.surge_start_pos;
+  
+  // Update the optimal result text to show the range
+  optimalTextElement.innerHTML = `
+    <strong>Fastest time:</strong> ${min_time_value.toFixed(1)} seconds<br>
+    <strong>Optimal surge window:</strong> ${optimalStartTime.toFixed(1)} to ${optimalEndTime.toFixed(1)} seconds into the ride<br>
+    <strong>Location:</strong> Optimal surge zone from ${optimalStartPos.toFixed(0)}m to ${optimalEndPos.toFixed(0)}m<br>
+    <strong>Speeds:</strong> Normal power: ${normalSpeed.toFixed(1)} m/s (${(normalSpeed*3.6).toFixed(1)} km/h), Surge power: ${surgeSpeed.toFixed(1)} m/s (${(surgeSpeed*3.6).toFixed(1)} km/h)
+  `;
+  
+  // Update the elevation profile with the optimal zone
+  drawElevationProfile(optimalStartPos, optimalEndPos, true);
 }
 
 // Initialize
 window.onload = function() {
-  // Force-reset the frontal area value to ensure consistency
-  document.getElementById('frontal_area').value = "0.4";
-  document.getElementById('frontal_area_slider').value = "0.4";
-  
   // Link sliders and number inputs
   const normalPowerSlider = document.getElementById('normal_power_slider');
   const normalPowerInput = document.getElementById('normal_power');
