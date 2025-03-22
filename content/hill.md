@@ -1,4 +1,4 @@
-Title: When's the best time to surve when cycling up a hill?
+Title: When's the best time to surge when cycling up a hill?
 Date: 2025-03-21
 Category: Physics
 Tags: cycling, physics, simulation, chart.js
@@ -123,7 +123,7 @@ Use the simulator below to find out!
 
 <!-- Container for the results chart -->
 <div style="margin: 20px 0;">
-  <h3>Total Time vs. Surge Start Time</h3>
+  <h3>Total Time vs. Surge Start Position</h3>
   <canvas id="results_chart" width="800" height="400"></canvas>
 </div>
 
@@ -492,16 +492,21 @@ function plot() {
   // Calculate a large number of evenly-spaced time points with high granularity
   const timePoints = [];
   // Use 0.5 second intervals throughout the entire range for higher precision
-  for (let t = 0; t <= 300; t += 0.5) {
+  for (let t = 0; t <= 500; t += 0.5) {
     timePoints.push(t);
   }
   
   // Sort and remove duplicates
   const uniqueTimePoints = [...new Set(timePoints)].sort((a, b) => a - b);
   
+  // Store both time-based and position-based results
+  const timeBasedData = [];
+  const positionBasedData = [];
+  
   for (let t_surge_start of uniqueTimePoints) {
     let result = simulate(normal_power, surge_power, surge_duration, t_surge_start);
-    data.push({x: t_surge_start, y: result.total_time});
+    timeBasedData.push({x: t_surge_start, y: result.total_time, pos: result.surge_start_pos});
+    positionBasedData.push({x: result.surge_start_pos, y: result.total_time, time: t_surge_start});
     
     if (result.total_time < min_time) {
       min_time = result.total_time;
@@ -510,6 +515,12 @@ function plot() {
     }
   }
   
+  // Sort position-based data by x (position)
+  positionBasedData.sort((a, b) => a.x - b.x);
+  
+  // Use position-based data for our chart
+  data = positionBasedData;
+  
   // Find the flat spot (optimal surge zone)
   // First, find the minimum time
   let min_time_value = Math.min(...data.map(point => point.y));
@@ -517,8 +528,12 @@ function plot() {
   // Find all points within 0.1 seconds of the minimum time (flat spot)
   const tolerance = 0.1; // seconds
   let optimalZone = data.filter(point => point.y <= min_time_value + tolerance);
-  let optimalStartTime = Math.min(...optimalZone.map(point => point.x));
-  let optimalEndTime = Math.max(...optimalZone.map(point => point.x));
+  let optimalStartPos = Math.min(...optimalZone.map(point => point.x));
+  let optimalEndPos = Math.max(...optimalZone.map(point => point.x));
+  
+  // Also keep track of corresponding times for the optimal zone
+  let optimalStartTime = timeBasedData.find(p => p.pos >= optimalStartPos)?.x || optimal_start;
+  let optimalEndTime = timeBasedData.find(p => p.pos >= optimalEndPos)?.x || (optimal_start + surge_duration);
   
   // Create chart
   const ctx = document.getElementById('results_chart').getContext('2d');
@@ -556,7 +571,8 @@ function plot() {
         tooltip: {
           callbacks: {
             label: function(context) {
-              return `Surge at ${context.parsed.x.toFixed(1)}s → Time: ${context.parsed.y.toFixed(1)}s`;
+              const point = context.raw;
+              return `Surge at ${point.x.toFixed(0)}m (${point.time?.toFixed(1) || '?'}s) → Time: ${context.parsed.y.toFixed(1)}s`;
             }
           }
         }
@@ -567,16 +583,16 @@ function plot() {
           position: 'bottom',
           title: {
             display: true,
-            text: 'Surge Start Time (s)'
+            text: 'Surge Start Position (m)'
           },
           ticks: {
             callback: function(value) {
-              return value + 's';
+              return value + 'm';
             }
           },
-          // Limit x-axis to 200 seconds
+          // Limit x-axis to total distance
           min: 0,
-          max: 300
+          max: total_distance
         },
         y: {
           title: {
@@ -619,23 +635,19 @@ function plot() {
   
   window.resultsChart.update();
   
-  // Calculate the position range corresponding to the optimal time range
-  // We need to map from surge start time to position
-  
-  // Simulate surge at optimal start time
-  let startResult = simulate(normal_power, surge_power, surge_duration, optimalStartTime);
-  // Simulate surge at optimal end time
-  let endResult = simulate(normal_power, surge_power, surge_duration, optimalEndTime);
-  
-  // Get positions from the simulation results
-  let optimalStartPos = startResult.surge_start_pos;
-  let optimalEndPos = endResult.surge_start_pos;
+  // We already have optimalStartPos and optimalEndPos directly from the position-based data
+
+  // Find the corresponding times for these positions for the result text
+  const startTimeData = timeBasedData.find(d => Math.abs(d.pos - optimalStartPos) < 1);
+  const endTimeData = timeBasedData.find(d => Math.abs(d.pos - optimalEndPos) < 1);
+  const startTimeText = startTimeData ? startTimeData.x.toFixed(1) : '?';
+  const endTimeText = endTimeData ? endTimeData.x.toFixed(1) : '?';
   
   // Update the optimal result text to show the range
   optimalTextElement.innerHTML = `
     <strong>Fastest time:</strong> ${min_time_value.toFixed(1)} seconds<br>
-    <strong>Optimal surge window:</strong> ${optimalStartTime.toFixed(1)} to ${optimalEndTime.toFixed(1)} seconds into the ride<br>
-    <strong>Location:</strong> Optimal surge zone from ${optimalStartPos.toFixed(0)}m to ${optimalEndPos.toFixed(0)}m<br>
+    <strong>Optimal surge zone:</strong> ${optimalStartPos.toFixed(0)}m to ${optimalEndPos.toFixed(0)}m<br>
+    <strong>Time equivalent:</strong> ${startTimeText}s to ${endTimeText}s into the ride<br>
     <strong>Speeds:</strong> Normal power: ${normalSpeed.toFixed(1)} m/s (${(normalSpeed*3.6).toFixed(1)} km/h), Surge power: ${surgeSpeed.toFixed(1)} m/s (${(surgeSpeed*3.6).toFixed(1)} km/h)
   `;
   
@@ -708,19 +720,23 @@ window.onload = function() {
 </script>
 
 ### Understanding the Results
-The simulation identifies the **first** optimal time to apply your power surge.
-Due to the physics of cycling, there may be multiple points where surging
-provides similar time benefits - this creates flat spots in the time curve.
+The simulation identifies the zone where your time will be minimized. There
+might be a slight wobble in sections: this is just a result of the simulation's
+granularity. Any spot on the hill between "momentum is spent" and "surge will
+be appplied downhill" is a good spot to surge.
 
-But here, let's look at some general conclusions.
+Here, let's look at some general conclusions. Of course, this isn't real life!
+A good cyclist will be able to determine how long and how hard to push for a
+given hill, in a way where they can recover before the next hill or attack.
 
 ### Don't surge before the climb!
-In most simulations, you'll find that the time is dramatically slower if the
-surge is applied before the climb. This is because all the extra power is
-"wasted" by accelerating on flat ground where air resistance is the dominant
-force.
+I often do this, telling myself I'll "spread the load" a bit before so that the
+peak power during the ascent is lower. But in most simulations, you'll find
+that the time is dramatically slower if the surge is applied before the climb.
+This is because all the extra power is "wasted" by accelerating on flat ground
+where air resistance is the dominant force.
 
-### Don't surge before your momentum is lost!
+### Don't surge before your momentum is spent!
 You'll also notice that the first optimal surge point is not exactly as the
 start of the climb. This is because the surge is most effective when the rider
 is at their slowest speed, just before the climb starts.
