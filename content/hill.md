@@ -31,8 +31,10 @@ When cycling, several forces affect your motion:
 3. **Rolling Resistance**: Friction between tires and road, linear with velocity.
 4. **Air Resistance**: Increases with the square of your velocity
 
-The simulation below models a 1'200 m route with a hill in the middle. You can
-apply a power surge at different points to see when it's most effective.
+The simulation below models a 1'200 m route with a hill in the middle. We're
+keeping things simple: you can apply a single surge of power, and the
+simulation takes care of calculating the time it takes to cross the finish line
+at all the various points across the road, to see when it's most effective.
 
 ## When Should You Surge?
 
