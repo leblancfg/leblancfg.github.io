@@ -45,7 +45,7 @@ LINKS = (("Résumé", "https://leblancfg.com/pages/leblancfg_CV.pdf"),)
 SOCIAL = (
     ("linkedin", "https://www.linkedin.com/in/fran%C3%A7ois-leblanc-07294b106/"),
     ("github", "https://github.com/leblancfg"),
-    ("mastodon", "https://fosstodon.org/@leblancfg"),
+    ("mastodon", "https://hachyderm.io/@leblancfg"),
     ("rss", "https://leblancfg.com/feeds/all.atom.xml"),
 )
 
