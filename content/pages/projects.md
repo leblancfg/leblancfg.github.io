@@ -3,6 +3,11 @@ slug: projects
 
 Here's a short list of projects I've undertaken in the past.
 
+## deprecations.info
+[Open source project](https://github.com/leblancfg/deprecations-rss) that tracks AI model deprecations across major providers (OpenAI, Anthropic, Google, AWS, Cohere) using Simon Willison's git scraper pattern. Provides an RSS feed for programmatic consumption, enabling automated notifications and CI/CD integration to prevent service disruptions from deprecated models.
+
+>Visit the [website here](https://deprecations.info).
+
 ## autocrop
 [Open source project](https://leblancfg.com/autocrop) autocrop finds faces in your pictures and automatically crops them. Perfect for profile picture processing for your website or batch work for ID cards, autocrop will output images centered around the biggest face detected. Developed a prototype for a [fast API server](https://github.com/leblancfg/test_fastapi), ultimatley shelved. 
 

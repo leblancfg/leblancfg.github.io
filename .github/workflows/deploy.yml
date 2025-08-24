@@ -32,22 +32,27 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install ghp-import
       
-      - name: Build the site
-        run: |
-          pelican content -s publishconf.py
-      
-      - name: Deploy to GitHub Pages
+      - name: Run make github (refresh, build, and deploy)
         run: |
           # Configure git
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
           
-          # Import the output directory to the master branch
-          pip install ghp-import
-          ghp-import output -b master -m "Automated deployment from dev branch"
+          # Remove output directory (refresh step)
+          rm -rf output
           
-          # Push to master branch
-          git push origin master --force
+          # Commit any pending changes to dev
+          git add .
+          git commit -m "Updated content" --allow-empty
+          git push origin dev
+          
+          # Build the site with production config
+          pelican content -s publishconf.py
+          
+          # Import to master branch and push
+          ghp-import -m "Generate Pelican site" -b master output
+          git push origin master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
