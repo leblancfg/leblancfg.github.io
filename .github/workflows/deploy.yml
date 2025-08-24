@@ -1,0 +1,53 @@
+name: Build and Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - dev
+    types:
+      - closed
+
+jobs:
+  build-and-deploy:
+    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.pull_request.merged == true)
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout dev branch
+        uses: actions/checkout@v4
+        with:
+          ref: dev
+          fetch-depth: 0
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      
+      - name: Build the site
+        run: |
+          pelican content -s publishconf.py
+      
+      - name: Deploy to GitHub Pages
+        run: |
+          # Configure git
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          
+          # Import the output directory to the master branch
+          pip install ghp-import
+          ghp-import output -b master -m "Automated deployment from dev branch"
+          
+          # Push to master branch
+          git push origin master --force
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
