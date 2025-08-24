@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com - Python</title><link href="https://leblancfg.com/" rel="alternate"></link><link href="https://leblancfg.com/feeds/python.atom.xml" rel="self"></link><id>https://leblancfg.com/</id><updated>2018-09-14T00:00:00-04:00</updated><subtitle>Data Science, Geospatial Python, Space Stuff</subtitle><entry><title>Unhashable in Python - Getting the unique number of locations in a GeoDataFrame</title><link href="https://leblancfg.com/unhashable-python-unique-locations-geometry-geodataframe.html" rel="alternate"></link><published>2018-09-14T00:00:00-04:00</published><updated>2018-09-14T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-09-14:/unhashable-python-unique-locations-geometry-geodataframe.html</id><summary type="html">&lt;p&gt;I encounter an unhashable type error when trying to get the unique number of geometries in a GeoDataFrame, and we learn about mutability (vs immutability) of Python objects in order to sidestep the issue.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
+<feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com - Python</title><link href="https://leblancfg.com/" rel="alternate"/><link href="https://leblancfg.com/feeds/python.atom.xml" rel="self"/><id>https://leblancfg.com/</id><updated>2018-09-14T00:00:00-04:00</updated><subtitle>Data Science, Geospatial Python, Space Stuff</subtitle><entry><title>Unhashable in Python - Getting the unique number of locations in a GeoDataFrame</title><link href="https://leblancfg.com/unhashable-python-unique-locations-geometry-geodataframe.html" rel="alternate"/><published>2018-09-14T00:00:00-04:00</published><updated>2018-09-14T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-09-14:/unhashable-python-unique-locations-geometry-geodataframe.html</id><summary type="html">&lt;p&gt;I encounter an unhashable type error when trying to get the unique number of geometries in a GeoDataFrame, and we learn about mutability (vs immutability) of Python objects in order to sidestep the issue.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
@@ -1459,7 +1459,7 @@ I end up using &lt;a href=""&gt;geopandas&lt;/a&gt; on a regular basis, and one 
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;
-</content><category term="Python"></category><category term="python"></category><category term="mutability"></category><category term="shapely"></category><category term="geopandas"></category></entry><entry><title>Higher-level functions in Python, Part 3 - filter</title><link href="https://leblancfg.com/higher-level-functions-python-filter.html" rel="alternate"></link><published>2018-06-14T00:00:00-04:00</published><updated>2018-06-14T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-06-14:/higher-level-functions-python-filter.html</id><summary type="html">&lt;p&gt;In our final installment for the Higher Level Function in Python Series, we dive into the Python &lt;code&gt;filter&lt;/code&gt; function. No sidetracks this time around. We simply take a look at how it's used, try to find a way where it would be superior to list comprehensions, fail, and conclude the series.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
+</content><category term="Python"/><category term="python"/><category term="mutability"/><category term="shapely"/><category term="geopandas"/></entry><entry><title>Higher-level functions in Python, Part 3 - filter</title><link href="https://leblancfg.com/higher-level-functions-python-filter.html" rel="alternate"/><published>2018-06-14T00:00:00-04:00</published><updated>2018-06-14T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-06-14:/higher-level-functions-python-filter.html</id><summary type="html">&lt;p&gt;In our final installment for the Higher Level Function in Python Series, we dive into the Python &lt;code&gt;filter&lt;/code&gt; function. No sidetracks this time around. We simply take a look at how it's used, try to find a way where it would be superior to list comprehensions, fail, and conclude the series.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
@@ -3277,7 +3277,7 @@ class filter(object)
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;
-</content><category term="Python"></category><category term="python"></category><category term="jupyter"></category><category term="functional"></category><category term="benchmarks"></category><category term="numpy"></category></entry><entry><title>Higher-level functions in Python, Part 2 - reduce</title><link href="https://leblancfg.com/higher-level-functions-python-reduce.html" rel="alternate"></link><published>2018-06-04T00:00:00-04:00</published><updated>2018-06-04T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-06-04:/higher-level-functions-python-reduce.html</id><summary type="html">&lt;p&gt;We go through uses of the Python &lt;code&gt;reduce&lt;/code&gt; function, when it's useful and its performance benefits. This time, we spend some time exploring function composition, and how to manage large function chains, e.g. in a data processing pipeline.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
+</content><category term="Python"/><category term="python"/><category term="jupyter"/><category term="functional"/><category term="benchmarks"/><category term="numpy"/></entry><entry><title>Higher-level functions in Python, Part 2 - reduce</title><link href="https://leblancfg.com/higher-level-functions-python-reduce.html" rel="alternate"/><published>2018-06-04T00:00:00-04:00</published><updated>2018-06-04T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-06-04:/higher-level-functions-python-reduce.html</id><summary type="html">&lt;p&gt;We go through uses of the Python &lt;code&gt;reduce&lt;/code&gt; function, when it's useful and its performance benefits. This time, we spend some time exploring function composition, and how to manage large function chains, e.g. in a data processing pipeline.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
@@ -5561,7 +5561,7 @@ reduce(...)
 &lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[32]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%time&lt;/span&gt;it
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%timeit&lt;/span&gt;
 &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lower&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
        &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;brown&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;blue&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
        &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;quick&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;slow&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -5598,7 +5598,7 @@ reduce(...)
 &lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[33]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%time&lt;/span&gt;it
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%timeit&lt;/span&gt;
 &lt;span class="n"&gt;clean_strings&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -5630,7 +5630,7 @@ reduce(...)
 &lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[34]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%time&lt;/span&gt;it
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%timeit&lt;/span&gt;
 &lt;span class="n"&gt;reduce&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;transforms&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -5707,7 +5707,7 @@ reduce(...)
 &lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[37]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%time&lt;/span&gt;it
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%timeit&lt;/span&gt;
 &lt;span class="n"&gt;repeat&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;clean_strings&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -5739,7 +5739,7 @@ reduce(...)
 &lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[38]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%time&lt;/span&gt;it
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%timeit&lt;/span&gt;
 &lt;span class="n"&gt;reduce&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;transforms&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -5793,7 +5793,7 @@ reduce(...)
 &lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[40]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%time&lt;/span&gt;it
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%timeit&lt;/span&gt;
 &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;lower&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
        &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;brown&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;blue&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
        &lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;replace&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;quick&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;slow&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
@@ -5830,7 +5830,7 @@ reduce(...)
 &lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[41]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%time&lt;/span&gt;it
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%timeit&lt;/span&gt;
 &lt;span class="n"&gt;clean_strings&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -5862,7 +5862,7 @@ reduce(...)
 &lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[42]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%time&lt;/span&gt;it
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%timeit&lt;/span&gt;
 &lt;span class="n"&gt;reduce&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;transforms&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -5901,7 +5901,7 @@ reduce(...)
 &lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[43]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%time&lt;/span&gt;it
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%timeit&lt;/span&gt;
 &lt;span class="n"&gt;repeat&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;clean_strings&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -5933,7 +5933,7 @@ reduce(...)
 &lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[44]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%time&lt;/span&gt;it
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%timeit&lt;/span&gt;
 &lt;span class="n"&gt;reduce&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;call&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;transforms&lt;/span&gt; &lt;span class="o"&gt;*&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;string&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -6014,7 +6014,7 @@ reduce(...)
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;
-</content><category term="Python"></category><category term="python"></category><category term="jupyter"></category><category term="functional"></category><category term="benchmarks"></category><category term="numpy"></category></entry><entry><title>Higher-level functions in Python, Part 1 - map</title><link href="https://leblancfg.com/higher-level-functions-python-map.html" rel="alternate"></link><published>2018-05-30T00:00:00-04:00</published><updated>2018-05-30T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-05-30:/higher-level-functions-python-map.html</id><summary type="html">&lt;p&gt;We go through uses of the Python &lt;code&gt;map&lt;/code&gt; function, when it's useful and its performance benefits, and get sidetracked into benchmarking different syntaxes for exponential expressions.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
+</content><category term="Python"/><category term="python"/><category term="jupyter"/><category term="functional"/><category term="benchmarks"/><category term="numpy"/></entry><entry><title>Higher-level functions in Python, Part 1 - map</title><link href="https://leblancfg.com/higher-level-functions-python-map.html" rel="alternate"/><published>2018-05-30T00:00:00-04:00</published><updated>2018-05-30T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-05-30:/higher-level-functions-python-map.html</id><summary type="html">&lt;p&gt;We go through uses of the Python &lt;code&gt;map&lt;/code&gt; function, when it's useful and its performance benefits, and get sidetracked into benchmarking different syntaxes for exponential expressions.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
@@ -7845,7 +7845,7 @@ Python provides a few higher order (or functional programming) functions in the 
 &lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[16]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%time&lt;/span&gt;it
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%timeit&lt;/span&gt;
 &lt;span class="nb"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;square&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;test&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -7877,7 +7877,7 @@ Python provides a few higher order (or functional programming) functions in the 
 &lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[17]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%time&lt;/span&gt;it
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%timeit&lt;/span&gt;
 &lt;span class="nb"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="nb"&gt;map&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;exp_2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;test&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 
@@ -8058,7 +8058,7 @@ Python provides a few higher order (or functional programming) functions in the 
 &lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[22]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%time&lt;/span&gt;it
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%timeit&lt;/span&gt;
 &lt;span class="c1"&gt;# Can&amp;#39;t cast np.square to `uint32` for some reason, but `int64` works fine&lt;/span&gt;
 &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;square&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;test_np&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dtype&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;int64&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -8091,7 +8091,7 @@ Python provides a few higher order (or functional programming) functions in the 
 &lt;div class="prompt input_prompt"&gt;In&amp;nbsp;[23]:&lt;/div&gt;
 &lt;div class="inner_cell"&gt;
     &lt;div class="input_area"&gt;
-&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%time&lt;/span&gt;it
+&lt;div class=" highlight hl-ipython3"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="o"&gt;%%timeit&lt;/span&gt;
 &lt;span class="c1"&gt;# Or we can specify `uint32` directly from np.arange&lt;/span&gt;
 &lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;sum&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;square&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;np&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;arange&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;3&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="mi"&gt;1024&lt;/span&gt;&lt;span class="o"&gt;**&lt;/span&gt;&lt;span class="mi"&gt;2&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;dtype&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;uint32&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)))&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
@@ -8403,7 +8403,7 @@ Python provides a few higher order (or functional programming) functions in the 
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;
-</content><category term="Python"></category><category term="python"></category><category term="jupyter"></category><category term="functional"></category><category term="benchmarks"></category><category term="numpy"></category></entry><entry><title>Introduction to the Python Scientific Ecosystem, Part 2</title><link href="https://leblancfg.com/getting-started-with-python-and-jupyter-notebooks-2.html" rel="alternate"></link><published>2017-08-10T00:00:00-04:00</published><updated>2017-08-10T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2017-08-10:/getting-started-with-python-and-jupyter-notebooks-2.html</id><summary type="html">&lt;p&gt;A general primer on Python for science and engineering, with an emphasis on the SciPy ecosystem of packages.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
+</content><category term="Python"/><category term="python"/><category term="jupyter"/><category term="functional"/><category term="benchmarks"/><category term="numpy"/></entry><entry><title>Introduction to the Python Scientific Ecosystem, Part 2</title><link href="https://leblancfg.com/getting-started-with-python-and-jupyter-notebooks-2.html" rel="alternate"/><published>2017-08-10T00:00:00-04:00</published><updated>2017-08-10T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2017-08-10:/getting-started-with-python-and-jupyter-notebooks-2.html</id><summary type="html">&lt;p&gt;A general primer on Python for science and engineering, with an emphasis on the SciPy ecosystem of packages.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
@@ -11525,7 +11525,7 @@ Once you've generated source code, it will need to be maintained for the future.
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;
-</content><category term="Python"></category><category term="python"></category><category term="jupyter"></category><category term="anaconda"></category><category term="conda"></category><category term="scipy"></category><category term="numpy"></category><category term="beginner"></category><category term="matplotlib"></category></entry><entry><title>Introduction to the Python Scientific Ecosystem, Part 1</title><link href="https://leblancfg.com/getting-started-with-python-and-jupyter-notebooks-1.html" rel="alternate"></link><published>2017-08-03T00:00:00-04:00</published><updated>2017-08-03T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2017-08-03:/getting-started-with-python-and-jupyter-notebooks-1.html</id><summary type="html">&lt;p&gt;A general primer on Python for science and engineering, with an emphasis on the SciPy ecosystem of packages.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
+</content><category term="Python"/><category term="python"/><category term="jupyter"/><category term="anaconda"/><category term="conda"/><category term="scipy"/><category term="numpy"/><category term="beginner"/><category term="matplotlib"/></entry><entry><title>Introduction to the Python Scientific Ecosystem, Part 1</title><link href="https://leblancfg.com/getting-started-with-python-and-jupyter-notebooks-1.html" rel="alternate"/><published>2017-08-03T00:00:00-04:00</published><updated>2017-08-03T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2017-08-03:/getting-started-with-python-and-jupyter-notebooks-1.html</id><summary type="html">&lt;p&gt;A general primer on Python for science and engineering, with an emphasis on the SciPy ecosystem of packages.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
@@ -12848,4 +12848,4 @@ Python is not a compiled language, but rather it is interpreted. The standard Py
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;
-</content><category term="Python"></category><category term="python"></category><category term="jupyter"></category><category term="anaconda"></category><category term="conda"></category><category term="scipy"></category><category term="numpy"></category><category term="beginner"></category><category term="matplotlib"></category></entry></feed>
+</content><category term="Python"/><category term="python"/><category term="jupyter"/><category term="anaconda"/><category term="conda"/><category term="scipy"/><category term="numpy"/><category term="beginner"/><category term="matplotlib"/></entry></feed>

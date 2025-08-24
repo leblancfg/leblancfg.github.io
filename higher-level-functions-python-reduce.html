@@ -2459,7 +2459,7 @@ reduce(...)
 <div class="prompt input_prompt">In&nbsp;[32]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>it
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%timeit</span>
 <span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
        <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;brown&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">)</span>
        <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;quick&#39;</span><span class="p">,</span> <span class="s1">&#39;slow&#39;</span><span class="p">)</span>
@@ -2496,7 +2496,7 @@ reduce(...)
 <div class="prompt input_prompt">In&nbsp;[33]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>it
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%timeit</span>
 <span class="n">clean_strings</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
 </pre></div>
 
@@ -2528,7 +2528,7 @@ reduce(...)
 <div class="prompt input_prompt">In&nbsp;[34]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>it
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%timeit</span>
 <span class="n">reduce</span><span class="p">(</span><span class="n">call</span><span class="p">,</span> <span class="n">transforms</span><span class="p">,</span> <span class="n">string</span><span class="p">)</span>
 </pre></div>
 
@@ -2605,7 +2605,7 @@ reduce(...)
 <div class="prompt input_prompt">In&nbsp;[37]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>it
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%timeit</span>
 <span class="n">repeat</span><span class="p">(</span><span class="n">clean_strings</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">string</span><span class="p">)</span>
 </pre></div>
 
@@ -2637,7 +2637,7 @@ reduce(...)
 <div class="prompt input_prompt">In&nbsp;[38]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>it
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%timeit</span>
 <span class="n">reduce</span><span class="p">(</span><span class="n">call</span><span class="p">,</span> <span class="n">transforms</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="n">string</span><span class="p">)</span>
 </pre></div>
 
@@ -2691,7 +2691,7 @@ reduce(...)
 <div class="prompt input_prompt">In&nbsp;[40]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>it
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%timeit</span>
 <span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
        <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;brown&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">)</span>
        <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;quick&#39;</span><span class="p">,</span> <span class="s1">&#39;slow&#39;</span><span class="p">)</span>
@@ -2728,7 +2728,7 @@ reduce(...)
 <div class="prompt input_prompt">In&nbsp;[41]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>it
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%timeit</span>
 <span class="n">clean_strings</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
 </pre></div>
 
@@ -2760,7 +2760,7 @@ reduce(...)
 <div class="prompt input_prompt">In&nbsp;[42]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>it
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%timeit</span>
 <span class="n">reduce</span><span class="p">(</span><span class="n">call</span><span class="p">,</span> <span class="n">transforms</span><span class="p">,</span> <span class="n">string</span><span class="p">)</span>
 </pre></div>
 
@@ -2799,7 +2799,7 @@ reduce(...)
 <div class="prompt input_prompt">In&nbsp;[43]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>it
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%timeit</span>
 <span class="n">repeat</span><span class="p">(</span><span class="n">clean_strings</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">string</span><span class="p">)</span>
 </pre></div>
 
@@ -2831,7 +2831,7 @@ reduce(...)
 <div class="prompt input_prompt">In&nbsp;[44]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>it
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%timeit</span>
 <span class="n">reduce</span><span class="p">(</span><span class="n">call</span><span class="p">,</span> <span class="n">transforms</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="n">string</span><span class="p">)</span>
 </pre></div>
 
