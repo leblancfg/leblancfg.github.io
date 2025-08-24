@@ -224,7 +224,6 @@ $RECYCLE.BIN/
 *.pid
 output/
 env/
-pelican-themes/
 dev.yml
 
 # Music model files 
