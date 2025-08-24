@@ -1,5 +1,5 @@
 Title: Tracking AI Model Deprecations with Git Scraping: Introducing deprecations.info
-Date: 2025-01-24 10:00
+Date: 2024-08-24 14:00
 Category: data-engineering
 Tags: git-scraper, rss, automation, ai, monitoring
 Slug: deprecations-info-git-scraper
