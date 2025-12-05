@@ -1,5 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com - Python</title><link href="https://leblancfg.com/" rel="alternate"></link><link href="https://leblancfg.com/feeds/python.atom.xml" rel="self"></link><id>https://leblancfg.com/</id><updated>2018-09-14T00:00:00-04:00</updated><subtitle>Data Science, Geospatial Python, Space Stuff</subtitle><entry><title>Unhashable in Python - Getting the unique number of locations in a GeoDataFrame</title><link href="https://leblancfg.com/unhashable-python-unique-locations-geometry-geodataframe.html" rel="alternate"></link><published>2018-09-14T00:00:00-04:00</published><updated>2018-09-14T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-09-14:/unhashable-python-unique-locations-geometry-geodataframe.html</id><summary type="html">&lt;p&gt;I encounter an unhashable type error when trying to get the unique number of geometries in a GeoDataFrame, and we learn about mutability (vs immutability) of Python objects in order to sidestep the issue.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
+<feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com - python</title><link href="https://leblancfg.com/" rel="alternate"></link><link href="https://leblancfg.com/feeds/python.atom.xml" rel="self"></link><id>https://leblancfg.com/</id><updated>2025-12-03T00:00:00-05:00</updated><subtitle>Data Science, Geospatial Python, Space Stuff</subtitle><entry><title>Trying out the Absurd queue for AI Workloads</title><link href="https://leblancfg.com/trying-absurd-postgres-workflows.html" rel="alternate"></link><published>2025-12-03T00:00:00-05:00</published><updated>2025-12-03T00:00:00-05:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2025-12-03:/trying-absurd-postgres-workflows.html</id><summary type="html">&lt;p&gt;Testing out Absurd, an experimental durable execution system that uses only Postgres, for AI workloads with expensive LLM calls.&lt;/p&gt;</summary><content type="html">&lt;p&gt;I've been experimenting with &lt;a href="https://github.com/earendil-works/absurd"&gt;Absurd&lt;/a&gt;, an
+experimental durable execution system by &lt;a href="https://lucumr.pocoo.org/"&gt;Armin Ronacher&lt;/a&gt; (the
+creator of &lt;a href="https://flask.palletsprojects.com/"&gt;Flask&lt;/a&gt;,
+&lt;a href="https://jinja.palletsprojects.com/"&gt;Jinja&lt;/a&gt;, and &lt;a href="https://rye.astral.sh/"&gt;Rye&lt;/a&gt;). It's
+explicitly not production-ready, but I wanted to see what kind of niche it might fill.
+My test case: AI workloads with expensive LLM API calls.&lt;/p&gt;
+&lt;p&gt;&lt;img src="img/absurd_screenshot.gif" alt="Absurd Workflows Screenshot" width="500"
+style="display:block; margin:auto;"&gt;&lt;/p&gt;
+&lt;h2&gt;The Problem with AI Workloads&lt;/h2&gt;
+&lt;p&gt;If you're building anything that makes LLM API calls, you know the pain: requests can take
+anywhere from 2 to 60+ seconds, they occasionally fail, and rate limits are sometimes
+unpredictable. Traditional task queues like &lt;a href="https://docs.celeryq.dev/"&gt;Celery&lt;/a&gt; or
+&lt;a href="https://python-rq.org/"&gt;RQ&lt;/a&gt; weren't designed for this. They'll restart your failed task
+from scratch, re-running all those expensive API calls you already paid for.&lt;/p&gt;
+&lt;p&gt;Durable execution systems like &lt;a href="https://temporal.io/"&gt;Temporal&lt;/a&gt; solve this by checkpointing
+your work as it progresses. If a worker dies, the next one picks up exactly where you left
+off. Self-hosting Temporal means running a multi-service cluster with its own database.
+There are managed options (Temporal Cloud, &lt;a href="https://www.inngest.com/"&gt;Inngest&lt;/a&gt;), but if you
+want something you can easily self-host alongside existing Postgres infrastructure, the
+options thin out.&lt;/p&gt;
+&lt;h2&gt;Enter Absurd&lt;/h2&gt;
+&lt;p&gt;Armin's &lt;a href="https://lucumr.pocoo.org/2025/11/3/absurd-workflows/"&gt;blog post introducing Absurd&lt;/a&gt;
+explains his motivation: "durable workflows are absurdly simple, but have been
+overcomplicated in recent years." His approach is to put the queue logic entirely in a
+single SQL file that turns any PostgreSQL database into a durable task queue with automatic
+checkpointing.&lt;/p&gt;
+&lt;p&gt;I'm generally wary of shoving business logic into databases, but this isn't that. There's
+no business logic here &amp;mdash; just using Postgres as a queue via &lt;a href="https://www.postgresql.org/docs/current/sql-select.html#SQL-FOR-UPDATE-SHARE"&gt;&lt;code&gt;SELECT ... FOR UPDATE SKIP
+LOCKED&lt;/code&gt;&lt;/a&gt; and
+storing checkpoint state in the same transaction. The queue mechanics live in SQL; your
+actual work stays in Python (or TypeScript).&lt;/p&gt;
+&lt;p&gt;A few things that stood out to me:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Checkpoints&lt;/strong&gt;: When your agent makes three API calls and crashes on the
+fourth, Absurd resumes from checkpoint three. You don't re-run (and re-pay for) work you've
+already done.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Self-hostable&lt;/strong&gt;: If you're building something others might deploy themselves,
+asking them to also run Temporal is a big ask. Asking them to have Postgres? They probably
+already do.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Works with what's already there&lt;/strong&gt; Your existing database does double duty &amp;mdash; no new services
+to run.&lt;/p&gt;
+&lt;h2&gt;A Practical Test&lt;/h2&gt;
+&lt;p&gt;I wrote a &lt;a href="https://absurd.leblancfg.com"&gt;little web app&lt;/a&gt;
+(&lt;a href="https://github.com/leblancfg/absurd-test"&gt;source&lt;/a&gt;) combining Absurd with
+&lt;a href="https://fastapi.tiangolo.com/"&gt;FastAPI&lt;/a&gt;, &lt;a href="https://htmx.org/"&gt;HTMX&lt;/a&gt;, and
+&lt;a href="https://ai.pydantic.dev/"&gt;Pydantic AI&lt;/a&gt;. The setup:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A web app that accepts prompts via API or simple UI&lt;/li&gt;
+&lt;li&gt;Tasks queued durably in PostgreSQL via Absurd&lt;/li&gt;
+&lt;li&gt;Workers that process tasks with automatic checkpointing&lt;/li&gt;
+&lt;li&gt;Real-time status updates via SSE, wired up through HTMX&lt;/li&gt;
+&lt;li&gt;Webhook callbacks when tasks complete&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The worker code looks something like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;&lt;span class="nd"&gt;@app&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;register_task&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;run-agent&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;handle_agent_task&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="nb"&gt;dict&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;ctx&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="c1"&gt;# Each step is checkpointed automatically&lt;/span&gt;
+    &lt;span class="n"&gt;ctx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run_step&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;mark-running&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;mark_task_running&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;task_id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]))&lt;/span&gt;
+
+    &lt;span class="c1"&gt;# If we crash here, we resume from &amp;quot;run-agent&amp;quot;, not the beginning&lt;/span&gt;
+    &lt;span class="n"&gt;result&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;ctx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;step&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;run-agent&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;run_agent&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;prompt&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]))&lt;/span&gt;
+
+    &lt;span class="n"&gt;ctx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;run_step&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;save-result&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="k"&gt;lambda&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;save_result&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;params&lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;task_id&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;],&lt;/span&gt; &lt;span class="n"&gt;result&lt;/span&gt;&lt;span class="p"&gt;))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;If the worker dies between steps, the next worker loads the checkpoints and continues. No duplicate
+API calls, no lost work. The HTMX + SSE combination means the UI stays in sync &amp;mdash; when you submit
+a task, it appears immediately and its status updates in real time as the worker progresses. I have
+a little hosted version running, but to avoid LLM costs, the worker currently just returns canned
+responses.&lt;/p&gt;
+&lt;h2&gt;The Tradeoffs&lt;/h2&gt;
+&lt;p&gt;Absurd isn't trying to replace Temporal for complex orchestration scenarios. It's
+intentionally minimal:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;No built-in retries with backoff (you handle that in your step functions, e.g. with the
+  &lt;a href="https://pypi.org/project/backoff/"&gt;backoff&lt;/a&gt; package)&lt;/li&gt;
+&lt;li&gt;No visual workflow designer&lt;/li&gt;
+&lt;li&gt;No managed cloud offering&lt;/li&gt;
+&lt;li&gt;Experimental software -- the README says so explicitly&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The &lt;a href="https://github.com/earendil-works/absurd"&gt;Absurd repository&lt;/a&gt; has SDKs for Python and
+TypeScript. Armin's &lt;a href="https://lucumr.pocoo.org/2025/11/3/absurd-workflows/"&gt;introductory blog post&lt;/a&gt;
+is worth reading for the full context. And if you want to see a working example, my &lt;a href="https://github.com/leblancfg/absurd-test"&gt;test
+repository&lt;/a&gt; shows how to wire it up with FastAPI
+and an AI agent framework. The Python SDK isn't published to PyPI yet, so you'll need to
+install it from git.&lt;/p&gt;
+&lt;h2&gt;When to Consider Absurd&lt;/h2&gt;
+&lt;p&gt;Absurd makes sense when:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;You're already using PostgreSQL&lt;/li&gt;
+&lt;li&gt;Your tasks involve expensive or slow operations (LLM calls, external APIs)&lt;/li&gt;
+&lt;li&gt;You want durability without running additional infrastructure&lt;/li&gt;
+&lt;li&gt;You're building something that needs to be self-hostable&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It's probably not the right choice if you need complex workflow orchestration, sub-second
+latencies, or enterprise support.&lt;/p&gt;
+&lt;h2&gt;What I'd Like to See&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Observability.&lt;/strong&gt; There's no built-in metrics, tracing, or dashboards. For anything
+approaching production use, you'd want to know queue depth, task duration distributions,
+failure rates. Currently you'd instrument this yourself. There's an
+&lt;a href="https://github.com/earendil-works/absurd/issues/22"&gt;open issue&lt;/a&gt; tracking this.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Dead letter handling.&lt;/strong&gt; What happens to tasks that permanently fail? Right now it's not
+clear how you'd handle poison messages or set up alerts for repeated failures.&lt;/p&gt;
+&lt;h2&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;For AI workloads where the main pattern is "call an API, save the result, maybe call
+another API," Absurd is worth looking at. It won't replace Temporal for complex
+orchestration, but if you're already on Postgres and want checkpointing without new
+infrastructure, it's a reasonable option to explore. I'll probably reach for it on my next
+side project that fits this pattern.&lt;/p&gt;</content><category term="python"></category><category term="python"></category><category term="postgreSQL"></category><category term="durable-execution"></category><category term="ai"></category></entry><entry><title>Unhashable in Python - Getting the unique number of locations in a GeoDataFrame</title><link href="https://leblancfg.com/unhashable-python-unique-locations-geometry-geodataframe.html" rel="alternate"></link><published>2018-09-14T00:00:00-04:00</published><updated>2018-09-14T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2018-09-14:/unhashable-python-unique-locations-geometry-geodataframe.html</id><summary type="html">&lt;p&gt;I encounter an unhashable type error when trying to get the unique number of geometries in a GeoDataFrame, and we learn about mutability (vs immutability) of Python objects in order to sidestep the issue.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
