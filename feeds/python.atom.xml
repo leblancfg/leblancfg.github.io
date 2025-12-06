@@ -7,6 +7,8 @@ explicitly not production-ready, but I wanted to see what kind of niche it might
 My test case: AI workloads with expensive LLM API calls.&lt;/p&gt;
 &lt;p&gt;&lt;img src="img/absurd_screenshot.gif" alt="Absurd Workflows Screenshot" width="500"
 style="display:block; margin:auto;"&gt;&lt;/p&gt;
+&lt;p&gt;→ &lt;strong&gt;Jump into the demo app&lt;/strong&gt;: &lt;a href="https://absurd.leblancfg.com"&gt;absurd.leblancfg.com&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;→ &lt;strong&gt;Source code for the demo app&lt;/strong&gt;: &lt;code&gt;&lt;a href="https://github.com/leblancfg/absurd-test"&gt;leblancfg/absurd-test&lt;/a&gt;&lt;/code&gt;&lt;/p&gt;
 &lt;h2&gt;The Problem with AI Workloads&lt;/h2&gt;
 &lt;p&gt;If you're building anything that makes LLM API calls, you know the pain: requests can take
 anywhere from 2 to 60+ seconds, they occasionally fail, and rate limits are sometimes
