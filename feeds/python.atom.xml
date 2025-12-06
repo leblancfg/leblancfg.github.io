@@ -32,13 +32,18 @@ no business logic here &amp;mdash; just using Postgres as a queue via &lt;a href
 LOCKED&lt;/code&gt;&lt;/a&gt; and
 storing checkpoint state in the same transaction. The queue mechanics live in SQL; your
 actual work stays in Python (or TypeScript).&lt;/p&gt;
+&lt;p&gt;If this sounds like &lt;a href="https://github.com/rails/solid_queue"&gt;Solid Queue&lt;/a&gt; from Rails 8, you're
+not far off &amp;mdash; both use &lt;code&gt;FOR UPDATE SKIP LOCKED&lt;/code&gt; to turn your database into a job queue.
+The difference is what happens when things fail. Solid Queue is a job queue: if a job crashes,
+it gets retried from the beginning. Absurd is a durable execution system: it saves checkpoints
+as your task progresses, so a crashed task resumes from the last checkpoint, not from scratch.
+For quick jobs, this distinction doesn't matter much. For multi-step workflows with expensive
+API calls, it's the whole point.&lt;/p&gt;
 &lt;p&gt;A few things that stood out to me:&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Checkpoints&lt;/strong&gt;: When your agent makes three API calls and crashes on the
-fourth, Absurd resumes from checkpoint three. You don't re-run (and re-pay for) work you've
-already done.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Self-hostable&lt;/strong&gt;: If you're building something others might deploy themselves,
-asking them to also run Temporal is a big ask. Asking them to have Postgres? They probably
-already do.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Checkpoints&lt;/strong&gt;: When your agent makes three API calls and crashes on the fourth, Absurd resumes
+from checkpoint three. You don't re-run (and re-pay for) work you've already done.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Self-hostable&lt;/strong&gt;: If you're building something others might deploy themselves, asking them to also
+run Temporal is a big ask. Asking them to have Postgres? They probably already do.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Works with what's already there&lt;/strong&gt; Your existing database does double duty &amp;mdash; no new services
 to run.&lt;/p&gt;
 &lt;h2&gt;A Practical Test&lt;/h2&gt;
