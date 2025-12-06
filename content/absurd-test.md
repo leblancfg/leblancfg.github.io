@@ -47,15 +47,21 @@ LOCKED`](https://www.postgresql.org/docs/current/sql-select.html#SQL-FOR-UPDATE-
 storing checkpoint state in the same transaction. The queue mechanics live in SQL; your
 actual work stays in Python (or TypeScript).
 
+If this sounds like [Solid Queue](https://github.com/rails/solid_queue) from Rails 8, you're
+not far off &mdash; both use `FOR UPDATE SKIP LOCKED` to turn your database into a job queue.
+The difference is what happens when things fail. Solid Queue is a job queue: if a job crashes,
+it gets retried from the beginning. Absurd is a durable execution system: it saves checkpoints
+as your task progresses, so a crashed task resumes from the last checkpoint, not from scratch.
+For quick jobs, this distinction doesn't matter much. For multi-step workflows with expensive
+API calls, it's the whole point.
+
 A few things that stood out to me:
 
-**Checkpoints**: When your agent makes three API calls and crashes on the
-fourth, Absurd resumes from checkpoint three. You don't re-run (and re-pay for) work you've
-already done.
+**Checkpoints**: When your agent makes three API calls and crashes on the fourth, Absurd resumes
+from checkpoint three. You don't re-run (and re-pay for) work you've already done.
 
-**Self-hostable**: If you're building something others might deploy themselves,
-asking them to also run Temporal is a big ask. Asking them to have Postgres? They probably
-already do.
+**Self-hostable**: If you're building something others might deploy themselves, asking them to also
+run Temporal is a big ask. Asking them to have Postgres? They probably already do.
 
 **Works with what's already there** Your existing database does double duty &mdash; no new services
 to run.
