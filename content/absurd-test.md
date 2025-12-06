@@ -16,6 +16,10 @@ My test case: AI workloads with expensive LLM API calls.
 <img src="img/absurd_screenshot.gif" alt="Absurd Workflows Screenshot" width="500"
 style="display:block; margin:auto;">
 
+→ **Jump into the demo app**: [absurd.leblancfg.com](https://absurd.leblancfg.com)
+
+→ **Source code for the demo app**: <code>[leblancfg/absurd-test](https://github.com/leblancfg/absurd-test)</code>
+
 ## The Problem with AI Workloads
 If you're building anything that makes LLM API calls, you know the pain: requests can take
 anywhere from 2 to 60+ seconds, they occasionally fail, and rate limits are sometimes
