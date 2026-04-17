@@ -19,7 +19,7 @@ PYGMENTS_STYLE = "monokai"
 ROBOTS = "index, follow"
 
 HOME = str(Path.home())
-THEME = "pelican-themes/Flex"
+THEME = "theme/Flex"
 PATH = "content"
 TIMEZONE = "America/Montreal"
 
