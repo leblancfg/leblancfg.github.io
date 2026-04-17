@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com - Python, SQL, MS</title><link href="https://leblancfg.com/" rel="alternate"/><link href="https://leblancfg.com/feeds/python-sql-ms.atom.xml" rel="self"/><id>https://leblancfg.com/</id><updated>2020-03-15T00:00:00-04:00</updated><subtitle>Data Science, Geospatial Python, Space Stuff</subtitle><entry><title>Benchmarks for writing pandas DataFrames to SQL Server (ODBC)</title><link href="https://leblancfg.com/benchmarks_writing_pandas_dataframe_SQL_Server.html" rel="alternate"/><published>2020-03-15T00:00:00-04:00</published><updated>2020-03-15T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2020-03-15:/benchmarks_writing_pandas_dataframe_SQL_Server.html</id><summary type="html">&lt;p&gt;In this article, we benchmark various methods to write data to MS SQL Server from pandas DataFrames to see which is the fastest. We compare &lt;code&gt;multi&lt;/code&gt;, &lt;code&gt;fast_executemany&lt;/code&gt; and &lt;code&gt;turbodbc&lt;/code&gt;, and find the best candidate.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
+<feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com - Python, SQL, MS</title><link href="https://leblancfg.com/" rel="alternate"></link><link href="https://leblancfg.com/feeds/python-sql-ms.atom.xml" rel="self"></link><id>https://leblancfg.com/</id><updated>2020-03-15T00:00:00-04:00</updated><subtitle>Data Science, Geospatial Python, Space Stuff</subtitle><entry><title>Benchmarks for writing pandas DataFrames to SQL Server (ODBC)</title><link href="https://leblancfg.com/benchmarks_writing_pandas_dataframe_SQL_Server.html" rel="alternate"></link><published>2020-03-15T00:00:00-04:00</published><updated>2020-03-15T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2020-03-15:/benchmarks_writing_pandas_dataframe_SQL_Server.html</id><summary type="html">&lt;p&gt;In this article, we benchmark various methods to write data to MS SQL Server from pandas DataFrames to see which is the fastest. We compare &lt;code&gt;multi&lt;/code&gt;, &lt;code&gt;fast_executemany&lt;/code&gt; and &lt;code&gt;turbodbc&lt;/code&gt;, and find the best candidate.&lt;/p&gt;</summary><content type="html">&lt;style type="text/css"&gt;/*!
 *
 * IPython notebook
 *
@@ -1209,10 +1209,10 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 
 
 
-&lt;div id="758edc8a-ca98-475f-bd85-42e93ad58c74"&gt;&lt;/div&gt;
+&lt;div id="36b2424b-4954-4f2d-8b4b-1bcd67db8bcb"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#758edc8a-ca98-475f-bd85-42e93ad58c74');
+var element = $('#36b2424b-4954-4f2d-8b4b-1bcd67db8bcb');
 
             setTimeout(function() {
                 var nbb_cell_id = 1;
@@ -1296,10 +1296,10 @@ No sqlalchemy_turbodbc version available
 
 
 
-&lt;div id="e50fbbda-c163-428a-8865-d35845ac74fb"&gt;&lt;/div&gt;
+&lt;div id="de34d077-e077-482b-83a0-e6c00362f874"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#e50fbbda-c163-428a-8865-d35845ac74fb');
+var element = $('#de34d077-e077-482b-83a0-e6c00362f874');
 
             setTimeout(function() {
                 var nbb_cell_id = 20;
@@ -1366,10 +1366,10 @@ var element = $('#e50fbbda-c163-428a-8865-d35845ac74fb');
 
 
 
-&lt;div id="845a70f0-a6c2-49b0-bee4-921d421716ac"&gt;&lt;/div&gt;
+&lt;div id="0a9b099a-0044-41cf-94fd-17391ec230a5"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#845a70f0-a6c2-49b0-bee4-921d421716ac');
+var element = $('#0a9b099a-0044-41cf-94fd-17391ec230a5');
 
             setTimeout(function() {
                 var nbb_cell_id = 3;
@@ -1547,10 +1547,10 @@ var element = $('#845a70f0-a6c2-49b0-bee4-921d421716ac');
 
 
 
-&lt;div id="54819deb-0d92-4468-8b3a-a4b2f5acf459"&gt;&lt;/div&gt;
+&lt;div id="db9ce02c-0b0c-41cd-82b2-2ff32a7fda6c"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#54819deb-0d92-4468-8b3a-a4b2f5acf459');
+var element = $('#db9ce02c-0b0c-41cd-82b2-2ff32a7fda6c');
 
             setTimeout(function() {
                 var nbb_cell_id = 4;
@@ -1608,10 +1608,10 @@ var element = $('#54819deb-0d92-4468-8b3a-a4b2f5acf459');
 
 
 
-&lt;div id="6fb78255-0df4-4109-96a8-6fcaafe8c258"&gt;&lt;/div&gt;
+&lt;div id="73fd1ba3-fac7-4b1f-aeaa-856e2d9e6e41"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#6fb78255-0df4-4109-96a8-6fcaafe8c258');
+var element = $('#73fd1ba3-fac7-4b1f-aeaa-856e2d9e6e41');
 
             setTimeout(function() {
                 var nbb_cell_id = 5;
@@ -1685,10 +1685,10 @@ var element = $('#6fb78255-0df4-4109-96a8-6fcaafe8c258');
 
 
 
-&lt;div id="4de82a15-f4c1-477b-8c7d-92d8958c4be6"&gt;&lt;/div&gt;
+&lt;div id="0a9f6fa8-e3e1-4e8a-a751-b0f6f10c39e2"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#4de82a15-f4c1-477b-8c7d-92d8958c4be6');
+var element = $('#0a9f6fa8-e3e1-4e8a-a751-b0f6f10c39e2');
 
             setTimeout(function() {
                 var nbb_cell_id = 6;
@@ -1767,10 +1767,10 @@ var element = $('#4de82a15-f4c1-477b-8c7d-92d8958c4be6');
 
 
 
-&lt;div id="3ab830b2-8c14-4508-9788-50ead3ed86c0"&gt;&lt;/div&gt;
+&lt;div id="025445b5-c7c5-4fdd-8e9e-66038d042e9c"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#3ab830b2-8c14-4508-9788-50ead3ed86c0');
+var element = $('#025445b5-c7c5-4fdd-8e9e-66038d042e9c');
 
             setTimeout(function() {
                 var nbb_cell_id = 7;
@@ -1832,10 +1832,10 @@ var element = $('#3ab830b2-8c14-4508-9788-50ead3ed86c0');
 
 
 
-&lt;div id="36904cd2-3539-422a-b544-e9fdc254b4de"&gt;&lt;/div&gt;
+&lt;div id="6201aaff-c692-4b92-acec-cb5444d498df"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#36904cd2-3539-422a-b544-e9fdc254b4de');
+var element = $('#6201aaff-c692-4b92-acec-cb5444d498df');
 
             setTimeout(function() {
                 var nbb_cell_id = 8;
@@ -1903,10 +1903,10 @@ var element = $('#36904cd2-3539-422a-b544-e9fdc254b4de');
 
 
 
-&lt;div id="afe11336-fa20-4edb-9242-90f6065d26eb"&gt;&lt;/div&gt;
+&lt;div id="ae8b0aa7-57cf-4e7c-a050-e8208040e7f7"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#afe11336-fa20-4edb-9242-90f6065d26eb');
+var element = $('#ae8b0aa7-57cf-4e7c-a050-e8208040e7f7');
 
             setTimeout(function() {
                 var nbb_cell_id = 9;
@@ -1981,10 +1981,10 @@ var element = $('#afe11336-fa20-4edb-9242-90f6065d26eb');
 
 
 
-&lt;div id="12975517-07ac-4679-80b5-346e9028bc85"&gt;&lt;/div&gt;
+&lt;div id="7daba534-df34-4a3f-960c-3319c719204b"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#12975517-07ac-4679-80b5-346e9028bc85');
+var element = $('#7daba534-df34-4a3f-960c-3319c719204b');
 
             setTimeout(function() {
                 var nbb_cell_id = 10;
@@ -2059,10 +2059,10 @@ var element = $('#12975517-07ac-4679-80b5-346e9028bc85');
 
 
 
-&lt;div id="39973156-2469-4d04-9903-317ec07f5704"&gt;&lt;/div&gt;
+&lt;div id="49c0819c-0341-4bc3-bd8b-8da0e0880c51"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#39973156-2469-4d04-9903-317ec07f5704');
+var element = $('#49c0819c-0341-4bc3-bd8b-8da0e0880c51');
 
             setTimeout(function() {
                 var nbb_cell_id = 11;
@@ -2138,10 +2138,10 @@ var element = $('#39973156-2469-4d04-9903-317ec07f5704');
 
 
 
-&lt;div id="83daeb63-73ca-4a5f-ad8c-47fef50e45e0"&gt;&lt;/div&gt;
+&lt;div id="1294a45e-907a-43cf-9b95-a08d9b4e111f"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#83daeb63-73ca-4a5f-ad8c-47fef50e45e0');
+var element = $('#1294a45e-907a-43cf-9b95-a08d9b4e111f');
 
             setTimeout(function() {
                 var nbb_cell_id = 12;
@@ -2209,10 +2209,10 @@ var element = $('#83daeb63-73ca-4a5f-ad8c-47fef50e45e0');
 
 
 
-&lt;div id="bec9e761-14c6-410d-be7f-4f5c818079ee"&gt;&lt;/div&gt;
+&lt;div id="7913c732-64ca-4f7f-aca1-5c29aae9568e"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#bec9e761-14c6-410d-be7f-4f5c818079ee');
+var element = $('#7913c732-64ca-4f7f-aca1-5c29aae9568e');
 
             setTimeout(function() {
                 var nbb_cell_id = 13;
@@ -2279,10 +2279,10 @@ var element = $('#bec9e761-14c6-410d-be7f-4f5c818079ee');
 
 
 
-&lt;div id="e2093b17-df84-40a6-b1c5-04199925f308"&gt;&lt;/div&gt;
+&lt;div id="2d7ec3e9-c777-4c42-a9e5-01b09f33ea21"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#e2093b17-df84-40a6-b1c5-04199925f308');
+var element = $('#2d7ec3e9-c777-4c42-a9e5-01b09f33ea21');
 
             setTimeout(function() {
                 var nbb_cell_id = 14;
@@ -2382,10 +2382,10 @@ var element = $('#e2093b17-df84-40a6-b1c5-04199925f308');
 
 
 
-&lt;div id="84a46e87-4d83-402b-90fa-11267b33a78f"&gt;&lt;/div&gt;
+&lt;div id="2970cbf3-6141-4ff6-a3bc-c4013558b16e"&gt;&lt;/div&gt;
 &lt;div class="output_subarea output_javascript "&gt;
 &lt;script type="text/javascript"&gt;
-var element = $('#84a46e87-4d83-402b-90fa-11267b33a78f');
+var element = $('#2970cbf3-6141-4ff6-a3bc-c4013558b16e');
 
             setTimeout(function() {
                 var nbb_cell_id = 21;
@@ -2453,4 +2453,4 @@ var element = $('#84a46e87-4d83-402b-90fa-11267b33a78f');
     (document.body || document.getElementsByTagName('head')[0]).appendChild(mathjaxscript);
 }
 &lt;/script&gt;
-</content><category term="Python, SQL, MS"/><category term="python"/><category term="SQL Server"/></entry></feed>
+</content><category term="Python, SQL, MS"></category><category term="python"></category><category term="SQL Server"></category></entry></feed>
