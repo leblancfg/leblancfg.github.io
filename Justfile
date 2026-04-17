@@ -23,5 +23,6 @@ refresh:
     git push origin dev
 
 github: refresh publish
+    git fetch origin {{branch}}
     uv run ghp-import -m "Generate Pelican site" -b {{branch}} output
-    git push origin {{branch}}
+    git push --force-with-lease origin {{branch}}
