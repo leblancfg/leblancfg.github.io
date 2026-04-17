@@ -38,13 +38,21 @@ I'm not there yet with power. Right now, I'd have a hard time telling you whethe
 
 This whole power obsession has sent me down a rabbit hole of analytics tools, and two in particular have fundamentally changed how I understand cycling performance.
 
-The first is [Xert](https://www.xertonline.com/). I believe the person behind it has a sports physiology PhD, and it shows. Xert builds what they call a "fitness signature" from your ride data — essentially an estimated power curve. But the really clever bit is a metric I haven't seen anywhere else: Maximum Power Available, or MPA.
+### Xert
+The first is [Xert](https://www.xertonline.com/). You can tell there's years of slow build, trial-and-error, and working with top-rate experts on this site. Its UX is quite clunky, and newcomers get lost. Hell, I still do. But IMO it's the gold standard for any sports-specific training apps out there that I know of. User-tailored workouts and multi-week training plans, Garmin apps to monitor your metrics while on the road, and its projected fitness signatures months out are all basically unheard of anywhere else.
+
+Xert builds what they call a "fitness signature" from your ride data — essentially an estimated power curve. But the really clever bit is a metric I haven't seen anywhere else: Maximum Power Available, or MPA.
+
+![Xert power curve](img/xert-power-curve.png)
 
 There's a lot of hand-waving here, but you can think of MPA as your gas tank. Your body has multiple metabolic pathways: ATP, glycogen, lactate, and so on, but you can abstract all of that into a single "battery", or "gas tank". During a ride, you're draining this battery, and your body is replenishing it at some rate. The fitter you are, the bigger the battery and the faster it refills.
 
 Xert overlays this MPA curve on top of your workout data, and it works like an inverted ceiling. When the MPA line drops down and touches your actual power output, that's failure. Your body literally cannot sustain that output anymore. Push 700 watts for 20 seconds, and if that depletes your MPA at that duration, then at the 21st second you have to back off. You won't drop to zero — maybe you can hold 500 watts for a couple more seconds — but you're drawing down a finite reserve.
 
+### Best Bike Split
 The second tool is [Best Bike Split](https://www.bestbikesplit.com/). Given a course profile  —  say, up the mountain and back  —  it calculates your optimal power strategy. The insight is that wind resistance scales dramatically with speed, so above about 30 km/h you're mostly fighting the air. The optimal strategy is to save energy on descents, push close to threshold on flats, and spend your reserves on climbs.
+
+![Best Bike Split](img/bbs.png)
 
 Where it gets interesting to me: Best Bike Split uses a fairly simplistic model for pacing your effort. But Xert's MPA model is a much richer representation of how your body actually depletes and recovers energy. If you could overlay Xert's MPA model onto Best Bike Split's course optimization, I think you'd get meaningfully better pacing strategies. That feels like a project worth exploring. Someday.
 
