@@ -225,6 +225,8 @@ $RECYCLE.BIN/
 output/
 env/
 dev.yml
+pelican-themes/
+plugins/
 
 # Music model files 
 *.pb

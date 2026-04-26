@@ -1,23 +1,19 @@
 # Notes to build blog
 ## Requirements
-1. `git clone --recursive -j8 https://github.com/leblancfg/leblancfg.github.io`
-  * If forgot `--recursive`:
-    - `git submodule init`
-    - `git submodule update`
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/leblancfg/leblancfg.github.io
+   cd leblancfg.github.io
+   ```
 2. Install dependencies:
    ```bash
-   pip install -r requirements.txt
-   # or with conda:
-   conda install -c conda-forge pelican ghp-import
+   uv sync --python 3.11
    ```
-3. Fix Flex base template &mdash; add the following before the stylesheets:
 
-      {% raw %}
-      <!-- Plotly -->
-      <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.5/require.min.js"></script>
-      <script>requirejs.config({paths: { 'plotly': ['https://cdn.plot.ly/plotly-latest.min']},});if(!window.Plotly) {{require(['plotly'],function(plotly) {window.Plotly=plotly;});}}</script>
-      {% endraw %}
+Notes:
+- The Flex theme is vendored in this repo under `theme/Flex/`.
+- No theme submodules are required anymore.
+- GitHub Actions handles publishing to `master` automatically when `dev` is pushed.
 
 ## Creating a New Article
 
@@ -43,52 +39,33 @@ Your article content starts here...
 
 ## Publishing Workflow
 
-### Quick Method (using make)
-```bash
-# Ensure you're on dev branch
-git checkout dev
-
-# Create/edit your article in content/
-# Then publish everything with one command:
-make github
-```
-
-### Manual Method
-If you need more control over the process:
-
-1. **Ensure you're on dev branch:**
+1. **Work on `dev`:**
    ```bash
    git checkout dev
+   git pull --rebase origin dev
    ```
 
 2. **Create or edit content:**
-   - Add new article to `content/` directory
+   - Add new article to `content/`
    - Edit existing pages in `content/pages/`
 
-3. **Test locally (optional):**
+3. **Test locally:**
    ```bash
-   # Build with development config
-   pelican content -s pelicanconf.py
-   
-   # Serve locally on port 8000
-   make serve
-   # or
-   pelican -lr --port 8000
+   just serve
+   ```
+   Or on a custom port:
+   ```bash
+   PORT=12345 just serve
    ```
 
-4. **Publish to production:**
+4. **Publish:**
    ```bash
-   # Option 1: Use make command (recommended)
-   make github
-   
-   # Option 2: Manual steps
-   pelican content -s publishconf.py
    git add .
    git commit -m 'Add new article: [title]'
    git push origin dev
-   ghp-import output -b master
-   git push origin master
    ```
+
+That push to `dev` triggers GitHub Actions, which builds the site and publishes `master`.
 
 ## Automated Deployment
 
@@ -96,7 +73,8 @@ The repository includes a GitHub Action that automatically deploys changes when:
 - You push directly to the `dev` branch
 - You merge a pull request into the `dev` branch
 
-The action runs the equivalent of `make github` automatically.
+The action builds from `dev` and publishes to `master`.
+It does **not** push commits back to `dev`.
 
 ## Troubleshooting
 
@@ -107,8 +85,8 @@ The action runs the equivalent of `make github` automatically.
 
 ### Build errors?
 - The Jupyter notebook error can be safely ignored
-- Ensure submodules are initialized: `git submodule update --init --recursive`
+- Use Python 3.11 via `uv sync --python 3.11`
 
 ### Theme issues?
 - The Flex theme modifications for Plotly support must be maintained
-- Theme is in `pelican-themes/Flex/`
+- Theme is vendored at `theme/Flex/`

@@ -6,8 +6,6 @@ Slug: addicted-to-my-power-meter
 Authors: Francois Leblanc
 Summary: What happens when a CrossFit guy gets a smart trainer, discovers power data, and can't stop chasing the numbers.
 
-# Addicted to My Power Meter
-
 This winter I picked up a smart trainer for indoor cycling. I had gotten a slump in motivation from CrossFit, which I'd been doing semi-seriously for about 5 years. I loaded up Zwift, clipped in, and within a week I was hooked. Not on the virtual scenery or the gamification, but on the numbers. Specifically, the power numbers.
 
 I've been doing CrossFit for about five years now, and one of the core ideas in CrossFit is deceptively elegant: the fittest athlete is the one who maximizes the area under their power curve across all types of movement. I know, it's a moutful. But it's literally one of founder Greg Glassman's "definition of fitness".
@@ -41,11 +39,13 @@ This whole power obsession has sent me down a rabbit hole of analytics tools, an
 ### Xert
 The first is [Xert](https://www.xertonline.com/). You can tell there's years of slow build, trial-and-error, and working with top-rate experts on this site. Its UX is quite clunky, and newcomers get lost. Hell, I still do. But IMO it's the gold standard for any sports-specific training apps out there that I know of. User-tailored workouts and multi-week training plans, Garmin apps to monitor your metrics while on the road, and its projected fitness signatures months out are all basically unheard of anywhere else.
 
-Xert builds what they call a "fitness signature" from your ride data — essentially an estimated power curve. But the really clever bit is a metric I haven't seen anywhere else: Maximum Power Available, or MPA.
-
 ![Xert power curve](img/xert-power-curve.png)
 
-There's a lot of hand-waving here, but you can think of MPA as your gas tank. Your body has multiple metabolic pathways: ATP, glycogen, lactate, and so on, but you can abstract all of that into a single "battery", or "gas tank". During a ride, you're draining this battery, and your body is replenishing it at some rate. The fitter you are, the bigger the battery and the faster it refills.
+Xert builds what they call a "fitness signature" from your ride data — essentially an estimated power curve. But the really clever bit is a metric I haven't seen anywhere else: Maximum Power Available, or MPA.
+
+![MPA curve](img/xert-mpa.png)
+
+There's a lot of hand-waving here, but you can think of MPA as your gas tank (purple line above). Your body has multiple metabolic pathways: ATP, glycogen, lactate, and so on, but you can abstract all of that into a single "battery", or "gas tank". During a ride, you're draining this battery, and your body is replenishing it at some rate. The fitter you are, the bigger the battery and the faster it refills.
 
 Xert overlays this MPA curve on top of your workout data, and it works like an inverted ceiling. When the MPA line drops down and touches your actual power output, that's failure. Your body literally cannot sustain that output anymore. Push 700 watts for 20 seconds, and if that depletes your MPA at that duration, then at the 21st second you have to back off. You won't drop to zero — maybe you can hold 500 watts for a couple more seconds — but you're drawing down a finite reserve.
 

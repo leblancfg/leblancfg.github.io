@@ -35,23 +35,15 @@ jobs:
           pip install -r requirements.txt
           pip install ghp-import
       
-      - name: Run make github (refresh, build, and deploy)
+      - name: Build and deploy site
         run: |
-          # Configure git
+          # Configure git for ghp-import commit on master
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
-          
-          # Remove output directory (refresh step)
-          rm -rf output
-          
-          # Commit any pending changes to dev
-          git add .
-          git commit -m "Updated content" --allow-empty
-          git push origin dev
-          
+
           # Build the site with production config
           pelican content -s publishconf.py
-          
+
           # Import to master branch and push
           ghp-import -m "Generate Pelican site" -b master output
           git push origin master
