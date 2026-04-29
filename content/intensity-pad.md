@@ -1,14 +1,15 @@
 ---
 title: I Spent My Sabbatical Building a Power Meter for Sledgehammers
-slug: intensity-pad-founder-story
+slug: intensity-pad
 date: 2026-04-17
 category: Fitness
-tags: intensity, founder-story, prototype, hardware, fitness
+tags: intensity, prototype, hardware, fitness
 status: published
-summary: One month, one prototype — the first Intensity Pad, and why I think striking movements deserve a power meter of their own.
+summary: One month, one prototype. The first Intensity Pad, and why I think striking movements deserve a power meter of their own.
 ---
 
-I spent the last month building a power meter for sledgehammer strikes: a pad you hit that tells you how hard you hit it, and whether you can do it again tomorrow.
+I spent the last month building a power meter for sledgehammer strikes: a pad you hit so you can see
+how hard you hit it throughout a workout, and track that over time. I call it the Intensity Pad.
 
 <div style="margin: 1.5rem auto; max-width: 360px; width: 100%;">
   <div style="position: relative; width: 100%; padding-top: 177.78%; overflow: hidden; border-radius: 12px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); background: #000;">
@@ -23,33 +24,91 @@ I spent the last month building a power meter for sledgehammer strikes: a pad yo
   </div>
 </div>
 
-This is the founder story: what I built, why I chose it, and what a month of hardware taught me. The engineering writeup will come later, once I've talked to someone who actually understands IP strategy. For now, the public home for the project is <https://intensity.systems/> — sign up there if you want to follow along.
+
+>**Dear reader**
+>
+>I'd eventually like to turn this into a product that people can purchase. Because of that, this
+>post intentionally focuses on how I got to the final proof-of-concept, and skips the technical
+>aspects.
+>
+>For now, the public home for the project is the very unfinished <https://intensity.systems/>. Sign
+>up there to follow along.
+>
+>If you're interested and a hardware person though, please reach out directly!
+
 
 ## Why I used my sabbatical on this
 
-After five years at Shopify, employees get [a paid month off](https://www.benefitscanada.com/archives_/benefits-canada-archive/how-shopify-is-supporting-employee-well-being-with-additional-paid-time-off/) to do whatever the hell they want. I took mine in April 2026. Thanks Tobi!
+After five years at Shopify, employees get [a paid month
+off](https://www.benefitscanada.com/archives_/benefits-canada-archive/how-shopify-is-supporting-employee-well-being-with-additional-paid-time-off/)
+to do whatever the hell they want. I took mine in April 2026. Thanks Tobi!
 
-I've been telling myself — and anyone who'd listen — for about six years now that I'd eventually end up doing something entrepreneurial. I've made small runs at independent things before: a band I toured with for two years in my twenties, a few abandoned company ideas, and during the pandemic a small gig selling weightlifting equipment out of my basement. That last one actually worked and taught me more about sourcing, logistics, and customer service than any job has. But I've never taken a dedicated, concentrated swing at an idea on my own time.
+I've been telling myself, and anyone who'd listen, for about six years that I'd eventually do
+something entrepreneurial. I've made small runs at independent things before: I co-founded and
+toured with a band for a couple years in my twenties, a few abandoned company ideas, and during the
+pandemic a small gig selling weightlifting equipment out of my basement. That last one worked, and I
+got to learn about sourcing, logistics, and customer service. But I'd never taken a dedicated,
+concentrated swing at an idea on my own time.
 
-So I gave myself a rule: 20 working days, one idea, push on it hard enough to find out if it has legs. I have a folder with a dozen ideas in it, most of them software, many of them some version of "a better mousetrap." I picked this one because it was the one where I'd be forced to learn the most new things: hardware, enclosure design, product marketing, customer development... and because it felt doable in a month. Barely.
+So my goal was: 20 working days, one idea, and push on it enough to see if it has legs. Of all the
+ideas I had, I picked that sledgehammer pad because it seemed to force me to learn the most things I
+didn't already know: hardware, CAD/physical design, product marketing, market research, etc. Also
+because it felt doable in a month... barely.
+
 
 ## The gap I kept staring at
 
-If you spend enough time around functional fitness, you notice that some modalities are beautifully instrumented and some are basically raw.
+After spending enough time around functional fitness, you end up noticing how some modalities are
+beautifully instrumented, and some are basically raw. It really depends on the movement and the
+implement.
 
-Running has pace, splits, heart rate, GPS. Cycling has [power meters](addicted-to-my-power-meter.html) and an entire vocabulary for thinking clearly about effort. Rowing and the ski erg aren't exactly underserved either. Lifting gives you known loads moving through known distances; with a stopwatch and a notebook, you can at least estimate work and power.
+Running has pace, splits, heart rate, GPS. Cycling has [power
+meters](addicted-to-my-power-meter.html) and an entire vocabulary for thinking clearly about effort.
+Rowing and the ski erg aren't exactly underserved either. Lifting weights gives you known loads moving
+through known distances; so "15 barbell cleans for time at 100 lb", not only is that a comparable
+effort when you do it again next month, but also if your friend does it.
 
-Then there's the other category. Loud, messy, explosive, and weirdly hard to measure. Striking with a sledgehammer is the cleanest example, but it's part of a broader movement pattern — core flexion, driving a load downward with your whole body. Chopping wood, driving a stake, even the tiny domestic version of snapping a stubborn ketchup bottle downward. It's a fundamental human movement, yet in modern gyms I think it's criminally under-programmed. Very few people train it seriously. My hypothesis is simple: if a movement isn't measurable, it rarely becomes programmable. I set out to change that.
+Then there are impact movements: mace, sledgehammer, slam balls. Really fun workouts, but basically
+impossible to measure or benchmark. There's a broad category of training that I call "impact
+training" that includes those movements, categorized by: core flexion, a load driven downward, with
+legs and trunk contributing instead of just arms. And &mdash; ok forgive me I'll get on a soapbox
+now &mash; it's a fundamental human movement! Chopping wood. Driving a stake. 8 year old me smashing
+down rocks to see if they had gold inside (they never did). It should be on the same rung as
+squatting and snatching in the pyramid of training movements!
 
-I am not a sledgehammer specialist. I've probably swung one for a total of three hours in my life. That was part of what made the idea interesting — it wasn't that I'd discovered a massive, mature category desperate for gadgets. It was that there was a fundamental movement here, naturally measurable, physically compelling, and oddly underserved.
+But because they're a crap shoot, "modern" training barely programs the movement. My hypothesis is
+simple: if impact training was measurable, it would have its place along the rower, bike and barbell
+in the gym. And if I trust my napkin math, it can probably be sold at a fraction of that rower or
+ski-erg price point.
+
+That said, I'm not a sledgehammer specialist. Honestly before this I've probably only spent a grand
+total of three hours doing it. That was part of the appeal too, as I was staring at a mismatch: a
+physical, satisfying movement with a clean signal "hiding" inside it.
+
 
 ## 20 days, one prototype
 
-The first week was reading, sketching, and ordering parts with names I'd never heard of a month earlier. The second week was when hardware started teaching me lessons. A connector I'd picked because it looked robust turned out to fail intermittently under exactly the kind of shock load the pad exists to measure. A sensor mount I was quietly proud of stopped working on the third session. Every few hours, reality would delete part of my mental picture and hand me back a more honest one.
+For the preceding 4 months I'd already been preparing and researching that project: physics models
+in Python, playing with toy sensors and an Arduino, purchasing parts and a shortlist of sensors I
+wanted to test out, and overall planning for the month. Also: sourcing parts is a bitch.
+
+Week one was just getting something working end-to-end. Barely any calibration or attention to
+detail. But that way, you're forced to rub your nose in what the actual bugs and rough edges are,
+and can plan accordingly after. What I learned then: most sensors saturate (not exactly a surprise,
+but SHIT), and sending I2C data down a relative long wire can cause issues. I knew both were
+potential issues, but, well, now I knew what I'd focus on after.
+
+By week two, I had a fully working proof of concept, tiny LCD display, and a buggy iOS app that
+showed live data. I then set out on building prototype pad #2 with the sensor I'd picked.
+
+I started week three testing out that new pad, with days of noisy calibration I couldn't make heads
+or tails of. The sensor I picked from the initial shortlist failed intermittently... probably
+because I hadn't soldered it properly. But by then, it was potted in epoxy! No soup for you.
 
 ![A month of hardware reality: parts, tools, and prototype mess on the workbench](img/intensity_messy.jpeg)
 
-The expensive mistake was a mechanical design choice I committed to on day four and didn't abandon until day twelve. Eight days. I could see the problem by day seven and spent the next five trying to rescue a decision I should've thrown out. No amount of whiteboarding would've surfaced it ahead of time, and no blog post by someone else would've convinced me either. Some lessons you pay for in hours.
+That third week was basically a write-off. Every few hours, reality deleted part of my mental model
+and handed me back a worse-looking, more accurate one.
 
 <div style="margin: 1.5rem auto; max-width: 360px; width: 100%;">
   <div style="position: relative; width: 100%; padding-top: 177.78%; overflow: hidden; border-radius: 12px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); background: #000;">
@@ -64,26 +123,55 @@ The expensive mistake was a mechanical design choice I committed to on day four 
   </div>
 </div>
 
-By the end of week three I had a pad that could take a real strike, a control unit that survived being dropped, and an iOS app pulling live data off of it. Week four was calibration: swinging a sledgehammer at the pad in my basement, over and over and over, until the numbers coming out the other end started to look like they meant something.
+By the end of week four though, freshly back from the drawing board, I had a pad that could take a
+real strike, a control unit with good enough UX, and an iOS app pulling live data off of it.
+
+That last week's focus was a second stage of calibration. I ended up collecting over 100
+calibration drops with known weights and heights, and was able to fit a model with a decent fit,
+even if I say so myself.
+
+The main challenge with calibration is that "distance from sensor" is the main source of noise in that
+dataset. I started off thinking I'd need a secondary hit detector system and add that signal to the
+model. But after a couple days, I reversed course: it's perfectly acceptable that athletes get lower
+numbers if they don't hit the sweet spot. In fact, that might even be a good thing: it encourages
+better technique and accuracy.
 
 ![First calibration run: strike power starting to look like a real signal](img/calibration_analysis.png)
 
-That chart was the moment the project stopped being a thought experiment. I've always liked the humbling quality of building new things — your job is to become less wrong, one concrete mistake at a time — and hardware is less patient about it than software. Software lets you be clever for a long time before reality forces the issue. A sledgehammer does not.
+From there, I was able to share with friends and reached out to a couple athletes, who hopefully
+become my first batch of beta testers.
+
 
 ## What I actually believe now
 
-Power data didn't just add numbers to my cycling; it changed the "texture" of the activity. It gave me a better language for pacing, comparison, and curiosity — I wrote about that [here](addicted-to-my-power-meter.html) — and after a few months I could feel 220 watts the same way I used to feel a heart rate of 160. The numbers were a bridge to better intuition.
+Power data for cycling completely changed how I approach that activity, and made me rethink much of
+the other training I do in other sports. I wrote about that [here](addicted-to-my-power-meter.html).
+After a few months, I could feel 220 watts the same way I used to feel a heart rate of 160. The
+numbers became a bridge to better intuition.
 
-That's the bar for Intensity Pad. Not "look, I made a gadget" — there are already plenty of gadgets in fitness and most of them don't matter. The thing worth chasing is whether a class of training people already find physically compelling could become more legible, more motivating, and more trainable once the right measurement exists. That's a much higher bar, and it's the only one I care about.
+So, that's the bar for Intensity Pad. Plenty of fitness gadgets already exist, and most of them
+don't matter. The thing worth chasing is whether a class of training (which I'm calling 'impact
+training' here) that people already find physically compelling gets more repeatable, legible, and motivating
+once the right measurement exists. That bar is higher, and it's the only one I care about.
 
-The prototype didn't prove every detail. What it did was change the emotional status of the idea. Before the sabbatical, Intensity Pad was a compelling concept in my head. Now it's a thing with mass — something people can pick up, abuse, argue about, and watch fail in specific rather than hypothetical ways. Specific disappointment is vastly better than vague optimism. Once an idea starts failing concretely, you can work with it.
+I'm proud of that work as well. As someone used to working with electrons, there's something really
+compelling about working with atoms. And now that idea it has mass: people can pick it up, abuse it,
+argue about it, and watch it fail in specific rather than hypothetical ways. Specific disappointment
+beats vague optimism.
 
-## Where it goes next
 
-The immediate next step is not a grand launch. It's more reality. More testing, more real use, a tighter form factor, and more time with the simple question underneath all of this: does it get more interesting the more real it gets, or less? Some ideas are compelling from a distance and collapse on contact. Others get sharper, more specific, and more stubborn the closer you get. My hope, obviously, is that this is the second kind.
+## Next steps
 
-The public home for the project is **[intensity.systems](https://intensity.systems/)**. If you want to follow along — or if you're the sort of person who likes the intersection of measurement, training, and slightly ridiculous hardware — sign up there.
+The next steps are about ansewring two questions: what will my handful of beta users think about it,
+and how can it be manufactured cheaply. Both unfortunately come with potential deal-breakers, but so
+far I have a good feeling on both counts.
 
-![The Intensity Systems landing page](img/intensity-landing-page.png)
+You can find the public home for the project at **[intensity.systems](https://intensity.systems/)**.
+If you want to follow along, or if you're the sort of person who likes the intersection of
+training, measurement, and slightly ridiculous hardware, sign up there.
 
-The month confirmed one thing for me: once you've watched one part of training become legible through good instrumentation, it's very hard not to start looking for the next dark corner.
+And if there's one thing for me: once you've watched one part of training become legible through
+good instrumentation, it's very hard not to start looking under all the other rugs in your house,
+and see what else can be done. I realize I'll sound like hyperbole, but I really feel like there's a
+holy grail of training insights out there, and we're just scratching the surface. Ultimately, my
+hope is to get there.
