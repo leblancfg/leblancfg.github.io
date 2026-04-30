@@ -72,7 +72,7 @@ Then there are impact movements: mace, sledgehammer, slam balls. Really fun work
 impossible to measure or benchmark. There's a broad category of training that I call "impact
 training" that includes those movements, categorized by: core flexion, a load driven downward, with
 legs and trunk contributing instead of just arms. And &mdash; ok forgive me I'll get on a soapbox
-now &mash; it's a fundamental human movement! Chopping wood. Driving a stake. 8 year old me smashing
+now &mdash; it's a fundamental human movement! Chopping wood. Driving a stake. 8 year old me smashing
 down rocks to see if they had gold inside (they never did). It should be on the same rung as
 squatting and snatching in the pyramid of training movements!
 
@@ -155,9 +155,9 @@ training' here) that people already find physically compelling gets more repeata
 once the right measurement exists. That bar is higher, and it's the only one I care about.
 
 I'm proud of that work as well. As someone used to working with electrons, there's something really
-compelling about working with atoms. And now that idea it has mass: people can pick it up, abuse it,
-argue about it, and watch it fail in specific rather than hypothetical ways. Specific disappointment
-beats vague optimism.
+compelling about working with atoms. And now that idea is made concrete: people can pick it up,
+abuse it, argue about it, and watch it fail in specific rather than hypothetical ways. Specific
+disappointment beats vague optimism.
 
 
 ## Next steps
