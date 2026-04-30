@@ -3,7 +3,8 @@ set shell := ["bash", "-cu"]
 port := env_var_or_default("PORT", "8910")
 branch := env_var_or_default("GITHUB_PAGES_BRANCH", "master")
 
-serve:
+alias s := server
+server:
     uv run pelican content -s devconf.py -lr --port {{port}}
 
 open:

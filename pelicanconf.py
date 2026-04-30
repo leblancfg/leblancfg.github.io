@@ -72,9 +72,17 @@ PLUGINS = [nb_markup]
 IGNORE_FILES = [".ipynb_checkpoints"]
 
 # Define Links
-STATIC_PATHS = ["img", "extra/CNAME", "pages/leblancfg_CV.pdf"]
+STATIC_PATHS = [
+    "img",
+    "extra/CNAME",
+    "extra/intensity-pad-founder-story.redirect",
+    "pages/leblancfg_CV.pdf",
+]
 EXTRA_PATH_METADATA = {
     "extra/CNAME": {"path": "CNAME"},
+    "extra/intensity-pad-founder-story.redirect": {
+        "path": "intensity-pad-founder-story.html"
+    },
     "pages/leblancfgCV.pdf": {"path": "pages/leblancfg_CV.pdf"},
 }
 
