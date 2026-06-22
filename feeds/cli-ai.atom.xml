@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com - cli, ai</title><link href="https://leblancfg.com/" rel="alternate"/><link href="https://leblancfg.com/feeds/cli-ai.atom.xml" rel="self"/><id>https://leblancfg.com/</id><updated>2026-06-14T00:00:00-04:00</updated><subtitle>Data Science, Geospatial Python, Space Stuff</subtitle><entry><title>pi-fusion: Local inference-time scaling for coding agents</title><link href="https://leblancfg.com/pi-fusion-local-inference-time-scaling-for-coding-agents.html" rel="alternate"/><published>2026-06-14T00:00:00-04:00</published><updated>2026-06-14T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2026-06-14:/pi-fusion-local-inference-time-scaling-for-coding-agents.html</id><summary type="html">&lt;p&gt;Why I built a local pi extension for OpenRouter Fusion-style planning panels, with the parts exposed.&lt;/p&gt;</summary><content type="html">&lt;p&gt;OpenRouter's Fusion feature got my attention because it matched results from Binks, an internal
+code-review project I've been working on. In those evals, panels of model calls kept doing better
+than I expected.&lt;/p&gt;
+&lt;p&gt;The first surprise was that a handful of fast, "dumber" models could match or beat parts of our
+benchmark. The second surprise was that a panel of frontier models could beat any single model in
+the panel. The mix mattered: cheap planners plus a strong synthesizer behaved differently from a
+frontier-only panel, and both were useful in different places.&lt;/p&gt;
+&lt;p&gt;I wanted that shape in my daily &lt;code&gt;pi&lt;/code&gt; loop, but I didn't want every fused turn to go through
+OpenRouter. I wanted to swap models, change worker count, restrict tools, cap output, and inspect
+exactly what got handed to the main agent.&lt;/p&gt;
+&lt;p&gt;So I built &lt;a href="https://github.com/leblancfg/pi-fusion"&gt;an extension for &lt;code&gt;pi-coding-agent&lt;/code&gt; called
+&lt;code&gt;pi-fusion&lt;/code&gt;&lt;/a&gt; that recreates it, plus a few more bells and
+whistles.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="pi-fusion: several models in parallel, one synthesized answer" src="img/pi_fusion_social_preview.png"&gt;&lt;/p&gt;
+&lt;p&gt;It runs a local planning panel before the normal actor turn. It can load shared context, split your
+prompt into a few angles, run independent worker agents in parallel, and write their notes into the
+actor's first turn.&lt;/p&gt;
+&lt;p&gt;One design rule for production workloads matters more than the rest: every bit of output that can
+influence the actor goes through the normal &lt;code&gt;pi&lt;/code&gt; session file. I don't want hidden extension state
+changing what the agent does. If the actor sees it, it's in the session. That makes turns resumable
+and keeps audit logs in one place.&lt;/p&gt;
+&lt;h2&gt;Why panels are useful&lt;/h2&gt;
+&lt;p&gt;The tradeoff is where the extra calls go and what the synthesizer can do with them.&lt;/p&gt;
+&lt;p&gt;For cheaper runs, I like using fast models as planners and the current session model as the
+synthesizer. The workers aren't expected to produce the final answer. They inspect the problem, find
+likely paths, and disagree in useful ways. Wall-clock time stays reasonable because the workers run
+in parallel.&lt;/p&gt;
+&lt;p&gt;For expensive runs, you can put frontier models in the panel and let another strong model
+synthesize. That costs more and takes longer. It can also catch mistakes that any one model missed.
+I don't use that for every task, but it's the mode I want available when the work has hidden
+coupling or a high cost of being wrong.&lt;/p&gt;
+&lt;p&gt;This fits the research thread around inference-time scaling. Snell et al.'s
+&lt;a href="https://arxiv.org/abs/2408.03314"&gt;"Scaling LLM Test-Time Compute Optimally"&lt;/a&gt; treats test-time
+compute as another scaling axis. Brown et al.'s
+&lt;a href="https://arxiv.org/abs/2407.21787"&gt;"Large Language Monkeys"&lt;/a&gt; shows how repeated sampling can amplify
+weaker models. Wang et al.'s &lt;a href="https://arxiv.org/abs/2406.04692"&gt;"Mixture-of-Agents"&lt;/a&gt; reports gains
+from aggregating multiple LLM agents. BAIR's
+&lt;a href="https://bair.berkeley.edu/blog/2024/02/18/compound-ai-systems/"&gt;"The Shift from Models to Compound AI Systems"&lt;/a&gt;
+gives the broader framing: the system around the model matters.&lt;/p&gt;
+&lt;p&gt;I'm not claiming that &lt;code&gt;pi-fusion&lt;/code&gt; proves anything new. I built it because the shape kept showing up
+in papers, in OpenRouter's product, and in my own code-review evals. The missing piece for me was a
+version I could run locally in the terminal and modify when the defaults were wrong.&lt;/p&gt;
+&lt;h2&gt;What a fused turn does&lt;/h2&gt;
+&lt;p&gt;A fused turn has four steps:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Discovery loads shared context from the repository. In read-only mode, it only gets search and
+   file-reading tools.&lt;/li&gt;
+&lt;li&gt;Prompt rewrite turns the original request into separate worker angles.&lt;/li&gt;
+&lt;li&gt;Workers run as headless &lt;code&gt;pi&lt;/code&gt; subprocesses and write short planning notes.&lt;/li&gt;
+&lt;li&gt;Synthesis puts discovery, prompt variations, and worker notes into the main actor turn.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Discovery and rewrite are optional. Worker count is configurable. The synthesis model can be the
+same model you're already using in &lt;code&gt;pi&lt;/code&gt;, or a different one.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="pi-fusion running in the pi TUI" src="img/pi_fusion_demo.gif"&gt;&lt;/p&gt;
+&lt;p&gt;A fused turn adds latency. On the setup I use most often, it's roughly eight to ten seconds before
+the actor starts. I don't want that for typo fixes. I do want it when I'm asking for a bug hunt, a
+refactor plan, or a review of code I don't know well.&lt;/p&gt;
+&lt;p&gt;When it works, the actor starts with a map: likely files, competing theories, edge cases, and places
+where the workers disagreed. That beats watching it confidently edit the wrong file and then dig
+itself out.&lt;/p&gt;
+&lt;h2&gt;Built for real use&lt;/h2&gt;
+&lt;p&gt;I'm aiming this at production use, not a demo that only behaves in a clean repo.&lt;/p&gt;
+&lt;p&gt;Discovery output, rewritten prompts, worker notes, and the synthesis bundle all get written into the
+&lt;code&gt;pi&lt;/code&gt; turn through &lt;code&gt;before_agent_start&lt;/code&gt;. There's no private side-channel where hidden extension state
+changes what the agent does. The user's original message stays intact, and the fused planning bundle
+is per-turn rather than something that piles up across the conversation.&lt;/p&gt;
+&lt;p&gt;Worker subprocesses run with &lt;code&gt;--no-extensions&lt;/code&gt;, because recursive fusion is a funny bug report
+exactly once.&lt;/p&gt;
+&lt;p&gt;Tool access is tunable. You can let discovery and workers use the normal tools, or you can force
+them into read-only planning:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;/fusion tools read-only
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;In read-only mode, planners can inspect the repo with tools like &lt;code&gt;read&lt;/code&gt;, &lt;code&gt;grep&lt;/code&gt;, &lt;code&gt;find&lt;/code&gt;, and &lt;code&gt;ls&lt;/code&gt;,
+but they can't edit files. That's usually how I run it. Let the panel argue. Let the actor write.&lt;/p&gt;
+&lt;p&gt;As a first smoke test, I ran the Binks PR-review prompt against an intentionally broken local diff
+with three read-only fusion workers and a GPT-5.5 synthesis turn. It found the bug and produced JSON
+that validated against Binks' review-output models.&lt;/p&gt;
+&lt;p&gt;Everything is configurable from the TUI, a dotfile, or CLI flags. Global presets live in
+&lt;code&gt;~/.pi/agent/fusion.json&lt;/code&gt;. Project presets live in &lt;code&gt;.pi/fusion.json&lt;/code&gt;, which makes repo-specific
+panels easy to share or commit. You can control worker count, models, reasoning effort, tool access,
+output budgets, context budgets, timeouts, and prompt templates.&lt;/p&gt;
+&lt;p&gt;For repeatable starts, the same controls are available as flags:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pi&lt;span class="w"&gt; &lt;/span&gt;--fusion-enabled&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;--fusion-workers&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;3&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;--fusion-planner-tools&lt;span class="w"&gt; &lt;/span&gt;read-only&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;--fusion-worker-model&lt;span class="w"&gt; &lt;/span&gt;google/gemini-3.5-flash&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;--fusion-worker-thinking&lt;span class="w"&gt; &lt;/span&gt;medium&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;--fusion-synthesis-model&lt;span class="w"&gt; &lt;/span&gt;openai/gpt-5.5&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="se"&gt;\&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;--fusion-synthesis-thinking&lt;span class="w"&gt; &lt;/span&gt;xhigh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;My bias here is infrastructure: plain controls, visible state, replaceable pieces. The defaults
+should be useful, but every important part should be exposed. You should be able to build on it,
+too.&lt;/p&gt;
+&lt;h2&gt;Trying it&lt;/h2&gt;
+&lt;p&gt;Install from npm:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pi&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;npm:@leblancfg/pi-fusion
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Or install straight from GitHub:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;pi&lt;span class="w"&gt; &lt;/span&gt;install&lt;span class="w"&gt; &lt;/span&gt;git:github.com/leblancfg/pi-fusion
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;Then open &lt;code&gt;pi&lt;/code&gt; and arm a fused turn:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;code&gt;/fusion
+/fusion on
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+
+&lt;p&gt;The code and docs are here:
+&lt;a href="https://github.com/leblancfg/pi-fusion"&gt;github.com/leblancfg/pi-fusion&lt;/a&gt;.&lt;/p&gt;</content><category term="cli, ai"/><category term="cli"/><category term="ai"/><category term="llms"/><category term="terminal"/><category term="pi"/><category term="agents"/><category term="test-time-compute"/><category term="engineering"/></entry></feed>
