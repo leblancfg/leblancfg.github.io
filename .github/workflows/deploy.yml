@@ -42,10 +42,9 @@ jobs:
           # Build the site with production config
           pelican content -s publishconf.py
 
-          # Import to master branch and push. Force-with-lease is safe here because
-          # master only contains generated output for the current dev commit.
-          git fetch origin master:refs/remotes/origin/master
+          # Import to master branch and push. master only contains generated output
+          # for the current dev commit, so force-pushing it is expected.
           ghp-import -m "Generate Pelican site" -b master output
-          git push --force-with-lease origin master
+          git push --force origin master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
