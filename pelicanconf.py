@@ -46,6 +46,7 @@ SOCIAL = (
     ("linkedin", "https://www.linkedin.com/in/fran%C3%A7ois-leblanc-07294b106/"),
     ("github", "https://github.com/leblancfg"),
     ("mastodon", "https://hachyderm.io/@leblancfg"),
+    ("x", "https://x.com/leblanc_fg"),
     ("rss", "https://leblancfg.com/feeds/all.atom.xml"),
 )
 
