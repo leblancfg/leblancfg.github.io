@@ -37,6 +37,11 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 
 USE_FOLDER_AS_CATEGORY = False
+ARTICLE_URL = "{slug}"
+ARTICLE_SAVE_AS = "{slug}/index.html"
+PAGE_URL = "pages/{slug}"
+PAGE_SAVE_AS = "pages/{slug}/index.html"
+DISABLE_URL_HASH = True
 MAIN_MENU = True
 HOME_HIDE_TAGS = True
 

@@ -223,6 +223,7 @@ $RECYCLE.BIN/
 # Pelican
 *.pid
 output/
+.dev-output/
 env/
 dev.yml
 pelican-themes/
