@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/stylesheet/style.min.css">
+
+
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+          href="https://leblancfg.com/theme/pygments/monokai.min.css">
+
+
+
+  <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/solid.css">
+
+
+  <link rel="shortcut icon" href="/img/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/img/icons/favicon.ico" type="image/x-icon">
+
+  <!-- Chrome, Firefox OS and Opera -->
+  <meta name="theme-color" content="#330033">
+  <!-- Windows Phone -->
+  <meta name="msapplication-navbutton-color" content="#330033">
+  <!-- iOS Safari -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Microsoft EDGE -->
+  <meta name="msapplication-TileColor" content="#330033">
+
+  <link href="https://leblancfg.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="leblancfg.com Atom">
+
+  <link href="https://leblancfg.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="leblancfg.com RSS">
+
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-120300361-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+ 
+
+<meta name="author" content="François Leblanc" />
+<meta name="description" content="Why I built a local pi extension for OpenRouter Fusion-style planning panels, with the parts exposed." />
+<meta name="keywords" content="cli, ai, llms, terminal, pi, agents, test-time-compute, engineering">
+
+
+  <meta property="og:site_name" content="leblancfg.com"/>
+  <meta property="og:title" content="pi-fusion: Local inference-time scaling for coding agents"/>
+  <meta property="og:description" content="Why I built a local pi extension for OpenRouter Fusion-style planning panels, with the parts exposed."/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="https://leblancfg.com/pi-fusion-local-inference-time-scaling-for-coding-agents"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2026-06-14 00:00:00-04:00"/>
+  <meta property="article:modified_time" content=""/>
+  <meta property="article:author" content="https://leblancfg.com/author/francois-leblanc.html">
+  <meta property="article:section" content="cli, ai"/>
+  <meta property="article:tag" content="cli"/>
+  <meta property="article:tag" content="ai"/>
+  <meta property="article:tag" content="llms"/>
+  <meta property="article:tag" content="terminal"/>
+  <meta property="article:tag" content="pi"/>
+  <meta property="article:tag" content="agents"/>
+  <meta property="article:tag" content="test-time-compute"/>
+  <meta property="article:tag" content="engineering"/>
+  <meta property="og:image" content="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4">
+
+  <title>leblancfg.com &ndash; pi-fusion: Local inference-time scaling for coding agents</title>
+
+
+</head>
+<body class="light-theme">
+
+<aside>
+  <div>
+    <a href="https://leblancfg.com/">
+      <img src="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4" alt="François Leblanc" title="François Leblanc">
+    </a>
+
+    <h1>
+      <a href="https://leblancfg.com/">François Leblanc</a>
+    </h1>
+
+    <p>Data Science, Geospatial Python, Space Stuff</p>
+
+
+    <nav>
+      <ul class="list">
+
+
+            <li>
+              <a target="_self"
+                 href="https://leblancfg.com/pages/about">
+                About
+              </a>
+            </li>
+            <li>
+              <a target="_self"
+                 href="https://leblancfg.com/pages/projects">
+                Projects
+              </a>
+            </li>
+
+          <li>
+            <a target="_self" href="https://leblancfg.com/pages/leblancfg_CV.pdf" >Résumé</a>
+          </li>
+      </ul>
+    </nav>
+
+    <ul class="social">
+      <li>
+        <a class="sc-linkedin"
+           href="https://www.linkedin.com/in/fran%C3%A7ois-leblanc-07294b106/"
+           target="_blank">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-github"
+           href="https://github.com/leblancfg"
+           target="_blank">
+          <i class="fa-brands fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-mastodon"
+rel="me"           href="https://hachyderm.io/@leblancfg"
+           target="_blank">
+          <i class="fa-brands fa-mastodon"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-x"
+           href="https://x.com/leblanc_fg"
+           target="_blank">
+          <svg class="x-logo" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+          </svg>
+        </a>
+      </li>
+      <li>
+        <a class="sc-rss"
+           href="https://leblancfg.com/feeds/all.atom.xml"
+           target="_blank">
+          <i class="fa-solid fa-rss"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</aside>
+  <main>
+
+<nav>
+  <a href="https://leblancfg.com/">Home</a>
+
+  <a href="/archives.html">Archives</a>
+  <a href="/categories.html">Categories</a>
+  <a href="/tags.html">Tags</a>
+
+  <a href="https://leblancfg.com/feeds/all.atom.xml">Atom</a>
+
+  <a href="https://leblancfg.com/feeds/all.rss.xml">RSS</a>
+</nav>
+
+<article class="single">
+  <header>
+      
+    <h1 id="pi-fusion-local-inference-time-scaling-for-coding-agents">pi-fusion: Local inference-time scaling for coding agents</h1>
+    <p>
+      Posted on June 14, 2026 in <a href="https://leblancfg.com/category/cli-ai.html">cli, ai</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>OpenRouter's Fusion feature got my attention because it matched results from Binks, an internal
+code-review project I've been working on. In those evals, panels of model calls kept doing better
+than I expected.</p>
+<p>The first surprise was that a handful of fast, "dumber" models could match or beat parts of our
+benchmark. The second surprise was that a panel of frontier models could beat any single model in
+the panel. The mix mattered: cheap planners plus a strong synthesizer behaved differently from a
+frontier-only panel, and both were useful in different places.</p>
+<p>I wanted that shape in my daily <code>pi</code> loop, but I didn't want every fused turn to go through
+OpenRouter. I wanted to swap models, change worker count, restrict tools, cap output, and inspect
+exactly what got handed to the main agent.</p>
+<p>So I built <a href="https://github.com/leblancfg/pi-fusion">an extension for <code>pi-coding-agent</code> called
+<code>pi-fusion</code></a> that recreates it, plus a few more bells and
+whistles.</p>
+<p><img alt="pi-fusion: several models in parallel, one synthesized answer" src="img/pi_fusion_social_preview.png"></p>
+<p>It runs a local planning panel before the normal actor turn. It can load shared context, split your
+prompt into a few angles, run independent worker agents in parallel, and write their notes into the
+actor's first turn.</p>
+<p>One design rule for production workloads matters more than the rest: every bit of output that can
+influence the actor goes through the normal <code>pi</code> session file. I don't want hidden extension state
+changing what the agent does. If the actor sees it, it's in the session. That makes turns resumable
+and keeps audit logs in one place.</p>
+<h2>Why panels are useful</h2>
+<p>The tradeoff is where the extra calls go and what the synthesizer can do with them.</p>
+<p>For cheaper runs, I like using fast models as planners and the current session model as the
+synthesizer. The workers aren't expected to produce the final answer. They inspect the problem, find
+likely paths, and disagree in useful ways. Wall-clock time stays reasonable because the workers run
+in parallel.</p>
+<p>For expensive runs, you can put frontier models in the panel and let another strong model
+synthesize. That costs more and takes longer. It can also catch mistakes that any one model missed.
+I don't use that for every task, but it's the mode I want available when the work has hidden
+coupling or a high cost of being wrong.</p>
+<p>This fits the research thread around inference-time scaling. Snell et al.'s
+<a href="https://arxiv.org/abs/2408.03314">"Scaling LLM Test-Time Compute Optimally"</a> treats test-time
+compute as another scaling axis. Brown et al.'s
+<a href="https://arxiv.org/abs/2407.21787">"Large Language Monkeys"</a> shows how repeated sampling can amplify
+weaker models. Wang et al.'s <a href="https://arxiv.org/abs/2406.04692">"Mixture-of-Agents"</a> reports gains
+from aggregating multiple LLM agents. BAIR's
+<a href="https://bair.berkeley.edu/blog/2024/02/18/compound-ai-systems/">"The Shift from Models to Compound AI Systems"</a>
+gives the broader framing: the system around the model matters.</p>
+<p>I'm not claiming that <code>pi-fusion</code> proves anything new. I built it because the shape kept showing up
+in papers, in OpenRouter's product, and in my own code-review evals. The missing piece for me was a
+version I could run locally in the terminal and modify when the defaults were wrong.</p>
+<h2>What a fused turn does</h2>
+<p>A fused turn has four steps:</p>
+<ol>
+<li>Discovery loads shared context from the repository. In read-only mode, it only gets search and
+   file-reading tools.</li>
+<li>Prompt rewrite turns the original request into separate worker angles.</li>
+<li>Workers run as headless <code>pi</code> subprocesses and write short planning notes.</li>
+<li>Synthesis puts discovery, prompt variations, and worker notes into the main actor turn.</li>
+</ol>
+<p>Discovery and rewrite are optional. Worker count is configurable. The synthesis model can be the
+same model you're already using in <code>pi</code>, or a different one.</p>
+<p><img alt="pi-fusion running in the pi TUI" src="img/pi_fusion_demo.gif"></p>
+<p>A fused turn adds latency. On the setup I use most often, it's roughly eight to ten seconds before
+the actor starts. I don't want that for typo fixes. I do want it when I'm asking for a bug hunt, a
+refactor plan, or a review of code I don't know well.</p>
+<p>When it works, the actor starts with a map: likely files, competing theories, edge cases, and places
+where the workers disagreed. That beats watching it confidently edit the wrong file and then dig
+itself out.</p>
+<h2>Built for real use</h2>
+<p>I'm aiming this at production use, not a demo that only behaves in a clean repo.</p>
+<p>Discovery output, rewritten prompts, worker notes, and the synthesis bundle all get written into the
+<code>pi</code> turn through <code>before_agent_start</code>. There's no private side-channel where hidden extension state
+changes what the agent does. The user's original message stays intact, and the fused planning bundle
+is per-turn rather than something that piles up across the conversation.</p>
+<p>Worker subprocesses run with <code>--no-extensions</code>, because recursive fusion is a funny bug report
+exactly once.</p>
+<p>Tool access is tunable. You can let discovery and workers use the normal tools, or you can force
+them into read-only planning:</p>
+<div class="highlight"><pre><span></span><code>/fusion tools read-only
+</code></pre></div>
+
+<p>In read-only mode, planners can inspect the repo with tools like <code>read</code>, <code>grep</code>, <code>find</code>, and <code>ls</code>,
+but they can't edit files. That's usually how I run it. Let the panel argue. Let the actor write.</p>
+<p>As a first smoke test, I ran the Binks PR-review prompt against an intentionally broken local diff
+with three read-only fusion workers and a GPT-5.5 synthesis turn. It found the bug and produced JSON
+that validated against Binks' review-output models.</p>
+<p>Everything is configurable from the TUI, a dotfile, or CLI flags. Global presets live in
+<code>~/.pi/agent/fusion.json</code>. Project presets live in <code>.pi/fusion.json</code>, which makes repo-specific
+panels easy to share or commit. You can control worker count, models, reasoning effort, tool access,
+output budgets, context budgets, timeouts, and prompt templates.</p>
+<p>For repeatable starts, the same controls are available as flags:</p>
+<div class="highlight"><pre><span></span><code>pi<span class="w"> </span>--fusion-enabled<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--fusion-workers<span class="w"> </span><span class="m">3</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--fusion-planner-tools<span class="w"> </span>read-only<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--fusion-worker-model<span class="w"> </span>google/gemini-3.5-flash<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--fusion-worker-thinking<span class="w"> </span>medium<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--fusion-synthesis-model<span class="w"> </span>openai/gpt-5.5<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--fusion-synthesis-thinking<span class="w"> </span>xhigh
+</code></pre></div>
+
+<p>My bias here is infrastructure: plain controls, visible state, replaceable pieces. The defaults
+should be useful, but every important part should be exposed. You should be able to build on it,
+too.</p>
+<h2>Trying it</h2>
+<p>Install from npm:</p>
+<div class="highlight"><pre><span></span><code>pi<span class="w"> </span>install<span class="w"> </span>npm:@leblancfg/pi-fusion
+</code></pre></div>
+
+<p>Or install straight from GitHub:</p>
+<div class="highlight"><pre><span></span><code>pi<span class="w"> </span>install<span class="w"> </span>git:github.com/leblancfg/pi-fusion
+</code></pre></div>
+
+<p>Then open <code>pi</code> and arm a fused turn:</p>
+<div class="highlight"><pre><span></span><code>/fusion
+/fusion on
+</code></pre></div>
+
+<p>The code and docs are here:
+<a href="https://github.com/leblancfg/pi-fusion">github.com/leblancfg/pi-fusion</a>.</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://leblancfg.com/tag/cli.html">cli</a>
+      <a href="https://leblancfg.com/tag/ai.html">ai</a>
+      <a href="https://leblancfg.com/tag/llms.html">llms</a>
+      <a href="https://leblancfg.com/tag/terminal.html">terminal</a>
+      <a href="https://leblancfg.com/tag/pi.html">pi</a>
+      <a href="https://leblancfg.com/tag/agents.html">agents</a>
+      <a href="https://leblancfg.com/tag/test-time-compute.html">test-time-compute</a>
+      <a href="https://leblancfg.com/tag/engineering.html">engineering</a>
+    </p>
+  </div>
+
+
+
+
+
+
+</article>
+
+<footer>
+<p>
+  &copy; 2026  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p></footer>  </main>
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " leblancfg.com ",
+  "url" : "https://leblancfg.com",
+  "image": "https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4",
+  "description": "François Leblanc's Thoughts and Writings"
+}
+</script>
+</body>
+</html>
