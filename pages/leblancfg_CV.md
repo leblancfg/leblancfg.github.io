@@ -131,7 +131,7 @@ machine learning, and government data products.
 
 ## Selected Projects
 ### pi-fusion (2026)
-Local inference-time scaling and compound model panels for coding agents. Extention for the
+Local inference-time scaling and compound model panels for coding agents. Extension for the
 [pi](https://pi.dev/) coding agent.
 
 - Project: https://github.com/leblancfg/pi-fusion
