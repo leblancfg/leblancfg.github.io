@@ -1,0 +1,324 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="index, follow" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Source+Code+Pro:ital,wght@0,400;0,700;1,400&family=Source+Sans+Pro:ital,wght@0,300;0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/stylesheet/style.min.css">
+
+
+    <link id="pygments-light-theme" rel="stylesheet" type="text/css"
+          href="https://leblancfg.com/theme/pygments/monokai.min.css">
+
+
+
+  <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/fontawesome.css">
+  <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/brands.css">
+  <link rel="stylesheet" type="text/css" href="https://leblancfg.com/theme/font-awesome/css/solid.css">
+
+
+  <link rel="shortcut icon" href="/img/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/img/icons/favicon.ico" type="image/x-icon">
+
+  <!-- Chrome, Firefox OS and Opera -->
+  <meta name="theme-color" content="#330033">
+  <!-- Windows Phone -->
+  <meta name="msapplication-navbutton-color" content="#330033">
+  <!-- iOS Safari -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Microsoft EDGE -->
+  <meta name="msapplication-TileColor" content="#330033">
+
+  <link href="https://leblancfg.com/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="leblancfg.com Atom">
+
+  <link href="https://leblancfg.com/feeds/all.rss.xml" type="application/rss+xml" rel="alternate" title="leblancfg.com RSS">
+
+<script type="text/javascript">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-120300361-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+<meta name="author" content="François Leblanc" />
+<meta name="description" content="A public SQLite artifact and checkpointed scraper for analyzing the 2026 CrossFit Open Men 35-39 leaderboard." />
+<meta name="keywords" content="crossfit, fitness, data, athlete">
+
+
+  <meta property="og:site_name" content="leblancfg.com"/>
+  <meta property="og:title" content="Building a 2026 CrossFit Open Athlete Dataset"/>
+  <meta property="og:description" content="A public SQLite artifact and checkpointed scraper for analyzing the 2026 CrossFit Open Men 35-39 leaderboard."/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="https://leblancfg.com/crossfit-open-2026-athlete-dataset"/>
+  <meta property="og:type" content="article"/>
+  <meta property="article:published_time" content="2026-07-02 00:00:00-04:00"/>
+  <meta property="article:modified_time" content=""/>
+  <meta property="article:author" content="https://leblancfg.com/author/francois-leblanc.html">
+  <meta property="article:section" content="Fitness"/>
+  <meta property="article:tag" content="crossfit"/>
+  <meta property="article:tag" content="fitness"/>
+  <meta property="article:tag" content="data"/>
+  <meta property="article:tag" content="athlete"/>
+  <meta property="og:image" content="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4">
+
+  <title>leblancfg.com &ndash; Building a 2026 CrossFit Open Athlete Dataset</title>
+
+
+</head>
+<body class="light-theme">
+
+<aside>
+  <div>
+    <a href="https://leblancfg.com/">
+      <img src="https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4" alt="François Leblanc" title="François Leblanc">
+    </a>
+
+    <h1>
+      <a href="https://leblancfg.com/">François Leblanc</a>
+    </h1>
+
+    <p>Data Science, Geospatial Python, Space Stuff</p>
+
+
+    <nav>
+      <ul class="list">
+
+
+            <li>
+              <a target="_self"
+                 href="https://leblancfg.com/pages/about">
+                About
+              </a>
+            </li>
+            <li>
+              <a target="_self"
+                 href="https://leblancfg.com/pages/projects">
+                Projects
+              </a>
+            </li>
+
+          <li>
+            <a target="_self" href="https://leblancfg.com/pages/leblancfg_CV.pdf" >CV</a>
+          </li>
+      </ul>
+    </nav>
+
+    <ul class="social">
+      <li>
+        <a class="sc-linkedin"
+           href="https://www.linkedin.com/in/fran%C3%A7ois-leblanc-07294b106/"
+           target="_blank">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-github"
+           href="https://github.com/leblancfg"
+           target="_blank">
+          <i class="fa-brands fa-github"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-mastodon"
+rel="me"           href="https://hachyderm.io/@leblancfg"
+           target="_blank">
+          <i class="fa-brands fa-mastodon"></i>
+        </a>
+      </li>
+      <li>
+        <a class="sc-x"
+           href="https://x.com/leblanc_fg"
+           target="_blank">
+          <svg class="x-logo" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+          </svg>
+        </a>
+      </li>
+      <li>
+        <a class="sc-rss"
+           href="https://leblancfg.com/feeds/all.atom.xml"
+           target="_blank">
+          <i class="fa-solid fa-rss"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+</aside>
+  <main>
+
+<nav>
+  <a href="https://leblancfg.com/">Home</a>
+
+  <a href="/archives.html">Archives</a>
+  <a href="/categories.html">Categories</a>
+  <a href="/tags.html">Tags</a>
+
+  <a href="https://leblancfg.com/feeds/all.atom.xml">Atom</a>
+
+  <a href="https://leblancfg.com/feeds/all.rss.xml">RSS</a>
+</nav>
+
+<article class="single">
+  <header>
+
+    <h1 id="crossfit-open-2026-athlete-dataset">Building a 2026 CrossFit Open Athlete Dataset</h1>
+    <p>
+      Posted on July 02, 2026 in <a href="https://leblancfg.com/category/fitness.html">Fitness</a>
+
+    </p>
+  </header>
+
+
+  <div>
+    <p>I’m competing in the 2027 CrossFit Open in Men 35-39. If the target is 90th percentile worldwide,
+the first useful question is brutally concrete: what does that mean in leaderboard terms?</p>
+
+<p>So I built the beginning of the dataset I wanted to read: a restartable public scrape of the
+CrossFit Games leaderboard API, stored as SQLite, with raw source responses kept beside normalized
+tables. The first complete artifact covers the full 2026 Men 35-39 Open division: <strong>29,171
+athletes</strong>, <strong>87,513 workout-score rows</strong>, and the API’s published
+<strong>29,171</strong> competitor field lining up with the normalized row count.</p>
+
+<p><a class="btn" href="/data/crossfit-open/crossfit_open_2026.sqlite">Download the SQLite artifact</a>
+<a class="btn" href="/data/crossfit-open/README.md">Read the data dictionary</a>
+<a class="btn" href="/data/crossfit-open/summary.json">Open summary JSON</a></p>
+
+<h2>The 90th percentile target</h2>
+<p>CrossFit’s current athlete pages did not expose an Open percentile field in the public HTML I checked.
+The dataset derives percentile from rank and field size instead. In Men 35-39 for 2026, the 90th
+percentile cutoff lands at <strong>rank 2,918</strong> out of
+<strong>29,171</strong>. In plain English: top ten percent meant being inside the
+first <strong>2,918</strong> athletes worldwide.</p>
+
+<p><img alt="Bar chart of Men 35-39 athletes by performance percentile bucket" src="/data/crossfit-open/men-35-39-percentile-buckets.svg"></p>
+
+<p>The athlete at exactly rank 2,918 had an overall score of 11,119. His workout ranks were 6,427,
+1,395, and 3,297. That is useful because it keeps the goal from collapsing into a vague identity
+claim. A 90th percentile Open does not require being elite at everything, but it does require
+surviving one weaker event without letting the total score drift out of range.</p>
+
+<h2>Where the field comes from</h2>
+<p>The field is large enough that country mix matters. The United States dominates the division, but
+Canada still contributes <strong>960</strong> athletes. The first full scrape found
+these top countries:</p>
+
+<ul>
+<li><strong>US</strong>: 9,817 athletes (United States)</li>
+<li><strong>FR</strong>: 2,670 athletes (France)</li>
+<li><strong>GB</strong>: 2,428 athletes (United Kingdom)</li>
+<li><strong>BR</strong>: 1,389 athletes (Brazil)</li>
+<li><strong>AU</strong>: 1,264 athletes (Australia)</li>
+<li><strong>KR</strong>: 1,124 athletes (Korea (the Republic of))</li>
+<li><strong>CA</strong>: 960 athletes (Canada)</li>
+<li><strong>IT</strong>: 843 athletes (Italy)</li>
+</ul>
+
+<p><img alt="Bar chart of top countries in the 2026 Open Men 35-39 division" src="/data/crossfit-open/men-35-39-top-countries.svg"></p>
+
+<h2>What is in the database</h2>
+<p>The SQLite file includes normalized tables for divisions, athletes, leaderboard entries, workout
+scores, and source fetches. Keeping <code>source_fetches</code> makes the database bigger, but I think it is the
+right tradeoff for a public artifact: readers can inspect exactly what came back from the public API,
+and the scraper can resume without hammering pages it already fetched successfully.</p>
+
+<p>The profile-page path is implemented too, but deliberately sampled rather than fully run. Athlete
+pages are much heavier than leaderboard API pages. The artifact includes <strong>25</strong>
+profile fetches and <strong>165</strong> parsed benchmark values to prove
+the parser, while leaving the full profile crawl as an explicit long-running job.</p>
+
+<h2>Useful starter queries</h2>
+<p>Find the 90th percentile boundary:</p>
+<pre><code>select max(overall_rank) as rank_cutoff, count(*) as athletes
+from leaderboard_entries
+where year = 2026
+  and competition_type = 'open'
+  and division_id = 18
+  and performance_percentile &gt;= 90;</code></pre>
+
+<p>Look at the event-rank spread for top-10-percent athletes:</p>
+<pre><code>select ordinal, min(rank) as best_rank, max(rank) as worst_rank
+from workout_scores ws
+join leaderboard_entries le
+  using (year, competition_type, division_id, competitor_id)
+where le.year = 2026
+  and le.competition_type = 'open'
+  and le.division_id = 18
+  and le.performance_percentile &gt;= 90
+group by ordinal
+order by ordinal;</code></pre>
+
+<ul>
+<li>Workout 1: top-10-percent athlete workout ranks span 1 to 8,585.</li>
+<li>Workout 2: top-10-percent athlete workout ranks span 1 to 9,903.</li>
+<li>Workout 3: top-10-percent athlete workout ranks span 2 to 7,358.</li>
+</ul>
+
+<h2>Provenance and next step</h2>
+<p>Preflight happened on July 2, 2026. The CrossFit robots file allowed the leaderboard and public
+athlete pages, while disallowing registration, score submission, and athlete-management paths. The
+leaderboard page points at the public <code>c3po.crossfit.com</code> leaderboard API. Athlete pages still expose
+rank tables and self-reported benchmark stats, but I did not find a public Open percentile field.</p>
+
+<p>The full all-division scrape is now a command, not a wish:</p>
+<pre><code>python3 scripts/crossfit_open_dataset.py \
+  --db data/crossfit-open/crossfit_open_2026.sqlite \
+  scrape-leaderboard --division all --sleep 1.0</code></pre>
+
+<p>Generated summary timestamp: <code>2026-07-02 23:18:01 UTC</code>.</p>
+  </div>
+  <div class="tag-cloud">
+    <p>
+      <a href="https://leblancfg.com/tag/crossfit.html">crossfit</a>
+<a href="https://leblancfg.com/tag/fitness.html">fitness</a>
+<a href="https://leblancfg.com/tag/data.html">data</a>
+<a href="https://leblancfg.com/tag/athlete.html">athlete</a>
+    </p>
+  </div>
+
+
+</article>
+
+<footer>
+<p>
+  &copy; 2026  - This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/deed.en_US" target="_blank">Creative Commons Attribution-ShareAlike</a>
+</p>
+<p>
+Built with <a href="http://getpelican.com" target="_blank">Pelican</a> using <a href="http://bit.ly/flex-pelican" target="_blank">Flex</a> theme
+</p><p>
+  <a rel="license"
+     href="http://creativecommons.org/licenses/by-sa/4.0/"
+     target="_blank">
+    <img alt="Creative Commons License"
+         title="Creative Commons License"
+         style="border-width:0"
+           src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"
+         width="80"
+         height="15"/>
+  </a>
+</p></footer>  </main>
+
+<script type="application/ld+json">
+{
+  "@context" : "http://schema.org",
+  "@type" : "Blog",
+  "name": " leblancfg.com ",
+  "url" : "https://leblancfg.com",
+  "image": "https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4",
+  "description": "François Leblanc's Thoughts and Writings"
+}
+</script>
+</body>
+</html>

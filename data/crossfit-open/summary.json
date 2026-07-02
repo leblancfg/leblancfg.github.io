@@ -1,0 +1,416 @@
+{
+  "generated_at": "2026-07-02T23:18:01+00:00",
+  "source": {
+    "leaderboard_api": "https://c3po.crossfit.com/api/leaderboards/v2/competitions/open/2026/leaderboards",
+    "games_robots": "https://games.crossfit.com/robots.txt",
+    "athlete_page_example": "https://games.crossfit.com/athlete/911088"
+  },
+  "divisions": [
+    {
+      "year": 2026,
+      "competition_type": "open",
+      "division_id": 1,
+      "division_name": "Men",
+      "category": "individual",
+      "gender": "M",
+      "total_pages": 2543,
+      "total_competitors": 127113,
+      "discovered_at": "2026-07-02T23:00:17+00:00",
+      "scraped_entries": 0
+    },
+    {
+      "year": 2026,
+      "competition_type": "open",
+      "division_id": 2,
+      "division_name": "Women",
+      "category": "individual",
+      "gender": "F",
+      "total_pages": 2120,
+      "total_competitors": 105959,
+      "discovered_at": "2026-07-02T23:00:18+00:00",
+      "scraped_entries": 0
+    },
+    {
+      "year": 2026,
+      "competition_type": "open",
+      "division_id": 3,
+      "division_name": "Men 45-49",
+      "category": "age_group",
+      "gender": "M",
+      "total_pages": 294,
+      "total_competitors": 14691,
+      "discovered_at": "2026-07-02T23:00:20+00:00",
+      "scraped_entries": 0
+    },
+    {
+      "year": 2026,
+      "competition_type": "open",
+      "division_id": 4,
+      "division_name": "Women 45-49",
+      "category": "age_group",
+      "gender": "F",
+      "total_pages": 225,
+      "total_competitors": 11248,
+      "discovered_at": "2026-07-02T23:00:21+00:00",
+      "scraped_entries": 0
+    },
+    {
+      "year": 2026,
+      "competition_type": "open",
+      "division_id": 5,
+      "division_name": "Men 50-54",
+      "category": "age_group",
+      "gender": "M",
+      "total_pages": 170,
+      "total_competitors": 8486,
+      "discovered_at": "2026-07-02T23:00:22+00:00",
+      "scraped_entries": 0
+    },
+    {
+      "year": 2026,
+      "competition_type": "open",
+      "division_id": 6,
+      "division_name": "Women 50-54",
+      "category": "age_group",
+      "gender": "F",
+      "total_pages": 122,
+      "total_competitors": 6051,
+      "discovered_at": "2026-07-02T23:00:23+00:00",
+      "scraped_entries": 0
+    },
+    {
+      "year": 2026,
+      "competition_type": "open",
+      "division_id": 7,
+      "division_name": "Men 55-59",
+      "category": "age_group",
+      "gender": "M",
+      "total_pages": 108,
+      "total_competitors": 5397,
+      "discovered_at": "2026-07-02T23:00:25+00:00",
+      "scraped_entries": 0
+    },
+    {
+      "year": 2026,
+      "competition_type": "open",
+      "division_id": 8,
+      "division_name": "Women 55-59",
+      "category": "age_group",
+      "gender": "F",
+      "total_pages": 83,
+      "total_competitors": 4143,
+      "discovered_at": "2026-07-02T23:00:26+00:00",
+      "scraped_entries": 0
+    },
+    {
+      "year": 2026,
+      "competition_type": "open",
+      "division_id": 11,
+      "division_name": "Teams",
+      "category": "team",
+      "gender": "",
+      "total_pages": 13,
+      "total_competitors": 640,
+      "discovered_at": "2026-07-02T23:00:27+00:00",
+      "scraped_entries": 0
+    },
+    {
+      "year": 2026,
+      "competition_type": "open",
+      "division_id": 12,
+      "division_name": "Men 40-44",
+      "category": "age_group",
+      "gender": "M",
+      "total_pages": 440,
+      "total_competitors": 21970,
+      "discovered_at": "2026-07-02T23:00:29+00:00",
+      "scraped_entries": 0
+    },
+    {
+      "year": 2026,
+      "competition_type": "open",
+      "division_id": 13,
+      "division_name": "Women 40-44",
+      "category": "age_group",
+      "gender": "F",
+      "total_pages": 346,
+      "total_competitors": 17264,
+      "discovered_at": "2026-07-02T23:00:30+00:00",
+      "scraped_entries": 0
+    },
+    {
+      "year": 2026,
+      "competition_type": "open",
+      "division_id": 14,
+      "division_name": "Boys 14-15",
+      "category": "teen",
+      "gender": "M",
+      "total_pages": 22,
+      "total_competitors": 1077,
+      "discovered_at": "2026-07-02T23:00:31+00:00",
+      "scraped_entries": 0
+    },
+    {
+      "year": 2026,
+      "competition_type": "open",
+      "division_id": 15,
+      "division_name": "Girls 14-15",
+      "category": "teen",
+      "gender": "F",
+      "total_pages": 21,
+      "total_competitors": 1049,
+      "discovered_at": "2026-07-02T23:00:33+00:00",
+      "scraped_entries": 0
+    },
+    {
+      "year": 2026,
+      "competition_type": "open",
+      "division_id": 16,
+      "division_name": "Boys 16-17",
+      "category": "teen",
+      "gender": "M",
+      "total_pages": 24,
+      "total_competitors": 1195,
+      "discovered_at": "2026-07-02T23:00:34+00:00",
+      "scraped_entries": 0
+    },
+    {
+      "year": 2026,
+      "competition_type": "open",
+      "division_id": 17,
+      "division_name": "Girls 16-17",
+      "category": "teen",
+      "gender": "F",
+      "total_pages": 23,
+      "total_competitors": 1108,
+      "discovered_at": "2026-07-02T23:00:36+00:00",
+      "scraped_entries": 0
+    },
+    {
+      "year": 2026,
+      "competition_type": "open",
+      "division_id": 18,
+      "division_name": "Men 35-39",
+      "category": "age_group",
+      "gender": "M",
+      "total_pages": 584,
+      "total_competitors": 29171,
+      "discovered_at": "2026-07-02T23:15:50+00:00",
+      "scraped_entries": 29171
+    },
+    {
+      "year": 2026,
+      "competition_type": "open",
+      "division_id": 19,
+      "division_name": "Women 35-39",
+      "category": "age_group",
+      "gender": "F",
+      "total_pages": 454,
+      "total_competitors": 22673,
+      "discovered_at": "2026-07-02T23:00:38+00:00",
+      "scraped_entries": 0
+    },
+    {
+      "year": 2026,
+      "competition_type": "open",
+      "division_id": 36,
+      "division_name": "Men 60-64",
+      "category": "age_group",
+      "gender": "M",
+      "total_pages": 57,
+      "total_competitors": 2825,
+      "discovered_at": "2026-07-02T23:00:40+00:00",
+      "scraped_entries": 0
+    },
+    {
+      "year": 2026,
+      "competition_type": "open",
+      "division_id": 37,
+      "division_name": "Women 60-64",
+      "category": "age_group",
+      "gender": "F",
+      "total_pages": 47,
+      "total_competitors": 2325,
+      "discovered_at": "2026-07-02T23:00:41+00:00",
+      "scraped_entries": 0
+    },
+    {
+      "year": 2026,
+      "competition_type": "open",
+      "division_id": 40,
+      "division_name": "Men 65-69",
+      "category": "age_group",
+      "gender": "M",
+      "total_pages": 27,
+      "total_competitors": 1329,
+      "discovered_at": "2026-07-02T23:00:42+00:00",
+      "scraped_entries": 0
+    },
+    {
+      "year": 2026,
+      "competition_type": "open",
+      "division_id": 41,
+      "division_name": "Women 65-69",
+      "category": "age_group",
+      "gender": "F",
+      "total_pages": 25,
+      "total_competitors": 1230,
+      "discovered_at": "2026-07-02T23:00:43+00:00",
+      "scraped_entries": 0
+    },
+    {
+      "year": 2026,
+      "competition_type": "open",
+      "division_id": 42,
+      "division_name": "Men 70+",
+      "category": "age_group",
+      "gender": "M",
+      "total_pages": 15,
+      "total_competitors": 740,
+      "discovered_at": "2026-07-02T23:00:44+00:00",
+      "scraped_entries": 0
+    },
+    {
+      "year": 2026,
+      "competition_type": "open",
+      "division_id": 43,
+      "division_name": "Women 70+",
+      "category": "age_group",
+      "gender": "F",
+      "total_pages": 15,
+      "total_competitors": 739,
+      "discovered_at": "2026-07-02T23:00:46+00:00",
+      "scraped_entries": 0
+    }
+  ],
+  "men_35_39": {
+    "entries": 29171,
+    "best_rank": 1,
+    "worst_rank": 27117,
+    "avg_age": 36.902163107195506,
+    "canada_entries": 960,
+    "us_entries": 9817
+  },
+  "men_35_39_90th_percentile_cutoff": {
+    "min_rank": 1,
+    "max_rank": 2918,
+    "athletes": 2918
+  },
+  "men_35_39_percentile_buckets": [
+    {
+      "bucket": "99-100",
+      "athletes": 292
+    },
+    {
+      "bucket": "95-99",
+      "athletes": 1168
+    },
+    {
+      "bucket": "90-95",
+      "athletes": 1458
+    },
+    {
+      "bucket": "75-90",
+      "athletes": 4375
+    },
+    {
+      "bucket": "50-75",
+      "athletes": 7293
+    },
+    {
+      "bucket": "25-50",
+      "athletes": 7292
+    },
+    {
+      "bucket": "0-25",
+      "athletes": 7293
+    }
+  ],
+  "men_35_39_top_countries": [
+    {
+      "country_code": "US",
+      "country_name": "United States",
+      "athletes": 9817
+    },
+    {
+      "country_code": "FR",
+      "country_name": "France",
+      "athletes": 2670
+    },
+    {
+      "country_code": "GB",
+      "country_name": "United Kingdom",
+      "athletes": 2428
+    },
+    {
+      "country_code": "BR",
+      "country_name": "Brazil",
+      "athletes": 1389
+    },
+    {
+      "country_code": "AU",
+      "country_name": "Australia",
+      "athletes": 1264
+    },
+    {
+      "country_code": "KR",
+      "country_name": "Korea (the Republic of)",
+      "athletes": 1124
+    },
+    {
+      "country_code": "CA",
+      "country_name": "Canada",
+      "athletes": 960
+    },
+    {
+      "country_code": "IT",
+      "country_name": "Italy",
+      "athletes": 843
+    },
+    {
+      "country_code": "ES",
+      "country_name": "Spain",
+      "athletes": 682
+    },
+    {
+      "country_code": "DE",
+      "country_name": "Germany",
+      "athletes": 665
+    },
+    {
+      "country_code": "NL",
+      "country_name": "Netherlands",
+      "athletes": 575
+    },
+    {
+      "country_code": "ZA",
+      "country_name": "South Africa",
+      "athletes": 542
+    }
+  ],
+  "men_35_39_top_10_percent_workout_rank_ranges": [
+    {
+      "ordinal": 1,
+      "workout_label": "1",
+      "best_rank": 1,
+      "worst_rank": 8585
+    },
+    {
+      "ordinal": 2,
+      "workout_label": "2",
+      "best_rank": 1,
+      "worst_rank": 9903
+    },
+    {
+      "ordinal": 3,
+      "workout_label": "3",
+      "best_rank": 2,
+      "worst_rank": 7358
+    }
+  ],
+  "profile_counts": {
+    "fetched_profiles": 25,
+    "athletes_with_benchmarks": 17,
+    "benchmark_values": 165
+  }
+}
