@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Page not found · leblancfg.com</title>
+  <script>
+    // Legacy .html links (pre extensionless-URL migration) 404 on GitHub Pages.
+    // Strip the trailing .html and send the visitor to the clean URL. This runs
+    // only on genuine 404s, so it can never shadow a real page or loop: the
+    // target has no .html suffix, and if it also 404s this check simply fails.
+    (function () {
+      var path = window.location.pathname;
+      if (/\.html$/.test(path)) {
+        var clean = path.replace(/\.html$/, "");
+        if (clean === "/index" || clean === "") {
+          clean = "/";
+        }
+        window.location.replace(clean + window.location.search + window.location.hash);
+      }
+    })();
+  </script>
+</head>
+<body>
+  <h1>Page not found</h1>
+  <p>Sorry, that page doesn't exist. Head back to the <a href="/">homepage</a>.</p>
+</body>
+</html>

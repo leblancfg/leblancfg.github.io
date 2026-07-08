@@ -193,10 +193,12 @@ rel="me"           href="https://hachyderm.io/@leblancfg"
 the development of software systems. In essence, the UNIX philosophy stresses
 the importance of keeping things simple and modular. You should think of the
 shell as a programming language of its own! Take this made-up example:</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span><span class="s1">&#39;https://www.example.com/query?symbol=GOOG&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span><span class="s1">&#39;.price&#39;</span><span class="w"> </span><span class="p">|</span>
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>-s<span class="w"> </span><span class="s1">&#39;https://www.example.com/query?symbol=GOOG&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+jq<span class="w"> </span><span class="s1">&#39;.price&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
 sqlite3<span class="w"> </span>stocks.db<span class="w"> </span><span class="s2">&quot;UPDATE portfolio SET price = </span><span class="k">$(</span>cat<span class="k">)</span><span class="s2">, ...&quot;</span>
-<span class="o">&amp;&amp;</span><span class="w"> </span>sqlite3<span class="w"> </span>stocks.db<span class="w"> </span><span class="s2">&quot;SELECT price FROM portfolio WHERE price &gt; 9000 AND ...&quot;</span><span class="w"> </span><span class="p">|</span>
-xargs<span class="w"> </span>-I<span class="w"> </span><span class="o">{}</span><span class="w"> </span>curl<span class="w"> </span>-X<span class="w"> </span>POST<span class="w"> </span>-H<span class="w"> </span><span class="s2">&quot;Content-Type: application/json&quot;</span><span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;{&quot;symbol&quot;: &quot;GOOG&quot;, &quot;price&quot;: &quot;&#39;</span><span class="o">{}</span><span class="s1">&#39;&quot;}&#39;</span><span class="w"> </span>https://example.com/api/sell
+<span class="o">&amp;&amp;</span>
+sqlite3<span class="w"> </span>stocks.db<span class="w"> </span><span class="s2">&quot;SELECT price FROM portfolio WHERE price &gt; 9000 AND ...&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="se">\</span>
+xargs<span class="w"> </span>-I<span class="w"> </span><span class="o">{}</span><span class="w"> </span>curl<span class="w"> </span>--json<span class="w"> </span><span class="s1">&#39;{&quot;symbol&quot;: &quot;GOOG&quot;, &quot;price&quot;: &quot;&#39;</span><span class="o">{}</span><span class="s1">&#39;&quot;}&#39;</span><span class="w"> </span>https://example.com/api/sell
 </code></pre></div>
 
 <p>In this (absolutely non-functional) condensed program, the following happens:</p>
