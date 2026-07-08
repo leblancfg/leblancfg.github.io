@@ -2,8 +2,14 @@
 # -*- coding: utf-8 -*- #
 from pathlib import Path
 from datetime import datetime as dt
+import sys
+
+CONFIG_DIR = Path(__file__).resolve().parent
+sys.path.insert(0, str(CONFIG_DIR))
 
 from pelican_jupyter import markup as nb_markup
+
+import legacy_html_redirects
 
 AUTHOR = "François Leblanc"
 SITEURL = "http://localhost:8000"
@@ -73,7 +79,7 @@ DEFAULT_PAGINATION = 10
 
 MARKUP = ("md", "ipynb")
 
-PLUGINS = [nb_markup]
+PLUGINS = [nb_markup, legacy_html_redirects]
 
 IGNORE_FILES = [".ipynb_checkpoints"]
 
