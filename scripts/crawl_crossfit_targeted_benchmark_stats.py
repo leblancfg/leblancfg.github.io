@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Iterable
 
 import requests
+from requests import HTTPError
 from bs4 import BeautifulSoup
 
 LB_TO_KG = 0.45359237
@@ -192,10 +193,55 @@ def crawl_profiles(targets: Iterable[TargetAthlete], cache_dir: Path, workers: i
                 _, html, status, source = future.result()
                 results[athlete_id] = (html, status, source)
             except Exception as exc:  # noqa: BLE001 - report crawl failures in output CSV by omission.
+                status = exc.response.status_code if isinstance(exc, HTTPError) and exc.response is not None else 0
+                results[athlete_id] = ("", status, "error")
                 print(f"failed {athlete_id}: {exc}")
             if index % 50 == 0:
                 print(f"fetched {index}/{len(athlete_ids)} profiles")
     return results
+
+
+def write_profile_manifest(targets: list[TargetAthlete], profile_html: dict[str, tuple[str, int, str]], output: Path) -> int:
+    output.parent.mkdir(parents=True, exist_ok=True)
+    fieldnames = [
+        "athlete_id",
+        "division_id",
+        "division_name",
+        "target_percentile",
+        "overall_rank",
+        "performance_percentile",
+        "window_start_rank",
+        "window_end_rank",
+        "http_status",
+        "fetch_source",
+        "benchmark_stat_count",
+        "parsed_at",
+    ]
+    parsed_at = datetime.now(timezone.utc).isoformat()
+    count = 0
+    with output.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fieldnames)
+        writer.writeheader()
+        for target in targets:
+            html, status, source = profile_html.get(target.athlete_id, ("", 0, "missing"))
+            writer.writerow(
+                {
+                    "athlete_id": target.athlete_id,
+                    "division_id": target.division_id,
+                    "division_name": target.division_name,
+                    "target_percentile": target.target_percentile,
+                    "overall_rank": target.overall_rank,
+                    "performance_percentile": f"{target.performance_percentile:.4f}",
+                    "window_start_rank": target.window_start_rank,
+                    "window_end_rank": target.window_end_rank,
+                    "http_status": status,
+                    "fetch_source": source,
+                    "benchmark_stat_count": len(parse_benchmark_stats(html)),
+                    "parsed_at": parsed_at,
+                }
+            )
+            count += 1
+    return count
 
 
 def write_targeted_stats(targets: list[TargetAthlete], profile_html: dict[str, tuple[str, int, str]], output: Path) -> int:
@@ -250,12 +296,13 @@ def write_targeted_stats(targets: list[TargetAthlete], profile_html: dict[str, t
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--data-dir", type=Path, default=Path.home() / ".cache/leblancfg/crossfit-open-2026-compact-v1/crossfit-open-2026-compact-v1")
-    parser.add_argument("--output", type=Path, default=Path("content/data/crossfit_open_2026_targeted_benchmark_stats.csv"))
+    parser.add_argument("--output", type=Path, default=Path("content/data/crossfit_open_2026_targeted_benchmark_stats_expanded.csv"))
+    parser.add_argument("--manifest-output", type=Path, default=Path("content/data/crossfit_open_2026_targeted_profile_manifest_expanded.csv"))
     parser.add_argument("--cache-dir", type=Path, default=Path.home() / ".cache/crossfit-open/targeted-profile-html")
     parser.add_argument("--half-window", type=int, default=15)
     parser.add_argument("--workers", type=int, default=8)
     parser.add_argument("--divisions", nargs="+", default=["Men", "Women", "Men 35-39", "Women 35-39", "Men 40-44", "Women 40-44"])
-    parser.add_argument("--percentiles", nargs="+", type=int, default=[90, 95, 99])
+    parser.add_argument("--percentiles", nargs="+", type=int, default=[75, 80, 85, 90, 95, 99])
     return parser.parse_args()
 
 
@@ -264,7 +311,9 @@ def main() -> None:
     targets = select_targets(args.data_dir, set(args.divisions), tuple(args.percentiles), args.half_window)
     print(f"selected {len(targets)} division-percentile target rows for {len({target.athlete_id for target in targets})} unique athletes")
     profile_html = crawl_profiles(targets, args.cache_dir, args.workers)
+    manifest_rows = write_profile_manifest(targets, profile_html, args.manifest_output)
     rows = write_targeted_stats(targets, profile_html, args.output)
+    print(f"wrote {manifest_rows} profile manifest rows to {args.manifest_output}")
     print(f"wrote {rows} benchmark rows to {args.output}")
 
 
