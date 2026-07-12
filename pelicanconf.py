@@ -81,11 +81,13 @@ IGNORE_FILES = [".ipynb_checkpoints"]
 STATIC_PATHS = [
     "img",
     "extra/CNAME",
+    "extra/404.redirect",
     "extra/intensity-pad-founder-story.redirect",
     "pages/leblancfg_CV.pdf",
 ]
 EXTRA_PATH_METADATA = {
     "extra/CNAME": {"path": "CNAME"},
+    "extra/404.redirect": {"path": "404.html"},
     "extra/intensity-pad-founder-story.redirect": {
         "path": "intensity-pad-founder-story.html"
     },

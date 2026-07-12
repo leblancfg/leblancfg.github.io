@@ -12,10 +12,12 @@ the importance of keeping things simple and modular. You should think of the
 shell as a programming language of its own! Take this made-up example:
 
 ```sh
-curl -s 'https://www.example.com/query?symbol=GOOG' | jq '.price' |
+curl -s 'https://www.example.com/query?symbol=GOOG' | \
+jq '.price' | \
 sqlite3 stocks.db "UPDATE portfolio SET price = $(cat), ..."
-&& sqlite3 stocks.db "SELECT price FROM portfolio WHERE price > 9000 AND ..." |
-xargs -I {} curl -X POST -H "Content-Type: application/json" -d '{"symbol": "GOOG", "price": "'{}'"}' https://example.com/api/sell
+&&
+sqlite3 stocks.db "SELECT price FROM portfolio WHERE price > 9000 AND ..." | \
+xargs -I {} curl --json '{"symbol": "GOOG", "price": "'{}'"}' https://example.com/api/sell
 ```
 
 In this (absolutely non-functional) condensed program, the following happens:
