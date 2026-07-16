@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com - cli, ai</title><link href="https://leblancfg.com/" rel="alternate"/><link href="https://leblancfg.com/feeds/cli-ai.atom.xml" rel="self"/><id>https://leblancfg.com/</id><updated>2026-06-14T00:00:00-04:00</updated><subtitle>Data Science, Geospatial Python, Space Stuff</subtitle><entry><title>pi-fusion: Local inference-time scaling for coding agents</title><link href="https://leblancfg.com/pi-fusion-local-inference-time-scaling-for-coding-agents" rel="alternate"/><published>2026-06-14T00:00:00-04:00</published><updated>2026-06-14T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2026-06-14:/pi-fusion-local-inference-time-scaling-for-coding-agents</id><summary type="html">&lt;p&gt;Why I built a local pi extension for OpenRouter Fusion-style planning panels, with the parts exposed.&lt;/p&gt;</summary><content type="html">&lt;p&gt;OpenRouter's Fusion feature got my attention because it matched results from Binks, an internal
+<feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com - cli, ai</title><link href="https://leblancfg.com/" rel="alternate"/><link href="https://leblancfg.com/feeds/cli-ai.atom.xml" rel="self"/><id>https://leblancfg.com/</id><updated>2026-06-14T00:00:00-04:00</updated><subtitle>Data Science, Geospatial Python, Space Stuff</subtitle><entry><title>pi-fusion: Local inference-time scaling for coding agents</title><link href="https://leblancfg.com/pi-fusion-local-inference-time-scaling-for-coding-agents/" rel="alternate"/><published>2026-06-14T00:00:00-04:00</published><updated>2026-06-14T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2026-06-14:/pi-fusion-local-inference-time-scaling-for-coding-agents/</id><summary type="html">&lt;p&gt;Why I built a local pi extension for OpenRouter Fusion-style planning panels, with the parts exposed.&lt;/p&gt;</summary><content type="html">&lt;p&gt;OpenRouter's Fusion feature got my attention because it matched results from Binks, an internal
 code-review project I've been working on. In those evals, panels of model calls kept doing better
 than I expected.&lt;/p&gt;
 &lt;p&gt;The first surprise was that a handful of fast, "dumber" models could match or beat parts of our
@@ -12,7 +12,7 @@ exactly what got handed to the main agent.&lt;/p&gt;
 &lt;p&gt;So I built &lt;a href="https://github.com/leblancfg/pi-fusion"&gt;an extension for &lt;code&gt;pi-coding-agent&lt;/code&gt; called
 &lt;code&gt;pi-fusion&lt;/code&gt;&lt;/a&gt; that recreates it, plus a few more bells and
 whistles.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="pi-fusion: several models in parallel, one synthesized answer" src="img/pi_fusion_social_preview.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="pi-fusion: several models in parallel, one synthesized answer" src="../img/pi_fusion_social_preview.png"&gt;&lt;/p&gt;
 &lt;p&gt;It runs a local planning panel before the normal actor turn. It can load shared context, split your
 prompt into a few angles, run independent worker agents in parallel, and write their notes into the
 actor's first turn.&lt;/p&gt;
@@ -52,7 +52,7 @@ version I could run locally in the terminal and modify when the defaults were wr
 &lt;/ol&gt;
 &lt;p&gt;Discovery and rewrite are optional. Worker count is configurable. The synthesis model can be the
 same model you're already using in &lt;code&gt;pi&lt;/code&gt;, or a different one.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="pi-fusion running in the pi TUI" src="img/pi_fusion_demo.gif"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="pi-fusion running in the pi TUI" src="../img/pi_fusion_demo.gif"&gt;&lt;/p&gt;
 &lt;p&gt;A fused turn adds latency. On the setup I use most often, it's roughly eight to ten seconds before
 the actor starts. I don't want that for typo fixes. I do want it when I'm asking for a bug hunt, a
 refactor plan, or a review of code I don't know well.&lt;/p&gt;

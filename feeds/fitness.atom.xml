@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com - Fitness</title><link href="https://leblancfg.com/" rel="alternate"/><link href="https://leblancfg.com/feeds/fitness.atom.xml" rel="self"/><id>https://leblancfg.com/</id><updated>2026-04-17T00:00:00-04:00</updated><subtitle>Data Science, Geospatial Python, Space Stuff</subtitle><entry><title>I Spent My Sabbatical Building a Power Meter for Sledgehammers</title><link href="https://leblancfg.com/intensity-pad" rel="alternate"/><published>2026-04-17T00:00:00-04:00</published><updated>2026-04-17T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2026-04-17:/intensity-pad</id><summary type="html">&lt;p&gt;One month, one prototype. The first Intensity Pad, and why I think striking movements deserve a power meter of their own.&lt;/p&gt;</summary><content type="html">&lt;p&gt;I spent the last month building a power meter for sledgehammer strikes: a pad you hit so you can see
+<feed xmlns="http://www.w3.org/2005/Atom"><title>leblancfg.com - Fitness</title><link href="https://leblancfg.com/" rel="alternate"/><link href="https://leblancfg.com/feeds/fitness.atom.xml" rel="self"/><id>https://leblancfg.com/</id><updated>2026-04-17T00:00:00-04:00</updated><subtitle>Data Science, Geospatial Python, Space Stuff</subtitle><entry><title>I Spent My Sabbatical Building a Power Meter for Sledgehammers</title><link href="https://leblancfg.com/intensity-pad/" rel="alternate"/><published>2026-04-17T00:00:00-04:00</published><updated>2026-04-17T00:00:00-04:00</updated><author><name>François Leblanc</name></author><id>tag:leblancfg.com,2026-04-17:/intensity-pad/</id><summary type="html">&lt;p&gt;One month, one prototype. The first Intensity Pad, and why I think striking movements deserve a power meter of their own.&lt;/p&gt;</summary><content type="html">&lt;p&gt;I spent the last month building a power meter for sledgehammer strikes: a pad you hit so you can see
 how hard you hit it throughout a workout, and track that over time. I call it the Intensity Pad.&lt;/p&gt;
 &lt;div style="margin: 1.5rem auto; max-width: 360px; width: 100%;"&gt;
   &lt;div style="position: relative; width: 100%; padding-top: 177.78%; overflow: hidden; border-radius: 12px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18); background: #000;"&gt;
@@ -41,7 +41,7 @@ because it felt doable in a month... barely.&lt;/p&gt;
 &lt;p&gt;After spending enough time around functional fitness, you end up noticing how some modalities are
 beautifully instrumented, and some are basically raw. It really depends on the movement and the
 implement.&lt;/p&gt;
-&lt;p&gt;Running has pace, splits, heart rate, GPS. Cycling has &lt;a href="addicted-to-my-power-meter.html"&gt;power
+&lt;p&gt;Running has pace, splits, heart rate, GPS. Cycling has &lt;a href="../addicted-to-my-power-meter/"&gt;power
 meters&lt;/a&gt; and an entire vocabulary for thinking clearly about effort.
 Rowing and the ski erg aren't exactly underserved either. Lifting weights gives you known loads moving
 through known distances; so "15 barbell cleans for time at 100 lb", not only is that a comparable
@@ -74,7 +74,7 @@ showed live data. I then set out on building prototype pad #2 with the sensor I'
 &lt;p&gt;I started week three testing out that new pad, with days of noisy calibration I couldn't make heads
 or tails of. The sensor I picked from the initial shortlist failed intermittently... probably
 because I hadn't soldered it properly. But by then, it was potted in epoxy! No soup for you.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="A month of hardware reality: parts, tools, and prototype mess on the workbench" src="img/intensity_messy.jpeg"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="A month of hardware reality: parts, tools, and prototype mess on the workbench" src="../img/intensity_messy.jpeg"&gt;&lt;/p&gt;
 &lt;p&gt;That third week was basically a write-off. Every few hours, reality deleted part of my mental model
 and handed me back a worse-looking, more accurate one.&lt;/p&gt;
 &lt;div style="margin: 1.5rem auto; max-width: 360px; width: 100%;"&gt;
@@ -100,12 +100,12 @@ dataset. I started off thinking I'd need a secondary hit detector system and add
 model. But after a couple days, I reversed course: it's perfectly acceptable that athletes get lower
 numbers if they don't hit the sweet spot. In fact, that might even be a good thing: it encourages
 better technique and accuracy.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="First calibration run: strike power starting to look like a real signal" src="img/calibration_analysis.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="First calibration run: strike power starting to look like a real signal" src="../img/calibration_analysis.png"&gt;&lt;/p&gt;
 &lt;p&gt;From there, I was able to share with friends and reached out to a couple athletes, who hopefully
 become my first batch of beta testers.&lt;/p&gt;
 &lt;h2&gt;What I actually believe now&lt;/h2&gt;
 &lt;p&gt;Power data for cycling completely changed how I approach that activity, and made me rethink much of
-the other training I do in other sports. I wrote about that &lt;a href="addicted-to-my-power-meter.html"&gt;here&lt;/a&gt;.
+the other training I do in other sports. I wrote about that &lt;a href="../addicted-to-my-power-meter/"&gt;here&lt;/a&gt;.
 After a few months, I could feel 220 watts the same way I used to feel a heart rate of 160. The
 numbers became a bridge to better intuition.&lt;/p&gt;
 &lt;p&gt;So, that's the bar for Intensity Pad. Plenty of fitness gadgets already exist, and most of them
@@ -127,14 +127,14 @@ training, measurement, and slightly ridiculous hardware, sign up there.&lt;/p&gt
 good instrumentation, it's very hard not to start looking under all the other rugs in your house,
 and see what else can be done. I realize I'll sound like hyperbole, but I really feel like there's a
 holy grail of training insights out there, and we're just scratching the surface. Ultimately, my
-hope is to get there.&lt;/p&gt;</content><category term="Fitness"/><category term="intensity"/><category term="prototype"/><category term="hardware"/><category term="fitness"/></entry><entry><title>Addicted to My Power Meter</title><link href="https://leblancfg.com/addicted-to-my-power-meter" rel="alternate"/><published>2025-05-11T00:00:00-04:00</published><updated>2025-05-11T00:00:00-04:00</updated><author><name>Francois Leblanc</name></author><id>tag:leblancfg.com,2025-05-11:/addicted-to-my-power-meter</id><summary type="html">&lt;p&gt;What happens when a CrossFit guy gets a smart trainer, discovers power data, and can't stop chasing the numbers.&lt;/p&gt;</summary><content type="html">&lt;p&gt;This winter I picked up a smart trainer for indoor cycling. I had gotten a slump in motivation from CrossFit, which I'd been doing semi-seriously for about 5 years. I loaded up Zwift, clipped in, and within a week I was hooked. Not on the virtual scenery or the gamification, but on the numbers. Specifically, the power numbers.&lt;/p&gt;
+hope is to get there.&lt;/p&gt;</content><category term="Fitness"/><category term="intensity"/><category term="prototype"/><category term="hardware"/><category term="fitness"/></entry><entry><title>Addicted to My Power Meter</title><link href="https://leblancfg.com/addicted-to-my-power-meter/" rel="alternate"/><published>2025-05-11T00:00:00-04:00</published><updated>2025-05-11T00:00:00-04:00</updated><author><name>Francois Leblanc</name></author><id>tag:leblancfg.com,2025-05-11:/addicted-to-my-power-meter/</id><summary type="html">&lt;p&gt;What happens when a CrossFit guy gets a smart trainer, discovers power data, and can't stop chasing the numbers.&lt;/p&gt;</summary><content type="html">&lt;p&gt;This winter I picked up a smart trainer for indoor cycling. I had gotten a slump in motivation from CrossFit, which I'd been doing semi-seriously for about 5 years. I loaded up Zwift, clipped in, and within a week I was hooked. Not on the virtual scenery or the gamification, but on the numbers. Specifically, the power numbers.&lt;/p&gt;
 &lt;p&gt;I've been doing CrossFit for about five years now, and one of the core ideas in CrossFit is deceptively elegant: the fittest athlete is the one who maximizes the area under their power curve across all types of movement. I know, it's a moutful. But it's literally one of founder Greg Glassman's "definition of fitness".&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Fitness spectrum" src="img/power_curve.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Fitness spectrum" src="../img/power_curve.png"&gt;&lt;/p&gt;
 &lt;p&gt;Sprinting, lifting, gymnastics — it doesn't matter. Fitness, in this framework, is the ability to produce high power output across every time domain and every modality. So when I suddenly had access to a real-time wattage readout on the bike, something clicked. This was a language I already spoke. It's that goddamned power curve, clear as day!&lt;/p&gt;
 &lt;h2&gt;The jarring return to the road&lt;/h2&gt;
 &lt;p&gt;Then the snow melted.&lt;/p&gt;
 &lt;p&gt;I went outside for my first ride of the spring and it was genuinely jarring. Not the wind or the traffic — the absence of data. I finished the ride, pulled up my stats, and there was just... nothing. No power curve, no average watts, no peak efforts. Heart rate, sure. GPS, fine. But the thing I actually cared about was gone.&lt;/p&gt;
-&lt;p&gt;Sure, there's velocity, but that's not a good expression of the work I was doing. In cycling, it's best to &lt;a href="surge-cycling-up-a-hill.html"&gt;surge when going uphill&lt;/a&gt;, i.e. when you're slowest. A proxy measure maybe, but nothing more!&lt;/p&gt;
+&lt;p&gt;Sure, there's velocity, but that's not a good expression of the work I was doing. In cycling, it's best to &lt;a href="../surge-cycling-up-a-hill/"&gt;surge when going uphill&lt;/a&gt;, i.e. when you're slowest. A proxy measure maybe, but nothing more!&lt;/p&gt;
 &lt;p&gt;It bothered me enough that I went out and bought power meter pedals for my road bike. That's when I knew I had a problem, or maybe just an expensive new hobby.&lt;/p&gt;
 &lt;h2&gt;I've been here before&lt;/h2&gt;
 &lt;p&gt;This isn't my first time getting hooked on a metric. When I got an Apple Watch a few years back, I started wearing it to CrossFit workouts and suddenly had heart rate data to inform my pacing. I'd tell myself things like "don't let your heart rate go above 160 until there's five minutes left." It was a revelation. But I feel like I'd gotten addicted to that too.&lt;/p&gt;
@@ -144,14 +144,14 @@ hope is to get there.&lt;/p&gt;</content><category term="Fitness"/><category ter
 &lt;p&gt;This whole power obsession has sent me down a rabbit hole of analytics tools, and two in particular have fundamentally changed how I understand cycling performance.&lt;/p&gt;
 &lt;h3&gt;Xert&lt;/h3&gt;
 &lt;p&gt;The first is &lt;a href="https://www.xertonline.com/"&gt;Xert&lt;/a&gt;. You can tell there's years of slow build, trial-and-error, and working with top-rate experts on this site. Its UX is quite clunky, and newcomers get lost. Hell, I still do. But IMO it's the gold standard for any sports-specific training apps out there that I know of. User-tailored workouts and multi-week training plans, Garmin apps to monitor your metrics while on the road, and its projected fitness signatures months out are all basically unheard of anywhere else.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Xert power curve" src="img/xert-power-curve.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Xert power curve" src="../img/xert-power-curve.png"&gt;&lt;/p&gt;
 &lt;p&gt;Xert builds what they call a "fitness signature" from your ride data — essentially an estimated power curve. But the really clever bit is a metric I haven't seen anywhere else: Maximum Power Available, or MPA.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="MPA curve" src="img/xert-mpa.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="MPA curve" src="../img/xert-mpa.png"&gt;&lt;/p&gt;
 &lt;p&gt;There's a lot of hand-waving here, but you can think of MPA as your gas tank (purple line above). Your body has multiple metabolic pathways: ATP, glycogen, lactate, and so on, but you can abstract all of that into a single "battery", or "gas tank". During a ride, you're draining this battery, and your body is replenishing it at some rate. The fitter you are, the bigger the battery and the faster it refills.&lt;/p&gt;
 &lt;p&gt;Xert overlays this MPA curve on top of your workout data, and it works like an inverted ceiling. When the MPA line drops down and touches your actual power output, that's failure. Your body literally cannot sustain that output anymore. Push 700 watts for 20 seconds, and if that depletes your MPA at that duration, then at the 21st second you have to back off. You won't drop to zero — maybe you can hold 500 watts for a couple more seconds — but you're drawing down a finite reserve.&lt;/p&gt;
 &lt;h3&gt;Best Bike Split&lt;/h3&gt;
 &lt;p&gt;The second tool is &lt;a href="https://www.bestbikesplit.com/"&gt;Best Bike Split&lt;/a&gt;. Given a course profile  —  say, up the mountain and back  —  it calculates your optimal power strategy. The insight is that wind resistance scales dramatically with speed, so above about 30 km/h you're mostly fighting the air. The optimal strategy is to save energy on descents, push close to threshold on flats, and spend your reserves on climbs.&lt;/p&gt;
-&lt;p&gt;&lt;img alt="Best Bike Split" src="img/bbs.png"&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Best Bike Split" src="../img/bbs.png"&gt;&lt;/p&gt;
 &lt;p&gt;Where it gets interesting to me: Best Bike Split uses a fairly simplistic model for pacing your effort. But Xert's MPA model is a much richer representation of how your body actually depletes and recovers energy. If you could overlay Xert's MPA model onto Best Bike Split's course optimization, I think you'd get meaningfully better pacing strategies. That feels like a project worth exploring. Someday.&lt;/p&gt;
 &lt;h2&gt;The CrossFit connection&lt;/h2&gt;
 &lt;p&gt;And this brings me back to CrossFit, because the same principle applies to every single movement in the gym. A thruster? That's just moving a known weight through a known distance in a known time — you can calculate the wattage directly. Pull-ups, same idea. Even double-unders, which are harder to measure directly, have a fairly fixed cadence that you could estimate power from.&lt;/p&gt;
