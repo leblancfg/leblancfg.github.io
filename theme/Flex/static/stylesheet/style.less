@@ -271,18 +271,6 @@ main {
       }
     }
 
-    // Notebook exports embed a light Pygments theme in each article, but the
-    // default Pygments style leaves plain names and punctuation uncolored.
-    // Without this override those spans inherit the site's Monokai CSS and end
-    // up nearly white on the notebook's light gray input background.
-    div.cell.code_cell div.input_area div.highlight pre {
-      .n,
-      .p,
-      .x {
-        color: #202020 !important;
-      }
-    }
-
     // Add a bit of padding between each of the entry boxes in the Isso auth
     // section. By default, they are squished together, which looks terrible.
     section#isso-thread .auth-section .input-wrapper {

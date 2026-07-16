@@ -63,7 +63,7 @@ beautifully instrumented, and some are basically raw. It really depends on the m
 implement.
 
 Running has pace, splits, heart rate, GPS. Cycling has [power
-meters](addicted-to-my-power-meter.html) and an entire vocabulary for thinking clearly about effort.
+meters](/addicted-to-my-power-meter) and an entire vocabulary for thinking clearly about effort.
 Rowing and the ski erg aren't exactly underserved either. Lifting weights gives you known loads moving
 through known distances; so "15 barbell cleans for time at 100 lb", not only is that a comparable
 effort when you do it again next month, but also if your friend does it.
@@ -105,7 +105,7 @@ I started week three testing out that new pad, with days of noisy calibration I 
 or tails of. The sensor I picked from the initial shortlist failed intermittently... probably
 because I hadn't soldered it properly. But by then, it was potted in epoxy! No soup for you.
 
-![A month of hardware reality: parts, tools, and prototype mess on the workbench](img/intensity_messy.jpeg)
+![A month of hardware reality: parts, tools, and prototype mess on the workbench](/img/intensity_messy.jpeg)
 
 That third week was basically a write-off. Every few hours, reality deleted part of my mental model
 and handed me back a worse-looking, more accurate one.
@@ -136,7 +136,7 @@ model. But after a couple days, I reversed course: it's perfectly acceptable tha
 numbers if they don't hit the sweet spot. In fact, that might even be a good thing: it encourages
 better technique and accuracy.
 
-![First calibration run: strike power starting to look like a real signal](img/calibration_analysis.png)
+![First calibration run: strike power starting to look like a real signal](/img/calibration_analysis.png)
 
 From there, I was able to share with friends and reached out to a couple athletes, who hopefully
 become my first batch of beta testers.
@@ -145,7 +145,7 @@ become my first batch of beta testers.
 ## What I actually believe now
 
 Power data for cycling completely changed how I approach that activity, and made me rethink much of
-the other training I do in other sports. I wrote about that [here](addicted-to-my-power-meter.html).
+the other training I do in other sports. I wrote about that [here](/addicted-to-my-power-meter).
 After a few months, I could feel 220 watts the same way I used to feel a heart rate of 160. The
 numbers became a bridge to better intuition.
 

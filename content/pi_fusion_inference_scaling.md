@@ -23,7 +23,7 @@ So I built [an extension for `pi-coding-agent` called
 `pi-fusion`](https://github.com/leblancfg/pi-fusion) that recreates it, plus a few more bells and
 whistles.
 
-![pi-fusion: several models in parallel, one synthesized answer](img/pi_fusion_social_preview.png)
+![pi-fusion: several models in parallel, one synthesized answer](/img/pi_fusion_social_preview.png)
 
 It runs a local planning panel before the normal actor turn. It can load shared context, split your
 prompt into a few angles, run independent worker agents in parallel, and write their notes into the
@@ -74,7 +74,7 @@ A fused turn has four steps:
 Discovery and rewrite are optional. Worker count is configurable. The synthesis model can be the
 same model you're already using in `pi`, or a different one.
 
-![pi-fusion running in the pi TUI](img/pi_fusion_demo.gif)
+![pi-fusion running in the pi TUI](/img/pi_fusion_demo.gif)
 
 A fused turn adds latency. On the setup I use most often, it's roughly eight to ten seconds before
 the actor starts. I don't want that for typo fixes. I do want it when I'm asking for a bug hunt, a

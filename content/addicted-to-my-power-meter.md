@@ -10,7 +10,7 @@ This winter I picked up a smart trainer for indoor cycling. I had gotten a slump
 
 I've been doing CrossFit for about five years now, and one of the core ideas in CrossFit is deceptively elegant: the fittest athlete is the one who maximizes the area under their power curve across all types of movement. I know, it's a moutful. But it's literally one of founder Greg Glassman's "definition of fitness".
 
-![Fitness spectrum](img/power_curve.png)
+![Fitness spectrum](/img/power_curve.png)
 
 Sprinting, lifting, gymnastics — it doesn't matter. Fitness, in this framework, is the ability to produce high power output across every time domain and every modality. So when I suddenly had access to a real-time wattage readout on the bike, something clicked. This was a language I already spoke. It's that goddamned power curve, clear as day!
 
@@ -20,7 +20,7 @@ Then the snow melted.
 
 I went outside for my first ride of the spring and it was genuinely jarring. Not the wind or the traffic — the absence of data. I finished the ride, pulled up my stats, and there was just... nothing. No power curve, no average watts, no peak efforts. Heart rate, sure. GPS, fine. But the thing I actually cared about was gone.
 
-Sure, there's velocity, but that's not a good expression of the work I was doing. In cycling, it's best to [surge when going uphill](surge-cycling-up-a-hill.html), i.e. when you're slowest. A proxy measure maybe, but nothing more!
+Sure, there's velocity, but that's not a good expression of the work I was doing. In cycling, it's best to [surge when going uphill](/surge-cycling-up-a-hill), i.e. when you're slowest. A proxy measure maybe, but nothing more!
 
 It bothered me enough that I went out and bought power meter pedals for my road bike. That's when I knew I had a problem, or maybe just an expensive new hobby.
 
@@ -39,11 +39,11 @@ This whole power obsession has sent me down a rabbit hole of analytics tools, an
 ### Xert
 The first is [Xert](https://www.xertonline.com/). You can tell there's years of slow build, trial-and-error, and working with top-rate experts on this site. Its UX is quite clunky, and newcomers get lost. Hell, I still do. But IMO it's the gold standard for any sports-specific training apps out there that I know of. User-tailored workouts and multi-week training plans, Garmin apps to monitor your metrics while on the road, and its projected fitness signatures months out are all basically unheard of anywhere else.
 
-![Xert power curve](img/xert-power-curve.png)
+![Xert power curve](/img/xert-power-curve.png)
 
 Xert builds what they call a "fitness signature" from your ride data — essentially an estimated power curve. But the really clever bit is a metric I haven't seen anywhere else: Maximum Power Available, or MPA.
 
-![MPA curve](img/xert-mpa.png)
+![MPA curve](/img/xert-mpa.png)
 
 There's a lot of hand-waving here, but you can think of MPA as your gas tank (purple line above). Your body has multiple metabolic pathways: ATP, glycogen, lactate, and so on, but you can abstract all of that into a single "battery", or "gas tank". During a ride, you're draining this battery, and your body is replenishing it at some rate. The fitter you are, the bigger the battery and the faster it refills.
 
@@ -52,7 +52,7 @@ Xert overlays this MPA curve on top of your workout data, and it works like an i
 ### Best Bike Split
 The second tool is [Best Bike Split](https://www.bestbikesplit.com/). Given a course profile  —  say, up the mountain and back  —  it calculates your optimal power strategy. The insight is that wind resistance scales dramatically with speed, so above about 30 km/h you're mostly fighting the air. The optimal strategy is to save energy on descents, push close to threshold on flats, and spend your reserves on climbs.
 
-![Best Bike Split](img/bbs.png)
+![Best Bike Split](/img/bbs.png)
 
 Where it gets interesting to me: Best Bike Split uses a fairly simplistic model for pacing your effort. But Xert's MPA model is a much richer representation of how your body actually depletes and recovers energy. If you could overlay Xert's MPA model onto Best Bike Split's course optimization, I think you'd get meaningfully better pacing strategies. That feels like a project worth exploring. Someday.
 

@@ -13,7 +13,7 @@ creator of [Flask](https://flask.palletsprojects.com/),
 explicitly not production-ready, but I wanted to see what kind of niche it might fill.
 My test case: AI workloads with expensive LLM API calls.
 
-<img src="img/absurd_screenshot.gif" alt="Absurd Workflows Screenshot" width="500"
+<img src="/img/absurd_screenshot.gif" alt="Absurd Workflows Screenshot" width="500"
 style="display:block; margin:auto;">
 
 → **Jump into the demo app**: [absurd.leblancfg.com](https://absurd.leblancfg.com)
