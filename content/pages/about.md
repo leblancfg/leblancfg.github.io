@@ -19,5 +19,5 @@ passion with my wife, who runs a wonderful [blog chronicling her culinary
 experiences](https://squeezemylemon.ca). People I look up to include Frank
 Zappa, Richard Feynman, J.K. Rowling, Peter Norvig, and Geoffrey Hinton.
 
-You can take a look at my résumé (now 5 years out of date 😞) by clicking
+You can take a look at my CV by clicking
 [here]({static}/pages/leblancfg_CV.pdf).
