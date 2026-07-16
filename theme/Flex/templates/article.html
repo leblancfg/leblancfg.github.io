@@ -49,6 +49,9 @@
   <div>
     {{ article.content }}
   </div>
+  {% if 'input_area' in article.content %}
+    {% include "partial/notebook_pygments.html" %}
+  {% endif %}
   <div class="tag-cloud">
     <p>
       {% if article.tags %}
