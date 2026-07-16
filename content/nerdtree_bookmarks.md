@@ -19,7 +19,7 @@ To create a new bookmark, simply navigate to the directory you want to save in N
 
 By default there is no shortcut assigned to the bookmark, but a simple `:Bo<Tab>` should suffice.
 
-![Screenshot of NERDTree bookmark called "output"](/img/NERDTree_bookmark.png)
+![Screenshot of NERDTree bookmark called "output"](../img/NERDTree_bookmark.png)
 
 # Jumping to an Existing Bookmark
 

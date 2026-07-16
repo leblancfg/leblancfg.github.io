@@ -18,7 +18,7 @@ SITETITLE = AUTHOR
 SITESUBTITLE = "Data Science, Geospatial Python, Space Stuff"
 SITEDESCRIPTION = "%s's Thoughts and Writings" % AUTHOR
 SITELOGO = "https://avatars0.githubusercontent.com/u/15659410?s=400&u=e3bc92486becb34e77028eef0f4dfc302540fcb3&v=4"
-FAVICON = "/img/icons/favicon.ico"
+FAVICON = "img/icons/favicon.ico"
 BROWSER_COLOR = "#330033"
 PYGMENTS_STYLE = "paraiso-dark"
 
@@ -43,9 +43,9 @@ TRANSLATION_FEED_ATOM = None
 AUTHOR_FEED_ATOM = None
 
 USE_FOLDER_AS_CATEGORY = False
-ARTICLE_URL = "{slug}"
+ARTICLE_URL = "{slug}/"
 ARTICLE_SAVE_AS = "{slug}/index.html"
-PAGE_URL = "pages/{slug}"
+PAGE_URL = "pages/{slug}/"
 PAGE_SAVE_AS = "pages/{slug}/index.html"
 DISABLE_URL_HASH = True
 MAIN_MENU = True
@@ -62,9 +62,9 @@ SOCIAL = (
 )
 
 MENUITEMS = (
-    ("Archives", "/archives.html"),
-    ("Categories", "/categories.html"),
-    ("Tags", "/tags.html"),
+    ("Archives", "archives.html"),
+    ("Categories", "categories.html"),
+    ("Tags", "tags.html"),
 )
 
 CC_LICENSE = {

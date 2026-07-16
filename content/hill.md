@@ -6,7 +6,7 @@ Slug: surge-cycling-up-a-hill
 Authors: François Leblanc
 Summary: A simple cycling simulator that calculates the time it takes to cycle up a hill with a surge of power.
 
-![Cycling uphill](/img/12_percent_hill.jpg)
+![Cycling uphill](../img/12_percent_hill.jpg)
 
 ## The Physics of Cycling Uphill
 My wife and I recently upgraded from our late 80s steel bikes to more modern ones, and purchased an erg-enabled indoor trainer. I've been spending a surprising number of hours on Zwift, and turns out... it's great fun! I consider myself an all-round athlete, so it was to my great dismay to discover that what I thought was being in OK shape is &mdash; as far as comparison with other indoor cyclists goes &mdash; relatively poor performance! This of course, was very exciting. I love a good training challenge.
