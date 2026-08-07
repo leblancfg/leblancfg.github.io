@@ -85,6 +85,7 @@ IGNORE_FILES = [".ipynb_checkpoints"]
 
 # Define Links
 STATIC_PATHS = [
+    "data",
     "img",
     "extra/CNAME",
     "extra/404.redirect",
