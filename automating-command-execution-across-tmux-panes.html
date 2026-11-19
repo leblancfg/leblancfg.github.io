@@ -109,7 +109,7 @@
             </li>
 
           <li>
-            <a target="_self" href="https://leblancfg.com/pages/leblancfg_CV.pdf" >CV</a>
+            <a target="_self" href="https://leblancfg.com/pages/leblancfg_CV.pdf" >Résumé</a>
           </li>
       </ul>
     </nav>
@@ -196,9 +196,9 @@ applied to a variety of scenarios.</p>
 <p>Here's a shell function that reloads the <code>.vimrc</code> file in all Vim instances
 across all tmux panes:</p>
 <div class="highlight"><pre><span></span><code><span class="k">function</span><span class="w"> </span>reload-all-vim<span class="o">()</span><span class="w"> </span><span class="o">{</span>
-<span class="w">    </span>tmux<span class="w"> </span>list-panes<span class="w"> </span>-aF<span class="w"> </span><span class="s2">&quot;#{pane_id} #{pane_current_command}&quot;</span><span class="w"> </span><span class="p">|</span>
-<span class="w">    </span>awk<span class="w"> </span><span class="s1">&#39;/vim|nvim/ {print $1}&#39;</span><span class="w"> </span><span class="p">|</span>
-<span class="w">    </span>xargs<span class="w"> </span>-I<span class="w"> </span><span class="o">{}</span><span class="w"> </span>tmux<span class="w"> </span>send-keys<span class="w"> </span>-t<span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="s2">&quot;C-[&quot;</span><span class="w"> </span><span class="s2">&quot;:so ~/.vimrc&quot;</span><span class="w"> </span><span class="s2">&quot;C-m&quot;</span>
+<span class="w">    </span>tmux<span class="w"> </span>list-panes<span class="w"> </span>-aF<span class="w"> </span><span class="s2">"#{pane_id} #{pane_current_command}"</span><span class="w"> </span><span class="p">|</span>
+<span class="w">    </span>awk<span class="w"> </span><span class="s1">'/vim|nvim/ {print $1}'</span><span class="w"> </span><span class="p">|</span>
+<span class="w">    </span>xargs<span class="w"> </span>-I<span class="w"> </span><span class="o">{}</span><span class="w"> </span>tmux<span class="w"> </span>send-keys<span class="w"> </span>-t<span class="w"> </span><span class="o">{}</span><span class="w"> </span><span class="s2">"C-["</span><span class="w"> </span><span class="s2">":so ~/.vimrc"</span><span class="w"> </span><span class="s2">"C-m"</span>
 <span class="o">}</span>
 </code></pre></div>
 

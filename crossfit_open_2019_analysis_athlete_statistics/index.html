@@ -110,7 +110,7 @@
             </li>
 
           <li>
-            <a target="_self" href="https://leblancfg.com/pages/leblancfg_CV.pdf" >CV</a>
+            <a target="_self" href="https://leblancfg.com/pages/leblancfg_CV.pdf" >Résumé</a>
           </li>
       </ul>
     </nav>
@@ -1398,10 +1398,10 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">URI_DB</span> <span class="o">=</span> <span class="s2">&quot;postgres://leblancfg@localhost:5432/cf_analysis&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">URI_DB</span> <span class="o">=</span> <span class="s2">"postgres://leblancfg@localhost:5432/cf_analysis"</span>
 <span class="n">db</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">create_engine</span><span class="p">(</span><span class="n">URI_DB</span><span class="p">)</span>
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;cf_athletes&quot;</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">"cf_athletes"</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s2">"id"</span><span class="p">)</span>
 <span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
 </pre></div>
 
@@ -1631,29 +1631,29 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">F_STRINGS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;women&quot;</span><span class="p">,</span> <span class="s2">&quot;girls&quot;</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">F_STRINGS</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"women"</span><span class="p">,</span> <span class="s2">"girls"</span><span class="p">]</span>
 <span class="n">COLOUR_SCHEME</span> <span class="o">=</span> <span class="n">px</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">colorbrewer</span><span class="o">.</span><span class="n">Set1</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">describe</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Takes a DataFrame and column name, prints a groupby-describe&quot;&quot;&quot;</span>
-    <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;sex&quot;</span><span class="p">)[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="w">    </span><span class="sd">"""Takes a DataFrame and column name, prints a groupby-describe"""</span>
+    <span class="n">display</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">"sex"</span><span class="p">)[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
 
 
 <span class="k">def</span><span class="w"> </span><span class="nf">parse_division</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Given a division title, e.g. &#39;Men&#39;, returns sex as &#39;F&#39;, &#39;M&#39; or None&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Given a division title, e.g. 'Men', returns sex as 'F', 'M' or None"""</span>
     <span class="k">if</span> <span class="n">text</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="k">return</span> <span class="kc">None</span>
     <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">word</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">F_STRINGS</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;F&quot;</span>
-    <span class="k">return</span> <span class="s2">&quot;M&quot;</span>
+        <span class="k">return</span> <span class="s2">"F"</span>
+    <span class="k">return</span> <span class="s2">"M"</span>
 
 
-<span class="n">df</span><span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;division&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">parse_division</span><span class="p">)</span>
-<span class="n">has_division</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">())</span>
+<span class="n">df</span><span class="p">[</span><span class="s2">"sex"</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"division"</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">parse_division</span><span class="p">)</span>
+<span class="n">has_division</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s2">"sex"</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">())</span>
 
 <span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;There are </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="mi">100</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">has_division</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span><span class="si">}</span><span class="s2">% of athletes that submitted sex&quot;</span>
+    <span class="sa">f</span><span class="s2">"There are </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="mi">100</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">has_division</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span><span class="si">}</span><span class="s2">% of athletes that submitted sex"</span>
 <span class="p">)</span>
 </pre></div>
 
@@ -1695,11 +1695,11 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Make new DataFrame called `bm` with just the ones with body measurements</span>
-<span class="n">bm</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="p">[</span><span class="s2">&quot;sex&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()]</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;80 &lt; weight &lt; 400 &amp; 4 &lt; height &lt; 7 &amp; 13 &lt; age &lt; 81&quot;</span><span class="p">)</span>
+<span class="n">bm</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="o">~</span><span class="n">df</span><span class="p">[</span><span class="s2">"sex"</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()]</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">"80 &lt; weight &lt; 400 &amp; 4 &lt; height &lt; 7 &amp; 13 &lt; age &lt; 81"</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span>
-    <span class="sa">f</span><span class="s2">&quot;Body measurement statistics available for </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="mi">100</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">bm</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span><span class="si">}</span><span class="s2">%&quot;</span>
-    <span class="sa">f</span><span class="s1">&#39; of athletes out of a possible </span><span class="si">{</span><span class="s2">&quot;</span><span class="si">{:,}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span><span class="si">}</span><span class="s1">.&#39;</span>
+    <span class="sa">f</span><span class="s2">"Body measurement statistics available for </span><span class="si">{</span><span class="nb">round</span><span class="p">(</span><span class="mi">100</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">bm</span><span class="p">)</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span><span class="si">}</span><span class="s2">%"</span>
+    <span class="sa">f</span><span class="s1">' of athletes out of a possible </span><span class="si">{</span><span class="s2">"</span><span class="si">{:,}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">df</span><span class="p">))</span><span class="si">}</span><span class="s1">.'</span>
 <span class="p">)</span>
 </pre></div>
 
@@ -1740,12 +1740,12 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span>
     <span class="n">bm</span><span class="p">,</span>
-    <span class="s2">&quot;age&quot;</span><span class="p">,</span>
+    <span class="s2">"age"</span><span class="p">,</span>
     <span class="n">nbins</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span>
-    <span class="n">barmode</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;CrossFit Open 2019 Athlete Pages — Age Distribution % by Sex&quot;</span><span class="p">,</span>
-    <span class="n">marginal</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">"sex"</span><span class="p">,</span>
+    <span class="n">barmode</span><span class="o">=</span><span class="s2">"group"</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">"CrossFit Open 2019 Athlete Pages — Age Distribution % by Sex"</span><span class="p">,</span>
+    <span class="n">marginal</span><span class="o">=</span><span class="s2">"box"</span><span class="p">,</span>
     <span class="n">color_discrete_sequence</span><span class="o">=</span><span class="n">COLOUR_SCHEME</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
@@ -1853,7 +1853,7 @@ if (outputEl) {{
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">bm</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">bm</span><span class="p">,</span> <span class="s2">"age"</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1956,15 +1956,15 @@ if (outputEl) {{
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">height</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;4.5 &lt; height &lt; 7&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">height</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">"4.5 &lt; height &lt; 7"</span><span class="p">)</span>
 <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span>
     <span class="n">height</span><span class="p">,</span>
-    <span class="s2">&quot;height&quot;</span><span class="p">,</span>
+    <span class="s2">"height"</span><span class="p">,</span>
     <span class="n">nbins</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span>
-    <span class="n">barmode</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;CrossFit Open 2019 Athlete Pages — Height Distribution % by Sex (in decimal feet)&quot;</span><span class="p">,</span>
-    <span class="n">marginal</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">"sex"</span><span class="p">,</span>
+    <span class="n">barmode</span><span class="o">=</span><span class="s2">"group"</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">"CrossFit Open 2019 Athlete Pages — Height Distribution % by Sex (in decimal feet)"</span><span class="p">,</span>
+    <span class="n">marginal</span><span class="o">=</span><span class="s2">"box"</span><span class="p">,</span>
     <span class="n">color_discrete_sequence</span><span class="o">=</span><span class="n">COLOUR_SCHEME</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
@@ -2041,7 +2041,7 @@ if (outputEl) {{
 <div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">bm</span><span class="p">,</span> <span class="s2">&quot;height&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">bm</span><span class="p">,</span> <span class="s2">"height"</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -2155,12 +2155,12 @@ if (outputEl) {{
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span>
     <span class="n">bm</span><span class="p">,</span>
-    <span class="s2">&quot;weight&quot;</span><span class="p">,</span>
+    <span class="s2">"weight"</span><span class="p">,</span>
     <span class="n">nbins</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span>
-    <span class="n">barmode</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;CrossFit Open 2019 Athlete Pages — Weight Distribution % by Sex&quot;</span><span class="p">,</span>
-    <span class="n">marginal</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">"sex"</span><span class="p">,</span>
+    <span class="n">barmode</span><span class="o">=</span><span class="s2">"group"</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">"CrossFit Open 2019 Athlete Pages — Weight Distribution % by Sex"</span><span class="p">,</span>
+    <span class="n">marginal</span><span class="o">=</span><span class="s2">"box"</span><span class="p">,</span>
     <span class="n">color_discrete_sequence</span><span class="o">=</span><span class="n">COLOUR_SCHEME</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
@@ -2237,7 +2237,7 @@ if (outputEl) {{
 <div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">bm</span><span class="p">,</span> <span class="s2">&quot;weight&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">bm</span><span class="p">,</span> <span class="s2">"weight"</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -2352,14 +2352,14 @@ if (outputEl) {{
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">px</span><span class="o">.</span><span class="n">density_contour</span><span class="p">(</span>
     <span class="n">bm</span><span class="p">,</span>
-    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;height&quot;</span><span class="p">,</span>
-    <span class="n">y</span><span class="o">=</span><span class="s2">&quot;weight&quot;</span><span class="p">,</span>
-    <span class="n">marginal_x</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">,</span>
-    <span class="n">marginal_y</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span>
-    <span class="n">trendline</span><span class="o">=</span><span class="s2">&quot;lowess&quot;</span><span class="p">,</span>
-    <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="s2">&quot;Height (feet)&quot;</span><span class="p">,</span> <span class="s2">&quot;weight&quot;</span><span class="p">:</span> <span class="s2">&quot;Weight (lb)&quot;</span><span class="p">},</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;CrossFit Open 2019 Athlete Pages — Distribution of Height and Weight by Sex&quot;</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">"height"</span><span class="p">,</span>
+    <span class="n">y</span><span class="o">=</span><span class="s2">"weight"</span><span class="p">,</span>
+    <span class="n">marginal_x</span><span class="o">=</span><span class="s2">"box"</span><span class="p">,</span>
+    <span class="n">marginal_y</span><span class="o">=</span><span class="s2">"box"</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">"sex"</span><span class="p">,</span>
+    <span class="n">trendline</span><span class="o">=</span><span class="s2">"lowess"</span><span class="p">,</span>
+    <span class="n">labels</span><span class="o">=</span><span class="p">{</span><span class="s2">"height"</span><span class="p">:</span> <span class="s2">"Height (feet)"</span><span class="p">,</span> <span class="s2">"weight"</span><span class="p">:</span> <span class="s2">"Weight (lb)"</span><span class="p">},</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">"CrossFit Open 2019 Athlete Pages — Distribution of Height and Weight by Sex"</span><span class="p">,</span>
     <span class="n">color_discrete_sequence</span><span class="o">=</span><span class="n">COLOUR_SCHEME</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>

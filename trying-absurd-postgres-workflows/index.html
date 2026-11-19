@@ -110,7 +110,7 @@
             </li>
 
           <li>
-            <a target="_self" href="https://leblancfg.com/pages/leblancfg_CV.pdf" >CV</a>
+            <a target="_self" href="https://leblancfg.com/pages/leblancfg_CV.pdf" >Résumé</a>
           </li>
       </ul>
     </nav>
@@ -243,15 +243,15 @@ to run.</p>
 <li>Webhook callbacks when tasks complete</li>
 </ul>
 <p>The worker code looks something like this:</p>
-<div class="highlight"><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">register_task</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;run-agent&quot;</span><span class="p">)</span>
+<div class="highlight"><pre><span></span><code><span class="nd">@app</span><span class="o">.</span><span class="n">register_task</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">"run-agent"</span><span class="p">)</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">handle_agent_task</span><span class="p">(</span><span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">ctx</span><span class="p">):</span>
     <span class="c1"># Each step is checkpointed automatically</span>
-    <span class="n">ctx</span><span class="o">.</span><span class="n">run_step</span><span class="p">(</span><span class="s2">&quot;mark-running&quot;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">mark_task_running</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;task_id&quot;</span><span class="p">]))</span>
+    <span class="n">ctx</span><span class="o">.</span><span class="n">run_step</span><span class="p">(</span><span class="s2">"mark-running"</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">mark_task_running</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s2">"task_id"</span><span class="p">]))</span>
 
-    <span class="c1"># If we crash here, we resume from &quot;run-agent&quot;, not the beginning</span>
-    <span class="n">result</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="s2">&quot;run-agent&quot;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">run_agent</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;prompt&quot;</span><span class="p">]))</span>
+    <span class="c1"># If we crash here, we resume from "run-agent", not the beginning</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">ctx</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="s2">"run-agent"</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">run_agent</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s2">"prompt"</span><span class="p">]))</span>
 
-    <span class="n">ctx</span><span class="o">.</span><span class="n">run_step</span><span class="p">(</span><span class="s2">&quot;save-result&quot;</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">save_result</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s2">&quot;task_id&quot;</span><span class="p">],</span> <span class="n">result</span><span class="p">))</span>
+    <span class="n">ctx</span><span class="o">.</span><span class="n">run_step</span><span class="p">(</span><span class="s2">"save-result"</span><span class="p">,</span> <span class="k">lambda</span><span class="p">:</span> <span class="n">save_result</span><span class="p">(</span><span class="n">params</span><span class="p">[</span><span class="s2">"task_id"</span><span class="p">],</span> <span class="n">result</span><span class="p">))</span>
 </code></pre></div>
 
 <p>If the worker dies between steps, the next worker loads the checkpoints and continues. No duplicate

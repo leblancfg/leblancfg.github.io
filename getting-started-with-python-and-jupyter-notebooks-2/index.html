@@ -114,7 +114,7 @@
             </li>
 
           <li>
-            <a target="_self" href="https://leblancfg.com/pages/leblancfg_CV.pdf" >CV</a>
+            <a target="_self" href="https://leblancfg.com/pages/leblancfg_CV.pdf" >Résumé</a>
           </li>
       </ul>
     </nav>
@@ -1334,7 +1334,7 @@ Building on IPython, Jupyter Notebooks are an in-browser way to structure code a
 <div class="prompt input_prompt">In&nbsp;[1]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Hello World!&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s1">'Hello World!'</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1402,7 +1402,7 @@ Building on IPython, Jupyter Notebooks are an in-browser way to structure code a
 <span class="nb">print</span><span class="p">(</span><span class="n">numbers</span><span class="p">)</span>
 
 <span class="c1"># They can contain basically anything</span>
-<span class="n">kitchen_sink</span> <span class="o">=</span> <span class="p">[</span><span class="n">math</span><span class="o">.</span><span class="n">e</span><span class="p">,</span> <span class="s1">&#39;words&#39;</span><span class="p">,</span> <span class="n">numbers</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">]</span>
+<span class="n">kitchen_sink</span> <span class="o">=</span> <span class="p">[</span><span class="n">math</span><span class="o">.</span><span class="n">e</span><span class="p">,</span> <span class="s1">'words'</span><span class="p">,</span> <span class="n">numbers</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">kitchen_sink</span><span class="p">)</span>
 </pre></div>
 
@@ -1435,7 +1435,7 @@ Building on IPython, Jupyter Notebooks are an in-browser way to structure code a
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># You can access list members by &#39;slicing&#39; with square brackets.</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># You can access list members by 'slicing' with square brackets.</span>
 <span class="c1"># The syntax is [starting index: ending index(: stride)]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">numbers</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
 
@@ -1491,13 +1491,13 @@ Building on IPython, Jupyter Notebooks are an in-browser way to structure code a
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Dictionaries are used to store &#39;database-like&#39; information</span>
-<span class="n">satellites_status</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;R1&#39;</span><span class="p">:</span> <span class="s1">&#39;Dead&#39;</span><span class="p">,</span> <span class="s1">&#39;R2&#39;</span><span class="p">:</span> <span class="s1">&#39;Operational&#39;</span><span class="p">}</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;R2 Status: &#39;</span><span class="p">,</span> <span class="n">satellites_status</span><span class="p">[</span><span class="s1">&#39;R2&#39;</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Dictionaries are used to store 'database-like' information</span>
+<span class="n">satellites_status</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'R1'</span><span class="p">:</span> <span class="s1">'Dead'</span><span class="p">,</span> <span class="s1">'R2'</span><span class="p">:</span> <span class="s1">'Operational'</span><span class="p">}</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'R2 Status: '</span><span class="p">,</span> <span class="n">satellites_status</span><span class="p">[</span><span class="s1">'R2'</span><span class="p">])</span>
 
 <span class="c1"># Tuples are immutable containers of fixed size, great for passing data around</span>
 <span class="n">rgb_fuchsia</span> <span class="o">=</span> <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;RGB Values for fuchsia:&#39;</span><span class="p">,</span> <span class="n">rgb_fuchsia</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'RGB Values for fuchsia:'</span><span class="p">,</span> <span class="n">rgb_fuchsia</span><span class="p">)</span>
 
 <span class="c1"># Sets are unique collections of items, and set-theoretic</span>
 <span class="c1"># operations (AND, OR, etc.) can be applied to them.</span>
@@ -1535,7 +1535,7 @@ RGB Values for fuchsia: (255, 0, 255)
 <div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># There&#39;s also many shorthand ways to things with Python</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># There's also many shorthand ways to things with Python</span>
 <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
 </pre></div>
@@ -1579,11 +1579,11 @@ RGB Values for fuchsia: (255, 0, 255)
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># You can define functions. These transform items passed to them</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">square</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Given number `n`, returns square of that number.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Given number `n`, returns square of that number."""</span>
     <span class="k">return</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span>
 
 <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="s1">&#39;squared is&#39;</span><span class="p">,</span> <span class="n">square</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="s1">'squared is'</span><span class="p">,</span> <span class="n">square</span><span class="p">(</span><span class="n">n</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -1623,8 +1623,8 @@ RGB Values for fuchsia: (255, 0, 255)
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># But make sure you&#39;re calling the right item types to your functions</span>
-<span class="c1"># Python doesn&#39;t know how to square a list, for example.</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># But make sure you're calling the right item types to your functions</span>
+<span class="c1"># Python doesn't know how to square a list, for example.</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">square</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">)))</span>
 </pre></div>
 
@@ -1726,10 +1726,10 @@ RGB Values for fuchsia: (255, 0, 255)
 
 <span class="c1"># Plotting stuff, which we get into next section.</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Time&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Enjoyment&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Learning Python&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s1">'r'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Time'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Enjoyment'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Learning Python'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 
@@ -2051,35 +2051,35 @@ Markdown is a human-readable way to annotate plain text so that it can be parsed
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Package imports.--------</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>  <span class="c1"># We&#39;ll talk about this one in the next chapter</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>  <span class="c1"># We'll talk about this one in the next chapter</span>
 <span class="c1"># We can interact with `matplotlib.pylab` objects directly with shorthand `plt`.</span>
 <span class="c1"># This simply saves typing, and is standard practice for often-used libraries.</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pylab</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 
 <span class="c1"># Create dummy data.--------</span>
-<span class="c1"># Two different random distributions of 10&#39;000 numbers.</span>
-<span class="c1"># In Jupyter, you can learn more about the functions&#39; documentation, and</span>
+<span class="c1"># Two different random distributions of 10'000 numbers.</span>
+<span class="c1"># In Jupyter, you can learn more about the functions' documentation, and</span>
 <span class="c1"># what arguments they use by Shift-Tabbing anywhere inside the parentheses.</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
 <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">geometric</span><span class="p">(</span><span class="n">p</span><span class="o">=</span><span class="mf">0.35</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10000</span><span class="p">)</span>
 
 
 <span class="c1">## Matplotlib starts here.--------</span>
-<span class="c1"># We create a new pylab `figure` object, which we&#39;ll define in the following lines</span>
+<span class="c1"># We create a new pylab `figure` object, which we'll define in the following lines</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
 
 <span class="c1"># Create 2 histograms from arrays `x` and `y` with the following attributes.</span>
 <span class="c1"># Notice the LaTeX in the label, denoted by surrounding `$` symbols.</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;Gaussian, $\mu=0$, $\sigma=10$&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Bernouilli, $p=0.35$&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'blue'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">'Gaussian, $\mu=0$, $\sigma=10$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'green'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Bernouilli, $p=0.35$'</span><span class="p">)</span>
 
 <span class="c1"># Next, we specify some `figure` attributes. These are quite self-explanatory.</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Value&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Random Distributions&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Value'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'Frequency'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Random Distributions'</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 
-<span class="c1"># Finally, we &quot;show&quot; the whole thing. In Jupyter this outputs under the cell.</span>
+<span class="c1"># Finally, we "show" the whole thing. In Jupyter this outputs under the cell.</span>
 <span class="c1"># Calling this in a script, instead, would open a new GUI window.</span>
 <span class="c1"># All this in 10 lines of code!</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -2356,15 +2356,15 @@ zCw3Jw8zM8vNycPMzHJz8jAzs9ycPMzMLDcnDzMzy+3/A7IjAUsVStO+AAAAAElFTkSuQmCC
 <div class="prompt input_prompt">In&nbsp;[13]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Numpy arrays come with an impressive list of &quot;dot-methods&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Numpy arrays come with an impressive list of "dot-methods"</span>
 <span class="c1"># that can be called directly from the objects</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Mean:        &#39;</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Mean:        '</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
 
 <span class="c1"># You can discover these in Jupyter by pressing Tab with the</span>
 <span class="c1"># cursor after the dot, say in `numbers.|`</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ndarray type:&#39;</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Dimensions:  &#39;</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Shape:       &#39;</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'ndarray type:'</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Dimensions:  '</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">ndim</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Shape:       '</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -2438,8 +2438,8 @@ Shape:        (10,)
                  <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
                  <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span>
                  <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">]])</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Columns means:&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Row means:    &#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Columns means:'</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'Row means:    '</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -2474,7 +2474,7 @@ Row means:     [ 3.  3.  3.  3.  3.]
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># You can pass arrays through functions, and it will</span>
 <span class="c1"># respect its type, and can include rounding and overflow</span>
 <span class="k">def</span><span class="w"> </span><span class="nf">square</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Given number `n`, returns its square.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Given number `n`, returns its square."""</span>
     <span class="k">return</span> <span class="n">n</span> <span class="o">**</span> <span class="mi">2</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">square</span><span class="p">(</span><span class="n">numbers</span><span class="p">))</span>
@@ -2519,7 +2519,7 @@ Row means:     [ 3.  3.  3.  3.  3.]
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># First row, first column</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>    <span class="c1"># The whole second row</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[:,</span><span class="mi">2</span><span class="p">])</span>  <span class="c1"># The third column</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;---&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'---'</span><span class="p">)</span>
 <span class="n">data</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">9999</span> <span class="c1"># Change value of first row, first col</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
@@ -2582,10 +2582,10 @@ Row means:     [ 3.  3.  3.  3.  3.]
 <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">tqdm</span><span class="w"> </span><span class="kn">import</span> <span class="n">tqdm</span>
 
-<span class="c1"># Some pixels will overload (diverge), but that&#39;s the point</span>
-<span class="c1"># So we&#39;ll hide the warning</span>
+<span class="c1"># Some pixels will overload (diverge), but that's the point</span>
+<span class="c1"># So we'll hide the warning</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
-<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">'ignore'</span><span class="p">)</span>
 
 <span class="c1"># Increase this to improve the shape of the fractal</span>
 <span class="n">iterations</span> <span class="o">=</span> <span class="mi">500</span>
@@ -2596,7 +2596,7 @@ Row means:     [ 3.  3.  3.  3.  3.]
 <span class="n">z</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">x</span><span class="o">*</span><span class="n">x</span> <span class="o">+</span> <span class="n">c</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">iterations</span><span class="p">,</span> <span class="n">c</span><span class="p">)</span>
 
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;The Mandelbrot Set, </span><span class="si">{}</span><span class="s1"> iterations&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">iterations</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'The Mandelbrot Set, </span><span class="si">{}</span><span class="s1"> iterations'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">iterations</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">z</span><span class="p">)))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>

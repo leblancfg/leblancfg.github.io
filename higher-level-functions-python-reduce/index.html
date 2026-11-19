@@ -111,7 +111,7 @@
             </li>
 
           <li>
-            <a target="_self" href="https://leblancfg.com/pages/leblancfg_CV.pdf" >CV</a>
+            <a target="_self" href="https://leblancfg.com/pages/leblancfg_CV.pdf" >Résumé</a>
           </li>
       </ul>
     </nav>
@@ -1835,11 +1835,11 @@ reduce(...)
 <div class="prompt input_prompt">In&nbsp;[15]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &#39;Canonical&#39; answer; can also handle arbitrary levels of nestedness</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 'Canonical' answer; can also handle arbitrary levels of nestedness</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Iterable</span>
 
 <span class="k">def</span><span class="w"> </span><span class="nf">flatten</span><span class="p">(</span><span class="n">items</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Yield items from any nested iterable; see REF.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">"""Yield items from any nested iterable; see REF."""</span>
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">items</span><span class="p">:</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="p">(</span><span class="nb">str</span><span class="p">,</span> <span class="nb">bytes</span><span class="p">)):</span>
             <span class="k">yield from</span> <span class="n">flatten</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -1928,9 +1928,9 @@ reduce(...)
 <div class="prompt input_prompt">In&nbsp;[17]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">list_items</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="s1">&#39;pear&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;kiwi&#39;</span><span class="p">,</span> <span class="s1">&#39;bicycle&#39;</span><span class="p">],</span>
-               <span class="p">[</span><span class="s1">&#39;shark&#39;</span><span class="p">,</span> <span class="s1">&#39;speedo&#39;</span><span class="p">,</span> <span class="s1">&#39;coconut&#39;</span><span class="p">,</span> <span class="s1">&#39;kiwi&#39;</span><span class="p">,</span> <span class="s1">&#39;bicycle&#39;</span><span class="p">],</span>
-               <span class="p">[</span><span class="s1">&#39;coffee&#39;</span><span class="p">,</span> <span class="s1">&#39;tea&#39;</span><span class="p">,</span> <span class="s1">&#39;apple&#39;</span><span class="p">,</span> <span class="s1">&#39;kiwi&#39;</span><span class="p">,</span> <span class="s1">&#39;bicycle&#39;</span><span class="p">]]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">list_items</span> <span class="o">=</span> <span class="p">[[</span><span class="s1">'apple'</span><span class="p">,</span> <span class="s1">'pear'</span><span class="p">,</span> <span class="s1">'orange'</span><span class="p">,</span> <span class="s1">'kiwi'</span><span class="p">,</span> <span class="s1">'bicycle'</span><span class="p">],</span>
+               <span class="p">[</span><span class="s1">'shark'</span><span class="p">,</span> <span class="s1">'speedo'</span><span class="p">,</span> <span class="s1">'coconut'</span><span class="p">,</span> <span class="s1">'kiwi'</span><span class="p">,</span> <span class="s1">'bicycle'</span><span class="p">],</span>
+               <span class="p">[</span><span class="s1">'coffee'</span><span class="p">,</span> <span class="s1">'tea'</span><span class="p">,</span> <span class="s1">'apple'</span><span class="p">,</span> <span class="s1">'kiwi'</span><span class="p">,</span> <span class="s1">'bicycle'</span><span class="p">]]</span>
 </pre></div>
 
     </div>
@@ -1943,7 +1943,7 @@ reduce(...)
 <div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &#39;Canonical&#39; answer</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 'Canonical' answer</span>
 <span class="nb">set</span><span class="p">(</span><span class="n">list_items</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">intersection</span><span class="p">(</span><span class="o">*</span><span class="n">list_items</span><span class="p">)</span>
 </pre></div>
 
@@ -2031,8 +2031,8 @@ reduce(...)
 <div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># &#39;Canonical&#39; answer</span>
-<span class="nb">int</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">digits</span><span class="p">))</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># 'Canonical' answer</span>
+<span class="nb">int</span><span class="p">(</span><span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">digits</span><span class="p">))</span>
 </pre></div>
 
     </div>
@@ -2159,19 +2159,19 @@ reduce(...)
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;a&quot;</span><span class="p">:{</span>
-        <span class="s2">&quot;r&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="s2">&quot;s&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-        <span class="s2">&quot;t&quot;</span><span class="p">:</span> <span class="mi">3</span>
+    <span class="s2">"a"</span><span class="p">:{</span>
+        <span class="s2">"r"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">"s"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="s2">"t"</span><span class="p">:</span> <span class="mi">3</span>
         <span class="p">},</span>
-    <span class="s2">&quot;b&quot;</span><span class="p">:{</span>
-        <span class="s2">&quot;u&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-        <span class="s2">&quot;v&quot;</span><span class="p">:</span> <span class="p">{</span>
-            <span class="s2">&quot;x&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-            <span class="s2">&quot;y&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
-            <span class="s2">&quot;z&quot;</span><span class="p">:</span> <span class="mi">3</span>
+    <span class="s2">"b"</span><span class="p">:{</span>
+        <span class="s2">"u"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="s2">"v"</span><span class="p">:</span> <span class="p">{</span>
+            <span class="s2">"x"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">"y"</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="s2">"z"</span><span class="p">:</span> <span class="mi">3</span>
         <span class="p">},</span>
-        <span class="s2">&quot;w&quot;</span><span class="p">:</span> <span class="mi">3</span>
+        <span class="s2">"w"</span><span class="p">:</span> <span class="mi">3</span>
         <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -2186,7 +2186,7 @@ reduce(...)
 <div class="prompt input_prompt">In&nbsp;[25]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">][</span><span class="s1">&#39;v&#39;</span><span class="p">][</span><span class="s1">&#39;y&#39;</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="s1">'b'</span><span class="p">][</span><span class="s1">'v'</span><span class="p">][</span><span class="s1">'y'</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -2230,7 +2230,7 @@ reduce(...)
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">operator</span>
 
 <span class="c1"># The user supplies this</span>
-<span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;v&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">]</span>
+<span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'b'</span><span class="p">,</span> <span class="s1">'v'</span><span class="p">,</span> <span class="s1">'y'</span><span class="p">]</span>
 
 <span class="n">reduce</span><span class="p">(</span><span class="n">operator</span><span class="o">.</span><span class="n">getitem</span><span class="p">,</span> <span class="n">keys</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
 </pre></div>
@@ -2277,14 +2277,14 @@ reduce(...)
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">clean_strings</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;brown&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">)</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;quick&#39;</span><span class="p">,</span> <span class="s1">&#39;slow&#39;</span><span class="p">)</span>
-    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;lazy&#39;</span><span class="p">,</span> <span class="s1">&#39;industrious&#39;</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'brown'</span><span class="p">,</span> <span class="s1">'blue'</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'quick'</span><span class="p">,</span> <span class="s1">'slow'</span><span class="p">)</span>
+    <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'lazy'</span><span class="p">,</span> <span class="s1">'industrious'</span><span class="p">)</span>
     <span class="n">s</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="n">title</span><span class="p">()</span>
     <span class="k">return</span> <span class="n">s</span>
 
 
-<span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG&quot;</span>
+<span class="n">string</span> <span class="o">=</span> <span class="s2">"THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG"</span>
 <span class="n">clean_strings</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
 </pre></div>
 
@@ -2327,9 +2327,9 @@ reduce(...)
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;brown&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">)</span>
-       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;quick&#39;</span><span class="p">,</span> <span class="s1">&#39;slow&#39;</span><span class="p">)</span>
-       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;lazy&#39;</span><span class="p">,</span> <span class="s1">&#39;industrious&#39;</span><span class="p">)</span>
+       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'brown'</span><span class="p">,</span> <span class="s1">'blue'</span><span class="p">)</span>
+       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'quick'</span><span class="p">,</span> <span class="s1">'slow'</span><span class="p">)</span>
+       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'lazy'</span><span class="p">,</span> <span class="s1">'industrious'</span><span class="p">)</span>
        <span class="o">.</span><span class="n">title</span><span class="p">()</span>
 <span class="p">)</span>
 </pre></div>
@@ -2372,9 +2372,9 @@ reduce(...)
 <div class="prompt input_prompt">In&nbsp;[29]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">color</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;brown&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">)</span>
-<span class="n">speed</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;quick&#39;</span><span class="p">,</span> <span class="s1">&#39;slow&#39;</span><span class="p">)</span>
-<span class="n">work</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;lazy&#39;</span><span class="p">,</span> <span class="s1">&#39;industrious&#39;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">color</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'brown'</span><span class="p">,</span> <span class="s1">'blue'</span><span class="p">)</span>
+<span class="n">speed</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'quick'</span><span class="p">,</span> <span class="s1">'slow'</span><span class="p">)</span>
+<span class="n">work</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'lazy'</span><span class="p">,</span> <span class="s1">'industrious'</span><span class="p">)</span>
 
 <span class="c1"># In actual use cases, this list can get quite lengthy!</span>
 <span class="n">transforms</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="o">.</span><span class="n">lower</span><span class="p">,</span> <span class="n">color</span><span class="p">,</span> <span class="n">speed</span><span class="p">,</span> <span class="n">work</span><span class="p">,</span> <span class="nb">str</span><span class="o">.</span><span class="n">title</span><span class="p">]</span>
@@ -2455,7 +2455,7 @@ reduce(...)
 <div class="prompt input_prompt">In&nbsp;[31]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">string</span> <span class="o">=</span> <span class="s2">"THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG"</span>
 </pre></div>
 
     </div>
@@ -2470,9 +2470,9 @@ reduce(...)
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%timeit</span>
 <span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;brown&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">)</span>
-       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;quick&#39;</span><span class="p">,</span> <span class="s1">&#39;slow&#39;</span><span class="p">)</span>
-       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;lazy&#39;</span><span class="p">,</span> <span class="s1">&#39;industrious&#39;</span><span class="p">)</span>
+       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'brown'</span><span class="p">,</span> <span class="s1">'blue'</span><span class="p">)</span>
+       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'quick'</span><span class="p">,</span> <span class="s1">'slow'</span><span class="p">)</span>
+       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'lazy'</span><span class="p">,</span> <span class="s1">'industrious'</span><span class="p">)</span>
        <span class="o">.</span><span class="n">title</span><span class="p">()</span>
 <span class="p">)</span>
 </pre></div>
@@ -2585,7 +2585,7 @@ reduce(...)
 <div class="prompt input_prompt">In&nbsp;[35]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">string</span> <span class="o">=</span> <span class="s2">"THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG"</span>
 </pre></div>
 
     </div>
@@ -2687,7 +2687,7 @@ reduce(...)
 <div class="prompt input_prompt">In&nbsp;[39]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">string</span> <span class="o">=</span> <span class="s2">&quot;THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG&quot;</span> <span class="o">*</span> <span class="mi">1000</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">string</span> <span class="o">=</span> <span class="s2">"THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG"</span> <span class="o">*</span> <span class="mi">1000</span>
 </pre></div>
 
     </div>
@@ -2702,9 +2702,9 @@ reduce(...)
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%timeit</span>
 <span class="p">(</span><span class="n">string</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;brown&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">)</span>
-       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;quick&#39;</span><span class="p">,</span> <span class="s1">&#39;slow&#39;</span><span class="p">)</span>
-       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;lazy&#39;</span><span class="p">,</span> <span class="s1">&#39;industrious&#39;</span><span class="p">)</span>
+       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'brown'</span><span class="p">,</span> <span class="s1">'blue'</span><span class="p">)</span>
+       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'quick'</span><span class="p">,</span> <span class="s1">'slow'</span><span class="p">)</span>
+       <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'lazy'</span><span class="p">,</span> <span class="s1">'industrious'</span><span class="p">)</span>
        <span class="o">.</span><span class="n">title</span><span class="p">()</span>
 <span class="p">)</span>
 </pre></div>

@@ -110,7 +110,7 @@
             </li>
 
           <li>
-            <a target="_self" href="https://leblancfg.com/pages/leblancfg_CV.pdf" >CV</a>
+            <a target="_self" href="https://leblancfg.com/pages/leblancfg_CV.pdf" >Résumé</a>
           </li>
       </ul>
     </nav>
@@ -1398,10 +1398,10 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">URI_DB</span> <span class="o">=</span> <span class="s2">&quot;postgres://leblancfg@localhost:5432/cf_analysis&quot;</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">URI_DB</span> <span class="o">=</span> <span class="s2">"postgres://leblancfg@localhost:5432/cf_analysis"</span>
 <span class="n">db</span> <span class="o">=</span> <span class="n">sql</span><span class="o">.</span><span class="n">create_engine</span><span class="p">(</span><span class="n">URI_DB</span><span class="p">)</span>
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">&quot;cf_athletes&quot;</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_sql</span><span class="p">(</span><span class="s2">"cf_athletes"</span><span class="p">,</span> <span class="n">db</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s2">"id"</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1636,16 +1636,16 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 <div class="prompt input_prompt">In&nbsp;[18]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fran</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;45 &lt; fran &lt; 800&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fran</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">"45 &lt; fran &lt; 800"</span><span class="p">)</span>
 
 <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span>
     <span class="n">fran</span><span class="p">,</span>
-    <span class="s2">&quot;fran&quot;</span><span class="p">,</span>
+    <span class="s2">"fran"</span><span class="p">,</span>
     <span class="n">nbins</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span>
-    <span class="n">barmode</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;CrossFit Open 2019 Athlete Pages — Distribution </span><span class="si">% o</span><span class="s2">f Fran Workout Times, by Sex&quot;</span><span class="p">,</span>
-    <span class="n">marginal</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">"sex"</span><span class="p">,</span>
+    <span class="n">barmode</span><span class="o">=</span><span class="s2">"group"</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">"CrossFit Open 2019 Athlete Pages — Distribution </span><span class="si">% o</span><span class="s2">f Fran Workout Times, by Sex"</span><span class="p">,</span>
+    <span class="n">marginal</span><span class="o">=</span><span class="s2">"box"</span><span class="p">,</span>
     <span class="n">color_discrete_sequence</span><span class="o">=</span><span class="n">COLOUR_SCHEME</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
@@ -1722,7 +1722,7 @@ if (outputEl) {{
 <div class="prompt input_prompt">In&nbsp;[57]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">fran</span><span class="p">,</span> <span class="s2">&quot;fran&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">fran</span><span class="p">,</span> <span class="s2">"fran"</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1839,16 +1839,16 @@ if (outputEl) {{
 <div class="prompt input_prompt">In&nbsp;[19]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">grace</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;45 &lt; grace &lt; 600&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">grace</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">"45 &lt; grace &lt; 600"</span><span class="p">)</span>
 
 <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span>
     <span class="n">grace</span><span class="p">,</span>
-    <span class="s2">&quot;grace&quot;</span><span class="p">,</span>
+    <span class="s2">"grace"</span><span class="p">,</span>
     <span class="n">nbins</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span>
-    <span class="n">barmode</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;CrossFit Open 2019 Athlete Pages — Distribution </span><span class="si">% o</span><span class="s2">f Grace Workout Times, by Sex&quot;</span><span class="p">,</span>
-    <span class="n">marginal</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">"sex"</span><span class="p">,</span>
+    <span class="n">barmode</span><span class="o">=</span><span class="s2">"group"</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">"CrossFit Open 2019 Athlete Pages — Distribution </span><span class="si">% o</span><span class="s2">f Grace Workout Times, by Sex"</span><span class="p">,</span>
+    <span class="n">marginal</span><span class="o">=</span><span class="s2">"box"</span><span class="p">,</span>
     <span class="n">color_discrete_sequence</span><span class="o">=</span><span class="n">COLOUR_SCHEME</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
@@ -1925,7 +1925,7 @@ if (outputEl) {{
 <div class="prompt input_prompt">In&nbsp;[58]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">grace</span><span class="p">,</span> <span class="s2">&quot;grace&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">grace</span><span class="p">,</span> <span class="s2">"grace"</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -2046,16 +2046,16 @@ if (outputEl) {{
 <div class="prompt input_prompt">In&nbsp;[20]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">helen</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;250 &lt; helen &lt; 1200&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">helen</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">"250 &lt; helen &lt; 1200"</span><span class="p">)</span>
 
 <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span>
     <span class="n">helen</span><span class="p">,</span>
-    <span class="s2">&quot;helen&quot;</span><span class="p">,</span>
+    <span class="s2">"helen"</span><span class="p">,</span>
     <span class="n">nbins</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span>
-    <span class="n">barmode</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;CrossFit Open 2019 Athlete Pages — Distribution </span><span class="si">% o</span><span class="s2">f Helen Workout Times, by Sex&quot;</span><span class="p">,</span>
-    <span class="n">marginal</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">"sex"</span><span class="p">,</span>
+    <span class="n">barmode</span><span class="o">=</span><span class="s2">"group"</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">"CrossFit Open 2019 Athlete Pages — Distribution </span><span class="si">% o</span><span class="s2">f Helen Workout Times, by Sex"</span><span class="p">,</span>
+    <span class="n">marginal</span><span class="o">=</span><span class="s2">"box"</span><span class="p">,</span>
     <span class="n">color_discrete_sequence</span><span class="o">=</span><span class="n">COLOUR_SCHEME</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
@@ -2132,7 +2132,7 @@ if (outputEl) {{
 <div class="prompt input_prompt">In&nbsp;[59]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">helen</span><span class="p">,</span> <span class="s2">&quot;helen&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">helen</span><span class="p">,</span> <span class="s2">"helen"</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -2261,15 +2261,15 @@ if (outputEl) {{
 <div class="prompt input_prompt">In&nbsp;[21]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">filt50</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;500 &lt; filthy50 &lt; 3000&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">filt50</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">"500 &lt; filthy50 &lt; 3000"</span><span class="p">)</span>
 <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span>
     <span class="n">filt50</span><span class="p">,</span>
-    <span class="s2">&quot;filthy50&quot;</span><span class="p">,</span>
+    <span class="s2">"filthy50"</span><span class="p">,</span>
     <span class="n">nbins</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span>
-    <span class="n">barmode</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;CrossFit Open 2019 Athlete Pages — Distribution </span><span class="si">% o</span><span class="s2">f Filthy Fifty Workout Times, by Sex&quot;</span><span class="p">,</span>
-    <span class="n">marginal</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">"sex"</span><span class="p">,</span>
+    <span class="n">barmode</span><span class="o">=</span><span class="s2">"group"</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">"CrossFit Open 2019 Athlete Pages — Distribution </span><span class="si">% o</span><span class="s2">f Filthy Fifty Workout Times, by Sex"</span><span class="p">,</span>
+    <span class="n">marginal</span><span class="o">=</span><span class="s2">"box"</span><span class="p">,</span>
     <span class="n">color_discrete_sequence</span><span class="o">=</span><span class="n">COLOUR_SCHEME</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
@@ -2346,7 +2346,7 @@ if (outputEl) {{
 <div class="prompt input_prompt">In&nbsp;[60]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">filt50</span><span class="p">,</span> <span class="s2">&quot;filthy50&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">filt50</span><span class="p">,</span> <span class="s2">"filthy50"</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -2468,15 +2468,15 @@ if (outputEl) {{
 <div class="prompt input_prompt">In&nbsp;[22]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fgb</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;100 &lt; fgonebad &lt; 600&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">fgb</span> <span class="o">=</span> <span class="n">bm</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">"100 &lt; fgonebad &lt; 600"</span><span class="p">)</span>
 <span class="n">px</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span>
     <span class="n">fgb</span><span class="p">,</span>
-    <span class="s2">&quot;fgonebad&quot;</span><span class="p">,</span>
+    <span class="s2">"fgonebad"</span><span class="p">,</span>
     <span class="n">nbins</span><span class="o">=</span><span class="mi">128</span><span class="p">,</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span>
-    <span class="n">barmode</span><span class="o">=</span><span class="s2">&quot;group&quot;</span><span class="p">,</span>
-    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;CrossFit Open 2019 Athlete Pages — Distribution </span><span class="si">% o</span><span class="s2">f Fight Gone Bad Workout Times, by Sex&quot;</span><span class="p">,</span>
-    <span class="n">marginal</span><span class="o">=</span><span class="s2">&quot;box&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">"sex"</span><span class="p">,</span>
+    <span class="n">barmode</span><span class="o">=</span><span class="s2">"group"</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">"CrossFit Open 2019 Athlete Pages — Distribution </span><span class="si">% o</span><span class="s2">f Fight Gone Bad Workout Times, by Sex"</span><span class="p">,</span>
+    <span class="n">marginal</span><span class="o">=</span><span class="s2">"box"</span><span class="p">,</span>
     <span class="n">color_discrete_sequence</span><span class="o">=</span><span class="n">COLOUR_SCHEME</span><span class="p">,</span>
 <span class="p">)</span>
 </pre></div>
@@ -2553,7 +2553,7 @@ if (outputEl) {{
 <div class="prompt input_prompt">In&nbsp;[61]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">fgb</span><span class="p">,</span> <span class="s2">&quot;fgonebad&quot;</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">describe</span><span class="p">(</span><span class="n">fgb</span><span class="p">,</span> <span class="s2">"fgonebad"</span><span class="p">)</span>
 </pre></div>
 
     </div>

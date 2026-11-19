@@ -111,7 +111,7 @@
             </li>
 
           <li>
-            <a target="_self" href="https://leblancfg.com/pages/leblancfg_CV.pdf" >CV</a>
+            <a target="_self" href="https://leblancfg.com/pages/leblancfg_CV.pdf" >Résumé</a>
           </li>
       </ul>
     </nav>
@@ -194,7 +194,7 @@ rel="me"           href="https://hachyderm.io/@leblancfg"
 <p>N.B. that last argument is highly recomended. The azure CLI is not a single install, but rather like 100 different modules, and you will have to accept/ continue every single one of them.</p>
 </blockquote>
 <p>but I got the error:</p>
-<div class="highlight"><pre><span></span><code><span class="nx">rm</span><span class="p">:</span><span class="w"> </span><span class="nx">cannot</span><span class="w"> </span><span class="nx">remove</span><span class="w"> </span><span class="err">&#39;</span><span class="o">/</span><span class="nx">tmp</span><span class="o">/</span><span class="nx">yaourt</span><span class="o">-</span><span class="nx">tmp</span><span class="o">-</span><span class="nx">leblancfg</span><span class="o">/</span><span class="nx">aur</span><span class="o">-</span><span class="nx">python</span><span class="o">-</span><span class="nx">azure</span><span class="o">-</span><span class="nx">storage</span><span class="o">/</span><span class="nx">pkg</span><span class="o">/</span><span class="nx">python</span><span class="o">-</span><span class="nx">azure</span><span class="o">-</span><span class="nx">storage</span><span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">lib</span><span class="o">/</span><span class="nx">python3</span><span class="p">.?</span><span class="o">/</span><span class="nx">site</span><span class="o">-</span><span class="nx">packages</span><span class="o">/</span><span class="nx">azure</span><span class="o">/</span><span class="nx">__init__</span><span class="p">.</span><span class="nx">py</span><span class="err">&#39;</span><span class="p">:</span><span class="w"> </span><span class="nx">No</span><span class="w"> </span><span class="nx">such</span><span class="w"> </span><span class="nx">file</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="nx">directory</span>
+<div class="highlight"><pre><span></span><code><span class="nx">rm</span><span class="p">:</span><span class="w"> </span><span class="nx">cannot</span><span class="w"> </span><span class="nx">remove</span><span class="w"> </span><span class="err">'</span><span class="o">/</span><span class="nx">tmp</span><span class="o">/</span><span class="nx">yaourt</span><span class="o">-</span><span class="nx">tmp</span><span class="o">-</span><span class="nx">leblancfg</span><span class="o">/</span><span class="nx">aur</span><span class="o">-</span><span class="nx">python</span><span class="o">-</span><span class="nx">azure</span><span class="o">-</span><span class="nx">storage</span><span class="o">/</span><span class="nx">pkg</span><span class="o">/</span><span class="nx">python</span><span class="o">-</span><span class="nx">azure</span><span class="o">-</span><span class="nx">storage</span><span class="o">/</span><span class="nx">usr</span><span class="o">/</span><span class="nx">lib</span><span class="o">/</span><span class="nx">python3</span><span class="p">.?</span><span class="o">/</span><span class="nx">site</span><span class="o">-</span><span class="nx">packages</span><span class="o">/</span><span class="nx">azure</span><span class="o">/</span><span class="nx">__init__</span><span class="p">.</span><span class="nx">py</span><span class="err">'</span><span class="p">:</span><span class="w"> </span><span class="nx">No</span><span class="w"> </span><span class="nx">such</span><span class="w"> </span><span class="nx">file</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="nx">directory</span>
 <span class="o">==</span><span class="p">&gt;</span><span class="w"> </span><span class="nx">ERROR</span><span class="p">:</span><span class="w"> </span><span class="nx">A</span><span class="w"> </span><span class="nx">failure</span><span class="w"> </span><span class="nx">occurred</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="kn">package</span><span class="p">().</span>
 <span class="w">    </span><span class="nx">Aborting</span><span class="o">...</span>
 <span class="o">==</span><span class="p">&gt;</span><span class="w"> </span><span class="nx">ERROR</span><span class="p">:</span><span class="w"> </span><span class="nx">Makepkg</span><span class="w"> </span><span class="nx">was</span><span class="w"> </span><span class="nx">unable</span><span class="w"> </span><span class="nx">to</span><span class="w"> </span><span class="nx">build</span><span class="w"> </span><span class="nx">python</span><span class="o">-</span><span class="nx">azure</span><span class="o">-</span><span class="nx">storage</span><span class="p">.</span>
@@ -206,7 +206,7 @@ rel="me"           href="https://hachyderm.io/@leblancfg"
 </code></pre></div>
 
 <p>I thought it was in the bag but got the error:</p>
-<div class="highlight"><pre><span></span><code>ERROR: This script does not support the Python Anaconda environment. Create an Anaconda virtual environment and install with &#39;pip&#39;
+<div class="highlight"><pre><span></span><code>ERROR: This script does not support the Python Anaconda environment. Create an Anaconda virtual environment and install with 'pip'
 </code></pre></div>
 
 <p>Well darn. I want to be able to call <code>az</code> through the whole system, not just in a virtual env. If you get this and have Anaconda installed, here's an easy fix for you.</p>
@@ -215,9 +215,9 @@ rel="me"           href="https://hachyderm.io/@leblancfg"
 <p><strong>Warning</strong>: the following steps mess with your <code>PATH</code> variable. If for some reason the installation doesn't work, make sure to run the second-to-last command in the block.</p>
 </blockquote>
 <div class="highlight"><pre><span></span><code><span class="n">echo</span><span class="w"> </span><span class="o">$</span><span class="n">PATH</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">tmp</span>
-<span class="k">export</span><span class="w"> </span><span class="n">PATH</span><span class="o">=</span><span class="s2">&quot;/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/opt/cuda/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl&quot;</span>
+<span class="k">export</span><span class="w"> </span><span class="n">PATH</span><span class="o">=</span><span class="s2">"/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/opt/cuda/bin:/usr/lib/jvm/default/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl"</span>
 <span class="n">curl</span><span class="w"> </span><span class="o">-</span><span class="n">L</span><span class="w"> </span><span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">aka</span><span class="o">.</span><span class="n">ms</span><span class="o">/</span><span class="n">InstallAzureCli</span><span class="w"> </span><span class="o">|</span><span class="w"> </span><span class="n">bash</span>
-<span class="k">export</span><span class="w"> </span><span class="n">PATH</span><span class="o">=</span><span class="s2">&quot;$(cat tmp)&quot;</span>
+<span class="k">export</span><span class="w"> </span><span class="n">PATH</span><span class="o">=</span><span class="s2">"$(cat tmp)"</span>
 <span class="n">source</span><span class="w"> </span><span class="o">~/.</span><span class="n">bashrc</span>
 </code></pre></div>
 
@@ -226,7 +226,7 @@ rel="me"           href="https://hachyderm.io/@leblancfg"
 </code></pre></div>
 
 <p>And make sure that your Python interpreter is back to its original state with:</p>
-<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s2">&quot;import sys;print(&#39;Anaconda&#39; in sys.executable)&quot;</span>
+<div class="highlight"><pre><span></span><code><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s2">"import sys;print('Anaconda' in sys.executable)"</span>
 </code></pre></div>
   </div>
   <div class="tag-cloud">

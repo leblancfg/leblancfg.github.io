@@ -109,7 +109,7 @@
             </li>
 
           <li>
-            <a target="_self" href="https://leblancfg.com/pages/leblancfg_CV.pdf" >CV</a>
+            <a target="_self" href="https://leblancfg.com/pages/leblancfg_CV.pdf" >Résumé</a>
           </li>
       </ul>
     </nav>
@@ -202,13 +202,13 @@ one developer's journey through the, uh, "intriguing" complexities of Rust.</p>
 <p>I'm on a Mac and considered installing Rust using <code>brew</code>, but the official
 installation instructions are so simple that I decided to go with that. I ran
 the following command in my terminal:</p>
-<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>--proto<span class="w"> </span><span class="s1">&#39;=https&#39;</span><span class="w"> </span>--tlsv1.2<span class="w"> </span>-sSf<span class="w"> </span>https://sh.rustup.rs<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
+<div class="highlight"><pre><span></span><code>curl<span class="w"> </span>--proto<span class="w"> </span><span class="s1">'=https'</span><span class="w"> </span>--tlsv1.2<span class="w"> </span>-sSf<span class="w"> </span>https://sh.rustup.rs<span class="w"> </span><span class="p">|</span><span class="w"> </span>sh
 </code></pre></div>
 
 <p>and went with the default options. This installed <code>rustc</code> and <code>cargo</code> on my machine.</p>
 <h1>Hello world</h1>
 <p>I then created a new script with the following content:</p>
-<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;fn main() { println!(&quot;Hello, world!&quot;); }&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>hello.rs
+<div class="highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s1">'fn main() { println!("Hello, world!"); }'</span><span class="w"> </span>&gt;<span class="w"> </span>hello.rs
 </code></pre></div>
 
 <p>, compiled and ran it with:</p>
@@ -257,17 +257,17 @@ cargo<span class="w"> </span>init
 <p>I ended up writing a slightly harder sql "formatter" whose job is to uppercase
 sql keywords in a DDL statement. Here's the code:</p>
 <div class="highlight"><pre><span></span><code><span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;select * from users as u where u.id = 1;&quot;</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"select * from users as u where u.id = 1;"</span><span class="p">;</span>
 <span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">formatted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">format_sql</span><span class="p">(</span><span class="n">input</span><span class="p">);</span>
-<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">formatted</span><span class="p">);</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span><span class="w"> </span><span class="n">formatted</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="k">fn</span><span class="w"> </span><span class="nf">format_sql</span><span class="p">(</span><span class="n">input</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="kt">str</span><span class="p">)</span><span class="w"> </span><span class="p">-&gt;</span><span class="w"> </span><span class="nb">String</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="c1">// TODO: Add like, wayyy more and make it a separate file</span>
 <span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">keywords</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span>
-<span class="w">        </span><span class="s">&quot;select&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;from&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;where&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;insert&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;update&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;delete&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;as&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;order&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;by&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;group&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="s">&quot;join&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;having&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;limit&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;offset&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;and&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;or&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;not&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;in&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;like&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;is&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;null&quot;</span><span class="p">,</span>
-<span class="w">        </span><span class="s">&quot;true&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;false&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;between&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;exists&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;case&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;when&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;then&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;else&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;end&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;distinct&quot;</span><span class="p">,</span>
+<span class="w">        </span><span class="s">"select"</span><span class="p">,</span><span class="w"> </span><span class="s">"from"</span><span class="p">,</span><span class="w"> </span><span class="s">"where"</span><span class="p">,</span><span class="w"> </span><span class="s">"insert"</span><span class="p">,</span><span class="w"> </span><span class="s">"update"</span><span class="p">,</span><span class="w"> </span><span class="s">"delete"</span><span class="p">,</span><span class="w"> </span><span class="s">"as"</span><span class="p">,</span><span class="w"> </span><span class="s">"order"</span><span class="p">,</span><span class="w"> </span><span class="s">"by"</span><span class="p">,</span><span class="w"> </span><span class="s">"group"</span><span class="p">,</span>
+<span class="w">        </span><span class="s">"join"</span><span class="p">,</span><span class="w"> </span><span class="s">"having"</span><span class="p">,</span><span class="w"> </span><span class="s">"limit"</span><span class="p">,</span><span class="w"> </span><span class="s">"offset"</span><span class="p">,</span><span class="w"> </span><span class="s">"and"</span><span class="p">,</span><span class="w"> </span><span class="s">"or"</span><span class="p">,</span><span class="w"> </span><span class="s">"not"</span><span class="p">,</span><span class="w"> </span><span class="s">"in"</span><span class="p">,</span><span class="w"> </span><span class="s">"like"</span><span class="p">,</span><span class="w"> </span><span class="s">"is"</span><span class="p">,</span><span class="w"> </span><span class="s">"null"</span><span class="p">,</span>
+<span class="w">        </span><span class="s">"true"</span><span class="p">,</span><span class="w"> </span><span class="s">"false"</span><span class="p">,</span><span class="w"> </span><span class="s">"between"</span><span class="p">,</span><span class="w"> </span><span class="s">"exists"</span><span class="p">,</span><span class="w"> </span><span class="s">"case"</span><span class="p">,</span><span class="w"> </span><span class="s">"when"</span><span class="p">,</span><span class="w"> </span><span class="s">"then"</span><span class="p">,</span><span class="w"> </span><span class="s">"else"</span><span class="p">,</span><span class="w"> </span><span class="s">"end"</span><span class="p">,</span><span class="w"> </span><span class="s">"distinct"</span><span class="p">,</span>
 <span class="w">    </span><span class="p">];</span>
 
 <span class="w">    </span><span class="n">input</span>
@@ -280,7 +280,7 @@ sql keywords in a DDL statement. Here's the code:</p>
 <span class="w">            </span><span class="p">}</span>
 <span class="w">        </span><span class="p">})</span>
 <span class="w">        </span><span class="p">.</span><span class="n">collect</span><span class="p">::</span><span class="o">&lt;</span><span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;&gt;</span><span class="p">()</span>
-<span class="w">        </span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">)</span>
+<span class="w">        </span><span class="p">.</span><span class="n">join</span><span class="p">(</span><span class="s">" "</span><span class="p">)</span>
 <span class="p">}</span>
 </code></pre></div>
 
@@ -301,26 +301,26 @@ your code, and they're only compiled when you run <code>cargo test</code>.</p>
 <span class="w">    </span><span class="k">use</span><span class="w"> </span><span class="k">super</span><span class="p">::</span><span class="o">*</span><span class="p">;</span>
 <span class="w">    </span><span class="cp">#[test]</span>
 <span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">test_empty_string</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">;</span>
-<span class="w">        </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">format_sql</span><span class="p">(</span><span class="n">query</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">""</span><span class="p">;</span>
+<span class="w">        </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">format_sql</span><span class="p">(</span><span class="n">query</span><span class="p">),</span><span class="w"> </span><span class="s">""</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 
 <span class="w">    </span><span class="cp">#[test]</span>
 <span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">test_basic_keywords</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;select * from users where id = 1&quot;</span><span class="p">;</span>
-<span class="w">        </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">format_sql</span><span class="p">(</span><span class="n">query</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;SELECT * FROM users WHERE id = 1&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"select * from users where id = 1"</span><span class="p">;</span>
+<span class="w">        </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">format_sql</span><span class="p">(</span><span class="n">query</span><span class="p">),</span><span class="w"> </span><span class="s">"SELECT * FROM users WHERE id = 1"</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 
 <span class="w">    </span><span class="cp">#[test]</span>
 <span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">test_mixed_case_keywords</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;SeLeCt * fRoM users where ID = 1&quot;</span><span class="p">;</span>
-<span class="w">        </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">format_sql</span><span class="p">(</span><span class="n">query</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;SELECT * FROM users WHERE ID = 1&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"SeLeCt * fRoM users where ID = 1"</span><span class="p">;</span>
+<span class="w">        </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">format_sql</span><span class="p">(</span><span class="n">query</span><span class="p">),</span><span class="w"> </span><span class="s">"SELECT * FROM users WHERE ID = 1"</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 
 <span class="w">    </span><span class="cp">#[test]</span>
 <span class="w">    </span><span class="k">fn</span><span class="w"> </span><span class="nf">test_no_keywords</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;users * id = 1&quot;</span><span class="p">;</span>
-<span class="w">        </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">format_sql</span><span class="p">(</span><span class="n">query</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;users * id = 1&quot;</span><span class="p">);</span>
+<span class="w">        </span><span class="kd">let</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"users * id = 1"</span><span class="p">;</span>
+<span class="w">        </span><span class="fm">assert_eq!</span><span class="p">(</span><span class="n">format_sql</span><span class="p">(</span><span class="n">query</span><span class="p">),</span><span class="w"> </span><span class="s">"users * id = 1"</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="p">}</span>
 </code></pre></div>
@@ -353,14 +353,14 @@ module provides the <code>args</code> function to get the command line arguments
 <span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">args</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">env</span><span class="p">::</span><span class="n">args</span><span class="p">().</span><span class="n">collect</span><span class="p">();</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">args</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Usage: {} &lt;input file&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="w">        </span><span class="fm">println!</span><span class="p">(</span><span class="s">"Usage: {} &lt;input file&gt;"</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
 <span class="w">        </span><span class="n">std</span><span class="p">::</span><span class="n">process</span><span class="p">::</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 
 <span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">filename</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">args</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">contents</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fs</span><span class="p">::</span><span class="n">read_to_string</span><span class="p">(</span><span class="n">filename</span><span class="p">).</span><span class="n">expect</span><span class="p">(</span><span class="s">&quot;Something went wrong reading the file&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">contents</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fs</span><span class="p">::</span><span class="n">read_to_string</span><span class="p">(</span><span class="n">filename</span><span class="p">).</span><span class="n">expect</span><span class="p">(</span><span class="s">"Something went wrong reading the file"</span><span class="p">);</span>
 <span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">formatted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">format_sql</span><span class="p">(</span><span class="o">&amp;</span><span class="n">contents</span><span class="p">);</span>
-<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">formatted</span><span class="p">);</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span><span class="w"> </span><span class="n">formatted</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre></div>
 
@@ -386,7 +386,7 @@ parallelism when sensible, based on work-load at runtime.</p>
 </blockquote>
 <p>Anywho, here's how we can do that. Start by editing the <code>Cargo.toml</code> file with:</p>
 <div class="highlight"><pre><span></span><code><span class="k">[dependencies]</span>
-<span class="n">rayon</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;1.10.0&quot;</span>
+<span class="n">rayon</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"1.10.0"</span>
 </code></pre></div>
 
 <p>then, in <code>main.rs</code>, add the following:</p>
@@ -402,7 +402,7 @@ parallelism when sensible, based on work-load at runtime.</p>
 <span class="k">fn</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">args</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">env</span><span class="p">::</span><span class="n">args</span><span class="p">().</span><span class="n">collect</span><span class="p">();</span>
 <span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">args</span><span class="p">.</span><span class="n">len</span><span class="p">()</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="p">{</span>
-<span class="w">        </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;Usage: {} &lt;input file&gt;&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<span class="w">        </span><span class="fm">println!</span><span class="p">(</span><span class="s">"Usage: {} &lt;input file&gt;"</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
 <span class="w">        </span><span class="n">std</span><span class="p">::</span><span class="n">process</span><span class="p">::</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 <span class="w">    </span><span class="p">}</span>
 <span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">paths</span><span class="p">:</span><span class="w"> </span><span class="nb">Vec</span><span class="o">&lt;</span><span class="nb">String</span><span class="o">&gt;</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">args</span><span class="p">.</span><span class="n">into_iter</span><span class="p">().</span><span class="n">skip</span><span class="p">(</span><span class="mi">1</span><span class="p">).</span><span class="n">collect</span><span class="p">();</span>
@@ -413,15 +413,15 @@ parallelism when sensible, based on work-load at runtime.</p>
 <span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">path</span><span class="p">.</span><span class="n">is_file</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
 <span class="w">            </span><span class="n">process_file</span><span class="p">(</span><span class="n">path</span><span class="p">);</span>
 <span class="w">        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
-<span class="w">            </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{} is not a file&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">path</span><span class="p">.</span><span class="n">display</span><span class="p">());</span>
+<span class="w">            </span><span class="fm">println!</span><span class="p">(</span><span class="s">"{} is not a file"</span><span class="p">,</span><span class="w"> </span><span class="n">path</span><span class="p">.</span><span class="n">display</span><span class="p">());</span>
 <span class="w">        </span><span class="p">}</span>
 <span class="w">    </span><span class="p">});</span>
 <span class="p">}</span>
 
 <span class="k">fn</span><span class="w"> </span><span class="nf">process_file</span><span class="p">(</span><span class="n">path</span><span class="p">:</span><span class="w"> </span><span class="kp">&amp;</span><span class="nc">Path</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
-<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">contents</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fs</span><span class="p">::</span><span class="n">read_to_string</span><span class="p">(</span><span class="n">path</span><span class="p">).</span><span class="n">expect</span><span class="p">(</span><span class="s">&quot;Failed to read file&quot;</span><span class="p">);</span>
+<span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">contents</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">fs</span><span class="p">::</span><span class="n">read_to_string</span><span class="p">(</span><span class="n">path</span><span class="p">).</span><span class="n">expect</span><span class="p">(</span><span class="s">"Failed to read file"</span><span class="p">);</span>
 <span class="w">    </span><span class="kd">let</span><span class="w"> </span><span class="n">formatted</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">format_sql</span><span class="p">(</span><span class="o">&amp;</span><span class="n">contents</span><span class="p">);</span>
-<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">&quot;{}&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">formatted</span><span class="p">);</span>
+<span class="w">    </span><span class="fm">println!</span><span class="p">(</span><span class="s">"{}"</span><span class="p">,</span><span class="w"> </span><span class="n">formatted</span><span class="p">);</span>
 <span class="p">}</span>
 <span class="o">..</span><span class="p">.</span>
 </code></pre></div>
