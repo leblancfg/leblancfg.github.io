@@ -89,6 +89,7 @@ STATIC_PATHS = [
     "extra/CNAME",
     "extra/404.redirect",
     "extra/intensity-pad-founder-story.redirect",
+    "extra/cs-80.redirect",
     "pages/leblancfg_CV.pdf",
 ]
 EXTRA_PATH_METADATA = {
@@ -97,6 +98,7 @@ EXTRA_PATH_METADATA = {
     "extra/intensity-pad-founder-story.redirect": {
         "path": "intensity-pad-founder-story.html"
     },
+    "extra/cs-80.redirect": {"path": "cs-80/index.html"},
     "pages/leblancfgCV.pdf": {"path": "pages/leblancfg_CV.pdf"},
 }
 

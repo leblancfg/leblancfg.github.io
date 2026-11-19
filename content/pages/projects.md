@@ -3,6 +3,11 @@ slug: projects
 
 Here's a short list of projects I've undertaken in the past.
 
+## cs80
+[Open source project](https://github.com/leblancfg/cs80) that models the Yamaha CS-80 polysynth in the browser, with Web MIDI and a 160-sound library, tuned for an M-Audio Oxygen 49.
+
+>Visit the [website here](https://leblancfg.com/cs80/).
+
 ## deprecations.info
 [Open source project](https://github.com/leblancfg/deprecations-rss) that tracks AI model deprecations across major providers (OpenAI, Anthropic, Google, AWS, Cohere) using Simon Willison's git scraper pattern. Provides an RSS feed for programmatic consumption, enabling automated notifications and CI/CD integration to prevent service disruptions from deprecated models.
 
